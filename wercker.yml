@@ -1,0 +1,22 @@
+box: wercker/rvm
+build:
+    steps:
+        - rvm-use:
+            version: 2.1.0
+
+        # install bundle & dependencies
+        - bundle-install
+
+        # A custom script step, name value is used in the UI
+        # and the code value contains the command that get executed
+        - script:
+            name: echo ruby information
+            code: |
+                echo "ruby version $(ruby --version) running"
+                echo "from location $(which ruby)"
+                echo -p "gem list: $(gem list)"
+
+        # execute tests
+        - script:
+               name: rspec
+               code: bundle exec rspec
