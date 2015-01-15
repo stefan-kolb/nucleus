@@ -10,6 +10,7 @@ gem 'grape-swagger'
 gem 'thin'
 gem 'logger'
 gem 'configatron'
+gem 'kwalify'
 gem 'daybreak'
 gem 'filesize'
 group :development do
