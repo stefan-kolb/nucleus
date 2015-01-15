@@ -11,6 +11,8 @@ gem 'grape-swagger'
 gem 'thin'
 gem 'logger'
 gem 'configatron'
+gem 'daybreak'
+gem 'filesize'
 
 group :test do
   gem 'rake'
