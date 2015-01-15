@@ -1,0 +1,16 @@
+type: map
+class: Paasal::API::Requirements
+desc:  Requirements that must be met by any adapter
+required: yes
+mapping:
+  "version": { type: text, required: yes, unique: yes }
+  "methods":
+    type: seq
+    required: yes
+    sequence:
+      - type: map
+        class: Paasal::API::RequiredMethod
+        desc:  A method that must be responded to by the adapter
+        required: yes
+        mapping:
+          "name": { type: text, required: yes, unique: yes }

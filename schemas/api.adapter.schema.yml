@@ -1,0 +1,26 @@
+type: map
+class: Paasal::Vendor
+desc:  vendor class
+required: yes
+mapping:
+  "name": { type: text, required: yes, unique: yes }
+  "providers":
+    type: seq
+    required: yes
+    sequence:
+      - type: map
+        class: Paasal::Provider
+        desc:  provider class
+        required: yes
+        mapping:
+          "name": { type: text, required: yes, unique: yes }
+          "endpoints":
+            type: seq
+            required: yes
+            sequence:
+              - type: map
+                class: Paasal::Endpoint
+                desc:  endpoint class
+                mapping:
+                  "name": { type: text, required: yes, unique: yes }
+                  "url": { type: str, required: yes, unique: yes }
