@@ -1,4 +1,12 @@
-require './app'
+#########################
+### Setup Application ###
+#########################
+
+# Load application
+require_relative 'scripts/load_app'
+# Initialize the application
+require_relative 'scripts/initialize'
+
 #########################
 ### Setup API Loggers ###
 #########################
