@@ -1,4 +1,5 @@
 require 'filesize'
+require 'time'
 
 module Paasal
   module DB
@@ -20,21 +21,65 @@ module Paasal
       end
 
       def set(entity)
-        entity.id = SecureRandom.uuid if entity.id.nil?
+        now = Time.now.utc.iso8601
+        if entity.created_at.nil?
+          # assign created timestamp
+          entity.created_at = now if entity.respond_to?(:updated_at=)
+        end
+        # assign update timestamp
+        entity.updated_at = now if entity.respond_to?(:updated_at=)
+
+        # finally save to the DB
         use_db do |db|
+          if entity.id.nil?
+            loop do
+              # assign unique ID (only for entities added via the API)
+              entity.id = SecureRandom.uuid if entity.id.nil?
+              break unless db.key? entity.id
+            end
+          end
+
           db.lock do
             db.set!(entity.id, entity)
           end
         end
       end
 
-      def delete(entity)
+      def delete(entity_id)
+        # TODO cascade delete for vendor --> provider --> endpoint in the controller
         use_db do |db|
           db.lock do
-            db.delete!(entity.id)
+            if db.key?(entity_id)
+              # id was given, delete now
+              db.delete!(entity_id)
+            else
+              raise ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
+            end
           end
         end
       end
+
+=begin
+      def delete(entity_id_or_key)
+        # TODO cascade delete for vendor --> provider --> endpoint
+        use_db do |db|
+          db.lock do
+            if db.key?(entity_id_or_key)
+              # id was given, delete now
+              db.delete!(entity_id_or_key)
+            else
+              # we need to search for the entity with this key to get the id
+              db.each do |key, value|
+                id = key if value == entity_id_or_key
+                break unless id.nil?
+              end
+              raise ResourceNotFoundError, "Neither an ID, nor a key was found for '#{entity_id_or_key}'." if id.nil?
+              db.delete!(id)
+            end
+          end
+        end
+      end
+=end
 
       def get(entity_id)
         use_db do |db|
