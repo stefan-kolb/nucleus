@@ -3,13 +3,15 @@ module Paasal
     include Kwalify::Util::HashLike
 
     attr_accessor :id
+    attr_accessor :created_at
+    attr_accessor :updated_at
 
     # Get the entity's key:
     # Shall be the name, but without whitespaces and in small letters
     #
     # @return [String] downcased name without whitespaces
     def key
-      name.gsub(/\s+/, '').downcase
+      name.gsub(/\s+/, '-').downcase
     end
 
     def to_s

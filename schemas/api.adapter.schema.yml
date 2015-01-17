@@ -3,6 +3,7 @@ class: Paasal::Vendor
 desc:  vendor class
 required: yes
 mapping:
+  "id": { type: text, required: yes, unique: yes }
   "name": { type: text, required: yes, unique: yes }
   "providers":
     type: seq
@@ -13,6 +14,7 @@ mapping:
         desc:  provider class
         required: yes
         mapping:
+          "id": { type: text, required: yes, unique: yes }
           "name": { type: text, required: yes, unique: yes }
           "endpoints":
             type: seq
@@ -22,5 +24,6 @@ mapping:
                 class: Paasal::Endpoint
                 desc:  endpoint class
                 mapping:
+                  "id": { type: text, required: yes, unique: yes }
                   "name": { type: text, required: yes, unique: yes }
                   "url": { type: str, required: yes, unique: yes }

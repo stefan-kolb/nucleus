@@ -3,7 +3,6 @@ module Paasal
 
     attr_accessor :name             # text
     attr_accessor :providers        # seq
-
     attr_accessor :adapter
 
     def initialize(hash=nil)
@@ -11,6 +10,7 @@ module Paasal
         return
       end
       @name = hash['name']
+      @id = hash['id']
       @providers = (v=hash['providers']) ? v.map!{|e| e.is_a?(Paasal::Provider) ? e : Paasal::Provider.new(e)} : v
     end
 
