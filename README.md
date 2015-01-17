@@ -27,10 +27,24 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Versioning
+
+Paasal follows the [Semantic Versioning](http://semver.org/) standard.
+
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/paasal/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+Everyone is welcome to contribute via
+
+- Forks & Pull Requests
+- Issues
+- Emails
+- Anything that comes into your mind ;-)
+
+## shield.io badges (not working)
+
+[![Gem Version](http://img.shields.io/gem/v/paasal.svg?style=flat-square)](http://badge.fury.io/rb/paasal)
+[![Dependency Status](https://img.shields.io/gemnasium/croeck/paasal.svg?style=flat-square)](https://gemnasium.com/croeck/paasal)
+[![Wercker](https://img.shields.io/wercker/ci/324d9f36b06c877d9f2df4e26489b8bd.svg?style=flat-square)](https://app.wercker.com/project/bykey/324d9f36b06c877d9f2df4e26489b8bd)
+[![Code Climate](https://img.shields.io/codeclimate/github/croeck/paasal.svg?style=flat-square)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/croeck/paasal.svg?style=flat-square)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
+

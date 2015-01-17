@@ -1,5 +1,6 @@
-require "paasal/version"
+require 'paasal/version'
 
+# Module documentation ...
 module Paasal
   # Your code goes here...
 end

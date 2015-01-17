@@ -28,4 +28,5 @@ group :test do
   gem 'rake'
   gem 'minitest'
   gem 'airborne'
+  gem 'codeclimate-test-reporter', require: nil
 end
