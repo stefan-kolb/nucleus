@@ -34,10 +34,17 @@ use Paasal::Rack::ErrorRequestLogger, ::File.join('log/error.log')
 # include to deal with environments that do NOT support the DELETE, PATCH, PUT methods
 # use Rack::MethodOverride
 
-# Serve our index file by default
-use Rack::Static , :urls => { "/docs" => "redirect.html" } , :root => "public/swagger-ui"
+# redirect to the documentation, but do NOT call the index directly
+use Rack::Static, :urls => {'/docs' => 'redirect.html'}, :root => 'public/swagger-ui'
+# we do not want robots to scan our API
+use Rack::Static, :urls => {'/robots.txt' => 'robots.txt'}, :root => 'public'
+#use Rack::Static , :urls => { "/" => "index.html" } , :root => "public/swagger-ui", :index => "redirect.html"
 
-run Rack::URLMap.new( {
-                          "/" => Paasal::API::Base.new,
-                          "/docs"    => Rack::Directory.new( "public/swagger-ui" )
-                      } )
+run Rack::URLMap.new(
+        {
+            # serve the dynamic API
+            '/' => Paasal::API::RootAPI.new,
+            '/api' => Paasal::API::RootAPI.new,
+            # serves the swagger-ui
+            '/docs' => Rack::Directory.new('public/swagger-ui')
+        })

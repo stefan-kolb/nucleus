@@ -21,7 +21,7 @@ group :development do
   gem 'guard-rack'
   gem 'guard-yard'
   # use patched version to prevent freezing
-  gem 'terminal-notifier-guard', :git => 'https://github.com/croeck/terminal-notifier-guard'
+  gem 'terminal-notifier-guard', :git => 'https://github.com/croeck/terminal-notifier-guard.git'
 end
 
 group :test do
