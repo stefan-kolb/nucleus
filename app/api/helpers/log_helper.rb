@@ -1,7 +1,7 @@
-module LogHelper
-  extend Grape::API::Helpers
+module Paasal
+  module LogHelper
+    extend Grape::API::Helpers
+    include Paasal::Logging
 
-  # include the paasal logger
-  include Paasal::Logging
-
+  end
 end
