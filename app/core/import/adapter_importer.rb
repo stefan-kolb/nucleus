@@ -1,5 +1,3 @@
-require 'pp'
-
 module Paasal
   class AdapterImporter
     include Paasal::Logging
@@ -24,7 +22,7 @@ module Paasal
       adapter_config_files = get_adapter_config_files
 
       api_versions.each do |api_version|
-        log.debug "Loadin adapters for API #{api_version}..."
+        log.debug "Loading adapters for API #{api_version}..."
         vendor_count = 0
         provider_count = 0
         endpoint_count = 0

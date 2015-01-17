@@ -29,4 +29,5 @@ group :test do
   gem 'minitest'
   gem 'airborne'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'simplecov'
 end
