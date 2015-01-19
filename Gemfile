@@ -14,6 +14,9 @@ gem 'configatron'
 gem 'kwalify'
 gem 'daybreak'
 gem 'filesize'
+gem 'excon'
+gem 'request_store'
+
 group :development do
   gem 'yard'
   gem 'guard'
