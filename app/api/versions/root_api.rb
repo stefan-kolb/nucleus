@@ -19,10 +19,16 @@ module Paasal
 
       # rescue ALL errors and comply to the error schema
       rescue_from :all do |e|
-        entity = env['api.endpoint'].build_error_entity(Errors::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
-        env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) in #{e.backtrace.first}:")
-        # log the stacktrace only in debug mode
-        e.backtrace.each { |line| env['api.endpoint'].log.debug line }
+        if e.kind_of? Errors::ApiError
+          # willingly sent error, no need for stacktrace
+          entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
+        elsif
+          entity = env['api.endpoint'].build_error_entity(ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
+          env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) in #{e.backtrace.first}:")
+          # log the stacktrace only in debug mode
+          e.backtrace.each { |line| env['api.endpoint'].log.debug line }
+        end
+
         # send response via Rack, since Grape does not support error! or entities via :with in the rescue block
         rack_response API::Models::Error.new(entity).to_json, entity[:status]
       end
