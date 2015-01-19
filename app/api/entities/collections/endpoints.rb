@@ -12,7 +12,7 @@ module Paasal
         expose :size, documentation: {
           type: 'Integer', required: true, desc: 'Number of items in the \'endpoints\' collection'
         } do |status, options|
-          status.size
+          status[:items].nil? ? 0 : status[:items].size
         end
 
         expose :items, as: 'endpoints', documentation: {
