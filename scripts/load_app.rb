@@ -17,9 +17,6 @@ require_relative 'shutdown.rb'
 # configuration
 require_all 'config'
 
-# rack middleware
-require_all 'app/middleware'
-
 # models
 require_all 'app/models'
 
@@ -28,6 +25,9 @@ require_all 'app/core'
 
 # adapters
 require_all 'app/adapters'
+
+# rack middleware
+require_all 'app/middleware'
 
 # api
 require_all 'app/api'
