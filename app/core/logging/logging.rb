@@ -46,7 +46,6 @@ module Paasal
         multi_logger = MultiLogger.new(
             :level => configatron.logging.has_key?(:level) ? configatron.logging.level : Logger::Severity::WARN,
             :loggers => [stdLog, fileLog])
-        puts "Set application log severity to #{multi_logger.level}"
         return multi_logger
 
       end

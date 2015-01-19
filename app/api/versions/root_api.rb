@@ -57,7 +57,7 @@ module Paasal
 
       route :any, '*path' do
         # raise 404
-        to_error(Errors::NOT_FOUND, 'Please refer to the API documentation and compare your call with the available resources and actions.')
+        to_error(ErrorMessages::NOT_FOUND, 'Please refer to the API documentation and compare your call with the available resources and actions.')
       end
 
       add_swagger_documentation

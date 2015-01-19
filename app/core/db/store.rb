@@ -22,12 +22,14 @@ module Paasal
 
       def set(entity)
         now = Time.now.utc.iso8601
-        if entity.created_at.nil?
+        if entity.respond_to?(:created_at) && entity.created_at.nil?
           # assign created timestamp
           entity.created_at = now if entity.respond_to?(:updated_at=)
         end
-        # assign update timestamp
-        entity.updated_at = now if entity.respond_to?(:updated_at=)
+        if entity.respond_to?(:updated_at)
+          # assign update timestamp
+          entity.updated_at = now if entity.respond_to?(:updated_at=)
+        end
 
         # finally save to the DB
         use_db do |db|
@@ -80,6 +82,16 @@ module Paasal
         end
       end
 =end
+
+      def get_collection(entity_ids)
+        response = []
+        use_db do |db|
+          entity_ids.each do |entity_id|
+            response << db.get(entity_id)
+          end
+        end unless entity_ids.nil? && entity_ids.empty?
+        response
+      end
 
       def get(entity_id)
         use_db do |db|
