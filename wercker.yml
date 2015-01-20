@@ -19,4 +19,6 @@ build:
         # execute tests
         - script:
                name: rspec
-               code: bundle exec rspec
+               code: |
+                    CODECLIMATE_REPO_TOKEN=1bbe3b4b67ee80c848bc79da1f5181780aee8d2b60569523f398bf67af2618d3
+                    bundle exec rspec
