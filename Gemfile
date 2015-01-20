@@ -32,5 +32,5 @@ group :test do
   gem 'minitest'
   gem 'airborne'
   gem 'codeclimate-test-reporter', require: nil
-  gem 'simplecov'
+  gem 'simplecov', :require => false
 end
