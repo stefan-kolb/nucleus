@@ -65,8 +65,6 @@ module Paasal
         # raise 404
         to_error(ErrorMessages::NOT_FOUND, 'Please refer to the API documentation and compare your call with the available resources and actions.')
       end
-
-      add_swagger_documentation
     end
   end
 end
