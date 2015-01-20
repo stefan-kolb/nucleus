@@ -73,7 +73,7 @@ module Paasal
             endpoint = endpoint_dao.get params[:endpoint_id]
             to_error(ErrorMessages::NOT_FOUND, "No endpoint found with the ID '#{params[:endpoint_id]}'") if endpoint.nil?
 
-            applications = repeat_on_invalid_authentication_cache do
+            applications = repeat_adapter_call_on_invalid_authentication_cache do
               adapter.applications
             end
 

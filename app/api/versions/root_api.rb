@@ -3,9 +3,10 @@ module Paasal
     class RootAPI < Grape::API
 
       # include all shared helpers
-      helpers Paasal::LogHelper
       helpers Paasal::AdapterHelper
       helpers Paasal::ErrorHelper
+      helpers Paasal::LogHelper
+      helpers Paasal::ResponseHelper
       helpers Paasal::SharedParamsHelper
 
       # TODO mayby we need those for request parameters?
