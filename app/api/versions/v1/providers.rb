@@ -8,6 +8,14 @@ module Paasal
           params :provider_id do
             requires :provider_id, type: String, desc: "The provider's ID in the form of a UUID."
           end
+
+          def load_provider
+            unless provider_dao.key? params[:provider_id]
+              to_error(ErrorMessages::NOT_FOUND, "No provider found with the ID '#{params[:provider_id]}'")
+            end
+            provider_dao.get params[:provider_id]
+          end
+
         end
 
         resource :providers do
@@ -29,8 +37,7 @@ module Paasal
             use :provider_id
           end
           get ':provider_id' do
-            provider = provider_dao.get params[:provider_id]
-            to_error(ErrorMessages::NOT_FOUND, "No provider found with the ID '#{params[:provider_id]}'") if provider.nil?
+            provider = load_provider
             provider.endpoints = endpoint_dao.get_collection(provider.endpoints)
             present provider, with: Models::Provider
           end
@@ -44,8 +51,7 @@ module Paasal
             use :provider_id
           end
           get ':provider_id/endpoints' do
-            provider = provider_dao.get params[:provider_id]
-            to_error(ErrorMessages::NOT_FOUND, "No provider found with the ID '#{params[:provider_id]}'") if provider.nil?
+            provider = load_provider
             endpoints = endpoint_dao.get_collection(provider.endpoints)
             present endpoints, with: Models::Endpoints
           end
