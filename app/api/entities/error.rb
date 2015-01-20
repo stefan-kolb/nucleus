@@ -20,7 +20,7 @@ module Paasal
       class Error < Grape::Entity
 
         expose :status, documentation: {
-          type: 'Integer', desc: 'The HTTP status code of the response, always between 100 and 999'
+          type: 'int', desc: 'The HTTP status code of the response, always between 100 and 999'
         }
 
         expose :message, documentation: {
@@ -32,7 +32,7 @@ module Paasal
         }
 
         expose :error_code, documentation: {
-          type: 'Integer', desc: 'A unique error code for reference and information lookup'
+          type: 'int', desc: 'A unique error code for reference and information lookup'
         }
 
         expose :more_info, safe: true, documentation: {

@@ -10,7 +10,7 @@ module Paasal
         present_collection true
 
         expose :size, documentation: {
-          type: 'Integer', required: true, desc: 'Number of items in the \'vendors\' collection'
+          type: 'int', required: true, desc: 'Number of items in the \'vendors\' collection'
         } do |status, options|
           status[:items].nil? ? 0 : status[:items].size
         end
