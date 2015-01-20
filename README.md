@@ -3,11 +3,12 @@
 [![Code Climate](https://codeclimate.com/repos/54af9232695680520400157d/badges/d9c8c6bf17955025db7a/gpa.svg)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
 [![Test Coverage](https://codeclimate.com/repos/54af9232695680520400157d/badges/d9c8c6bf17955025db7a/coverage.svg)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
 
-# Paasal
+# PaaSal
 
-TODO: Write a gem description
+_PaaSal_ is a RESTful abstraction layer for the management functions of Platform-as-a-Service (PaaS) providers.  
+The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape). It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
-## Installation
+## Use in your application
 
 Add this line to your application's Gemfile:
 
@@ -22,14 +23,58 @@ And then execute:
 Or install it yourself as:
 
     $ gem install paasal
+    
+Finally require the gem in your application
 
-## Usage
+	require 'paasal'
 
-TODO: Write usage instructions here
+
+## Use the API
+
+Besides including the abstraction layer in your application, PaaSal can also be started and serve the RESTful API:
+
+#### Start a `rack` server
+A rack server can be started in multiple ways.
+The most convinient solution is to use the provided script:  
+
+	./bin/paasal start 
+
+Hower, you can also start the API using another rack compliant server, e.g. [thin](http://code.macournoyer.com/thin/) or rely on your default rack server:
+
+    rackup
+
+#### API endpoints
+
+TODO
+
+## Configuration
+
+TODO
+
+
+
+## API client(s)
+
+As of now, there is no API client available.
+As a reward of providing swagger-compatible API docs, clients can be generated for several languages:
+`Scala`, `Flash`, `Java`, `Objc`, `PHP`, `Python`, `Python3`, `Ruby`
+
+For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
+
+## Schema validation
+
+The generated schema can be validated against the [swagger specification](https://github.com/swagger-api/swagger-spec).
+Please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
 
 ## Versioning
 
-Paasal follows the [Semantic Versioning](http://semver.org/) standard.
+PaaSal follows the [Semantic Versioning](http://semver.org/) standard. 
+Therefore, PaaSal also allows to serve multiple versions of the API and provide legacy support.
+
+However, be aware that
+__each non-backward compatible change of the application must result in an increase of the major version.__
+
+The initial version is: `0.1.0`.
 
 ## Contributing
 
