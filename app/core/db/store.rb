@@ -115,6 +115,12 @@ module Paasal
         end
       end
 
+      def key?(key)
+        use_db do |db|
+          db.key? key
+        end
+      end
+
     end
   end
 end
