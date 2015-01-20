@@ -15,6 +15,10 @@ module Paasal
 
       end
 
+      def authenticate
+
+      end
+
     end
   end
 end
