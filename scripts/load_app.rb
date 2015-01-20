@@ -13,8 +13,6 @@ require 'securerandom'
 require 'excon'
 require 'request_store'
 
-# Shutdown hook to cleanup
-require_relative 'shutdown.rb'
 
 # configuration
 require_all 'config'

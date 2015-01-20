@@ -1,5 +1,8 @@
 include Paasal::Logging
 
+# Shutdown hook to cleanup
+require_relative 'shutdown.rb'
+
 begin
   # set the temporary db file if is has not been specified via the config
   unless configatron.db.has_key?(:path)
