@@ -27,15 +27,22 @@ module Paasal
       create_dao(Paasal::DB::AdapterDao)
     end
 
-    # Load an Endpoint instance from the store
-    #
-    # @params [Hash] params parameters required when called from auth block
-    # @return [Paasal::API::Models::Endpoint] loaded Endpoint instance
     def load_endpoint(params = params)
-      unless endpoint_dao.key? params[:endpoint_id]
-        to_error(ErrorMessages::NOT_FOUND, "No endpoint found with the ID '#{params[:endpoint_id]}'")
+      load_entity(endpoint_dao, :endpoint_id, 'endpoint', params)
+    end
+
+    # Load an entity's instance from the store
+    #
+    # @params [Paasal::Store] dao the DAO to use for loading
+    # @params [Symbol] id symbol where the entities id can be found in the params
+    # @params [String] name entities name for error output
+    # @params [Hash] params parameters required when called from auth block
+    # @return [Paasal::AbstractModel] loaded entity's instance
+    def load_entity(dao, id, name, params = params)
+      unless dao.key? params[id]
+        to_error(Paasal::API::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{params[id]}'")
       end
-      endpoint_dao.get params[:endpoint_id]
+      dao.get params[id]
     end
 
     # Create a DAO for with the given class, but only once per request.

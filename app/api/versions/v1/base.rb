@@ -9,6 +9,7 @@ module Paasal
         mount V1::Providers
         mount V1::Endpoints
         mount V1::Vendors
+        mount V1::Auth
 
         get '/' do
           # TODO move to helper and reuse in later versions

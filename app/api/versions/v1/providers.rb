@@ -6,14 +6,11 @@ module Paasal
         helpers do
           # noinspection RubyArgCount
           params :provider_id do
-            requires :provider_id, type: String, desc: "The provider's ID in the form of a UUID."
+            requires :provider_id, type: String, desc: "The provider's ID."
           end
 
           def load_provider
-            unless provider_dao.key? params[:provider_id]
-              to_error(ErrorMessages::NOT_FOUND, "No provider found with the ID '#{params[:provider_id]}'")
-            end
-            provider_dao.get params[:provider_id]
+            load_entity(provider_dao, :provider_id, 'provider')
           end
 
         end

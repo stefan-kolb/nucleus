@@ -10,10 +10,7 @@ module Paasal
           end
 
           def load_vendor
-            unless vendor_dao.key? params[:vendor_id]
-              to_error(ErrorMessages::NOT_FOUND, "No vendor found with the ID '#{params[:vendor_id]}'")
-            end
-            vendor_dao.get params[:vendor_id]
+            load_entity(vendor_dao, :vendor_id, 'vendor')
           end
 
         end
