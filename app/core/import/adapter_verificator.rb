@@ -13,12 +13,21 @@ module Paasal
       api_requirements = get_api_requirements(api_version)
       # check that all required methods are implemented
       missing_methods = []
+      invalid_arguments = []
       api_requirements.methods.each do |required_method|
-        missing_methods << required_method.name unless adapter.respond_to? required_method.name
+        if !adapter.respond_to? required_method.name
+          missing_methods << required_method.name
+          log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', does not implement the method for "\
+            "API #{api_version}: #{required_method.name}"
+        elsif adapter.method(required_method.name).arity != required_method.arguments
+          invalid_arguments << required_method.name
+          log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', wrong number of method arguments "\
+             "for API #{api_version}: #{required_method.name}, expected #{required_method.arguments} but "\
+             "found #{adapter.method(required_method.name).arity}"
+        end
       end
-      unless missing_methods.empty?
-        log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', does not implement method(s) for API #{api_version}: #{missing_methods.join(', ')}"
-        raise Paasal::InvalidAdapterError, "Adapter '#{adapter}' does not implement all methods required by API #{api_version}"
+      unless missing_methods.empty? && invalid_arguments.empty?
+        raise Paasal::InvalidAdapterError, "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
       end
       return nil
     end

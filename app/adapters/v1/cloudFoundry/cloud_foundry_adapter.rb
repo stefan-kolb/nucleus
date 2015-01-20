@@ -15,7 +15,11 @@ module Paasal
 
       end
 
-      def authenticate
+      def authenticate(username, password)
+
+      end
+
+      def applications
 
       end
 

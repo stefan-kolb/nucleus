@@ -29,22 +29,22 @@ module Paasal
         auth_headers_cache.key? cache_key(username, password)
       end
 
-      def self.method_added(name)
-        return if @__last_methods_added && @__last_methods_added.include?(name)
-        with_wrapper = :"#{name}_with_before_each_method_call"
-        without_wrapper = :"#{name}_without_before_each_method_call"
-        @__last_methods_added = [name, with_wrapper, without_wrapper]
-        # wrap the method call
-        define_method with_wrapper do |*args, &block|
-          log.debug "Calling adapter method '#{name}' against #{@endpoint_url}"
-          response = send without_wrapper, *args, &block
-          log.debug "Finished '#{name}' adapter method call against #{@endpoint_url}"
-          return response
-        end
-        alias_method without_wrapper, name
-        alias_method name, with_wrapper
-        @__last_methods_added = nil
-      end
+      # def self.method_added(name)
+      #   return if @__last_methods_added && @__last_methods_added.include?(name)
+      #   with_wrapper = :"#{name}_with_before_each_method_call"
+      #   without_wrapper = :"#{name}_without_before_each_method_call"
+      #   @__last_methods_added = [name, with_wrapper, without_wrapper]
+      #   # wrap the method call
+      #   define_method with_wrapper do |*args, &block|
+      #     log.debug "Calling adapter method '#{name}' against #{@endpoint_url}"
+      #     response = send without_wrapper, *args, &block
+      #     log.debug "Finished '#{name}' adapter method call against #{@endpoint_url}"
+      #     return response
+      #   end
+      #   alias_method without_wrapper, name
+      #   alias_method name, with_wrapper
+      #   @__last_methods_added = nil
+      # end
 
       private
 
