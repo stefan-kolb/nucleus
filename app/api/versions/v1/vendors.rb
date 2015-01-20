@@ -35,7 +35,9 @@ module Paasal
           get ':vendor_id' do
             vendor_dao = Paasal::DB::VendorDao.new self.version
             vendor = vendor_dao.get params[:vendor_id]
-            to_error(Errors::NOT_FOUND, "No vendor found with the ID '#{params[:vendor_id]}'") if vendor.nil?
+            to_error(ErrorMessages::NOT_FOUND, "No vendor found with the ID '#{params[:vendor_id]}'") if vendor.nil?
+            provider_dao = Paasal::DB::ProviderDao.new self.version
+            vendor.providers = provider_dao.get_collection(vendor.providers)
             present vendor, with: Models::Vendor
           end
 
@@ -50,8 +52,10 @@ module Paasal
           get ':vendor_id/providers' do
             vendor_dao = Paasal::DB::VendorDao.new self.version
             vendor = vendor_dao.get params[:vendor_id]
-            to_error(Errors::NOT_FOUND, "No vendor found with the ID '#{params[:vendor_id]}'") if vendor.nil?
-            present vendor.providers, with: Models::Providers
+            to_error(ErrorMessages::NOT_FOUND, "No vendor found with the ID '#{params[:vendor_id]}'") if vendor.nil?
+            provider_dao = Paasal::DB::ProviderDao.new self.version
+            providers = provider_dao.get_collection(vendor.providers)
+            present providers, with: Models::Providers
           end
 
         end
