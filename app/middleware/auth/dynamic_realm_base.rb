@@ -9,21 +9,11 @@ module Grape
           super(app, options)
         end
 
-        def context
-          env['api.endpoint']
-        end
-
         def _call(env)
           self.env = env
 
-          # TODO feature request !?
           # dynamic realm names
-          if options.key?(:realm_replace) && !options[:realm_replace].nil?
-            # assign values to the realm template and change the realm name
-            route_args = env['rack.routing_args']
-            replacements = Hash[options[:realm_replace].collect { |s| [s, route_args.key?(s) ? route_args[s] : s] }]
-            options[:realm] = options[:realm] % replacements
-          end
+          update_realm_name
 
           if options.key?(:type)
             auth_proc         = options[:proc]
@@ -43,6 +33,19 @@ module Grape
             app.call(env)
           end
         end
+
+        private
+
+        # TODO feature request for grape !?
+        def update_realm_name
+          if options.key?(:realm_replace) && !options[:realm_replace].nil?
+            # assign values to the realm template and change the realm name
+            route_args = env['rack.routing_args']
+            replacements = Hash[options[:realm_replace].collect { |s| [s, route_args.key?(s) ? route_args[s] : s] }]
+            options[:realm] = options[:realm] % replacements
+          end
+        end
+
       end
     end
   end

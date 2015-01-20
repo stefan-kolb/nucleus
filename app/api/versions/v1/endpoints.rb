@@ -26,7 +26,6 @@ module Paasal
             use :endpoint_id
           end
           get ':endpoint_id' do
-            endpoint_dao = Paasal::DB::EndpointDao.new self.version
             endpoint = endpoint_dao.get params[:endpoint_id]
             to_error(ErrorMessages::NOT_FOUND, "No endpoint found with the ID '#{params[:endpoint_id]}'") if endpoint.nil?
             present endpoint, with: Models::Endpoint
@@ -44,11 +43,10 @@ module Paasal
           http_basic({ realm: 'PaaSal API Authorization @ %{endpoint_id}', realm_replace: [:endpoint_id] }) do |username, password, params|
             begin
               # find a matching endpoint
-              endpoint_dao = Paasal::DB::EndpointDao.new params[:version]
               endpoint = endpoint_dao.get params[:endpoint_id]
               to_error(ErrorMessages::NOT_FOUND, "No endpoint found with the ID '#{params[:endpoint_id]}'") if endpoint.nil?
               # resolve the required adapter
-              adapter_dao = Paasal::DB::AdapterDao.new params[:version]
+              #adapter_dao = Paasal::DB::AdapterDao.new params[:version]
               index_entry = adapter_dao.get params[:endpoint_id]
               # save info for the current request, no need to retrieve multiple times
               RequestStore.store[:endpoint] = endpoint
@@ -69,7 +67,6 @@ module Paasal
             end
           end
           get ':endpoint_id/applications' do
-            endpoint_dao = Paasal::DB::EndpointDao.new self.version
             endpoint = endpoint_dao.get params[:endpoint_id]
             to_error(ErrorMessages::NOT_FOUND, "No endpoint found with the ID '#{params[:endpoint_id]}'") if endpoint.nil?
 
@@ -83,7 +80,6 @@ module Paasal
           # LIST endpoints
           desc 'List of available endpoints'
           get '/' do
-            endpoint_dao = Paasal::DB::EndpointDao.new self.version
             endpoints = endpoint_dao.get_all
             present endpoints, with: Models::Endpoints
           end

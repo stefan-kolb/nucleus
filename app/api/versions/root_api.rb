@@ -4,6 +4,7 @@ module Paasal
 
       # include all shared helpers
       helpers Paasal::AdapterHelper
+      helpers Paasal::DaoHelper
       helpers Paasal::ErrorHelper
       helpers Paasal::LogHelper
       helpers Paasal::ResponseHelper

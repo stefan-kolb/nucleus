@@ -29,10 +29,8 @@ module Paasal
             use :provider_id
           end
           get ':provider_id' do
-            provider_dao = Paasal::DB::ProviderDao.new self.version
             provider = provider_dao.get params[:provider_id]
             to_error(ErrorMessages::NOT_FOUND, "No provider found with the ID '#{params[:provider_id]}'") if provider.nil?
-            endpoint_dao = Paasal::DB::EndpointDao.new self.version
             provider.endpoints = endpoint_dao.get_collection(provider.endpoints)
             present provider, with: Models::Provider
           end
@@ -46,10 +44,8 @@ module Paasal
             use :provider_id
           end
           get ':provider_id/endpoints' do
-            provider_dao = Paasal::DB::ProviderDao.new self.version
             provider = provider_dao.get params[:provider_id]
             to_error(ErrorMessages::NOT_FOUND, "No provider found with the ID '#{params[:provider_id]}'") if provider.nil?
-            endpoint_dao = Paasal::DB::EndpointDao.new self.version
             endpoints = endpoint_dao.get_collection(provider.endpoints)
             present endpoints, with: Models::Endpoints
           end
