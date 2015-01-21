@@ -18,8 +18,8 @@ module Paasal
       end
 
       return if valid
-      raise Paasal::InvalidAdapterError,
-            "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
+      fail Paasal::InvalidAdapterError,
+           "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
     end
 
     private
@@ -50,14 +50,14 @@ module Paasal
     # @param [String] api_version API version to collect the requirements for
     def get_api_requirements(api_version)
       # this is not the schema, but the requirements file (!)
-      #api_requirements_file = File.expand_path("../../../api/versions/#{api_version}/requirements.yml", __FILE__)
+      # api_requirements_file = File.expand_path("../../../api/versions/#{api_version}/requirements.yml", __FILE__)
       api_requirements_file = "app/api/versions/#{api_version}/requirements.yml"
-      #schema_file = File.expand_path('../../../../schemas/api.requirements.schema.yml', __FILE__)
+      # schema_file = File.expand_path('../../../../schemas/api.requirements.schema.yml', __FILE__)
       schema_file = 'schemas/api.requirements.schema.yml'
-      schema = Kwalify::Yaml.load_file(schema_file, :untabify=>true, :preceding_alias=>true)
+      schema = Kwalify::Yaml.load_file(schema_file, :untabify => true, :preceding_alias => true)
       validator = Kwalify::Validator.new(schema)
-      parser = Kwalify::Yaml::Parser.new(validator, :data_binding=>true, :preceding_alias=>true)
-      api_requirements = parser.parse_file(api_requirements_file, :untabify=>true)
+      parser = Kwalify::Yaml::Parser.new(validator, :data_binding => true, :preceding_alias => true)
+      api_requirements = parser.parse_file(api_requirements_file, :untabify => true)
       api_requirements
     end
   end

@@ -1,4 +1,4 @@
-$LOAD_PATH<< File.join(File.dirname(__FILE__), '..')
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..')
 
 if ENV['CODECLIMATE_REPO_TOKEN']
   require 'codeclimate-test-reporter'

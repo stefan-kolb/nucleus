@@ -27,7 +27,7 @@ module Paasal
     def reauthenticate
       # resolve username & password for authentication request
       auth_keys = %w(HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION)
-      authorization_key = auth_keys.detect { |k| @env.has_key?(k) }
+      authorization_key = auth_keys.detect { |k| @env.key?(k) }
       username_password = @env[authorization_key].split(' ', 2).last
       credentials = username_password.unpack('m*').first.split(/:/, 2)
       # raises 401 if the authentication did not only expire, but became completely invalid

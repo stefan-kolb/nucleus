@@ -4,23 +4,18 @@ module Paasal
       # TODO how to assert that the class implements all required operations?
 
       def start
-
       end
 
       def stop
-
       end
 
       def restart
-
       end
 
       def authenticate(username, password)
-
       end
 
       def applications
-
       end
     end
   end

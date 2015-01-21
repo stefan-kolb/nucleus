@@ -4,7 +4,7 @@ module Paasal
   class Authenticator
     include Paasal::ErrorBuilder
 
-    def initialize(app, realm=nil, &authenticator)
+    def initialize(app, realm = nil, &authenticator)
       @app, @realm, @authenticator = app, realm, authenticator
     end
 
@@ -27,7 +27,7 @@ module Paasal
     private
 
     def unauthorized(dev_msg)
-      send_response(Paasal::API::ErrorMessages::AUTH_UNAUTHORIZED, dev_msg, { 'WWW-Authenticate' => challenge.to_s })
+      send_response(Paasal::API::ErrorMessages::AUTH_UNAUTHORIZED, dev_msg,  'WWW-Authenticate' => challenge.to_s)
     end
 
     def bad_request(dev_msg)

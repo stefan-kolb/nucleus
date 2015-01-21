@@ -4,7 +4,7 @@ module Paasal
     attr_accessor :exit_code
 
     # initialize with default exit code of ExitCodes::STARTUP_ERROR
-    def initialize(message, exit_code=ExitCodes::STARTUP_ERROR)
+    def initialize(message, exit_code = ExitCodes::STARTUP_ERROR)
       super(message)
       @exit_code = exit_code
     end

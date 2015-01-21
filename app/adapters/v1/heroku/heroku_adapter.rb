@@ -13,7 +13,7 @@ module Paasal
 
       def start
         log.debug "Start @ #{@endpoint_url}"
-        raise Errors::InvalidAuthenticationHeaderError, 'test error'
+        fail Errors::InvalidAuthenticationHeaderError, 'test error'
       end
 
       def stop
@@ -39,7 +39,7 @@ module Paasal
 
         # Heroku returns 404 for invalid credentials
         # TODO customize the error, include proper dev message
-        raise Errors::AuthenticationFailedError, 'Heroku says the credentials are invalid' if response.status == 404
+        fail Errors::AuthenticationFailedError, 'Heroku says the credentials are invalid' if response.status == 404
 
         response_parsed = JSON.parse(response.body)
         api_token = response_parsed['api_key']

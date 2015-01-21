@@ -11,7 +11,7 @@ module Paasal
     # @return [Array<String>] names of the API versions
     def api_versions
       return @detected_api_versions unless @detected_api_versions.nil?
-      #api_versions_dir = File.expand_path('../../../api/versions/*', __FILE__)
+      # api_versions_dir = File.expand_path('../../../api/versions/*', __FILE__)
       api_versions_dir = 'app/api/versions/*'
       log.debug "... looking for API versions at '#{api_versions_dir}'"
       api_versions = []

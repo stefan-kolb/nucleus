@@ -6,7 +6,7 @@ module Paasal
     attr_accessor :name             # text
     attr_accessor :endpoints        # seq
 
-    def initialize(hash=nil)
+    def initialize(hash = nil)
       if hash.nil?
         return
       end
@@ -19,7 +19,6 @@ module Paasal
       else
         @endpoints
       end
-
     end
 
     def representation

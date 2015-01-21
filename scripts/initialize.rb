@@ -5,7 +5,7 @@ require_relative 'shutdown.rb'
 
 begin
   # set the temporary db file if is has not been specified via the config
-  unless configatron.db.has_key?(:path)
+  unless configatron.db.key?(:path)
     puts 'No custom store specified, generating temporary store filename'
     configatron.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.store"
   end

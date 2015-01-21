@@ -16,7 +16,7 @@ module Paasal
         errors.each do |e|
           log.error "[#{e.path}] #{e.message}"
         end
-        raise InvalidAdapterConfigError, 'Invalid adapter configuration. See the logs for detailed information.'
+        fail InvalidAdapterConfigError, 'Invalid adapter configuration. See the logs for detailed information.'
       end
       vendor
     end
@@ -28,9 +28,9 @@ module Paasal
     # @return [Kwalify::Yaml::Parser] new and configured parser instance
     def parser
       schema_file = 'schemas/api.adapter.schema.yml'
-      schema = Kwalify::Yaml.load_file(schema_file, :untabify=>true, :preceding_alias=>true)
+      schema = Kwalify::Yaml.load_file(schema_file, :untabify => true, :preceding_alias => true)
       validator = Kwalify::Validator.new(schema)
-      Kwalify::Yaml::Parser.new(validator, :data_binding=>true, :preceding_alias=>true)
+      Kwalify::Yaml::Parser.new(validator, :data_binding => true, :preceding_alias => true)
     end
   end
 end

@@ -13,7 +13,7 @@ module Paasal
       # @param [Hash] hash the options to create the Requirement
       # @option hash [String] :version The API version
       # @option hash [Array<Paasal::RequiredMethod>] :methods methods that are required to comply with the API version
-      def initialize(hash=nil)
+      def initialize(hash = nil)
         if hash.nil?
           return
         end

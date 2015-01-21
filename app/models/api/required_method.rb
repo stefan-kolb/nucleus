@@ -13,7 +13,7 @@ module Paasal
       # @param [Hash] hash the options to create the RequiredMethod
       # @option hash [String] name The method's name
       # @option hash [String] arguments (0) The number of expected arguments for the method
-      def initialize(hash=nil)
+      def initialize(hash = nil)
         @arguments = 0
         if hash.nil?
           return

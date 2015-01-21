@@ -13,10 +13,10 @@ module Paasal
     def get_adapter(api_version, adapter_config)
       log.debug "... trying to resolve adapter for config #{adapter_config} and API #{api_version}..."
       adapter_name = File.basename(adapter_config).sub(/.[^.]+\z/, '_adapter.rb')
-      #file_search_path = File.expand_path("../../../adapters/#{api_version}/*/#{adapter_name}", __FILE__)
+      # file_search_path = File.expand_path("../../../adapters/#{api_version}/*/#{adapter_name}", __FILE__)
       file_search_path = "app/adapters/#{api_version}/*/#{adapter_name}"
       adapter_file = Dir.glob(file_search_path)
-      raise AmbiguousAdapterError, "More than 1 adapter file found for #{adapter_name}" unless adapter_file.size <= 1
+      fail AmbiguousAdapterError, "More than 1 adapter file found for #{adapter_name}" unless adapter_file.size <= 1
 
       return if adapter_file.empty?
       log.debug "... found '#{adapter_file.first}'"

@@ -6,7 +6,7 @@ module Paasal
     attr_accessor :name             # text
     attr_accessor :url              # str
 
-    def initialize(hash=nil)
+    def initialize(hash = nil)
       if hash.nil?
         return
       end

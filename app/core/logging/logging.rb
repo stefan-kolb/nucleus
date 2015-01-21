@@ -21,7 +21,6 @@ module Paasal
       end
 
       def configure_logger_for(classname)
-
         # prepare logging dir
         log_dir = ::File.join('log')
         log_file = ::File.join(log_dir, 'paasal.log')
@@ -44,7 +43,7 @@ module Paasal
 
         # apply the log level from the app. configuration
         multi_logger = MultiLogger.new(
-            :level => configatron.logging.has_key?(:level) ? configatron.logging.level : Logger::Severity::WARN,
+            :level => configatron.logging.key?(:level) ? configatron.logging.level : Logger::Severity::WARN,
             :loggers => [std_log, file_log])
         multi_logger
       end

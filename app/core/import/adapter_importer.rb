@@ -29,7 +29,7 @@ module Paasal
           load_adapter_config(adapter_config, api_version)
         end
 
-        #log.debug "... loaded #{vendor_count} vendors with #{provider_count} providers "\
+        # log.debug "... loaded #{vendor_count} vendors with #{provider_count} providers "\
         # "and #{endpoint_count} endpoints for API #{api_version}"
       end
     end
@@ -92,8 +92,8 @@ module Paasal
         # (3), save the endpoint
         endpoint_dao.set endpoint
         # (4) save in the adapter index entry for fast resolving
-        index_entry = AdapterIndexEntry.new({ 'id' => endpoint.id, 'url' => endpoint.url,
-                                              'adapter_clazz' => adapter_clazz })
+        index_entry = AdapterIndexEntry.new('id' => endpoint.id, 'url' => endpoint.url,
+                                              'adapter_clazz' => adapter_clazz)
         adapter_dao.set index_entry
       end
     end
@@ -105,7 +105,7 @@ module Paasal
     end
 
     def load_adapter_config_files
-      #adapter_dir = File.join(File.dirname(__FILE__), '../../../config/adapters')
+      # adapter_dir = File.join(File.dirname(__FILE__), '../../../config/adapters')
       adapter_dir = 'config/adapters'
       files = Dir[File.join(adapter_dir, '*.yml')] | Dir[File.join(adapter_dir, '*.yaml')]
       files = files.flatten.compact

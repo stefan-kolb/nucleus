@@ -19,7 +19,7 @@ class MultiLogger
   # @option args [Integer] :level (2) The severity level
   # @option args [Array<Logger>] :loggers ([]) The loggers that are initially to be added
   # @return the object
-  def initialize(args={})
+  def initialize(args = {})
     @level = args[:level] || Logger::Severity::WARN
     @loggers = []
 

@@ -4,7 +4,7 @@ module Paasal
     attr_accessor :providers        # seq
     attr_accessor :adapter
 
-    def initialize(hash=nil)
+    def initialize(hash = nil)
       if hash.nil?
         return
       end

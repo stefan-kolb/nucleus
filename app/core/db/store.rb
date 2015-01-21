@@ -48,7 +48,7 @@ module Paasal
               # id was given, delete now
               db.delete!(entity_id)
             else
-              raise ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
+              fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
             end
           end
         end
