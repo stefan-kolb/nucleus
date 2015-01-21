@@ -19,10 +19,12 @@ gem 'request_store'
 
 group :development do
   gem 'yard'
+  gem 'rubocop'
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rack'
   gem 'guard-yard'
+  gem 'guard-rubocop'
   # use patched version to prevent freezing
   gem 'terminal-notifier-guard', :git => 'https://github.com/croeck/terminal-notifier-guard.git'
 end
