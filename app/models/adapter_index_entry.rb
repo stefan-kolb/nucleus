@@ -14,6 +14,5 @@ module Paasal
       @url = hash['url']
       @adapter_clazz = hash['adapter_clazz']
     end
-
   end
 end

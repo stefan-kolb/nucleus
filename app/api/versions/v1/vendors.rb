@@ -2,7 +2,6 @@ module Paasal
   module API
     module V1
       class Vendors < Grape::API
-
         helpers do
           # noinspection RubyArgCount
           params :vendor_id do
@@ -23,7 +22,7 @@ module Paasal
             failure ErrorResponses.standard_responses
           end
           get '/' do
-            vendors = vendor_dao.get_all
+            vendors = vendor_dao.all
             present vendors, with: Models::Vendors
           end
 
@@ -58,7 +57,6 @@ module Paasal
           # TODO POST
 
         end
-
       end
     end
   end

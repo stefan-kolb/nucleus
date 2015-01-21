@@ -1,6 +1,5 @@
 module Paasal
   class Vendor < Paasal::AbstractModel
-
     attr_accessor :name             # text
     attr_accessor :providers        # seq
     attr_accessor :adapter
@@ -20,15 +19,10 @@ module Paasal
       end
     end
 
-    def get_representation
+    def representation
       msg = "Vendor: #{@name}"
-      unless @providers.nil? || @providers.empty?
-        msg << ", #{@providers.size} providers"
-      end
-      unless @adapter.nil?
-        msg << ', incl. adapter'
-      end
+      msg << ", #{@providers.size} providers" unless @providers.nil? || @providers.empty?
+      msg << ', incl. adapter' unless @adapter.nil?
     end
-
   end
 end

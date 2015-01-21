@@ -58,7 +58,6 @@ module Paasal
             'Content-Type' => 'application/json'
         }.merge(RequestStore.store[:adapter].cached_headers)
       end
-
     end
   end
 end

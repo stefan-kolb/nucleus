@@ -4,7 +4,6 @@ require 'time'
 module Paasal
   module DB
     class Store
-
       def initialize(api_version, store_type)
         @store_type = store_type
         @api_version = api_version
@@ -71,7 +70,7 @@ module Paasal
         end
       end
 
-      def get_all
+      def all
         instances = []
         use_db do |db|
           db.each do |_id, value|
@@ -99,12 +98,10 @@ module Paasal
           # assign created timestamp
           entity.created_at = now if entity.respond_to?(:updated_at=)
         end
-        if entity.respond_to?(:updated_at)
-          # assign update timestamp
-          entity.updated_at = now if entity.respond_to?(:updated_at=)
-        end
+        return unless entity.respond_to?(:updated_at)
+        # assign update timestamp
+        entity.updated_at = now if entity.respond_to?(:updated_at=)
       end
-
     end
   end
 end

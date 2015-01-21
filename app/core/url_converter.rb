@@ -23,6 +23,5 @@ module Paasal
       end
       secured_url
     end
-
   end
 end

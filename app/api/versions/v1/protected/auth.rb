@@ -2,7 +2,6 @@ module Paasal
   module API
     module V1
       class Auth < Grape::API
-
         # defines the authentication for all subsequently mounted routes
         http_basic({
                        realm: 'PaaSal API Authorization @ %{endpoint_id}',
@@ -51,7 +50,6 @@ module Paasal
         mount Paasal::API::V1::Data::Rebuild
         mount Paasal::API::V1::Data::Upload
         mount Paasal::API::V1::Data::Download
-
       end
     end
   end

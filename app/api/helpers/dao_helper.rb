@@ -62,12 +62,12 @@ module Paasal
     def version_for_dao
       if self.respond_to? :version
         begin
-          return self.version
+          return version
         rescue NoMethodError
           log.debug 'No method error while determining version for DAO, use fallback now'
         end
       end
-      self.routes.first.instance_variable_get(:@options)[:version]
+      routes.first.instance_variable_get(:@options)[:version]
     end
 
   end

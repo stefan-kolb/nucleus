@@ -22,12 +22,9 @@ module Paasal
 
     end
 
-    def get_representation
+    def representation
       msg = "Provider: #{@name}"
-      unless @endpoints.nil? || @endpoints.empty?
-        msg << ", #{@endpoints.size} endpoints"
-      end
+      msg << ", #{@endpoints.size} endpoints" unless @endpoints.nil? || @endpoints.empty?
     end
-
   end
 end

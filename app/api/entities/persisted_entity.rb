@@ -3,7 +3,6 @@ module Paasal
     module Models
 
       class PersistedEntity < AbstractEntity
-
         expose :id, safe: true, documentation: {
           desc: 'The ID of the resource',
           type: 'String',
@@ -21,7 +20,6 @@ module Paasal
           type: 'String',
           required: true
         }
-
       end
     end
   end

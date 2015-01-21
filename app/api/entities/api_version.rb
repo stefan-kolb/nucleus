@@ -4,7 +4,6 @@ module Paasal
       # An ApiVersion belongs to the API of our application and offers
       # multiple resources according to a defined schema.
       class ApiVersion < AbstractEntity
-
         expose :name, documentation: { type: 'String', desc: 'API version, e.g. v1 or v2' }
 
         expose :resources,  documentation: {
@@ -22,7 +21,6 @@ module Paasal
               docs: { href: link_docs }
           }
         end
-
       end
     end
   end

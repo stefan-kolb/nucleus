@@ -1,6 +1,5 @@
 module Paasal
   class StartupError < StandardError
-
     # exit code to use when exiting the application due to this error
     attr_accessor :exit_code
 
@@ -9,6 +8,5 @@ module Paasal
       super(message)
       @exit_code = exit_code
     end
-
   end
 end

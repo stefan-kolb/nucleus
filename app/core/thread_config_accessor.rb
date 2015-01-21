@@ -34,9 +34,8 @@
 #
 # By coderrr (Steve), see https://coderrr.wordpress.com/2008/04/10/lets-stop-polluting-the-threadcurrent-hash/
 class Class
-
   # Binds accessors to the class and its instances and allows to use them as thread-bound config
-  def thread_config_accessor name, options = {}
+  def thread_config_accessor(name, options = {})
     mod = Module.new
     mod.module_eval do
       class_variable_set :"@@#{name}", Hash.new { |h, k| h[k] = options[:default] }
@@ -63,20 +62,20 @@ class Class
   end
 
   # Binds accessors to the class and its instances and allows to use them as (read-only) thread-bound config
-  def thread_config_accessor_readonly name, options = {}
+  def thread_config_accessor_readonly(name, options = {})
     mod = Module.new
     mod.module_eval do
       class_variable_set :"@@#{name}", Hash.new { |h, k| h[k] = options[:default] }
     end
 
     # use finalizer to prevent memory leaks and clean-up when threads die
-    mod.module_eval %{
+    mod.module_eval %{(
       FINALIZER = lambda {|id| @@#{name}.delete id }
 
       def #{name}
         @@#{name}[Thread.current.object_id]
       end
-    }
+    )}
 
     class_eval do
       include mod

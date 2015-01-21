@@ -58,18 +58,18 @@ describe 'thread_config_accessor' do
   end
 
   it 'should have the different values in a new thread' do
-    Thread.new {
+    Thread.new do
       @config.setting_a = 2
       expect(@config.setting_a).to eql 2
       expect(@config.setting_a).to eql ThreadedConfig.setting_a
-    }.join
+    end.join
   end
 
   it 'should have the default values in a new thread' do
-    Thread.new {
+    Thread.new do
       expect(@config.setting_a).to eql 5
       expect(@config.setting_a).to eql ThreadedConfig.setting_a
-    }.join
+    end.join
   end
 
 end
@@ -87,10 +87,10 @@ describe 'thread_config_accessor_readonly' do
   end
 
   it 'should keep the same default values in a new thread' do
-    Thread.new {
+    Thread.new do
       expect(@config.setting_a).to eql 7
       expect(@config.setting_a).to eql ThreadedConfigReadOnly.setting_a
-    }.join
+    end.join
   end
 
   it 'should not allow to change the default values' do

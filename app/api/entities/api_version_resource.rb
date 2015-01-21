@@ -2,7 +2,6 @@ module Paasal
   module API
     module Models
       class ApiVersionResource < AbstractEntity
-
         expose :name, documentation: {
           type: 'String', desc: 'Resource name, e.g. providers'
         }
@@ -15,7 +14,6 @@ module Paasal
               parent: { href: link_api_version }
           }
         end
-
       end
     end
   end

@@ -5,7 +5,7 @@ module Paasal
     class MetaStore
       include Paasal::Logging
 
-      def get_files
+      def files
         files = Dir["#{configatron.db.path}**"]
         log.debug "Found files: #{files}"
         files
@@ -13,13 +13,12 @@ module Paasal
 
       def tidy_all
         log.debug('Tidying all DB stores...')
-        db_files = get_files
-        unless db_files.nil?
-          db_files.each do |db_file|
-            # skip directories
-            next if File.directory? db_file
-            tidy_file(db_file)
-          end
+        db_files = files
+        return if db_files.nil?
+        db_files.each do |db_file|
+          # skip directories
+          next if File.directory? db_file
+          tidy_file(db_file)
         end
       end
 
@@ -37,7 +36,6 @@ module Paasal
           db.close unless db.nil?
         end
       end
-
     end
   end
 end

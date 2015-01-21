@@ -2,7 +2,6 @@ module Paasal
   module API
     module Models
       class Providers < AbstractEntity
-
         def self.entity_name
           'ProviderList'
         end
@@ -27,7 +26,6 @@ module Paasal
               parent: { href: link_resource(%w(vendors), o[:env]['rack.routing_args'][:vendor_id]) }
           }
         end
-
       end
     end
   end

@@ -17,10 +17,9 @@ module Paasal
         valid ||= verify_method_arguments(adapter, api_version, required_method)
       end
 
-      unless valid
-        raise Paasal::InvalidAdapterError,
-              "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
-      end
+      return if valid
+      raise Paasal::InvalidAdapterError,
+            "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
     end
 
     private
@@ -61,6 +60,5 @@ module Paasal
       api_requirements = parser.parse_file(api_requirements_file, :untabify=>true)
       api_requirements
     end
-
   end
 end

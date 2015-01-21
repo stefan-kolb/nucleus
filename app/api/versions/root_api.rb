@@ -1,7 +1,6 @@
 module Paasal
   module API
     class RootAPI < Grape::API
-
       # include all shared helpers
       helpers Paasal::AdapterHelper
       helpers Paasal::DaoHelper
@@ -11,20 +10,20 @@ module Paasal
       helpers Paasal::SharedParamsHelper
 
       # TODO mayby we need those for request parameters?
-      #content_type :xml, 'application/xml'
+      # content_type :xml, 'application/xml'
       content_type :json, 'application/json'
-      #content_type :binary, 'application/octet-stream'
-      #content_type :txt, 'text/plain'
+      # content_type :binary, 'application/octet-stream'
+      # content_type :txt, 'text/plain'
       default_format :json
       default_error_formatter :json
       format :json
 
       # rescue ALL errors and comply to the error schema
       rescue_from :all do |e|
-        if e.kind_of? Errors::ApiError
+        if e.is_a? Errors::ApiError
           # willingly sent error, no need for stacktrace
           entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
-        elsif e.kind_of? Grape::Exceptions::ValidationErrors
+        elsif e.is_a? Grape::Exceptions::ValidationErrors
           entity = env['api.endpoint'].build_error_entity(ErrorMessages::BAD_REQUEST, e.message)
         else
           entity = env['api.endpoint'].build_error_entity(
@@ -43,7 +42,7 @@ module Paasal
       # BE SORTED STARTING WITH THE HIGHEST VERSION
 
       # include proof-of-concept API, version 2
-      #mount Paasal::API::V2::Base
+      # mount Paasal::API::V2::Base
 
       # include basic API, version 1
       mount Paasal::API::V1::Base

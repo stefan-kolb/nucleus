@@ -2,7 +2,6 @@ module Paasal
   module API
     module Models
       class Links < Grape::Entity
-
         def self.entity_name
           'References'
         end
@@ -27,7 +26,6 @@ module Paasal
         expose :applications,
                documentation: { type: 'Link', desc: 'Reference to applications that belong to this resource' },
                using: Paasal::API::Models::Link, safe: true
-
       end
     end
   end

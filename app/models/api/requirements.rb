@@ -1,6 +1,5 @@
 module Paasal
   module API
-
     # Requirements of an API version
     #
     # @author Cedric Roeck (cedric.roeck@gmail.com)
@@ -26,7 +25,6 @@ module Paasal
           @methods = v
         end
       end
-
     end
   end
 end

@@ -2,7 +2,6 @@ module Paasal
   module API
     module Models
       class Application < PersistedEntity
-
         def self.entity_name
           'Application'
         end
@@ -26,7 +25,6 @@ module Paasal
               parent: { href: link_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id]) }
           }
         end
-
       end
     end
   end

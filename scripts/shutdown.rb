@@ -1,5 +1,5 @@
 # Implement shutdown actions, tidy up the DB
-at_exit {
+at_exit do
   puts '', '-----------------------------------------------', ''
   puts 'Cleaning up...'
 
@@ -9,4 +9,4 @@ at_exit {
   else
     Paasal::DB::MetaStore.new.tidy_all
   end
-}
+end

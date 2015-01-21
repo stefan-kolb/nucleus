@@ -3,7 +3,6 @@ module Paasal
     module Models
       # The Api is the root node of our API.
       class Api < AbstractEntity
-
         expose :versions,  documentation: {
           type: 'Paasal::API::Version', is_array: true,
           desc: 'List of the available versions of the API'
@@ -17,7 +16,6 @@ module Paasal
               docs: { href: link_docs }
           }
         end
-
       end
     end
   end

@@ -1,7 +1,9 @@
+require 'english'
+
 module Paasal
   module Logging
     class Formatter
-      Format = "%s, %38s [%s#%d] %5s -- %s: %s\n"
+      FORMAT = "%s, %38s [%s#%d] %5s -- %s: %s\n"
 
       attr_accessor :datetime_format
 
@@ -17,7 +19,7 @@ module Paasal
           request_part = "[#{Thread.current[:paasal_request_id]}]"
         end
 
-        Format % [severity[0..0], request_part, format_datetime(time),
+        FORMAT % [severity[0..0], request_part, format_datetime(time),
                   $PID, severity, progname, msg2str(msg)]
       end
 
@@ -33,12 +35,12 @@ module Paasal
 
       def msg2str(msg)
         case msg
-          when ::String
-            msg
-          when ::Exception
-            "#{ msg.message } (#{ msg.class })\n" << (msg.backtrace || []).join("\n")
-          else
-            msg.inspect
+        when ::String
+          msg
+        when ::Exception
+          "#{ msg.message } (#{ msg.class })\n" << (msg.backtrace || []).join("\n")
+        else
+          msg.inspect
         end
       end
     end

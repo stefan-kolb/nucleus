@@ -2,7 +2,6 @@ module Paasal
   module API
     module Models
       class Endpoint < PersistedEntity
-
         def self.entity_name
           'Endpoint'
         end
@@ -28,7 +27,6 @@ module Paasal
               applications: { href: link_child_resource(%w(endpoints), instance, %w(applications)) }, safe: true
           }
         end
-
       end
     end
   end

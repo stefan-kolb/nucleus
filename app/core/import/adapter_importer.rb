@@ -17,15 +17,15 @@ module Paasal
     # @raise [Paasal::AmbiguousAdapterError] if more than one adapter was found for an adapter configuration
     def import_adapters
       log.debug 'Loading API versions...'
-      api_versions = @api_detector.get_api_versions
+      api_versions = @api_detector.api_versions
 
       log.debug 'Loading adapter files...'
-      adapter_config_files = get_adapter_config_files
+      config_files = load_adapter_config_files
 
       api_versions.each do |api_version|
         log.debug "Loading adapters for API #{api_version}..."
 
-        adapter_config_files.each do |adapter_config|
+        config_files.each do |adapter_config|
           load_adapter_config(adapter_config, api_version)
         end
 
@@ -41,38 +41,37 @@ module Paasal
       vendor = @vendor_parser.parse(adapter_config)
       adapter_file = @adapter_resolver.get_adapter(api_version, adapter_config)
 
+      return if adapter_file.nil?
       # persist the vendor, but only if a valid adapter was found for this version
-      unless adapter_file.nil?
-        adapter_clazz = get_adapter_clazz(adapter_file)
-        adapter_instance = adapter_clazz.new('fake url')
-        vendor.adapter = adapter_instance
+      adapter_clazz = resolve_adapter_clazz(adapter_file)
+      adapter_instance = adapter_clazz.new('fake url')
+      vendor.adapter = adapter_instance
 
-        # verify adapter validity
-        @adapter_verificator.verify(adapter_instance, api_version)
+      # verify adapter validity
+      @adapter_verificator.verify(adapter_instance, api_version)
 
-        # persist to store
-        save_vendor(vendor, api_version)
-      end
+      # persist to store
+      save_vendor(vendor, api_version, adapter_clazz)
     end
 
-    def save_vendor(vendor, api_version)
+    def save_vendor(vendor, api_version, adapter_clazz)
       # instantiate DAOs for this API version
       vendor_dao = Paasal::DB::VendorDao.new api_version
 
-      save_providers(vendor, api_version) unless vendor.providers.nil?
+      save_providers(vendor, api_version, adapter_clazz) unless vendor.providers.nil?
       # (7), finally save the vendor after all nested entities got their IDs
       vendor.providers = vendor.providers.collect(&:id)
       vendor_dao.set vendor
     end
 
-    def save_providers(vendor, api_version)
+    def save_providers(vendor, api_version, adapter_clazz)
       provider_dao = Paasal::DB::ProviderDao.new api_version
 
       # finally persist recursively
       vendor.providers.each do |provider|
         # (1), save the provider and assign him an ID
         provider_dao.set provider
-        save_endpoints(provider, api_version) unless provider.endpoints.nil?
+        save_endpoints(provider, api_version, adapter_clazz) unless provider.endpoints.nil?
         # (5), assign the vendor's ID to the provider
         provider.endpoints = provider.endpoints.collect(&:id)
         provider.vendor = vendor.id
@@ -81,7 +80,7 @@ module Paasal
       end
     end
 
-    def save_endpoints(provider, api_version)
+    def save_endpoints(provider, api_version, adapter_clazz)
       endpoint_dao = Paasal::DB::EndpointDao.new api_version
       adapter_dao = Paasal::DB::AdapterDao.new api_version
 
@@ -99,13 +98,13 @@ module Paasal
       end
     end
 
-    def get_adapter_clazz(adapter_file)
+    def resolve_adapter_clazz(adapter_file)
       # transform path to clazz and load an instance
       adapter_class = "Paasal::Adapters::#{File.basename(adapter_file, '.rb').capitalize}".camelize
-      adapter_class.split('::').inject(Object) { |a, e| a.const_get e}
+      adapter_class.split('::').inject(Object) { |a, e| a.const_get e }
     end
 
-    def get_adapter_config_files
+    def load_adapter_config_files
       #adapter_dir = File.join(File.dirname(__FILE__), '../../../config/adapters')
       adapter_dir = 'config/adapters'
       files = Dir[File.join(adapter_dir, '*.yml')] | Dir[File.join(adapter_dir, '*.yaml')]
@@ -114,6 +113,5 @@ module Paasal
       log.debug "... found #{files.size} adapter config file(s)"
       files
     end
-
   end
 end

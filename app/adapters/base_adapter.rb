@@ -55,7 +55,6 @@ module Paasal
         RequestStore.store[:cache_key] = key
         key
       end
-
     end
   end
 end

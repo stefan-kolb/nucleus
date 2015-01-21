@@ -2,7 +2,6 @@ module Paasal
   module API
     module V1
       class Providers < Grape::API
-
         helpers do
           # noinspection RubyArgCount
           params :provider_id do
@@ -21,7 +20,7 @@ module Paasal
           # desc 'Return list of providers'
           # get '/' do
           #   provider_dao = Paasal::DB::ProviderDao.new self.version
-          #   providers = provider_dao.get_all
+          #   providers = provider_dao.all
           #   present providers, with: Models::Providers
           # end
 
@@ -67,7 +66,6 @@ module Paasal
         #     }
         #   end
         # end
-
       end
     end
   end

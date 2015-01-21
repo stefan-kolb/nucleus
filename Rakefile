@@ -25,13 +25,12 @@ end
 
 task routes: :environment do
   Paasal::API::RootAPI.routes.each do |route|
-    unless route.route_method.nil?
-      method = route.route_method.ljust(10)
-      path = route.route_path
-      version = route.instance_variable_get(:@options)[:version]
-      path = path.gsub(/:version/, version) unless version.nil?
-      puts "     #{method} #{path}"
-    end
+    next if route.nil?
+    method = route.route_method.ljust(10)
+    path = route.route_path
+    version = route.instance_variable_get(:@options)[:version]
+    path = path.gsub(/:version/, version) unless version.nil?
+    puts "     #{method} #{path}"
   end
 end
 

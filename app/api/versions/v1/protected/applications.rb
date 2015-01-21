@@ -23,9 +23,7 @@ module Paasal
 
             present applications, with: Models::Applications
           end
-
         end
-
       end
     end
   end

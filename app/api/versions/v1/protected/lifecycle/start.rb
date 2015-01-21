@@ -6,7 +6,6 @@ module Paasal
           helpers Paasal::SharedParamsHelper
 
           # TODO implement me
-
         end
       end
     end

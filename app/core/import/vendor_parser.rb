@@ -8,9 +8,9 @@ module Paasal
     # @raise [InvalidAdapterConfigError] if the configuration is invalid
     # @return [Paasal::Vendor] the parsed Vendor instance
     def parse(adapter_config)
-      parser = get_parser
-      vendor = parser.parse_file(adapter_config)
-      errors = parser.errors
+      config_parser = parser
+      vendor = config_parser.parse_file(adapter_config)
+      errors = config_parser.errors
       # show errors
       if errors && !errors.empty?
         errors.each do |e|
@@ -26,13 +26,11 @@ module Paasal
     # Create a new (clean) instance of the YML parser
     #
     # @return [Kwalify::Yaml::Parser] new and configured parser instance
-    def get_parser
-      #schema_file = File.expand_path('../../../../schemas/api.adapter.schema.yml', __FILE__)
+    def parser
       schema_file = 'schemas/api.adapter.schema.yml'
       schema = Kwalify::Yaml.load_file(schema_file, :untabify=>true, :preceding_alias=>true)
       validator = Kwalify::Validator.new(schema)
       Kwalify::Yaml::Parser.new(validator, :data_binding=>true, :preceding_alias=>true)
     end
-
   end
 end

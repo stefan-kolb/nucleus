@@ -1,6 +1,5 @@
 module Paasal
   module API
-
     # This class represents a method that is required by an API version.
     #
     # @author Cedric Roeck (cedric.roeck@gmail.com)
@@ -22,7 +21,6 @@ module Paasal
         @name = hash['name']
         @arguments = hash['arguments']
       end
-
     end
   end
 end

@@ -15,18 +15,17 @@ module Paasal
     end
 
     def to_s
-      if self.respond_to?('get_representation') && !@name.nil? && !@name.to_s.strip.length == 0
-        return get_representation
+      if self.respond_to?('representation') && !@name.nil? && !@name.to_s.strip.length == 0
+        return representation
       end
       super.to_s
     end
 
     def inspect
-      if self.respond_to?('get_representation') && !@name.nil? && @name.to_s.strip.length > 0
-        return get_representation
+      if self.respond_to?('representation') && !@name.nil? && @name.to_s.strip.length > 0
+        return representation
       end
       super.inspect
     end
-
   end
 end

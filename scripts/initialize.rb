@@ -17,7 +17,7 @@ begin
 
   # Check the API versions once and make them available via configatron
   api_detector = Paasal::ApiDetector.new
-  configatron.api.versions = api_detector.get_api_versions
+  configatron.api.versions = api_detector.api_versions
 
   # Add authorization strategy to grape and replace default http_basic
   Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Authenticator, ->(options) { [options[:realm]] })

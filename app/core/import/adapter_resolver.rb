@@ -22,6 +22,5 @@ module Paasal
       log.debug "... found '#{adapter_file.first}'"
       adapter_file.first
     end
-
   end
 end

@@ -4,7 +4,6 @@ require 'grape/middleware/base'
 module Grape
   module Middleware
     class Formatter < Base
-
       private
 
       # store parsed input in env['api.request.body']
@@ -14,7 +13,7 @@ module Grape
         if content_type_for(fmt)
           parser = Grape::Parser::Base.parser_for fmt, options
           if parser
-           parse_body(body, parser)
+            parse_body(body, parser)
           else
             env['api.request.body'] = body
           end
@@ -45,7 +44,6 @@ module Grape
         end
         env['rack.request.form_input'] = env['rack.input']
       end
-
     end
   end
 end

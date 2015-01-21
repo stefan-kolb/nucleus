@@ -1,13 +1,11 @@
 module Paasal
   module API
     module Models
-
       # The AbstractEntity is designed as super-class for all entities that shall be exposed via the API.
       # For exposing the data we use {Grape::Entity the Grape::Entity class}.
       # Each entity has to expose a unique ID and a link to the entity's resource itself.
       # To simplify the link creation, the class provides the {#create_link create_link method}.
       class AbstractEntity < Grape::Entity
-
         # Create a link to a resource representation.
         # If no parameters are provided, a link to the API root is returned.
         #
@@ -59,7 +57,7 @@ module Paasal
         # @return [String] link to the API or API version documentation
         def link_docs
           if self.is_a?(ApiVersion)
-            "#{root_url}/docs/api/#{self.object[:name]}"
+            "#{root_url}/docs/api/#{object[:name]}"
           else
             "#{root_url}/docs"
           end
@@ -72,9 +70,9 @@ module Paasal
         def link_api_version
           link = link_api_root
           if self.is_a?(ApiVersion)
-            link << "/#{self.object[:name]}"
-          elsif !self.options[:version].nil?
-            link << "/#{self.options[:version]}"
+            link << "/#{object[:name]}"
+          elsif !options[:version].nil?
+            link << "/#{options[:version]}"
           end
           link
         end
@@ -89,9 +87,8 @@ module Paasal
         private
 
         def root_url
-          "#{self.options[:env]['rack.url_scheme']}://#{self.options[:env]['HTTP_HOST']}"
+          "#{options[:env]['rack.url_scheme']}://#{options[:env]['HTTP_HOST']}"
         end
-
       end
     end
   end

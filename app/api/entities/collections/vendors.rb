@@ -2,7 +2,6 @@ module Paasal
   module API
     module Models
       class Vendors < AbstractEntity
-
         def self.entity_name
           'VendorList'
         end
@@ -27,7 +26,6 @@ module Paasal
               parent: { href: link_api_version }
           }
         end
-
       end
     end
   end

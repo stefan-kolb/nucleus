@@ -52,6 +52,5 @@ module Paasal
       route_args = auth.instance_variable_get(:@env)['rack.routing_args']
       @authenticator.call(*auth.credentials << route_args)
     end
-
   end
 end

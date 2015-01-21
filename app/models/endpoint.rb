@@ -15,12 +15,9 @@ module Paasal
       @id = hash['id']
     end
 
-    def get_representation
+    def representation
       msg = "Endpoint: #{@name}"
-      unless @url.nil? || @url.empty?
-        msg << " [#{@url}]"
-      end
+      msg << " [#{@url}]" unless @url.nil? || @url.empty?
     end
-
   end
 end

@@ -18,7 +18,6 @@ module Paasal
       #    }
       #
       class Error < Grape::Entity
-
         expose :status, documentation: {
           type: 'int', desc: 'The HTTP status code of the response, always between 100 and 999'
         }
@@ -38,7 +37,6 @@ module Paasal
         expose :more_info, safe: true, documentation: {
            type: 'String', desc: 'Link to more detailed information about the error'
         }
-
       end
     end
   end

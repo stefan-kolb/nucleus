@@ -7,9 +7,8 @@ module Rack
   #
   # @author Cedric Roeck (cedric.roeck@gmail.com)
   class AccessLogger
-
     # the log format
-    FORMAT = %{%s [%36s] - %s [%s] "%s %s%s %s" %d %s %0.4f\n}
+    FORMAT = %({%s [%36s] - %s [%s] "%s %s%s %s" %d %s %0.4f\n})
 
     def initialize(app, logger=nil)
       @app = app
@@ -44,20 +43,19 @@ module Rack
     def build_message(env, status, header, began_at)
       ended_at = Time.now
       content_length = get_content_length(header)
-      request_id = get_request_id
 
       FORMAT % [
-          env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR'] || '-',
-          request_id,
-          env['REMOTE_USER'] || '-',
-          ended_at.strftime('%d/%b/%Y:%H:%M:%S %z'),
-          env[REQUEST_METHOD],
-          env[PATH_INFO],
-          env[QUERY_STRING].empty? ? '' : "?#{env[QUERY_STRING]}",
-          env['HTTP_VERSION'],
-          status.to_s[0..3],
-          content_length,
-          ended_at - began_at
+        env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR'] || '-',
+        request_id,
+        env['REMOTE_USER'] || '-',
+        ended_at.strftime('%d/%b/%Y:%H:%M:%S %z'),
+        env[REQUEST_METHOD],
+        env[PATH_INFO],
+        env[QUERY_STRING].empty? ? '' : "?#{env[QUERY_STRING]}",
+        env['HTTP_VERSION'],
+        status.to_s[0..3],
+        content_length,
+        ended_at - began_at
       ]
     end
 
@@ -67,7 +65,7 @@ module Rack
       content_length.to_s == '0' ? '-' : content_length
     end
 
-    def get_request_id
+    def request_id
       if Thread.current[:paasal_request_id].nil?
         # if there is no request id, then fill up the space
         request_id = '*' * 36

@@ -22,7 +22,6 @@ module Paasal
       def applications
 
       end
-
     end
   end
 end

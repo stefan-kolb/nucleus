@@ -4,7 +4,6 @@ module Grape
   module Middleware
     module Auth
       class DynamicRealmBase < Base
-
         def initialize(app, options = {})
           super(app, options)
         end
@@ -38,14 +37,12 @@ module Grape
 
         # TODO feature request for grape !?
         def update_realm_name
-          if options.key?(:realm_replace) && !options[:realm_replace].nil?
-            # assign values to the realm template and change the realm name
-            route_args = env['rack.routing_args']
-            replacements = Hash[options[:realm_replace].collect { |s| [s, route_args.key?(s) ? route_args[s] : s] }]
-            options[:realm] = options[:realm] % replacements
-          end
+          return if !options.key?(:realm_replace) || options[:realm_replace].nil?
+          # assign values to the realm template and change the realm name
+          route_args = env['rack.routing_args']
+          replacements = Hash[options[:realm_replace].collect { |s| [s, route_args.key?(s) ? route_args[s] : s] }]
+          options[:realm] = options[:realm] % replacements
         end
-
       end
     end
   end
