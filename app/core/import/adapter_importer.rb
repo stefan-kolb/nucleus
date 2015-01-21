@@ -87,7 +87,7 @@ module Paasal
 
     def get_adapter_clazz(adapter_file)
       # transform path to clazz and load an instance
-      adapter_class = "Paasal::Adapters::#{File.basename(adapter_file, ".rb").capitalize}".camelize
+      adapter_class = "Paasal::Adapters::#{File.basename(adapter_file, '.rb').capitalize}".camelize
       adapter_class.split('::').inject(Object) {|o,c| o.const_get c}
     end
 

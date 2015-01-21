@@ -4,7 +4,7 @@ module Paasal
     # Requirements of an API version
     #
     # @author Cedric Röck (cedric.roeck@gmail.com)
-  class Requirements
+    class Requirements
       include Kwalify::Util::HashLike
 
       attr_accessor :version          # text

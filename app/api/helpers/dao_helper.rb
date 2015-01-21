@@ -55,6 +55,7 @@ module Paasal
         begin
           version = self.version
         rescue NoMethodError
+          version = nil
         end
       end
       version = self.routes.first.instance_variable_get(:@options)[:version] if version.nil?

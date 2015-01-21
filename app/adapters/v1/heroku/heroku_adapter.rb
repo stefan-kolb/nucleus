@@ -28,6 +28,8 @@ module Paasal
         p headers
         response = Excon.get("#{@endpoint_url}/apps", headers: headers)
         response_parsed = JSON.parse(response.body, symbolize_names: true)
+        # TODO convert to compliant Hash
+        response_parsed
       end
 
       def authenticate(username, password)

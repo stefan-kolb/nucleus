@@ -6,14 +6,13 @@ module Paasal
         # defines the authentication for all subsequently mounted routes
         http_basic({ realm: 'PaaSal API Authorization @ %{endpoint_id}', realm_replace: [:endpoint_id] }) do |username, password, params|
           if username.nil? || username.empty? || password.nil? || password.empty?
-            # never allow empty usernames and / or passwords
+            # never allow empty username and / or password
             false
           else
             begin
               # find a matching endpoint
               endpoint = load_endpoint(params)
               # resolve the required adapter
-              #adapter_dao = Paasal::DB::AdapterDao.new params[:version]
               index_entry = adapter_dao.get params[:endpoint_id]
               # save info for the current request, no need to retrieve multiple times
               RequestStore.store[:endpoint] = endpoint
@@ -28,7 +27,7 @@ module Paasal
               end
               # auth passed
               true
-            rescue Errors::AuthenticationFailedError => e
+            rescue Errors::AuthenticationFailedError
               log.debug "Authentication attempt failed at #{endpoint.url} using '#{index_entry.adapter_clazz}'"
               false
             end

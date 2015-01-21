@@ -16,3 +16,8 @@ guard 'yard', :port => '8808', :cli => '--reload' do
   watch(%r{lib/.+\.rb})
   watch(%r{.+\.md})
 end
+
+guard :rubocop do
+  watch(%r{.+\.rb$})
+  watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
+end

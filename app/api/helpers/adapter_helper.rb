@@ -11,7 +11,7 @@ module Paasal
         log.debug 'Prepare repeated action call block...'
         response = yield
         log.debug '... the block did pass just fine!'
-      rescue Errors::InvalidAuthenticationHeaderError => e
+      rescue Errors::InvalidAuthenticationHeaderError
         log.debug 'Call failed, start repetition by removing outdated cache entry'
         RequestStore.store[:adapter].uncache RequestStore.store[:cache_key]
 
