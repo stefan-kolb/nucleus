@@ -18,7 +18,7 @@ module Paasal
         end
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', desc: 'Resource links', is_array: true } do |instance, o|
+          type: 'References', desc: 'Resource links', is_array: true } do |instance, _o|
           {
               self: { href: link_resource(%w(endpoints), instance) },
               # link back to the provider

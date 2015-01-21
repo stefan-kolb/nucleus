@@ -11,8 +11,8 @@ module Paasal
 
         expose :size, documentation: {
           type: 'int', required: true, desc: 'Number of items in the \'applications\' collection'
-        } do |status, options|
-          status[:items].nil? ? 0 : status[:items].size
+        } do |instance, _o|
+          instance[:items].nil? ? 0 : instance[:items].size
         end
 
         expose :items, as: 'applications', documentation: {
@@ -20,7 +20,7 @@ module Paasal
         }, using: Models::Application
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', desc: 'Resource links', is_array: true } do |i, o|
+          type: 'References', desc: 'Resource links', is_array: true } do |_i, o|
           {
               self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id], %w(applications)) },
               # link back to the endpoint

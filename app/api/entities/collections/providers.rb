@@ -11,8 +11,8 @@ module Paasal
 
         expose :size, documentation: {
           type: 'int', required: true, desc: 'Number of items in the \'providers\' collection'
-        } do |status, options|
-          status[:items].nil? ? 0 : status[:items].size
+        } do |instance, _o|
+          instance[:items].nil? ? 0 : instance[:items].size
         end
 
         expose :items, as: 'providers', documentation: {
@@ -20,7 +20,7 @@ module Paasal
         }, using: Models::Provider
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', desc: 'Resource links', is_array: true } do |i, o|
+          type: 'References', desc: 'Resource links', is_array: true } do |_i, _o|
           {
               self: { href: link_child_resource(%w(vendors), o[:env]['rack.routing_args'][:vendor_id], %w(providers)) },
               # link back to the vendor

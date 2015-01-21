@@ -23,19 +23,19 @@ module Paasal
       def configure_logger_for(classname)
 
         # prepare logging dir
-        logDir = ::File.join('log')
-        logFile = ::File.join(logDir, 'paasal.log')
+        log_dir = ::File.join('log')
+        log_file = ::File.join(log_dir, 'paasal.log')
         # prepare path and create missing directories
-        FileUtils.mkdir_p(logDir) unless File.directory?(logDir)
+        FileUtils.mkdir_p(log_dir) unless File.directory?(log_dir)
         # create the loggers
-        stdLog = Logger.new(STDOUT)
+        std_log = Logger.new(STDOUT)
         # use rotation for x days
-        fileLog = Logger.new(logFile, 'daily', 7)
+        file_log = Logger.new(log_file, 'daily', 7)
 
         # include custom log format that includes the request id
         formatter = Paasal::Logging::Formatter.new
 
-        [fileLog, stdLog].each do |logger|
+        [file_log, std_log].each do |logger|
           # apply format
           logger.formatter = formatter
           # apply the classname
@@ -45,9 +45,8 @@ module Paasal
         # apply the log level from the app. configuration
         multi_logger = MultiLogger.new(
             :level => configatron.logging.has_key?(:level) ? configatron.logging.level : Logger::Severity::WARN,
-            :loggers => [stdLog, fileLog])
-        return multi_logger
-
+            :loggers => [std_log, file_log])
+        multi_logger
       end
     end
   end

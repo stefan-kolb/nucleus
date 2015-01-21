@@ -12,7 +12,9 @@ module Paasal
 
       def use_db
         # utilize the configured file store
-        path = "#{configatron.db.path}#{configatron.db.path.end_with?(File::SEPARATOR)?'':'/'}#{@api_version}"
+        path = configatron.db.path
+        path << '/' unless configatron.db.path.end_with?(File::SEPARATOR)
+        path << @api_version
         FileUtils.mkpath path
         db = Daybreak::DB.new("#{path}/#{@store_type}")
         yield db
@@ -21,15 +23,7 @@ module Paasal
       end
 
       def set(entity)
-        now = Time.now.utc.iso8601
-        if entity.respond_to?(:created_at) && entity.created_at.nil?
-          # assign created timestamp
-          entity.created_at = now if entity.respond_to?(:updated_at=)
-        end
-        if entity.respond_to?(:updated_at)
-          # assign update timestamp
-          entity.updated_at = now if entity.respond_to?(:updated_at=)
-        end
+        update_timestamps(entity)
 
         # finally save to the DB
         use_db do |db|
@@ -102,7 +96,7 @@ module Paasal
       def get_all
         instances = []
         use_db do |db|
-          db.each do |id, value|
+          db.each do |_id, value|
             instances << value
           end
         end
@@ -110,14 +104,26 @@ module Paasal
       end
 
       def keys
-        use_db do |db|
-          db.keys
-        end
+        use_db(&:keys)
       end
 
       def key?(key)
         use_db do |db|
           db.key? key
+        end
+      end
+
+      private
+
+      def update_timestamps(entity)
+        now = Time.now.utc.iso8601
+        if entity.respond_to?(:created_at) && entity.created_at.nil?
+          # assign created timestamp
+          entity.created_at = now if entity.respond_to?(:updated_at=)
+        end
+        if entity.respond_to?(:updated_at)
+          # assign update timestamp
+          entity.updated_at = now if entity.respond_to?(:updated_at=)
         end
       end
 

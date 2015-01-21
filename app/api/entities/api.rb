@@ -10,7 +10,7 @@ module Paasal
         }, using: Models::ApiVersion
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links', is_array: true } do |i, o|
+          type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
           {
               self: { href: link_api_root },
               # link to the API documentation

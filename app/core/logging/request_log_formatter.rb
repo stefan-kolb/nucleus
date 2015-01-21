@@ -18,14 +18,14 @@ module Paasal
         end
 
         Format % [severity[0..0], request_part, format_datetime(time),
-                  $$, severity, progname, msg2str(msg)]
+                  $PID, severity, progname, msg2str(msg)]
       end
 
       private
 
       def format_datetime(time)
         if @datetime_format.nil?
-          time.strftime("%Y-%m-%dT%H:%M:%S.") << "%06d " % time.usec
+          time.strftime('%Y-%m-%dT%H:%M:%S.') << '%06d ' % time.usec
         else
           time.strftime(@datetime_format)
         end

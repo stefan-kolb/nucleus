@@ -18,18 +18,23 @@ module Paasal
           db_files.each do |db_file|
             # skip directories
             next if File.directory? db_file
-
-            log.debug("... tidy #{db_file}")
-            begin
-              db = Daybreak::DB.new(db_file)
-              original_size = Filesize.from("#{db.bytesize} B").pretty
-              db.compact
-              shrinked_size = Filesize.from("#{db.bytesize} B").pretty
-              log.debug("... reduced size from #{original_size} to #{shrinked_size}") unless original_size == shrinked_size
-            ensure
-              db.close unless db.nil?
-            end
+            tidy_file(db_file)
           end
+        end
+      end
+
+      private
+
+      def tidy_file(db_file)
+        log.debug("... tidy #{db_file}")
+        begin
+          db = Daybreak::DB.new(db_file)
+          original_size = Filesize.from("#{db.bytesize} B").pretty
+          db.compact
+          shrinked_size = Filesize.from("#{db.bytesize} B").pretty
+          log.debug("... reduced size from #{original_size} to #{shrinked_size}") unless original_size == shrinked_size
+        ensure
+          db.close unless db.nil?
         end
       end
 

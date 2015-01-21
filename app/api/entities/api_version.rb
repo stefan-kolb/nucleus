@@ -13,7 +13,7 @@ module Paasal
         }, using: Models::ApiVersionResource, unless: { collection: true }
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links', is_array: true } do |i, o|
+          type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
           {
               self: { href: link_api_version },
               # link back to the API root

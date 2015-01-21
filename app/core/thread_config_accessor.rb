@@ -39,7 +39,7 @@ class Class
   def thread_config_accessor name, options = {}
     mod = Module.new
     mod.module_eval do
-      class_variable_set :"@@#{name}", Hash.new {|h,k| h[k] = options[:default] }
+      class_variable_set :"@@#{name}", Hash.new { |h, k| h[k] = options[:default] }
     end
 
     # use finalizer to prevent memory leaks and clean-up when threads die
@@ -66,7 +66,7 @@ class Class
   def thread_config_accessor_readonly name, options = {}
     mod = Module.new
     mod.module_eval do
-      class_variable_set :"@@#{name}", Hash.new {|h,k| h[k] = options[:default] }
+      class_variable_set :"@@#{name}", Hash.new { |h, k| h[k] = options[:default] }
     end
 
     # use finalizer to prevent memory leaks and clean-up when threads die

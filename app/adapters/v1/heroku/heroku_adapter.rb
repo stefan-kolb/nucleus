@@ -44,7 +44,7 @@ module Paasal
         response_parsed = JSON.parse(response.body)
         api_token = response_parsed['api_key']
         # finally return the header key and value
-        { 'Authorization' => "Bearer #{api_token}"}
+        { 'Authorization' => "Bearer #{api_token}" }
       end
 
       # Excon.get('http://geemus.com', :headers => {'Authorization' => 'Basic 0123456789ABCDEF'})

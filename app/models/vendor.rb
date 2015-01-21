@@ -11,7 +11,13 @@ module Paasal
       end
       @name = hash['name']
       @id = hash['id']
-      @providers = (v=hash['providers']) ? v.map!{|e| e.is_a?(Paasal::Provider) ? e : Paasal::Provider.new(e)} : v
+
+      v = hash['providers']
+      if v
+        @providers = v.map! { |e| e.is_a?(Paasal::Provider) ? e : Paasal::Provider.new(e) }
+      else
+        @providers = v
+      end
     end
 
     def get_representation

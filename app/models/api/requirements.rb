@@ -19,7 +19,12 @@ module Paasal
           return
         end
         @version = hash['version']
-        @methods = (v=hash['methods']) ? v.map!{|e| e.is_a?(Paasal::API::RequiredMethod) ? e : Paasal::API::RequiredMethod.new(e)} : v
+        v = hash['methods']
+        if v
+          @methods = v.map! { |e| e.is_a?(Paasal::API::RequiredMethod) ? e : Paasal::API::RequiredMethod.new(e) }
+        else
+          @methods = v
+        end
       end
 
     end

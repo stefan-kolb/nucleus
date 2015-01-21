@@ -21,9 +21,9 @@ module Paasal
               unless RequestStore.store[:adapter].cache?(username, password)
                 # no auth header available, perform authentication first
                 # throws an error if the authentication failed
-                RequestStore.store[:auth_header] = RequestStore.store[:adapter].authenticate(username, password)
+                auth_headers = RequestStore.store[:adapter].authenticate(username, password)
                 # cache the auth header so it does not have to be retrieved per request
-                RequestStore.store[:adapter].cache(username, password, RequestStore.store[:auth_header])
+                RequestStore.store[:adapter].cache(username, password, auth_headers)
               end
               # auth passed
               true

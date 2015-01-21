@@ -12,7 +12,14 @@ module Paasal
       end
       @name = hash['name']
       @id = hash['id']
-      @endpoints = (v=hash['endpoints']) ? v.map!{|e| e.is_a?(Paasal::Endpoint) ? e : Paasal::Endpoint.new(e)} : v
+
+      v = hash['endpoints']
+      if v
+        @endpoints = v.map! { |e| e.is_a?(Paasal::Endpoint) ? e : Paasal::Endpoint.new(e) }
+      else
+        @endpoints
+      end
+
     end
 
     def get_representation

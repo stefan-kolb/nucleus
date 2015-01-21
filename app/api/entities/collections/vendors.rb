@@ -11,8 +11,8 @@ module Paasal
 
         expose :size, documentation: {
           type: 'int', required: true, desc: 'Number of items in the \'vendors\' collection'
-        } do |status, options|
-          status[:items].nil? ? 0 : status[:items].size
+        } do |instance, _o|
+          instance[:items].nil? ? 0 : instance[:items].size
         end
 
         expose :items, as: 'vendors', using: Paasal::API::Models::Vendor, documentation: {
@@ -20,7 +20,7 @@ module Paasal
         }
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links', is_array: true } do |i, o|
+          type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
           {
               self: { href: link_resource(%w(vendors)) },
               # link back to the api version
