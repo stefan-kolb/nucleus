@@ -3,7 +3,7 @@ module Paasal
 
     # Requirements of an API version
     #
-    # @author Cedric Röck (cedric.roeck@gmail.com)
+    # @author Cedric Roeck (cedric.roeck@gmail.com)
     class Requirements
       include Kwalify::Util::HashLike
 
@@ -13,7 +13,7 @@ module Paasal
       # Initialize the API Requirement.
       # @param [Hash] hash the options to create the Requirement
       # @option hash [String] :version The API version
-      # @option hash [Array<Paasal::RequiredMethod>] :methods The methods that are required to comply with the API version
+      # @option hash [Array<Paasal::RequiredMethod>] :methods methods that are required to comply with the API version
       def initialize(hash=nil)
         if hash.nil?
           return

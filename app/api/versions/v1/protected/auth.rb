@@ -4,7 +4,10 @@ module Paasal
       class Auth < Grape::API
 
         # defines the authentication for all subsequently mounted routes
-        http_basic({ realm: 'PaaSal API Authorization @ %{endpoint_id}', realm_replace: [:endpoint_id] }) do |username, password, params|
+        http_basic({
+                       realm: 'PaaSal API Authorization @ %{endpoint_id}',
+                       realm_replace: [:endpoint_id]
+                   }) do |username, password, params|
           if username.nil? || username.empty? || password.nil? || password.empty?
             # never allow empty username and / or password
             false

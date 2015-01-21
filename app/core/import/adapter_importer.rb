@@ -29,7 +29,8 @@ module Paasal
           load_adapter_config(adapter_config, api_version)
         end
 
-        #log.debug "... loaded #{vendor_count} vendors with #{provider_count} providers and #{endpoint_count} endpoints for API #{api_version}"
+        #log.debug "... loaded #{vendor_count} vendors with #{provider_count} providers "\
+        # "and #{endpoint_count} endpoints for API #{api_version}"
       end
     end
 
@@ -92,7 +93,8 @@ module Paasal
         # (3), save the endpoint
         endpoint_dao.set endpoint
         # (4) save in the adapter index entry for fast resolving
-        index_entry = AdapterIndexEntry.new({ 'id' => endpoint.id, 'url' => endpoint.url, 'adapter_clazz' => adapter_clazz })
+        index_entry = AdapterIndexEntry.new({ 'id' => endpoint.id, 'url' => endpoint.url,
+                                              'adapter_clazz' => adapter_clazz })
         adapter_dao.set index_entry
       end
     end

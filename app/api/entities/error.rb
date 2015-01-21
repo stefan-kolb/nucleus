@@ -13,7 +13,7 @@ module Paasal
       #    {
       #      "status": 404,
       #      "message": "The resource could not be found",
-      #      "dev_message": "Please refer to the API documentation and compare your call with the available resources and actions.",
+      #      "dev_message": "Please compare your call with the available API resources and actions.",
       #      "error_code": 404
       #    }
       #

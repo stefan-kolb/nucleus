@@ -3,7 +3,7 @@ module Paasal
 
     # This class represents a method that is required by an API version.
     #
-    # @author Cedric Röck (cedric.roeck@gmail.com)
+    # @author Cedric Roeck (cedric.roeck@gmail.com)
     class RequiredMethod
       include Kwalify::Util::HashLike
 

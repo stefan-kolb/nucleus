@@ -5,7 +5,7 @@ module Rack
   # Rack::AccessLogger forwards every request to the given +app+, and
   # logs a line to the +logger+.
   #
-  # @author Cedric Röck (cedric.roeck@gmail.com)
+  # @author Cedric Roeck (cedric.roeck@gmail.com)
   class AccessLogger
 
     # the log format
@@ -62,7 +62,8 @@ module Rack
     end
 
     def get_content_length(headers)
-      content_length = headers[CONTENT_LENGTH] or return '-'
+      return '-' unless headers[CONTENT_LENGTH]
+      content_length = headers[CONTENT_LENGTH]
       content_length.to_s == '0' ? '-' : content_length
     end
 

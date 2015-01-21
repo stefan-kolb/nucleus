@@ -4,7 +4,7 @@ module Paasal
     # default 'rack.errors' output not only to the console, but also to a log file.
     # This file then includes all error stacktraces.
     #
-    # @author Cedric Röck (cedric.roeck@gmail.com)
+    # @author Cedric Roeck (cedric.roeck@gmail.com)
     class ErrorRequestLogger
       def initialize(app, file)
         @app = app

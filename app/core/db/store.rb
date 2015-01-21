@@ -55,28 +55,6 @@ module Paasal
         end
       end
 
-=begin
-      def delete(entity_id_or_key)
-        # TODO cascade delete for vendor --> provider --> endpoint
-        use_db do |db|
-          db.lock do
-            if db.key?(entity_id_or_key)
-              # id was given, delete now
-              db.delete!(entity_id_or_key)
-            else
-              # we need to search for the entity with this key to get the id
-              db.each do |key, value|
-                id = key if value == entity_id_or_key
-                break unless id.nil?
-              end
-              raise ResourceNotFoundError, "Neither an ID, nor a key was found for '#{entity_id_or_key}'." if id.nil?
-              db.delete!(id)
-            end
-          end
-        end
-      end
-=end
-
       def get_collection(entity_ids)
         response = []
         use_db do |db|

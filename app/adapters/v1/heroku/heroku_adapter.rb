@@ -55,7 +55,7 @@ module Paasal
       def headers
         {
             'Accept' => 'application/vnd.heroku+json; version=3',
-            'Content-Type' => 'application/json',
+            'Content-Type' => 'application/json'
         }.merge(RequestStore.store[:adapter].cached_headers)
       end
 

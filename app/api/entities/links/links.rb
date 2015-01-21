@@ -16,13 +16,16 @@ module Paasal
         expose :docs, documentation: { type: 'Link', desc: 'Documentation reference' },
                using: Paasal::API::Models::Link, safe: true
 
-        expose :providers, documentation: { type: 'Link', desc: 'Reference to providers that belong to this resource' },
+        expose :providers,
+               documentation: { type: 'Link', desc: 'Reference to providers that belong to this resource' },
                using: Paasal::API::Models::Link, safe: true
 
-        expose :endpoints, documentation: { type: 'Link', desc: 'Reference to endpoints that belong to this resource' },
+        expose :endpoints,
+               documentation: { type: 'Link', desc: 'Reference to endpoints that belong to this resource' },
                using: Paasal::API::Models::Link, safe: true
 
-        expose :applications, documentation: { type: 'Link', desc: 'Reference to applications that belong to this resource' },
+        expose :applications,
+               documentation: { type: 'Link', desc: 'Reference to applications that belong to this resource' },
                using: Paasal::API::Models::Link, safe: true
 
       end

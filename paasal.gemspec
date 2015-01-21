@@ -8,7 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Paasal::VERSION
   spec.authors       = ['Cedric Röck']
   spec.email         = ['paasal@roecky.net']
-  spec.summary       = 'PaaSal is an abstraction layer for the management functions of Platform-as-a-Service (PaaS) providers.'
+  spec.summary       = 'PaaSal is an abstraction layer for the management functions of '\
+                        'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
   spec.homepage      = 'paasal.github.io/croeck'
   spec.license       = 'MIT'
@@ -18,6 +19,6 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = %w(lib app)
 
-  spec.add_development_dependency "bundler", "~> 1.7"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency 'bundler', '~> 1.7'
+  spec.add_development_dependency 'rake', '~> 10.0'
 end

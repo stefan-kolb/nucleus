@@ -27,8 +27,10 @@ module Paasal
         elsif e.kind_of? Grape::Exceptions::ValidationErrors
           entity = env['api.endpoint'].build_error_entity(ErrorMessages::BAD_REQUEST, e.message)
         else
-          entity = env['api.endpoint'].build_error_entity(ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
-          env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) in #{e.backtrace.first}:")
+          entity = env['api.endpoint'].build_error_entity(
+            ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
+          env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) "\
+            "in #{e.backtrace.first}:")
           # log the stacktrace only in debug mode
           e.backtrace.each { |line| env['api.endpoint'].log.debug line }
         end
@@ -67,7 +69,8 @@ module Paasal
 
       route :any, '*path' do
         # raise 404
-        to_error(ErrorMessages::NOT_FOUND, 'Please refer to the API documentation and compare your call with the available resources and actions.')
+        to_error(ErrorMessages::NOT_FOUND, 'Please refer to the API documentation and compare your call '\
+        'with the available resources and actions.')
       end
     end
   end

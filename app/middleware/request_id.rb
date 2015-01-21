@@ -7,7 +7,7 @@ module Paasal
     # a UUID of no request ID was delivered in the request header.
     # The 'X-Request-ID' will also be included in the response header.
     #
-    # @author Cedric Röck (cedric.roeck@gmail.com)
+    # @author Cedric Roeck (cedric.roeck@gmail.com)
     class RequestId
       def initialize(app)
         @app = app

@@ -18,7 +18,8 @@ module Paasal
       end
 
       unless valid
-        raise Paasal::InvalidAdapterError, "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
+        raise Paasal::InvalidAdapterError,
+              "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
       end
     end
 
