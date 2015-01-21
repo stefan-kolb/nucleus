@@ -20,6 +20,12 @@ module Paasal
           error_code: 401
       }
 
+      BAD_REQUEST = {
+          message: 'Bad Request: Parameter validation failed',
+          status: 400,
+          error_code: 4000
+      }
+
       AUTH_BAD_REQUEST = {
           message: 'Bad Authentication Request',
           status: 400,
