@@ -34,8 +34,20 @@ module Paasal
           end
         end
 
-        # mount all protected routes
+        ##################################
+        ### Mount all protected routes ###
+        ##################################
+
+        # application list
         mount Paasal::API::V1::Applications
+        # lifecycle operations
+        mount Paasal::API::V1::Lifecycle::Start
+        mount Paasal::API::V1::Lifecycle::Stop
+        mount Paasal::API::V1::Lifecycle::Restart
+        # data operations
+        mount Paasal::API::V1::Data::Rebuild
+        mount Paasal::API::V1::Data::Upload
+        mount Paasal::API::V1::Data::Download
 
       end
     end
