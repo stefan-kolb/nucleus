@@ -24,7 +24,9 @@ module Paasal
         if e.kind_of? Errors::ApiError
           # willingly sent error, no need for stacktrace
           entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
-        elsif
+        elsif e.kind_of? Grape::Exceptions::ValidationErrors
+          entity = env['api.endpoint'].build_error_entity(ErrorMessages::BAD_REQUEST, e.message)
+        else
           entity = env['api.endpoint'].build_error_entity(ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
           env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) in #{e.backtrace.first}:")
           # log the stacktrace only in debug mode
