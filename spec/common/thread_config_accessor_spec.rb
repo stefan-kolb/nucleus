@@ -38,7 +38,7 @@ describe 'config values accessibility' do
   it 'for config defined in inheriting class shall not be available to parent classes' do
     child = ThreadedConfigChildA.new
     expect(child.setting_a).to eql 11
-    expect{ThreadedConfigParentA.setting_a}.to raise_error(NoMethodError)
+    expect { ThreadedConfigParentA.setting_a }.to raise_error(NoMethodError)
   end
 
 end
@@ -94,8 +94,6 @@ describe 'thread_config_accessor_readonly' do
   end
 
   it 'should not allow to change the default values' do
-    Thread.new {
-      expect{@config.setting_a = 10}.to raise_error
-    }.join
+    Thread.new { expect { @config.setting_a = 10 }.to raise_error }.join
   end
 end

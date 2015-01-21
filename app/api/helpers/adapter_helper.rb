@@ -15,18 +15,23 @@ module Paasal
         log.debug 'Call failed, start repetition by removing outdated cache entry'
         RequestStore.store[:adapter].uncache RequestStore.store[:cache_key]
 
-        # resolve username & password for authentication request
-        authorization_key = ['HTTP_AUTHORIZATION', 'X-HTTP_AUTHORIZATION', 'X_HTTP_AUTHORIZATION'].detect { |k| @env.has_key?(k) }
-        username_password = @env[authorization_key].split(' ', 2).last
-        credentials = username_password.unpack('m*').first.split(/:/, 2)
-        # raises 401 if the authentication did not only expire, but became completely invalid
-        RequestStore.store[:auth_header] = RequestStore.store[:adapter].authenticate(credentials[0], credentials[1])
+        reauthenticate
 
         log.debug 'Repeating call block...'
         response = yield
         log.debug '... the repetition did pass just fine!'
       end
       response
+    end
+
+    def reauthenticate
+      # resolve username & password for authentication request
+      authorization_key = ['HTTP_AUTHORIZATION', 'X-HTTP_AUTHORIZATION', 'X_HTTP_AUTHORIZATION'].detect { |k| @env.has_key?(k) }
+      username_password = @env[authorization_key].split(' ', 2).last
+      credentials = username_password.unpack('m*').first.split(/:/, 2)
+      # raises 401 if the authentication did not only expire, but became completely invalid
+      auth_headers = RequestStore.store[:adapter].authenticate(credentials[0], credentials[1])
+      RequestStore.store[:adapter].cache(credentials[0], credentials[1], auth_headers)
     end
 
   end

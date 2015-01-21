@@ -20,7 +20,7 @@ module Paasal
 
       return if adapter_file.empty?
       log.debug "... found '#{adapter_file.first}'"
-      return adapter_file.first
+      adapter_file.first
     end
 
   end

@@ -10,29 +10,38 @@ module Paasal
     # @raise [Paasal::InvalidAdapterError] if at least one required method has not been implemented in the Adapter
     # @return [void]
     def verify(adapter, api_version)
-      api_requirements = get_api_requirements(api_version)
       # check that all required methods are implemented
-      missing_methods = []
-      invalid_arguments = []
-      api_requirements.methods.each do |required_method|
-        if !adapter.respond_to? required_method.name
-          missing_methods << required_method.name
-          log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', does not implement the method for "\
-            "API #{api_version}: #{required_method.name}"
-        elsif adapter.method(required_method.name).arity != required_method.arguments
-          invalid_arguments << required_method.name
-          log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', wrong number of method arguments "\
-             "for API #{api_version}: #{required_method.name}, expected #{required_method.arguments} but "\
-             "found #{adapter.method(required_method.name).arity}"
-        end
+      valid = true
+      get_api_requirements(api_version).methods.each do |required_method|
+        valid ||= verify_missing_methods(adapter, api_version, required_method)
+        valid ||= verify_method_arguments(adapter, api_version, required_method)
       end
-      unless missing_methods.empty? && invalid_arguments.empty?
+
+      unless valid
         raise Paasal::InvalidAdapterError, "Adapter '#{adapter}' has invalid methods that are required by API #{api_version}"
       end
-      return nil
     end
 
     private
+
+    def verify_missing_methods(adapter, api_version, required_method)
+      unless adapter.respond_to? required_method.name
+        log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', does not implement the method for "\
+            "API #{api_version}: #{required_method.name}"
+        return false
+      end
+      true
+    end
+
+    def verify_method_arguments(adapter, api_version, required_method)
+      unless adapter.method(required_method.name).arity != required_method.arguments
+        log.fatal "Invalid Adapter '#{adapter.class.name.underscore}', wrong number of method arguments "\
+                   "for API #{api_version}: #{required_method.name}, expected #{required_method.arguments} but "\
+                   "found #{adapter.method(required_method.name).arity}"
+        return false
+      end
+      true
+    end
 
     # Load and parse the requirement specification for the API version.
     # The requirements must be specified in a 'requirements.yml' file of the API version's directory,

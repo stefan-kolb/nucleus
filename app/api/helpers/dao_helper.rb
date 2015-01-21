@@ -51,20 +51,23 @@ module Paasal
     # @param [class] clazz DAO class for which an instance shall be created
     # @return [Store] concrete DAO store
     def create_dao(clazz)
-      if self.respond_to? :version
-        begin
-          version = self.version
-        rescue NoMethodError
-          version = nil
-        end
-      end
-      version = self.routes.first.instance_variable_get(:@options)[:version] if version.nil?
-
+      version = version_for_dao
       return RequestStore.store[clazz] if RequestStore.exist?(clazz)
       log.debug("Create #{clazz} for API #{version}")
       dao = clazz.new version
       RequestStore.store[clazz] = dao
       dao
+    end
+
+    def version_for_dao
+      if self.respond_to? :version
+        begin
+          return self.version
+        rescue NoMethodError
+          log.debug 'No method error while determining version for DAO, use fallback now'
+        end
+      end
+      self.routes.first.instance_variable_get(:@options)[:version]
     end
 
   end
