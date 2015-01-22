@@ -5,7 +5,7 @@ module Paasal
         class Stop < Grape::API
           helpers Paasal::SharedParamsHelper
 
-          # TODO implement me
+          # TODO: implement me
         end
       end
     end

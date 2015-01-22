@@ -54,10 +54,10 @@ module Paasal
       api_requirements_file = "app/api/versions/#{api_version}/requirements.yml"
       # schema_file = File.expand_path('../../../../schemas/api.requirements.schema.yml', __FILE__)
       schema_file = 'schemas/api.requirements.schema.yml'
-      schema = Kwalify::Yaml.load_file(schema_file, :untabify => true, :preceding_alias => true)
+      schema = Kwalify::Yaml.load_file(schema_file, untabify: true, preceding_alias: true)
       validator = Kwalify::Validator.new(schema)
-      parser = Kwalify::Yaml::Parser.new(validator, :data_binding => true, :preceding_alias => true)
-      api_requirements = parser.parse_file(api_requirements_file, :untabify => true)
+      parser = Kwalify::Yaml::Parser.new(validator, data_binding: true, preceding_alias: true)
+      api_requirements = parser.parse_file(api_requirements_file, untabify: true)
       api_requirements
     end
   end

@@ -9,7 +9,7 @@ module Paasal
       helpers Paasal::ResponseHelper
       helpers Paasal::SharedParamsHelper
 
-      # TODO mayby we need those for request parameters?
+      # TODO: mayby we need those for request parameters?
       # content_type :xml, 'application/xml'
       content_type :json, 'application/json'
       # content_type :binary, 'application/octet-stream'

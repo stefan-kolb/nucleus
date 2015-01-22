@@ -3,7 +3,7 @@ module Paasal
     class HerokuAdapter < Paasal::Adapters::BaseAdapter
       include Paasal::Logging
 
-      # TODO how to assert that the class implements all required operations?
+      # TODO: how to assert that the class implements all required operations?
       def initialize(endpoint_url)
         super(endpoint_url)
       end
@@ -28,17 +28,17 @@ module Paasal
         p headers
         response = Excon.get("#{@endpoint_url}/apps", headers: headers)
         response_parsed = JSON.parse(response.body, symbolize_names: true)
-        # TODO convert to compliant Hash
+        # TODO: convert to compliant Hash
         response_parsed
       end
 
       def authenticate(username, password)
         log.debug "Authenticate @ #{@endpoint_url}"
-        # TODO share the connection
+        # TODO: share the connection
         response = Excon.post("#{@endpoint_url}/login?username=#{username}&password=#{password}")
 
         # Heroku returns 404 for invalid credentials
-        # TODO customize the error, include proper dev message
+        # TODO: customize the error, include proper dev message
         fail Errors::AuthenticationFailedError, 'Heroku says the credentials are invalid' if response.status == 404
 
         response_parsed = JSON.parse(response.body)
@@ -54,7 +54,7 @@ module Paasal
 
       def headers
         {
-            'Accept' => 'application/vnd.heroku+json; version=3',
+          'Accept' => 'application/vnd.heroku+json; version=3',
             'Content-Type' => 'application/json'
         }.merge(RequestStore.store[:adapter].cached_headers)
       end

@@ -5,9 +5,7 @@ module Paasal
     attr_accessor :adapter
 
     def initialize(hash = nil)
-      if hash.nil?
-        return
-      end
+      return if hash.nil?
       @name = hash['name']
       @id = hash['id']
 

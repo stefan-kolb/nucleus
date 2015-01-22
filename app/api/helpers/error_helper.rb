@@ -1,5 +1,4 @@
 module Paasal
-
   # The ErrorHelper class extends {Grape::API::Helpers Grape's Helpers} and provides
   # common methods for the API to raise errors.
   module ErrorHelper
@@ -18,6 +17,5 @@ module Paasal
       log.debug("API error: #{entity[:status]} - #{entity[:message]}")
       error!(entity, entity[:status])
     end
-
   end
 end

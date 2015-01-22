@@ -1,6 +1,5 @@
 module Paasal
   module ErrorBuilder
-
     # This method builds an error entity that complies to our defined exception schema:
     #
     #    {
@@ -17,7 +16,7 @@ module Paasal
     # @param [String] dev_message The developer message with a technical explanation why the error has been raised
     def build_error_entity(error, dev_message = nil)
       {
-          status: error[:status],
+        status: error[:status],
           message: error[:message],
           dev_message: dev_message.nil? ? nil : dev_message,
           error_code: error.key?(:error_code) ? error[:error_code] : nil,
@@ -26,6 +25,5 @@ module Paasal
           with: Paasal::API::Models::Error
       }
     end
-
   end
 end

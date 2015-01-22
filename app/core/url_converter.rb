@@ -1,6 +1,5 @@
 module Paasal
   module UrlConverter
-
     # Convert the URL to the secure 'HTTPS' scheme. Passed URLs must be in one of the following forms:
     #    {scheme}://{prefix.}host.domain
     #    {prefix.}host.domain

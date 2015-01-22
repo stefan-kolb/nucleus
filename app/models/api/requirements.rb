@@ -14,9 +14,7 @@ module Paasal
       # @option hash [String] :version The API version
       # @option hash [Array<Paasal::RequiredMethod>] :methods methods that are required to comply with the API version
       def initialize(hash = nil)
-        if hash.nil?
-          return
-        end
+        return if hash.nil?
         @version = hash['version']
         v = hash['methods']
         if v

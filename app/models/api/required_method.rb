@@ -15,9 +15,7 @@ module Paasal
       # @option hash [String] arguments (0) The number of expected arguments for the method
       def initialize(hash = nil)
         @arguments = 0
-        if hash.nil?
-          return
-        end
+        return if hash.nil?
         @name = hash['name']
         @arguments = hash['arguments']
       end

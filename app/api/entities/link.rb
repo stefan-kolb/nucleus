@@ -9,7 +9,7 @@ module Paasal
         end
 
         expose :href, safe: true, documentation: {
-                        desc: 'The link to the described resource', required: true, type: 'Url' }
+          desc: 'The link to the described resource', required: true, type: 'Url' }
       end
     end
   end

@@ -6,7 +6,6 @@ module Paasal
   # 1xx => Startup failed
   #
   module ExitCodes
-
     ##########################
     ### Startup Exceptions ###
     ##########################
@@ -19,6 +18,5 @@ module Paasal
 
     # Malformed adapter configuration, could not grant to load all providers
     INVALID_ADAPTER_CONFIG = 102
-
   end
 end

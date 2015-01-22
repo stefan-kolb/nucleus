@@ -1,6 +1,6 @@
 require 'grape/middleware/base'
 
-# TODO report BUG and ask how to fix this issue
+# TODO: report BUG and ask how to fix this issue
 module Grape
   module Middleware
     class Formatter < Base
@@ -24,12 +24,10 @@ module Grape
 
       def parse_body(body, parser)
         body = (env['api.request.body'] = parser.call(body, env))
-        if body.is_a?(Hash)
-          body_to_env(body)
-        end
+        body_to_env(body) if body.is_a?(Hash)
       rescue StandardError => e
         # patched to handle parsing errors via the rescue handlers
-        if e.kind_of?(MultiJson::ParseError)
+        if e.is_a?(MultiJson::ParseError)
           raise Paasal::Errors::BadRequestError, e.message.gsub(/795: /, '')
         else
           throw :error, status: 400, message: e.message

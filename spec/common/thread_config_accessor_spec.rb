@@ -1,29 +1,28 @@
 require_relative '../../app/core/thread_config_accessor'
 
 class ThreadedConfig
-  thread_config_accessor :setting_a, :default => 5
+  thread_config_accessor :setting_a, default: 5
 end
 
 class ThreadedConfigParentA
 end
 
 class ThreadedConfigParentB
-  thread_config_accessor :setting_a, :default => 13
+  thread_config_accessor :setting_a, default: 13
 end
 
 class ThreadedConfigChildA < ThreadedConfigParentA
-  thread_config_accessor :setting_a, :default => 11
+  thread_config_accessor :setting_a, default: 11
 end
 
 class ThreadedConfigChildB < ThreadedConfigParentB
 end
 
 class ThreadedConfigReadOnly
-  thread_config_accessor_readonly :setting_a, :default => 7
+  thread_config_accessor_readonly :setting_a, default: 7
 end
 
 describe 'config values accessibility' do
-
   it 'for config defined in base class shall be available to inheriting classes' do
     child = ThreadedConfigChildB.new
     expect(child.setting_a).to eql 13
@@ -40,11 +39,9 @@ describe 'config values accessibility' do
     expect(child.setting_a).to eql 11
     expect { ThreadedConfigParentA.setting_a }.to raise_error(NoMethodError)
   end
-
 end
 
 describe 'thread_config_accessor' do
-
   before :all do
     # create instance
     @config = ThreadedConfig.new
@@ -71,11 +68,9 @@ describe 'thread_config_accessor' do
       expect(@config.setting_a).to eql ThreadedConfig.setting_a
     end.join
   end
-
 end
 
 describe 'thread_config_accessor_readonly' do
-
   before :all do
     # create instance
     @config = ThreadedConfigReadOnly.new

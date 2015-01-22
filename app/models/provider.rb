@@ -7,9 +7,7 @@ module Paasal
     attr_accessor :endpoints        # seq
 
     def initialize(hash = nil)
-      if hash.nil?
-        return
-      end
+      return if hash.nil?
       @name = hash['name']
       @id = hash['id']
 

@@ -1,7 +1,6 @@
 module Paasal
   module API
     module Models
-
       # The Error class has to be thrown each time an error occurs when using the API.
       # Therefore all errors are guaranteed to use the same schema.
       # An error must include the HTTP status code (status), the message (message),
@@ -35,7 +34,7 @@ module Paasal
         }
 
         expose :more_info, safe: true, documentation: {
-           type: 'String', desc: 'Link to more detailed information about the error'
+          type: 'String', desc: 'Link to more detailed information about the error'
         }
       end
     end

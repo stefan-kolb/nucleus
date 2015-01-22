@@ -44,7 +44,7 @@ module Rack
       ended_at = Time.now
       content_length = get_content_length(header)
 
-      FORMAT % [
+      format_inputs = [
         env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR'] || '-',
         request_id,
         env['REMOTE_USER'] || '-',
@@ -57,6 +57,8 @@ module Rack
         content_length,
         ended_at - began_at
       ]
+
+      format(FORMAT, format_inputs)
     end
 
     def get_content_length(headers)

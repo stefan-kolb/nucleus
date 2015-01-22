@@ -5,7 +5,6 @@ module Paasal
         helpers Paasal::SharedParamsHelper
 
         resource :endpoints do
-
           # # LIST endpoints
           # desc 'List of available endpoints'
           # get '/' do

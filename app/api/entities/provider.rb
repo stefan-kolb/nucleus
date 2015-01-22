@@ -18,7 +18,7 @@ module Paasal
         expose :_links, using: Paasal::API::Models::Links, documentation: {
           type: 'References', desc: 'Resource links', is_array: true } do |instance, _o|
           {
-              self: { href: link_resource(%w(providers), instance) },
+            self: { href: link_resource(%w(providers), instance) },
               # link back to the vendor
               parent: { href: link_resource(%w(vendors), instance.vendor) },
               # associated endpoints

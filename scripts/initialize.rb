@@ -27,7 +27,7 @@ begin
   puts 'Initialization complete & configuration locked!'
   puts '-----------------------------------------------'
 
-  # TODO DEBUG CODE TO VISUALISE THE LOADED DB STATE
+  # TODO: DEBUG CODE TO VISUALISE THE LOADED DB STATE
 
   ['v1'].each do |api_version|
     puts '', "API #{api_version}:"

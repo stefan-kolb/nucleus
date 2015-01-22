@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'kwalify'
 
 describe 'The validation of the' do
-
   before :all do
     meta_validator = Kwalify::MetaValidator.instance
     @parser = Kwalify::Yaml::Parser.new(meta_validator)
@@ -22,8 +21,7 @@ describe 'The validation of the' do
     expect(errors).to match_array([])
   end
 
-  # TODO test adapter configs
+  # TODO: test adapter configs
 
-  # TODO test adapter implementations
-
+  # TODO: test adapter implementations
 end

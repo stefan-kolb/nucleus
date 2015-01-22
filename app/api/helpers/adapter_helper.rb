@@ -34,6 +34,5 @@ module Paasal
       auth_headers = RequestStore.store[:adapter].authenticate(credentials[0], credentials[1])
       RequestStore.store[:adapter].cache(credentials[0], credentials[1], auth_headers)
     end
-
   end
 end

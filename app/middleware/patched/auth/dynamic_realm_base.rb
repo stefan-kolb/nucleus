@@ -35,7 +35,7 @@ module Grape
 
         private
 
-        # TODO feature request for grape !?
+        # TODO: feature request for grape !?
         def update_realm_name
           return if !options.key?(:realm_replace) || options[:realm_replace].nil?
           # assign values to the realm template and change the realm name

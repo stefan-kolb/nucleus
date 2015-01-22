@@ -13,7 +13,6 @@ require 'securerandom'
 require 'excon'
 require 'request_store'
 
-
 # configuration
 require_all 'config'
 

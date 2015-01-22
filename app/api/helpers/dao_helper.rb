@@ -69,6 +69,5 @@ module Paasal
       end
       routes.first.instance_variable_get(:@options)[:version]
     end
-
   end
 end

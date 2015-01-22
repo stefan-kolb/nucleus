@@ -93,7 +93,7 @@ module Paasal
         endpoint_dao.set endpoint
         # (4) save in the adapter index entry for fast resolving
         index_entry = AdapterIndexEntry.new('id' => endpoint.id, 'url' => endpoint.url,
-                                              'adapter_clazz' => adapter_clazz)
+                                            'adapter_clazz' => adapter_clazz)
         adapter_dao.set index_entry
       end
     end

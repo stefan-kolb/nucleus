@@ -19,8 +19,8 @@ module Paasal
         expose :_links, using: Paasal::API::Models::Links, documentation: {
           type: 'References', desc: 'Resource links', is_array: true } do |instance, o|
           {
-              self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
-                                                ['applications', instance[:id]]) },
+            self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+                                              ['applications', instance[:id]]) },
               # link back to the provider
               parent: { href: link_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id]) }
           }

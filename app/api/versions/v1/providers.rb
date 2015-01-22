@@ -11,11 +11,9 @@ module Paasal
           def load_provider
             load_entity(provider_dao, :provider_id, 'provider')
           end
-
         end
 
         resource :providers do
-
           # # LIST providers
           # desc 'Return list of providers'
           # get '/' do

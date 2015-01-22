@@ -5,7 +5,6 @@ module Paasal
         helpers Paasal::SharedParamsHelper
 
         resource :endpoints do
-
           # GET all applications behind an endpoint
           desc 'Get all applications that are registered at the endpoint' do
             success Paasal::API::Models::Applications
@@ -14,9 +13,9 @@ module Paasal
           params do
             use :endpoint_id
           end
-          # TODO extract to use only once for all protected resources
+          # TODO: extract to use only once for all protected resources
           get ':endpoint_id/applications' do
-            # TODO use endpoint for the adapter
+            # TODO: use endpoint for the adapter
             applications = repeat_adapter_call_on_invalid_authentication_cache do
               adapter.applications
             end

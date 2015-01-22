@@ -6,7 +6,7 @@ module Paasal
       include Paasal::Logging
 
       # thread-based cache for the api authorization headers
-      thread_config_accessor :auth_headers_cache, :default => {}
+      thread_config_accessor :auth_headers_cache, default: {}
 
       def initialize(endpoint_url)
         @endpoint_url = endpoint_url

@@ -21,7 +21,7 @@ module Paasal
             # IDs can only be assigned to resource links
             if instance_or_id.respond_to?('id')
               link << "/#{instance_or_id.id}" unless instance_or_id.id.nil?
-            elsif instance_or_id.kind_of? String
+            elsif instance_or_id.is_a? String
               link << "/#{instance_or_id}" unless instance_or_id.nil?
             end
           end

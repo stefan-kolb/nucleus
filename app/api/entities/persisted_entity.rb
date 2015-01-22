@@ -1,7 +1,6 @@
 module Paasal
   module API
     module Models
-
       class PersistedEntity < AbstractEntity
         expose :id, safe: true, documentation: {
           desc: 'The ID of the resource',

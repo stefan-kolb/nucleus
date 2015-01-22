@@ -45,7 +45,7 @@ module Paasal
     end
 
     def challenge
-      'Basic realm="%s"' % @realm
+      format('Basic realm="%s"', @realm)
     end
 
     def valid?(auth)

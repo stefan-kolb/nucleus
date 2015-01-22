@@ -41,7 +41,7 @@ module Paasal
       end
 
       def delete(entity_id)
-        # TODO cascade delete for vendor --> provider --> endpoint in the controller
+        # TODO: cascade delete for vendor --> provider --> endpoint in the controller
         use_db do |db|
           db.lock do
             if db.key?(entity_id)

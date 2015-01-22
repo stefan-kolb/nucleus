@@ -7,9 +7,7 @@ module Paasal
     attr_accessor :url
 
     def initialize(hash = nil)
-      if hash.nil?
-        return
-      end
+      return if hash.nil?
       @id = hash['id']
       @url = hash['url']
       @adapter_clazz = hash['adapter_clazz']

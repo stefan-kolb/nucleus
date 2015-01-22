@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     class CloudFoundryAdapter < Paasal::Adapters::BaseAdapter
-      # TODO how to assert that the class implements all required operations?
+      # TODO: how to assert that the class implements all required operations?
 
       def start
       end

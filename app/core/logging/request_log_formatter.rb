@@ -19,15 +19,15 @@ module Paasal
           request_part = "[#{Thread.current[:paasal_request_id]}]"
         end
 
-        FORMAT % [severity[0..0], request_part, format_datetime(time),
-                  $PID, severity, progname, msg2str(msg)]
+        format(FORMAT, [severity[0..0], request_part, format_datetime(time),
+                        $PID, severity, progname, msg2str(msg)])
       end
 
       private
 
       def format_datetime(time)
         if @datetime_format.nil?
-          time.strftime('%Y-%m-%dT%H:%M:%S.') << '%06d ' % time.usec
+          format(time.strftime('%Y-%m-%dT%H:%M:%S.') << '%06d ', time.usec)
         else
           time.strftime(@datetime_format)
         end

@@ -11,11 +11,9 @@ module Paasal
           def load_vendor
             load_entity(vendor_dao, :vendor_id, 'vendor')
           end
-
         end
 
         resource :vendors do
-
           # LIST vendors
           desc 'List of supported vendors in this API version' do
             success Paasal::API::Models::Vendors
@@ -54,8 +52,7 @@ module Paasal
             present providers, with: Models::Providers
           end
 
-          # TODO POST
-
+          # TODO: POST
         end
       end
     end

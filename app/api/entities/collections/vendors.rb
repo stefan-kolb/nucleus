@@ -21,7 +21,7 @@ module Paasal
         expose :_links, using: Paasal::API::Models::Links, documentation: {
           type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
           {
-              self: { href: link_resource(%w(vendors)) },
+            self: { href: link_resource(%w(vendors)) },
               # link back to the api version
               parent: { href: link_api_version }
           }
