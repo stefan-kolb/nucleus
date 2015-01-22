@@ -22,8 +22,8 @@ module Paasal
           type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
           {
             self: { href: link_resource(%w(vendors)) },
-              # link back to the api version
-              parent: { href: link_api_version }
+            # link back to the api version
+            parent: { href: link_api_version }
           }
         end
       end

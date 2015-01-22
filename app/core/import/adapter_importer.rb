@@ -24,14 +24,11 @@ module Paasal
 
       api_versions.each do |api_version|
         log.debug "Loading adapters for API #{api_version}..."
-
         config_files.each do |adapter_config|
           load_adapter_config(adapter_config, api_version)
         end
-
-        # log.debug "... loaded #{vendor_count} vendors with #{provider_count} providers "\
-        # "and #{endpoint_count} endpoints for API #{api_version}"
       end
+      log.info 'Adapter import completed'
     end
 
     private
@@ -55,6 +52,7 @@ module Paasal
     end
 
     def save_vendor(vendor, api_version, adapter_clazz)
+      log.debug "... persisting vendor: #{vendor.name}"
       # instantiate DAOs for this API version
       vendor_dao = Paasal::DB::VendorDao.new api_version
 
@@ -69,6 +67,7 @@ module Paasal
 
       # finally persist recursively
       vendor.providers.each do |provider|
+        log.debug "... persisting provider: #{provider.name}"
         # (1), save the provider and assign him an ID
         provider_dao.set provider
         save_endpoints(provider, api_version, adapter_clazz) unless provider.endpoints.nil?
@@ -85,6 +84,7 @@ module Paasal
       adapter_dao = Paasal::DB::AdapterDao.new api_version
 
       provider.endpoints.each do |endpoint|
+        log.debug "... persisting endpoint: #{endpoint.name}"
         # (2a), assign the provider's ID to the endpoint
         endpoint.provider = provider.id
         # (2b), secure the endpoints URL by using only the https scheme

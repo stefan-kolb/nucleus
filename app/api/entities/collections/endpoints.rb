@@ -23,8 +23,8 @@ module Paasal
           {
             self: { href: link_child_resource(%w(providers), o[:env]['rack.routing_args'][:provider_id],
                                               %w(endpoints)) },
-              # link back to the provider
-              parent: { href: link_resource(%w(providers), o[:env]['rack.routing_args'][:provider_id]) }
+            # link back to the provider
+            parent: { href: link_resource(%w(providers), o[:env]['rack.routing_args'][:provider_id]) }
           }
         end
       end

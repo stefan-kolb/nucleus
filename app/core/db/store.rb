@@ -11,7 +11,7 @@ module Paasal
 
       def use_db
         # utilize the configured file store
-        path = configatron.db.path
+        path = "#{configatron.db.path}"
         path << '/' unless configatron.db.path.end_with?(File::SEPARATOR)
         path << @api_version
         FileUtils.mkpath path
