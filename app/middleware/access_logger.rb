@@ -44,21 +44,17 @@ module Rack
       ended_at = Time.now
       content_length = get_content_length(header)
 
-      format_inputs = [
-        env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR'] || '-',
-        request_id,
-        env['REMOTE_USER'] || '-',
-        ended_at.strftime('%d/%b/%Y:%H:%M:%S %z'),
-        env[REQUEST_METHOD],
-        env[PATH_INFO],
-        env[QUERY_STRING].empty? ? '' : "?#{env[QUERY_STRING]}",
-        env['HTTP_VERSION'],
-        status.to_s[0..3],
-        content_length,
-        ended_at - began_at
-      ]
-
-      format(FORMAT, format_inputs)
+      format(FORMAT, env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR'] || '-',
+             request_id,
+             env['REMOTE_USER'] || '-',
+             ended_at.strftime('%d/%b/%Y:%H:%M:%S %z'),
+             env[REQUEST_METHOD],
+             env[PATH_INFO],
+             env[QUERY_STRING].empty? ? '' : "?#{env[QUERY_STRING]}",
+             env['HTTP_VERSION'],
+             status.to_s[0..3],
+             content_length,
+             ended_at - began_at)
     end
 
     def get_content_length(headers)

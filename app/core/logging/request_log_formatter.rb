@@ -19,8 +19,8 @@ module Paasal
           request_part = "[#{Thread.current[:paasal_request_id]}]"
         end
 
-        format(FORMAT, [severity[0..0], request_part, format_datetime(time),
-                        $PID, severity, progname, msg2str(msg)])
+        format(FORMAT, severity[0..0], request_part, format_datetime(time),
+               $PID, severity, progname, msg2str(msg))
       end
 
       private
