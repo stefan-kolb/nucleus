@@ -7,12 +7,12 @@ module Paasal
         end
 
         expose :name, documentation: {
-          type: 'String', desc: 'Application name, e.g. \'murmuring-shelf-1234\''
+          type: String, desc: 'Application name, e.g. \'murmuring-shelf-1234\''
         }
 
         # expose :data do
         #   expose :url, documentation: {
-        #     type: 'String', desc: 'Link to the endpoint\'s root node'
+        #     type: String, desc: 'Link to the endpoint\'s root node'
         #   }
         # end
 

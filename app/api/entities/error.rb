@@ -22,11 +22,11 @@ module Paasal
         }
 
         expose :message, documentation: {
-          type: 'String', desc: 'Basic explanation of the error'
+          type: String, desc: 'Basic explanation of the error'
         }
 
         expose :dev_message, documentation: {
-          type: 'String', desc: 'A detailed message that includes developers notes about how to fix the error'
+          type: String, desc: 'A detailed message that includes developers notes about how to fix the error'
         }
 
         expose :error_code, documentation: {
@@ -34,7 +34,7 @@ module Paasal
         }
 
         expose :more_info, safe: true, documentation: {
-          type: 'String', desc: 'Link to more detailed information about the error'
+          type: String, desc: 'Link to more detailed information about the error'
         }
       end
     end

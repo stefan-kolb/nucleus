@@ -6,9 +6,12 @@ module Paasal
           'Vendor'
         end
 
-        expose :name, documentation: { type: 'String', desc: 'Vendor name, e.g. \'Cloud Foundry\'' }
+        expose :name, documentation: {
+          type: String, desc: 'Vendor name, e.g. \'Cloud Foundry\'',
+          presence: true,
+          allow_blank: false }
 
-        expose :key, documentation: { type: 'String', desc: 'Vendor key, e.g. \'cloud-foundry\'' }
+        expose :key, documentation: { type: String, desc: 'Vendor key, e.g. \'cloud-foundry\'' }
 
         expose :providers, documentation: {
           type: 'Paasal::API::Models::Provider',
@@ -20,10 +23,10 @@ module Paasal
           type: 'References', desc: 'Resource links', is_array: true } do |instance, _o|
           {
             self: { href: link_resource(%w(vendors), instance) },
-              # link back to the api version
-              parent: { href: link_resource },
-              # associated providers
-              providers: { href: link_child_resource(%w(vendors), instance, %w(providers)) }
+            # link back to the api version
+            parent: { href: link_resource },
+            # associated providers
+            providers: { href: link_child_resource(%w(vendors), instance, %w(providers)) }
           }
         end
       end

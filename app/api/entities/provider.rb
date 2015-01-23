@@ -7,8 +7,9 @@ module Paasal
         end
 
         expose :name, documentation: {
-          type: 'String', desc: 'Provider name, e.g. \'Pivotal CF\''
-        }
+          type: String, desc: 'Provider name, e.g. \'Pivotal CF\'',
+          presence: true,
+          allow_blank: false }
 
         expose :endpoints, documentation: {
           type: 'Paasal::API::Endpoint', is_array: true,

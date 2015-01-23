@@ -4,7 +4,7 @@ module Paasal
       # An ApiVersion belongs to the API of our application and offers
       # multiple resources according to a defined schema.
       class ApiVersion < AbstractEntity
-        expose :name, documentation: { type: 'String', desc: 'API version, e.g. v1 or v2' }
+        expose :name, documentation: { type: String, desc: 'API version, e.g. v1 or v2' }
 
         expose :resources,  documentation: {
           type: 'Paasal::API::Models::VersionResource', is_array: true,

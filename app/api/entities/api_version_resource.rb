@@ -3,7 +3,7 @@ module Paasal
     module Models
       class ApiVersionResource < AbstractEntity
         expose :name, documentation: {
-          type: 'String', desc: 'Resource name, e.g. providers'
+          type: String, desc: 'Resource name, e.g. providers'
         }
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
