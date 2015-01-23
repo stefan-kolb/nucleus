@@ -6,15 +6,13 @@ module Paasal
 
     def initialize(hash = nil)
       return if hash.nil?
-      @name = hash['name']
-      @id = hash['id']
+      hash = HashWithIndifferentAccess.new hash
+      @name = hash[:name]
+      @id = hash[:id]
+      @providers = []
 
-      v = hash['providers']
-      if v
-        @providers = v.map! { |e| e.is_a?(Paasal::Provider) ? e : Paasal::Provider.new(e) }
-      else
-        @providers = v
-      end
+      return unless hash.key?(:providers)
+      @providers = hash[:providers].map! { |e| e.is_a?(Paasal::Provider) ? e : Paasal::Provider.new(e) }
     end
 
     def representation

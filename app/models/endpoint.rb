@@ -8,9 +8,10 @@ module Paasal
 
     def initialize(hash = nil)
       return if hash.nil?
-      @name = hash['name']
-      @url = hash['url']
-      @id = hash['id']
+      hash = HashWithIndifferentAccess.new hash
+      @name = hash[:name]
+      @url = hash[:url]
+      @id = hash[:id]
     end
 
     def representation

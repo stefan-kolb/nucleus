@@ -25,7 +25,7 @@ end
 
 task routes: :environment do
   Paasal::API::RootAPI.routes.each do |route|
-    next if route.nil?
+    next if route.nil? || route.route_method.nil?
     method = route.route_method.ljust(10)
     path = route.route_path
     version = route.instance_variable_get(:@options)[:version]

@@ -5,13 +5,13 @@ module Paasal
         helpers Paasal::SharedParamsHelper
 
         resource :endpoints do
-          # # LIST endpoints
-          # desc 'List of available endpoints'
-          # get '/' do
-          #   endpoint_dao = Paasal::DB::EndpointDao.new self.version
-          #   endpoints = endpoint_dao.all
-          #   present endpoints, with: Models::Endpoints
-          # end
+          # LIST endpoints
+          desc 'List of all available endpoints'
+          get '/' do
+            endpoint_dao = Paasal::DB::EndpointDao.new version
+            endpoints = endpoint_dao.all
+            present endpoints, with: Models::Endpoints
+          end
 
           # GET endpoint
           desc 'Get a selected endpoint entity via its ID'
@@ -21,7 +21,7 @@ module Paasal
           get ':endpoint_id' do
             present load_endpoint, with: Models::Endpoint
           end
-        end # provider namespace
+        end # endpoint namespace
       end
     end
   end

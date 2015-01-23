@@ -38,6 +38,8 @@ module Paasal
             db.set!(entity.id, entity)
           end
         end
+        # return the updated and persisted entity
+        entity
       end
 
       def delete(entity_id)
