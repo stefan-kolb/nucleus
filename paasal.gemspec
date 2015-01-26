@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'PaaSal is an abstraction layer for the management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
-  spec.homepage      = 'paasal.github.io/croeck'
+  spec.homepage      = 'https://paasal.github.io/croeck'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
