@@ -3,7 +3,7 @@ module Paasal
     module V1
       class Base < Grape::API
         # specify the version for all mounted endpoints
-        version 'v1', using: :path, vendor: 'paasal', format: :json
+        version 'v1', using: :header, vendor: 'paasal', format: :json
 
         # dynamic mounting is not possible due to incompatibility with grape-swagger
         mount V1::Providers
