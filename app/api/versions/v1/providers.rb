@@ -69,6 +69,50 @@ module Paasal
             provider_dao.set provider
             present endpoint, with: Models::Endpoint
           end
+
+          desc 'Update a provider entity' do
+            success Models::Provider
+            failure [[200, 'Provider updated', Models::Provider]].concat ErrorResponses.standard_responses
+          end
+          params do
+            use :provider_id
+            use :provider_patch
+          end
+          patch ':provider_id' do
+            # load the endpoint and verify it is valid
+            provider = load_provider
+
+            # :provider is required, therefore no check for the key is required
+            update_fields(provider, Models::Provider.documentation, declared(params, include_missing: false)[:provider])
+
+            # save the changes
+            provider_dao.set provider
+            # build response
+            provider.endpoints = endpoint_dao.get_collection(provider.endpoints)
+            present provider, with: Models::Provider
+          end
+
+          desc 'Delete a provider entity' do
+            # empty response body, therefore no actual success message
+            failure [[204, 'Provider deleted']].concat ErrorResponses.standard_responses
+          end
+          params do
+            use :provider_id
+          end
+          delete ':provider_id' do
+            provider = load_provider
+            provider_dao.delete(params[:provider_id])
+            # remove the provider from the vendor
+            vendor = load_vendor(vendor_id: provider.vendor)
+            vendor.providers.delete provider.id unless vendor.providers.nil?
+            vendor_dao.set vendor
+            # cascade delete operation, remove all associated endpoints
+            provider.endpoints.each do |endpoint_id|
+              endpoint_dao.delete endpoint_id
+            end unless provider.endpoints.nil?
+            # respond with 204 when entity is deleted (see rfc7231), no content
+            status 204
+          end
         end # provider namespace
 
         # resource "providers/:providerName/:providerVersion" do
