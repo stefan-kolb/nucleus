@@ -9,10 +9,6 @@ module Paasal
           params :vendor_id do
             requires :vendor_id, type: String, desc: "The vendor's ID"
           end
-
-          def load_vendor
-            load_entity(vendor_dao, :vendor_id, 'vendor')
-          end
         end
 
         resource :vendors do

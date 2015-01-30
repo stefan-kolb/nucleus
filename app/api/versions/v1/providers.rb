@@ -9,10 +9,6 @@ module Paasal
           params :provider_id do
             requires :provider_id, type: String, desc: "The provider's ID"
           end
-
-          def load_provider
-            load_entity(provider_dao, :provider_id, 'provider')
-          end
         end
 
         resource :providers do

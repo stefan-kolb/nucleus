@@ -31,6 +31,14 @@ module Paasal
       load_entity(endpoint_dao, :endpoint_id, 'endpoint', params)
     end
 
+    def load_provider(params = params)
+      load_entity(provider_dao, :provider_id, 'provider', params)
+    end
+
+    def load_vendor(params = params)
+      load_entity(vendor_dao, :vendor_id, 'vendor', params)
+    end
+
     # Load an entity's instance from the store
     #
     # @params [Paasal::Store] dao the DAO to use for loading
