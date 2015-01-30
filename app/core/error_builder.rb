@@ -14,15 +14,17 @@ module Paasal
     #
     # @param [Hash] error Constant that includes a default message, the status and error code
     # @param [String] dev_message The developer message with a technical explanation why the error has been raised
-    def build_error_entity(error, dev_message = nil)
+    def build_error_entity(error, dev_message = nil, headers = {})
       {
         status: error[:status],
-          message: error[:message],
-          dev_message: dev_message.nil? ? nil : dev_message,
-          error_code: error.key?(:error_code) ? error[:error_code] : nil,
-          more_info: error.key?(:error_code) ? 'linktodoc' : nil,
-          # always use this entity to comply with the error schema
-          with: Paasal::API::Models::Error
+        message: error[:message],
+        dev_message: dev_message.nil? ? nil : dev_message,
+        error_code: error.key?(:error_code) ? error[:error_code] : nil,
+        more_info: error.key?(:error_code) ? 'linktodoc' : nil,
+        # headers to append to the rack response
+        headers: headers,
+        # always use this entity to comply with the error schema
+        with: Paasal::API::Models::Error
       }
     end
   end

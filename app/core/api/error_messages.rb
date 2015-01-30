@@ -30,6 +30,12 @@ module Paasal
         status: 400,
         error_code: 4001
       }
+
+      INVALID_ACCEPT_HEADER = {
+        message: 'Invalid Accept header, vendor or version not found',
+        status: 406,
+        error_code: 406
+      }
     end
   end
 end

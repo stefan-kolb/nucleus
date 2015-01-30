@@ -5,6 +5,7 @@ module Paasal
        [401, 'Unauthorized', Paasal::API::Models::Error],
        [403, 'Forbidden', Paasal::API::Models::Error],
        [404, 'Resource not found', Paasal::API::Models::Error],
+       [406, 'API vendor or version not found', Paasal::API::Models::Error],
        [500, 'Internal processing error', Paasal::API::Models::Error]]
     end
   end
