@@ -3,7 +3,6 @@ module Paasal
     module Models
       # The AbstractEntity is designed as super-class for all entities that shall be exposed via the API.
       # For exposing the data we use {Grape::Entity the Grape::Entity class}.
-      # Each entity has to expose a unique ID and a link to the entity's resource itself.
       # To simplify the link creation, the class provides the {#create_link create_link method}.
       class AbstractEntity < Grape::Entity
         # Create a link to a resource representation.
@@ -14,19 +13,14 @@ module Paasal
         #
         # @return [String] link to a resource of the API
         def link_resource(namespaces = nil, instance_or_id = nil)
-          link = link_api_version
-          # resource can only exist for an API version
-          unless namespaces.nil?
-            link << "/#{namespaces.join('/')}"
-            # IDs can only be assigned to resource links
-            if instance_or_id.respond_to?('id')
-              link << "/#{instance_or_id.id}" unless instance_or_id.id.nil?
-            elsif instance_or_id.is_a? String
-              link << "/#{instance_or_id}" unless instance_or_id.nil?
-            end
+          namespaces = [] if namespaces.nil?
+          id = ''
+          if instance_or_id.respond_to?('id')
+            id = instance_or_id.id unless instance_or_id.id.nil?
+          elsif instance_or_id.is_a? String
+            id = instance_or_id unless instance_or_id.nil?
           end
-          # return the created link
-          link
+          link_generator.resource(namespaces, id)
         end
 
         # Create a link to a child-resource representation.
@@ -56,10 +50,11 @@ module Paasal
         #
         # @return [String] link to the API or API version documentation
         def link_docs
+          # TODO: move to ApiVersion class
           if self.is_a?(ApiVersion)
-            "#{root_url}/docs/api/#{object[:name]}"
+            "#{link_generator.root_url}/docs/api/#{object[:name]}"
           else
-            "#{root_url}/docs"
+            "#{link_generator.root_url}/docs"
           end
         end
 
@@ -68,13 +63,8 @@ module Paasal
         #
         # @return [String] link to the current API version
         def link_api_version
-          link = link_api_root
-          if self.is_a?(ApiVersion)
-            link << "/#{object[:name]}"
-          elsif !options[:version].nil?
-            link << "/#{options[:version]}"
-          end
-          link
+          # link_generator.api_version
+          link_api_root
         end
 
         # Create a link to the API root node.
@@ -88,6 +78,18 @@ module Paasal
 
         def root_url
           "#{options[:env]['rack.url_scheme']}://#{options[:env]['HTTP_HOST']}"
+        end
+
+        def link_generator
+          return @link_generator unless @link_generator.nil?
+          # Create a new generator instance
+          if self.is_a?(ApiVersion)
+            version = object[:name]
+          elsif !options[:version].nil?
+            version = options[:version]
+          end
+          @link_generator = Paasal::LinkGenerator.new(options[:env], version)
+          @link_generator
         end
       end
     end
