@@ -34,9 +34,10 @@ group :development do
 end
 
 group :test do
-  gem 'rake'
-  gem 'minitest'
   gem 'airborne'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'factory_girl'
+  gem 'faker'
+  gem 'rake'
   gem 'simplecov', require: false
 end

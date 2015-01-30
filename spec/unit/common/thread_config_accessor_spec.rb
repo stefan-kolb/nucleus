@@ -1,4 +1,4 @@
-require_relative '../../app/core/thread_config_accessor'
+require 'app/core/thread_config_accessor'
 
 class ThreadedConfig
   thread_config_accessor :setting_a, default: 5

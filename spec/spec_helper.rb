@@ -16,4 +16,24 @@ else
   end
 end
 
+# load configuration for integration tests
+require_relative '../scripts/load_config'
+# disable logging
+configatron.logging.level = Logger::Severity::FATAL
+
+# require our app
 require_relative '../scripts/load_app'
+
+# initialize db, versions and auth strategy
+require_relative '../scripts/initialize_core'
+
+# load FactoryGirl
+require 'factory_girl'
+RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+end
+require 'faker'
+require_relative 'factories/models.rb'
+
+# require shared examples
+require_all 'spec/support'
