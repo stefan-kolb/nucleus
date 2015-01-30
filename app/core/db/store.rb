@@ -4,39 +4,42 @@ require 'time'
 module Paasal
   module DB
     class Store
+      include Paasal::Logging
+
       def initialize(api_version, store_type)
         @store_type = store_type
         @api_version = api_version
+        @db = open_db
+        # make sure DB gets closed
+        at_exit do
+          log.debug "Closing DB for #{store_type} and #{api_version}"
+          @db.close
+        end
       end
 
-      def use_db
+      def open_db
         # utilize the configured file store
         path = "#{configatron.db.path}"
         path << '/' unless configatron.db.path.end_with?(File::SEPARATOR)
         path << @api_version
         FileUtils.mkpath path
-        db = Daybreak::DB.new("#{path}/#{@store_type}")
-        yield db
-      ensure
-        db.close unless db.nil?
+        Daybreak::DB.new("#{path}/#{@store_type}")
       end
 
       def set(entity)
         update_timestamps(entity)
 
         # finally save to the DB
-        use_db do |db|
-          if entity.id.nil?
-            loop do
-              # assign unique ID (only for entities added via the API)
-              entity.id = SecureRandom.uuid if entity.id.nil?
-              break unless db.key? entity.id
-            end
+        if entity.id.nil?
+          loop do
+            # assign unique ID (only for entities added via the API)
+            entity.id = SecureRandom.uuid if entity.id.nil?
+            break unless @db.key? entity.id
           end
+        end
 
-          db.lock do
-            db.set!(entity.id, entity)
-          end
+        @db.lock do
+          @db.set!(entity.id, entity)
         end
         # return the updated and persisted entity
         entity
@@ -44,51 +47,49 @@ module Paasal
 
       def delete(entity_id)
         # TODO: cascade delete for vendor --> provider --> endpoint in the controller
-        use_db do |db|
-          db.lock do
-            if db.key?(entity_id)
-              # id was given, delete now
-              db.delete!(entity_id)
-            else
-              fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
-            end
+        @db.lock do
+          if @db.key?(entity_id)
+            # id was given, delete now
+            @db.delete!(entity_id)
+          else
+            fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
           end
         end
       end
 
       def get_collection(entity_ids)
         response = []
-        use_db do |db|
+        unless entity_ids.nil? && entity_ids.empty?
           entity_ids.each do |entity_id|
-            response << db.get(entity_id)
+            response << @db.get(entity_id)
           end
-        end unless entity_ids.nil? && entity_ids.empty?
+        end
         response
       end
 
       def get(entity_id)
-        use_db do |db|
-          db.get(entity_id)
-        end
+        @db.get(entity_id)
       end
 
       def all
         instances = []
-        use_db do |db|
-          db.each do |_id, value|
-            instances << value
-          end
+        @db.each do |_id, value|
+          instances << value
         end
         instances
       end
 
       def keys
-        use_db(&:keys)
+        @db.keys
       end
 
       def key?(key)
-        use_db do |db|
-          db.key? key
+        @db.key? key
+      end
+
+      def clear
+        @db.lock do
+          @db.clear unless @db.empty?
         end
       end
 
@@ -98,9 +99,8 @@ module Paasal
         now = Time.now.utc.iso8601
         if entity.respond_to?(:created_at) && entity.created_at.nil?
           # assign created timestamp
-          entity.created_at = now if entity.respond_to?(:updated_at=)
+          entity.created_at = now if entity.respond_to?(:created_at=)
         end
-        return unless entity.respond_to?(:updated_at)
         # assign update timestamp
         entity.updated_at = now if entity.respond_to?(:updated_at=)
       end

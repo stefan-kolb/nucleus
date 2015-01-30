@@ -62,7 +62,7 @@ module Paasal
       version = version_for_dao
       return RequestStore.store[clazz] if RequestStore.exist?(clazz)
       log.debug("Create #{clazz} for API #{version}")
-      dao = clazz.new version
+      dao = clazz.instance version
       RequestStore.store[clazz] = dao
       dao
     end

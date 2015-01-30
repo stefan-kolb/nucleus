@@ -54,7 +54,7 @@ module Paasal
     def save_vendor(vendor, api_version, adapter_clazz)
       log.debug "... persisting vendor: #{vendor.name}"
       # instantiate DAOs for this API version
-      vendor_dao = Paasal::DB::VendorDao.new api_version
+      vendor_dao = Paasal::DB::VendorDao.instance api_version
 
       save_providers(vendor, api_version, adapter_clazz) unless vendor.providers.nil?
       # (7), finally save the vendor after all nested entities got their IDs
@@ -63,7 +63,7 @@ module Paasal
     end
 
     def save_providers(vendor, api_version, adapter_clazz)
-      provider_dao = Paasal::DB::ProviderDao.new api_version
+      provider_dao = Paasal::DB::ProviderDao.instance api_version
 
       # finally persist recursively
       vendor.providers.each do |provider|
@@ -80,8 +80,8 @@ module Paasal
     end
 
     def save_endpoints(provider, api_version, adapter_clazz)
-      endpoint_dao = Paasal::DB::EndpointDao.new api_version
-      adapter_dao = Paasal::DB::AdapterDao.new api_version
+      endpoint_dao = Paasal::DB::EndpointDao.instance api_version
+      adapter_dao = Paasal::DB::AdapterDao.instance api_version
 
       provider.endpoints.each do |endpoint|
         log.debug "... persisting endpoint: #{endpoint.name}"
