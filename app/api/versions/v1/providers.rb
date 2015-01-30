@@ -13,17 +13,19 @@ module Paasal
 
         resource :providers do
           # LIST providers
-          desc 'Return a list of all providers'
+          desc 'Return a list of all providers' do
+            success Models::Providers
+            failure [[200, 'Providers retrieved', Models::Providers]].concat ErrorResponses.standard_responses
+          end
           get '/' do
-            provider_dao = Paasal::DB::ProviderDao.new version
             providers = provider_dao.all
             present providers, with: Models::Providers
           end
 
           # GET provider
           desc 'Get a selected provider entity via its ID' do
-            success Paasal::API::Models::Provider
-            failure ErrorResponses.standard_responses
+            success Models::Provider
+            failure [[200, 'Provider retrieved', Models::Provider]].concat ErrorResponses.standard_responses
           end
           params do
             use :provider_id
@@ -36,8 +38,8 @@ module Paasal
 
           # GET a provider's endpoints
           desc 'Get all endpoints that are offered by this provider' do
-            success Paasal::API::Models::Endpoints
-            failure ErrorResponses.standard_responses
+            success Models::Endpoints
+            failure [[200, 'Endpoints retrieved', Models::Endpoints]].concat ErrorResponses.standard_responses
           end
           params do
             use :provider_id
@@ -49,8 +51,9 @@ module Paasal
           end
 
           desc 'Create a new endpoint entity that belongs to this provider' do
-            success Paasal::API::Models::Endpoint
-            failure ErrorResponses.standard_responses
+            success Models::Endpoint
+            failure [[201, 'Endpoint created', Models::Endpoint]].concat ErrorResponses.standard_responses
+            headers(Location: { description: 'Link to the created entity', required: true })
           end
           params do
             use :provider_id
@@ -59,7 +62,8 @@ module Paasal
           post ':provider_id/endpoints' do
             # load the vendor and verify it is valid
             provider = load_provider
-            # If validation passed, all required fields are available and not null (unless explicitly allowed)
+            # If validation passed, all required fields are available and not null (unless explicitly allowed).
+            # Fields that were not allowed (id, ...) are excluded via declared(params)
             endpoint = Endpoint.new declared(params)[:endpoint]
             endpoint.provider = provider.id
             # automatically assigns a unique ID, but the name does not have to be unique
@@ -67,6 +71,8 @@ module Paasal
             # finally assign the endpoint to the provider's collection and present the created entity
             provider.endpoints << endpoint.id
             provider_dao.set provider
+            # add location header that refers to the created entity (see RFC7231 p.68)
+            header 'Location', link_generator.resource(%w(endpoints), endpoint.id)
             present endpoint, with: Models::Endpoint
           end
 

@@ -6,15 +6,20 @@ module Paasal
 
         resource :endpoints do
           # LIST endpoints
-          desc 'List of all available endpoints'
+          desc 'List of all available endpoints' do
+            success Models::Endpoints
+            failure [[200, 'Endpoints retrieved', Models::Endpoints]].concat ErrorResponses.standard_responses
+          end
           get '/' do
-            endpoint_dao = Paasal::DB::EndpointDao.new version
             endpoints = endpoint_dao.all
             present endpoints, with: Models::Endpoints
           end
 
           # GET endpoint
-          desc 'Get a selected endpoint entity via its ID'
+          desc 'Get a selected endpoint entity via its ID' do
+            success Models::Endpoint
+            failure [[200, 'Endpoint retrieved', Models::Endpoint]].concat ErrorResponses.standard_responses
+          end
           params do
             use :endpoint_id
           end
