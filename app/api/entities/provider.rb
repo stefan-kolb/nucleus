@@ -8,15 +8,16 @@ module Paasal
 
         expose :name, documentation: {
           type: String, desc: 'Provider name, e.g. \'Pivotal CF\'',
-          presence: true,
+          required_details: { request: { POST: true, PATCH: false }, response: true },
           allow_blank: false }
 
         expose :endpoints, documentation: {
-          type: 'Paasal::API::Endpoint', is_array: true,
+          type: 'Endpoint', is_array: true,
           desc: 'Endpoints of the provider\'s service'
         }, using: Models::Endpoint, unless: { collection: true }
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
+          required_details: { request: false, response: true },
           type: 'References', desc: 'Resource links', is_array: true } do |instance, _o|
           {
             self: { href: link_resource(%w(providers), instance) },

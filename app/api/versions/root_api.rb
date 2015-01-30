@@ -5,6 +5,7 @@ module Paasal
       helpers Paasal::AdapterHelper
       helpers Paasal::DaoHelper
       helpers Paasal::ErrorHelper
+      helpers Paasal::LinkGeneratorHelper
       helpers Paasal::LogHelper
       helpers Paasal::ResponseHelper
       helpers Paasal::SharedParamsHelper

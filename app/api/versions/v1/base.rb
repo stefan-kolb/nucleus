@@ -11,7 +11,7 @@ module Paasal
         mount V1::Vendors
         mount V1::Auth
 
-        get '/' do
+        get '/resources' do
           # TODO: move to helper and reuse in later versions
           resource_names = %w(vendors providers endpoints)
           resource_hashes = []

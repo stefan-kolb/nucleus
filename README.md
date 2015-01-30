@@ -61,6 +61,16 @@ As a reward of providing swagger-compatible API docs, clients can be generated f
 
 For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
 
+### Accept Header
+
+Paasal always uses the latest API version if no `Accept` header is specified.
+We therefore **strongly encourage** you to always specify the `Accept` header.
+The vendor thereby must be set to `paasal` and the version must be available.
+Otherwise an error with the HTTP status `406` is returned.
+A sample `Accept` header would be:
+
+    Accept = application/vnd.paasal-v1
+
 ## Schema validation
 
 The generated schema can be validated against the [swagger specification](https://github.com/swagger-api/swagger-spec).
