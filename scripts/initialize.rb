@@ -4,36 +4,23 @@ include Paasal::Logging
 require_relative 'shutdown.rb'
 
 begin
-  # set the temporary db file if is has not been specified via the config
-  unless configatron.db.key?(:path)
-    puts 'No custom store specified, generating temporary store filename'
-    configatron.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.store"
-  end
+  require_relative 'initialize_core.rb'
   log.info "DB store assigned to #{configatron.db.path}"
 
   # load vendors and put them into the db stores
   adapter_loader = Paasal::AdapterImporter.new
   adapter_loader.import_adapters
 
-  # Check the API versions once and make them available via configatron
-  api_detector = Paasal::ApiDetector.new
-  configatron.api.versions = api_detector.api_versions
-
-  # Add authorization strategy to grape and replace default http_basic
-  Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Authenticator, ->(options) { [options[:realm]] })
-
-  # Lock the configuration, so it can't be manipulated
-  configatron.lock!
   puts 'Initialization complete & configuration locked!'
   puts '-----------------------------------------------'
 
   # TODO: DEBUG CODE TO VISUALISE THE LOADED DB STATE
 
-  ['v1'].each do |api_version|
+  configatron.api.versions.each do |api_version|
     puts '', "API #{api_version}:"
-    vendor_dao = Paasal::DB::VendorDao.new api_version
-    provider_dao = Paasal::DB::ProviderDao.new api_version
-    endpoint_dao = Paasal::DB::EndpointDao.new api_version
+    vendor_dao = Paasal::DB::VendorDao.instance api_version
+    provider_dao = Paasal::DB::ProviderDao.instance api_version
+    endpoint_dao = Paasal::DB::EndpointDao.instance api_version
 
     vendor_dao.keys.each do |key|
       p vendor_dao.get key

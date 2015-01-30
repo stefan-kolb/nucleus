@@ -2,6 +2,8 @@
 ### Setup Application ###
 #########################
 
+# Load configuration
+require_relative 'scripts/load_config'
 # Load application
 require_relative 'scripts/load_app'
 # Initialize the application

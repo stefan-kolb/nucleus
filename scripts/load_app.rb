@@ -5,16 +5,12 @@ require 'grape-entity'
 require 'grape-swagger'
 require 'require_all'
 require 'logger'
-require 'configatron'
 require 'kwalify'
 require 'daybreak'
 require 'tmpdir'
 require 'securerandom'
 require 'excon'
 require 'request_store'
-
-# configuration
-require_all 'config'
 
 # models
 require_all 'app/models'
