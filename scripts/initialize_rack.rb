@@ -10,10 +10,10 @@ module Paasal
 
         # Prepare logging directory
         root = ::File.dirname(__FILE__)
-        logDir = ::File.join(root,'log')
-        FileUtils.mkdir_p(logDir) unless File.directory?(logDir)
+        log_dir = ::File.join(root, 'log')
+        FileUtils.mkdir_p(log_dir) unless File.directory?(log_dir)
         # Setup request logging for the past 7 days
-        logger = Logger.new(::File.join(root,'log','requests.log'), 'daily', 7)
+        logger = Logger.new(::File.join(root, 'log', 'requests.log'), 'daily', 7)
 
         #########################
         ### Setup Rack Server ###
@@ -32,18 +32,17 @@ module Paasal
         # use Rack::MethodOverride
 
         # redirect to the documentation, but do NOT call the index directly
-        use ::Rack::Static, :urls => {'/docs' => 'redirect.html'}, :root => 'public/swagger-ui'
+        use ::Rack::Static, urls: { '/docs' => 'redirect.html' }, root: 'public/swagger-ui'
         # we do not want robots to scan our API
-        use ::Rack::Static, :urls => {'/robots.txt' => 'robots.txt'}, :root => 'public'
+        use ::Rack::Static, urls: { '/robots.txt' => 'robots.txt' }, root: 'public'
 
         run ::Rack::URLMap.new(
-          {
-            # serve the dynamic API
-            '/' => Paasal::API::RootAPI.new,
-            '/api' => Paasal::API::RootAPI.new,
-            # serves the swagger-ui
-            '/docs' => ::Rack::Directory.new('public/swagger-ui')
-          })
+          # serve the dynamic API
+          '/' => Paasal::API::RootAPI.new,
+          '/api' => Paasal::API::RootAPI.new,
+          # serves the swagger-ui
+          '/docs' => ::Rack::Directory.new('public/swagger-ui')
+        )
       end
     end
   end

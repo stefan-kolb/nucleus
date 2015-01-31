@@ -4,12 +4,21 @@ require 'kwalify'
 describe 'Paasal::Adapters' do
   Paasal::ApiDetector.api_versions.each do |api_version|
     describe "API #{api_version}" do
+      it 'has valid adapter requirements' do
+        expect(Paasal::API.requirements(api_version)).to_not be_nil
+      end
+
       Paasal::Adapters.configuration_files.each do |file|
         adapter_clazz = Paasal::Adapters.adapter_clazz(file, api_version)
         # adapter must not be available for each version (!)
-        if adapter_clazz
-          describe File.basename(file) do
-            let!(:adapter) { adapter_clazz.new 'fake endpoint url' }
+        next unless adapter_clazz
+        describe File.basename(file) do
+          it 'is a valid adapter configuration' do
+            expect(Paasal::VendorParser.parse(file)).to_not be_nil
+          end
+
+          let!(:adapter) { adapter_clazz.new 'fake endpoint url' }
+          if Paasal::API.requirements(api_version)
             Paasal::API.requirements(api_version).methods.each do |required_method|
               describe "method #{required_method.name}" do
                 it 'is implemented' do

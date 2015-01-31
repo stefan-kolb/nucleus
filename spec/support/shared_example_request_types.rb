@@ -6,7 +6,7 @@ end
 
 shared_examples 'valid error schema' do
   it 'complies with the error schema' do
-
+    # TODO: implement me
   end
   it 'status matches error schema status' do
     expect(json_body[:status]).to eq(response.status)

@@ -16,4 +16,8 @@ describe 'API Error schema' do
       include_examples 'a not accepted request'
     end
   end
+  context 'GET with missing accept header' do
+    before { get '/endpoints' }
+    include_examples 'a valid GET request'
+  end
 end
