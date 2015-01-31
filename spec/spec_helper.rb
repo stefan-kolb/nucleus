@@ -6,6 +6,10 @@ if ENV['CODECLIMATE_REPO_TOKEN']
 else
   require 'simplecov'
   SimpleCov.start do
+    add_filter 'spec/'
+    add_filter 'scripts/'
+    add_filter 'config/'
+
     add_group 'Adapters', 'app/adapters'
     add_group 'API versions', 'app/api/versions'
     add_group 'API entities', 'app/api/entities'
