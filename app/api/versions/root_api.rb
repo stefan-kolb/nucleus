@@ -47,7 +47,7 @@ module Paasal
       # BE SORTED STARTING WITH THE HIGHEST VERSION
 
       # include proof-of-concept API, version 2
-      mount Paasal::API::V2::Base
+      # mount Paasal::API::V2::Base
 
       # include basic API, version 1
       mount Paasal::API::V1::Base
