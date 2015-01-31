@@ -1,9 +1,10 @@
 require 'scripts/initialize_core'
+require 'scripts/initialize_rack'
 require 'spec/integration/test_data_generator'
 
 require 'airborne'
 Airborne.configure do |config|
-  config.rack_app = Paasal::API::RootAPI
+  config.rack_app = Paasal::Rack.app
   config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
 end
 

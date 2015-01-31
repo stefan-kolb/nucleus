@@ -83,7 +83,7 @@ describe Paasal::API::V1::Providers do
     context 'with a malformed body' do
       let!(:updated_name) { Faker::Internet.slug }
       before { patch "/providers/#{provider_a.id}", name: updated_name }
-      include_examples 'a malformed PATCH request'
+      include_examples 'a bad request'
     end
   end
 
@@ -120,7 +120,7 @@ describe Paasal::API::V1::Providers do
     context 'with the body values not nested in a provider object' do
       let!(:updated_name) { Faker::Internet.slug }
       before { post "/vendors/#{vendor.id}/providers", name: updated_name }
-      include_examples 'a malformed POST request'
+      include_examples 'a bad request'
 
       context 'causes the provider list' do
         before { get '/providers' }

@@ -107,7 +107,7 @@ describe Paasal::API::V1::Endpoints do
       let!(:updated_name) { Faker::Internet.slug }
       let!(:updated_url) { Faker::Internet.url }
       before { patch "/endpoints/#{endpoint_a.id}", name: updated_name, url: updated_url }
-      include_examples 'a malformed PATCH request'
+      include_examples 'a bad request'
     end
   end
 
@@ -147,7 +147,7 @@ describe Paasal::API::V1::Endpoints do
       let!(:updated_name) { Faker::Internet.slug }
       let!(:updated_url) { Faker::Internet.url }
       before { post "/providers/#{provider.id}/endpoints", name: updated_name, url: updated_url }
-      include_examples 'a malformed POST request'
+      include_examples 'a bad request'
 
       context 'causes the endpoint list' do
         before { get '/endpoints' }
