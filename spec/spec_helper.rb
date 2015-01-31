@@ -21,6 +21,11 @@ require_relative '../scripts/load_config'
 # disable logging
 configatron.logging.level = Logger::Severity::FATAL
 
+# force tmp database
+configatron.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.test.store"
+configatron.db.delete_on_shutdown = true
+configatron.db.override = true
+
 # require our app
 require_relative '../scripts/load_app'
 
