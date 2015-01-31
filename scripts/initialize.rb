@@ -8,8 +8,7 @@ begin
   log.info "DB store assigned to #{configatron.db.path}"
 
   # load vendors and put them into the db stores
-  adapter_loader = Paasal::AdapterImporter.new
-  adapter_loader.import_adapters
+  Paasal::AdapterImporter.new.import
 
   puts 'Initialization complete & configuration locked!'
   puts '-----------------------------------------------'

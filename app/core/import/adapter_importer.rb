@@ -3,29 +3,18 @@ module Paasal
     include Paasal::Logging
     include Paasal::UrlConverter
 
-    def initialize
-      @adapter_verificator = Paasal::AdapterVerificator.new
-      @adapter_resolver = Paasal::AdapterResolver.new
-      @vendor_parser = Paasal::VendorParser.new
-      @api_detector = Paasal::ApiDetector.new
-    end
-
     # Import all API adapters that are described in the adapter configurations.
-    # Before the import, each adapters will be verified if it complies to the API version.
     #
-    # @raise [Paasal::InvalidAdapterError] if an adapter is invalid
     # @raise [Paasal::AmbiguousAdapterError] if more than one adapter was found for an adapter configuration
-    def import_adapters
+    def import
       log.debug 'Loading API versions...'
-      api_versions = @api_detector.api_versions
+      api_versions = Paasal::ApiDetector.api_versions
 
       log.debug 'Loading adapter files...'
-      config_files = load_adapter_config_files
-
       api_versions.each do |api_version|
         log.debug "Loading adapters for API #{api_version}..."
-        config_files.each do |adapter_config|
-          load_adapter_config(adapter_config, api_version)
+        Paasal::Adapters.configuration_files.each do |adapter_config|
+          import_adapter(adapter_config, api_version)
         end
       end
       log.info 'Adapter import completed'
@@ -33,19 +22,17 @@ module Paasal
 
     private
 
-    def load_adapter_config(adapter_config, api_version)
+    def import_adapter(adapter_config, api_version)
       log.debug "... processing #{adapter_config}"
-      vendor = @vendor_parser.parse(adapter_config)
-      adapter_file = @adapter_resolver.get_adapter(api_version, adapter_config)
+      vendor = Paasal::VendorParser.parse(adapter_config)
+      return if vendor.nil?
 
-      return if adapter_file.nil?
+      adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, api_version)
+      return if adapter_clazz.nil?
+
       # persist the vendor, but only if a valid adapter was found for this version
-      adapter_clazz = resolve_adapter_clazz(adapter_file)
       adapter_instance = adapter_clazz.new('fake url')
       vendor.adapter = adapter_instance
-
-      # verify adapter validity
-      @adapter_verificator.verify(adapter_instance, api_version)
 
       # persist to store
       save_vendor(vendor, api_version, adapter_clazz)
@@ -96,22 +83,6 @@ module Paasal
                                             'adapter_clazz' => adapter_clazz)
         adapter_dao.set index_entry
       end
-    end
-
-    def resolve_adapter_clazz(adapter_file)
-      # transform path to clazz and load an instance
-      adapter_class = "Paasal::Adapters::#{File.basename(adapter_file, '.rb').capitalize}".camelize
-      adapter_class.split('::').inject(Object) { |a, e| a.const_get e }
-    end
-
-    def load_adapter_config_files
-      # adapter_dir = File.join(File.dirname(__FILE__), '../../../config/adapters')
-      adapter_dir = 'config/adapters'
-      files = Dir[File.join(adapter_dir, '*.yml')] | Dir[File.join(adapter_dir, '*.yaml')]
-      files = files.flatten.compact
-      files.collect! { |file| File.expand_path(file) }
-      log.debug "... found #{files.size} adapter config file(s)"
-      files
     end
   end
 end
