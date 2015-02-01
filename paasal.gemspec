@@ -19,6 +19,26 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = %w(lib app)
 
+  spec.add_runtime_dependency 'configatron'
+  spec.add_runtime_dependency 'daybreak'
+  spec.add_runtime_dependency 'excon'
+  spec.add_runtime_dependency 'filesize'
+  # spec.add_runtime_dependency 'grape'
+  # spec.add_runtime_dependency 'grape-entity'
+  # spec.add_runtime_dependency 'grape-swagger'
+  spec.add_runtime_dependency 'kwalify'
+  spec.add_runtime_dependency 'logger'
+  spec.add_runtime_dependency 'request_store'
+  spec.add_runtime_dependency 'require_all'
+
   spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-bundler'
+  spec.add_development_dependency 'guard-rack'
+  spec.add_development_dependency 'guard-rubocop'
+  spec.add_development_dependency 'guard-yard'
   spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'thin'
+  spec.add_development_dependency 'yard'
 end
