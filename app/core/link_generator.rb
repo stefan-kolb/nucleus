@@ -5,23 +5,20 @@ module Paasal
       @version = api_version
     end
 
+    # TODO: add documentation
     def resource(namespaces, id)
       # resource can only exist for an API version
       link = api_root
       # combine namespace and entity ID
-      link << "/#{namespaces.join('/')}" unless namespaces.nil?
-      link << "/#{id}" unless id.nil?
+      if namespaces.is_a? String
+        link << "/#{namespaces}" unless namespaces.empty?
+      else
+        link << "/#{namespaces.join('/')}" unless namespaces.nil? || namespaces.empty?
+      end
+      link << "/#{id}" unless id.nil? || id.empty?
       # return the created link
       link
     end
-
-    # # Create a link to the current API version.
-    # # The version is determined either from the current request path, or from the current object.
-    # #
-    # # @return [String] link to the current API version
-    # def api_version
-    #   api_root << "/#{@version}"
-    # end
 
     # Create a link to the API root node.
     #

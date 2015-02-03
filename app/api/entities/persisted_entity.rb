@@ -5,22 +5,19 @@ module Paasal
         expose :id, safe: true, documentation: {
           desc: 'The ID of the resource',
           type: String,
-          required: true,
-          presence: false
+          required_details: { request: false, response: true }
         }
 
         expose :created_at, safe: true, documentation: {
           desc: 'UTC timestamp in ISO8601 format, describes when the resource was created',
           type: String,
-          required: true,
-          presence: false
+          required_details: { request: false, response: true }
         }
 
         expose :updated_at, safe: true, documentation: {
           desc: 'UTC timestamp in ISO8601 format, describes when the resource was updated the last time',
           type: String,
-          required: true,
-          presence: false
+          required_details: { request: false, response: true }
         }
       end
     end

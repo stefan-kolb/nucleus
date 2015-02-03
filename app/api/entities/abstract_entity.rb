@@ -18,7 +18,7 @@ module Paasal
           if instance_or_id.respond_to?('id')
             id = instance_or_id.id unless instance_or_id.id.nil?
           elsif instance_or_id.is_a? String
-            id = instance_or_id unless instance_or_id.nil?
+            id = instance_or_id
           end
           link_generator.resource(namespaces, id)
         end

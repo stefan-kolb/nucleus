@@ -1,32 +1,13 @@
 module Paasal
   module API
     module Models
-      class Endpoints < AbstractEntity
+      class Endpoints < CollectionEntity
         def self.entity_name
           'EndpointList'
         end
 
-        present_collection true
-
-        expose :size, documentation: {
-          type: 'int', required: true, desc: 'Number of items in the \'endpoints\' collection'
-        } do |instance, _o|
-          instance[:items].nil? ? 0 : instance[:items].size
-        end
-
-        expose :items, as: 'endpoints', documentation: {
-          type: 'Endpoint', desc: 'List of the available endpoints', is_array: true
-        }, using: Models::Endpoint
-
-        expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', desc: 'Resource links', is_array: true } do |_i, o|
-          {
-            self: { href: link_child_resource(%w(providers), o[:env]['rack.routing_args'][:provider_id],
-                                              %w(endpoints)) },
-            # link back to the provider
-            parent: { href: link_resource(%w(providers), o[:env]['rack.routing_args'][:provider_id]) }
-          }
-        end
+        item_collection('endpoints', 'endpoints', Models::Endpoint)
+        basic_links('providers/%{provider_id}', 'endpoints')
       end
     end
   end
