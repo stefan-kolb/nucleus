@@ -6,6 +6,10 @@ module Paasal
       requires :endpoint_id, type: String, desc: "The endpoint's ID"
     end
 
+    params :application_id do
+      requires :application_id, type: String, desc: "The application's ID"
+    end
+
     params :vendor do
       # require the keys of the vendor in the json object 'vendor'
       requires :vendor, type: Hash do
