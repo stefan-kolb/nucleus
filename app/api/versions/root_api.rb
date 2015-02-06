@@ -26,7 +26,7 @@ module Paasal
           # willingly sent error, no need for stacktrace
           entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
         elsif e.is_a?(Grape::Exceptions::ValidationErrors) || e.is_a?(Grape::Exceptions::InvalidMessageBody)
-          entity = env['api.endpoint'].build_error_entity(ErrorMessages::BAD_REQUEST, e.message)
+          entity = env['api.endpoint'].build_error_entity(ErrorMessages::BAD_REQUEST_VALIDATION, e.message)
         elsif e.is_a?(Grape::Exceptions::InvalidAcceptHeader)
           entity = env['api.endpoint'].build_error_entity(ErrorMessages::INVALID_ACCEPT_HEADER, e.message, e.headers)
           env['paasal.invalid.accept.header'] = true
