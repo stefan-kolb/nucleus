@@ -12,16 +12,6 @@ module Paasal
         end
 
         resource :providers do
-          # LIST providers
-          desc 'Return a list of all providers' do
-            success Models::Providers
-            failure [[200, 'Providers retrieved', Models::Providers]].concat ErrorResponses.standard_responses
-          end
-          get '/' do
-            providers = provider_dao.all
-            present providers, with: Models::Providers
-          end
-
           # GET provider
           desc 'Get a selected provider entity via its ID' do
             success Models::Provider
@@ -57,7 +47,7 @@ module Paasal
           end
           params do
             use :provider_id
-            use :endpoint
+            use :create_endpoint
           end
           post ':provider_id/endpoints' do
             # load the vendor and verify it is valid
@@ -82,7 +72,7 @@ module Paasal
           end
           params do
             use :provider_id
-            use :provider_patch
+            use :update_provider
           end
           patch ':provider_id' do
             # load the endpoint and verify it is valid
@@ -120,20 +110,6 @@ module Paasal
             status 204
           end
         end # provider namespace
-
-        # resource "providers/:providerName/:providerVersion" do
-        #   params do
-        #     requires :providerVersion, type: String, desc: "The version of the provider's API"
-        #     requires :providerName, type: String, desc: "The provider that shall be used"
-        #   end
-        #   get do
-        #     {
-        #         d:'d',
-        #         name: params[:providerName],
-        #         version: params[:providerVersion]
-        #     }
-        #   end
-        # end
       end
     end
   end

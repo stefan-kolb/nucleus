@@ -5,16 +5,6 @@ module Paasal
         helpers Paasal::SharedParamsHelper
 
         resource :endpoints do
-          # LIST endpoints
-          desc 'List of all available endpoints' do
-            success Models::Endpoints
-            failure [[200, 'Endpoints retrieved', Models::Endpoints]].concat ErrorResponses.standard_responses
-          end
-          get '/' do
-            endpoints = endpoint_dao.all
-            present endpoints, with: Models::Endpoints
-          end
-
           # GET endpoint
           desc 'Get a selected endpoint entity via its ID' do
             success Models::Endpoint
@@ -33,7 +23,7 @@ module Paasal
           end
           params do
             use :endpoint_id
-            use :endpoint_patch
+            use :update_endpoint
           end
           patch ':endpoint_id' do
             # load the endpoint and verify it is valid

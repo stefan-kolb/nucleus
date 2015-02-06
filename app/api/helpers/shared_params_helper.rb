@@ -10,15 +10,7 @@ module Paasal
       requires :application_id, type: String, desc: "The application's ID"
     end
 
-    params :vendor do
-      # require the keys of the vendor in the json object 'vendor'
-      requires :vendor, type: Hash do
-        requires :all, using: Paasal::API::Models::Vendor.documentation.except(
-          :id, :providers, :created_at, :updated_at, :key, :_links)
-      end
-    end
-
-    params :provider do
+    params :create_provider do
       # require the keys of the provider in the json object 'provider'
       requires :provider, type: Hash do
         requires :all, using: Paasal::API::Models::Provider.documentation.except(
@@ -26,14 +18,14 @@ module Paasal
       end
     end
 
-    params :provider_patch do
+    params :update_provider do
       requires :provider, type: Hash do
         optional :all, using: Paasal::API::Models::Provider.documentation
           .except(:id, :endpoints, :vendor, :created_at, :updated_at, :key, :_links)
       end
     end
 
-    params :endpoint do
+    params :create_endpoint do
       # require the keys of the endpoint in the json object 'endpoint'
       requires :endpoint, type: Hash do
         requires :all, using: Paasal::API::Models::Endpoint.documentation.except(
@@ -41,13 +33,11 @@ module Paasal
       end
     end
 
-    params :endpoint_patch do
+    params :update_endpoint do
       requires :endpoint, type: Hash do
         optional :all, using: Paasal::API::Models::Endpoint.documentation
           .except(:id, :applications, :created_at, :updated_at, :key, :_links)
       end
     end
   end
-  # require the keys of the vendor in the post body root
-  # requires :all, using: Paasal::API::Models::Vendor.documentation.except(:providers, :_links)
 end

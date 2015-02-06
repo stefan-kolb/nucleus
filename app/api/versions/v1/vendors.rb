@@ -18,7 +18,7 @@ module Paasal
             failure [[200, 'Vendors retrieved', Models::Vendors]].concat ErrorResponses.standard_responses
           end
           get '/' do
-            vendors = vendor_dao.all
+            vendors = vendor_dao.all || []
             present vendors, with: Models::Vendors
           end
 
@@ -56,7 +56,7 @@ module Paasal
           end
           params do
             use :vendor_id
-            use :provider
+            use :create_provider
           end
           post ':vendor_id/providers' do
             # load the vendor and verify it is valid
