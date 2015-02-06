@@ -25,4 +25,14 @@ require_all 'app/adapters'
 require_all 'app/middleware'
 
 # api
+require_all 'app/api/entities'
+require_all 'app/api/helpers'
+
+# This is a workaround to properly load all swagger-documentation:
+# Load each api version, but start with the protected controllers
+Paasal::ApiDetector.api_versions.each do |api_version|
+  require_all "app/api/versions/#{api_version}/protected"
+  require_all "app/api/versions/#{api_version}"
+end
+# Finally load the complete API to make sure we did not miss anything
 require_all 'app/api'
