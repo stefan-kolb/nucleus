@@ -6,7 +6,7 @@ end
 
 shared_examples 'valid error schema' do
   it 'complies with the error schema' do
-    # TODO: implement me
+    expect_json_keys(:status, :dev_message, :message, :error_code, :more_info)
   end
   it 'status matches error schema status' do
     expect(json_body[:status]).to eq(response.status)
