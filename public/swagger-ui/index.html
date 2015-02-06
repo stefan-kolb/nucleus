@@ -25,7 +25,7 @@
   <script type="text/javascript">
     $(function () {
       window.swaggerUi = new SwaggerUi({
-      url: "/api/v1/schema",
+      url: "/api/schema",
       dom_id: "swagger-ui-container",
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       onComplete: function(swaggerApi, swaggerUi){
@@ -50,6 +50,7 @@
       docExpansion: "none",
       sorter : "alpha"
     });
+    window.authorizations.add("Accept-Version", new ApiKeyAuthorization("Accept-Version", "v1", "header"));
 
     $('#input_apiKey').change(function() {
       var key = $('#input_apiKey')[0].value;
