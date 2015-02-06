@@ -1,3 +1,4 @@
+# noinspection ALL
 module Paasal
   module SharedParamsHelper
     extend Grape::API::Helpers
@@ -6,7 +7,8 @@ module Paasal
       requires :endpoint_id, type: String, desc: "The endpoint's ID"
     end
 
-    params :application_id do
+    params :application_context do
+      use :endpoint_id
       requires :application_id, type: String, desc: "The application's ID"
     end
 
@@ -37,6 +39,24 @@ module Paasal
       requires :endpoint, type: Hash do
         optional :all, using: Paasal::API::Models::Endpoint.documentation
           .except(:id, :applications, :created_at, :updated_at, :key, :_links)
+      end
+    end
+
+    params :create_application do
+      # require the keys of the application in the json object 'application'
+      requires :application, type: Hash do
+        # requires :name, using: Paasal::API::Models::Application.documentation[:name]
+        optional :all, using: Paasal::API::Models::Application.documentation
+          .except(:id, :state, :created_at, :updated_at, :_links)
+      end
+    end
+
+    params :update_application do
+      # require the keys of the application in the json object 'application'
+      requires :application, type: Hash do
+        # requires :name, using: Paasal::API::Models::Application.documentation[:name]
+        optional :all, using: Paasal::API::Models::Application.documentation
+          .except(:id, :state, :created_at, :updated_at, :_links)
       end
     end
   end
