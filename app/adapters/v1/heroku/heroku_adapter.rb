@@ -1,7 +1,8 @@
 module Paasal
   module Adapters
-    class HerokuAdapter < Paasal::Adapters::BaseAdapter
-      include Paasal::Logging
+    module V1
+      class HerokuAdapter < Paasal::Adapters::BaseAdapter
+        include Paasal::Logging
 
       # TODO: how to assert that the class implements all required operations?
       def initialize(endpoint_url)
@@ -57,6 +58,7 @@ module Paasal
           'Accept' => 'application/vnd.heroku+json; version=3',
             'Content-Type' => 'application/json'
         }.merge(RequestStore.store[:adapter].cached_headers)
+        end
       end
     end
   end
