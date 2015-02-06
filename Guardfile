@@ -8,7 +8,7 @@ end
 guard 'rack', server: 'thin' do
   watch('Gemfile.lock')
   watch('config.ru')
-  watch(/^config|app|public|lib|schemas|scripts\\/.*)
+  watch(/^config|app|public|lib|schemas|scripts\/.*/)
 end
 
 guard 'yard', port: '8808', cli: '--reload' do
