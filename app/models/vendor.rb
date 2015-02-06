@@ -2,7 +2,6 @@ module Paasal
   class Vendor < Paasal::AbstractModel
     attr_accessor :name             # text
     attr_accessor :providers        # seq
-    attr_accessor :adapter
 
     def initialize(hash = nil)
       return if hash.nil?

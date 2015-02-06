@@ -31,10 +31,6 @@ module Paasal
       return if adapter_clazz.nil?
 
       # persist the vendor, but only if a valid adapter was found for this version
-      adapter_instance = adapter_clazz.new('fake url')
-      vendor.adapter = adapter_instance
-
-      # persist to store
       save_vendor(vendor, api_version, adapter_clazz)
     end
 
