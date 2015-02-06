@@ -10,11 +10,19 @@ module Paasal
 
     class VersionDependantAdapterDao < Paasal::DB::Store
       include Paasal::Logging
+      include Paasal::UrlConverter
 
       def initialize(api_version)
         log.debug "Creating new VersionDependantAdapterDao for version #{api_version}"
         super(api_version, 'adapter_index')
       end
+
+      def set(entity)
+        # secure the URL, always convert to https (!)
+        entity.url = secure_url(entity.url)
+        super(entity)
+      end
+
     end
   end
 end
