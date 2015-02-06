@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard-rack'
   spec.add_development_dependency 'guard-rubocop'
   spec.add_development_dependency 'guard-yard'
+  spec.add_development_dependency 'inch'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'thin'
