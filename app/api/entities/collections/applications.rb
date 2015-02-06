@@ -7,7 +7,7 @@ module Paasal
         end
 
         item_collection('applications', 'applications', Models::Application)
-        basic_links('endpoints/%{:endpoint_id}', 'applications')
+        basic_links('endpoints/%{endpoint_id}', 'applications')
       end
     end
   end

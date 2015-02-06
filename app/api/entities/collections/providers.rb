@@ -7,7 +7,7 @@ module Paasal
         end
 
         item_collection('providers', 'providers', Models::Provider)
-        basic_links('vendors/%{:vendor_id}', 'providers')
+        basic_links('vendors/%{vendor_id}', 'providers')
       end
     end
   end
