@@ -15,13 +15,17 @@ module Paasal
 
       return bad_request('Bad authentication request', env) unless auth.basic?
 
-      if valid?(auth)
-        env['REMOTE_USER'] = auth.username
-
-        return @app.call(env)
+      begin
+        # should be either valid or throws an exception
+        if valid?(auth)
+          env['REMOTE_USER'] = auth.username
+          return @app.call(env)
+        end
+        unauthorized('Invalid credentials', env)
+      rescue Errors::AuthenticationError => e
+        log.debug 'Authentication attempt failed'
+        send_response(e.ui_error, e.message, env)
       end
-
-      unauthorized('Invalid credentials', env)
     end
 
     private
