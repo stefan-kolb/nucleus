@@ -5,10 +5,25 @@ module Paasal
         # specify the version for all mounted endpoints
         version 'v1', using: :header, vendor: 'paasal', format: :json
 
+        before do
+          # allow no declared version for api root
+          if version.nil?
+            if env['HTTP_ACCEPT_VERSION']
+              # Fallback for swagger-ui. If no version could be used from the accept header,
+              # try to use the accept-version header.
+              env['api.version'] = env['HTTP_ACCEPT_VERSION']
+            else
+              # Without a version PaaSal can't work properly, fail fast (!)
+              to_error(ErrorMessages::INVALID_ACCEPT_HEADER,
+                       'Make sure you provided a valid Accept Header, eg: \'application/vnd.paasal-v1+json\'')
+            end
+          end
+        end
+
         # dynamic mounting is not possible due to incompatibility with grape-swagger
+        mount V1::Vendors
         mount V1::Providers
         mount V1::Endpoints
-        mount V1::Vendors
         mount V1::Auth
 
         get '/resources' do

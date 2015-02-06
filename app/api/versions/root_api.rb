@@ -20,14 +20,6 @@ module Paasal
       default_error_formatter :json
       format :json
 
-      before do
-        if version.nil?
-          # Without a version PaaSal can't work properly, fail fast (!)
-          to_error(ErrorMessages::INVALID_ACCEPT_HEADER,
-                   'Make sure you provided a valid Accept Header, eg: \'application/vnd.paasal-v1+json\'')
-        end
-      end
-
       # rescue ALL errors and comply to the error schema
       rescue_from :all do |e|
         if e.is_a? Errors::ApiError
