@@ -10,11 +10,7 @@ module Paasal
       # resource can only exist for an API version
       link = api_root
       # combine namespace and entity ID
-      if namespaces.is_a? String
-        link << "/#{namespaces}" unless namespaces.empty?
-      else
-        link << "/#{namespaces.join('/')}" unless namespaces.nil? || namespaces.empty?
-      end
+      link << namespace(namespaces)
       link << "/#{id}" unless id.nil? || id.empty?
       # return the created link
       link
@@ -30,6 +26,16 @@ module Paasal
     # TODO: add documentation
     def root_url
       "#{@env['rack.url_scheme']}://#{@env['HTTP_HOST']}"
+    end
+
+    private
+
+    def namespace(namespaces)
+      if namespaces.is_a?(String) && !namespaces.empty?
+        "/#{namespaces}"
+      else
+        "/#{namespaces.join('/')}" unless namespaces.nil? || namespaces.empty?
+      end
     end
   end
 end

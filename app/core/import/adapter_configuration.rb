@@ -26,8 +26,8 @@ module Paasal
       adapter_file = adapter_file(adapter_config, api_version)
       return if adapter_file.nil?
       # transform path to clazz and load an instance
-      adapter_clazz = "Paasal::Adapters::#{api_version.upcase}::#{File.basename(adapter_file, '.rb').capitalize}".camelize
-      adapter_clazz.split('::').inject(Object) { |a, e| a.const_get e }
+      adapter_clazz = "Paasal::Adapters::#{api_version.upcase}::#{File.basename(adapter_file, '.rb').capitalize}"
+      adapter_clazz.camelize.split('::').inject(Object) { |a, e| a.const_get e }
     end
 
     # Get the path to the adapter's class file by translation from the adapter configuration's name.

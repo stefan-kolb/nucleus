@@ -69,7 +69,9 @@ module Paasal
             application_params = declared(params, include_missing: false)[:application]
             # allow ALL values in the vendor specific section
             application_params = application_params.merge params[:application][:vendor_specific]
-            application = with_authentication { adapter.update_application(params[:application_id], application_params) }
+            application = with_authentication do
+              adapter.update_application(params[:application_id], application_params)
+            end
             present application, with: Models::Application
           end
         end

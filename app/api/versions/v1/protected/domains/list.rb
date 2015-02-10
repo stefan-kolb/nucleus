@@ -17,7 +17,7 @@ module Paasal
               domains = with_authentication { adapter.domains(params[:application_id]) }
               present domains, with: Models::Domains
             end
-          end #end of resource
+          end # end of resource
         end
       end
     end

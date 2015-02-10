@@ -22,7 +22,6 @@ module Paasal
         entity.url = secure_url(entity.url)
         super(entity)
       end
-
     end
   end
 end

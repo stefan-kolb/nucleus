@@ -40,9 +40,9 @@ module Paasal
             domains: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
                                                  ['applications', instance[:id], 'domains']) },
             logs: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
-                                                               ['applications', instance[:id], 'logs']) },
+                                              ['applications', instance[:id], 'logs']) },
             vars: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
-                                                               ['applications', instance[:id], 'vars']) }
+                                              ['applications', instance[:id], 'vars']) }
           }
         end
       end

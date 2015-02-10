@@ -31,11 +31,11 @@ describe Paasal::API::V1::Providers do
   end
 
   describe 'GET /vendors/:vendor_id/providers response (repeated)' do
-    before {
+    before do
       get "/vendors/#{vendor.id}/providers"
       # 2nd call, previous issue caused providers the be shown only once
       get "/vendors/#{vendor.id}/providers"
-    }
+    end
     include_examples 'a valid GET request'
     it 'has provider-list like structure' do
       expect_json_types(size: :int, providers: :array_of_objects, _links: :object)

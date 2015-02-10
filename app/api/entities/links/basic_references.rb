@@ -9,7 +9,7 @@ module Paasal
         expose :self, documentation: { type: 'Link', desc: 'Self-reference', required: true },
                using: Paasal::API::Models::Link
 
-        expose :parent, documentation: { type: 'Link', desc: 'Reference to parent resource', required: true},
+        expose :parent, documentation: { type: 'Link', desc: 'Reference to parent resource', required: true },
                using: Paasal::API::Models::Link
       end
     end

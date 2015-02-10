@@ -10,7 +10,7 @@ module Paasal
     # TODO: documentation
     def authenticate(username, password)
       return self if @access_token
-      response = post(query: { grant_type: 'password', username: username, password: password})
+      response = post(query: { grant_type: 'password', username: username, password: password })
       # TODO: throw error if not authenticated
       # TODO: handle certificate errors -> temporary error !?
       # fail Errors::AuthenticationFailedError, 'Endpoint says the credentials are invalid' if response.status == 404
@@ -34,7 +34,7 @@ module Paasal
     # TODO: documentation
     def refresh
       if @refresh_token.nil?
-        raise Errors::OAuth2AuthenticationError.new("Can't refresh token before initial authentication", self)
+        fail Errors::OAuth2AuthenticationError.new("Can't refresh token before initial authentication", self)
       end
       response = post(query: { grant_type: 'refresh_token', refresh_token: @refresh_token })
       extract(body(response))
@@ -51,17 +51,17 @@ module Paasal
       # explicitly allow redirects, otherwise they would cause an error
       # TODO: Basic Y2Y6 could be cloud-foundry specific
       request_params = { expects: [200, 301, 302, 303, 307, 308], middlewares: middleware.uniq,
-                         headers: { 'Authorization' => 'Basic Y2Y6' }}.merge(params)
+                         headers: { 'Authorization' => 'Basic Y2Y6' } }.merge(params)
       # execute the post request and return the response
       Excon.new(@auth_url, ssl_verify_peer: @check_certificates).post(request_params)
     rescue Excon::Errors::HTTPStatusError => e
       log.debug "OAuth2 Authentication failed: #{e}"
       case e.response.status
-        when 403
-          log.error("OAuth2 for '#{@auth_url}' failed with status 403 (access denied), indicating an adapter issue")
-          raise Errors::UnknownAdapterCallError.new('Access to resource denied, probably the adapter must be updated')
-        when 400, 401
-          raise Errors::OAuth2AuthenticationError.new(body(e.response)[:error_description], self)
+      when 403
+        log.error("OAuth2 for '#{@auth_url}' failed with status 403 (access denied), indicating an adapter issue")
+        raise Errors::UnknownAdapterCallError, 'Access to resource denied, probably the adapter must be updated'
+      when 400, 401
+        raise Errors::OAuth2AuthenticationError.new(body(e.response)[:error_description], self)
       end
     end
 
@@ -75,7 +75,6 @@ module Paasal
     end
 
     def body(response)
-
       MultiJson.load(response.body, symbolize_keys: true)
     end
 

@@ -12,7 +12,7 @@ module Paasal
     # @return [String] url with HTTPS scheme
     def secure_url(url_to_secure)
       # return if URL already is secure
-      return url_to_secure if url_to_secure =~ /\A#{URI::regexp(['https'])}\z/
+      return url_to_secure if url_to_secure =~ /\A#{URI.regexp(['https'])}\z/
       throw ArgumentError, "Invalid URL '#{url_to_secure}', can't secure relative URL" if url_to_secure.start_with?('/')
       uri = URI.parse(url_to_secure)
       if uri.scheme.nil?

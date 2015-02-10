@@ -5,7 +5,7 @@ module Paasal
       include Paasal::Logging
 
       def initialize(endpoint_url, check_certificates = true)
-        fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI::regexp(['https'])}\z/
+        fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
         @endpoint_url = endpoint_url
         @check_certificates = check_certificates
       end
@@ -47,7 +47,7 @@ module Paasal
       # @return [Hash<String,String>, Paasal::OAuth2Client] cached authentication information
       def headers
         auth_object = auth_objects_cache[RequestStore.store[:cache_key]]
-        return auth_object unless auth_object.is_a? Paasal::OAuth2Client
+        return auth_object if auth_object.is_a? Hash
         # oauth client, generates the header for us
         auth_object.auth_header
       end
