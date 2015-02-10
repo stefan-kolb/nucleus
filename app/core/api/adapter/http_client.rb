@@ -74,36 +74,38 @@ module Paasal
 
       def execute_request(path, params)
         url = to_url path
-        # allow to follow redirects in the APIs
-        # params[:expects] = [301, 302, 303, 307, 308].push(*params[:expects]).uniq
-        params[:headers] = headers
-        params[:body] = params[:body].to_json if params.key? :body
-        request_params = common_request_params.merge(params)
-
-        response = Excon.new(url, excon_connection_params).request(request_params)
-        log.debug("Response received for request to #{url}")
+        # log.debug("#{params[:method]} --> #{url}")
+        response = Excon.new(url, excon_connection_params).request(add_common_request_params.merge(params))
+        # log.debug("Response received for request to #{url}")
         # we never want the JSON string, but always the hash representation
         response.body = hash_of(decompress(response).body)
         response
       rescue Excon::Errors::HTTPStatusError => e
+        handle_execute_request_error(e, url)
+      end
+
+      def handle_execute_request_error(e, url)
         log.debug 'ERROR, Excon could not execute the request.'
+        # transform json response to Hash object
         e.response.body = hash_of(e.response.body)
+        # fail with adapter specific error handling
+        handle_error(e.response) if respond_to?(:handle_error)
+        fallback_error_handling(e, url)
+      end
 
-        if respond_to? :handle_error
-          handle_error(e.response)
-        end
-
+      def fallback_error_handling(e, url)
+        error_status = e.response.status
         # arriving here, error could not be processed --> use fallback errors
         if e.is_a? Excon::Errors::ServerError
-          raise Errors::UnknownAdapterCallError.new(e.message, API::ErrorMessages::RESCUED_ADAPTER_CALL_SERVER)
-        elsif e.response.status == 404
+          fail Errors::UnknownAdapterCallError, e.message
+        elsif error_status == 404
           log.error("Resource not found (404) at '#{url}', indicating an adapter issue")
-          raise Errors::UnknownAdapterCallError.new('Resource not found, probably the adapter must be updated')
-        elsif e.response.status == 401
-          raise Errors::AuthenticationError, 'Auth. failed, probably cache is outdated or permissions were revoked?'
+          fail Errors::UnknownAdapterCallError, 'Resource not found, probably the adapter must be updated'
+        elsif error_status == 401
+          fail Errors::AuthenticationError, 'Auth. failed, probably cache is outdated or permissions were revoked?'
         else
-          log.error("Fallback error handling (#{e.response.status}) at '#{url}', indicating an adapter issue")
-          raise Errors::UnknownAdapterCallError, e.message
+          log.error("Fallback error handling (#{error_status}) at '#{url}', indicating an adapter issue")
+          fail Errors::UnknownAdapterCallError, e.message
         end
       end
 
@@ -116,13 +118,18 @@ module Paasal
       def excon_connection_params
         middleware = Excon.defaults[:middlewares].dup
         middleware << Excon::Middleware::Decompress
-        # middleware << Excon::Middleware::RedirectFollower
+        middleware << Excon::Middleware::RedirectFollower
         { middlewares: middleware, ssl_verify_peer: @check_certificates }
       end
 
       def hash_of(message_body)
         return {} if message_body.nil? || message_body.empty?
-        MultiJson.load(message_body, symbolize_keys: true)
+        begin
+          return MultiJson.load(message_body, symbolize_keys: true)
+        rescue MultiJson::ParseError
+          # parsing failed, content probably is no valid JSON content
+          message_body
+        end
       end
 
       def decompress(response)
@@ -131,8 +138,14 @@ module Paasal
         response
       end
 
-      def common_request_params
-        { connection_timeout: 600, write_timeout: 300, read_timeout: 90 }
+      def add_common_request_params(params)
+        common_params = { connection_timeout: 600, write_timeout: 300, read_timeout: 90 }
+        # allow to follow redirects in the APIs
+        params[:expects] = [301, 302, 303, 307, 308].push(*params[:expects]).uniq
+        params[:headers] = headers unless params[:headers]
+        params[:body] = params[:body].to_json if params.key? :body
+        # merge and return
+        common_params.merge params
       end
     end
   end
