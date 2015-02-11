@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require 'spec/unit/unit_spec_helper'
 require 'kwalify'
 
 describe 'YAML requirements schema' do

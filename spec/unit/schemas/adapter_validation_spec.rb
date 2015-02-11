@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'spec/unit/unit_spec_helper'
 require 'kwalify'
 
 describe 'Paasal::Adapters' do

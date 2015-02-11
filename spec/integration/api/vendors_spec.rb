@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'integration/integration_spec_helper'
+require 'spec/integration/integration_spec_helper'
 
 describe Paasal::API::V1::Vendors do
   after { Paasal::TestDataGenerator.clean }
@@ -26,6 +25,7 @@ describe Paasal::API::V1::Vendors do
       expect_json_sizes(vendors: 2)
     end
     it 'lists all vendors' do
+      expect(json_body[:vendors]).to_not be_nil
       expect(json_body[:vendors][0][:id]).to eq vendor_a.id
       expect(json_body[:vendors][1][:id]).to eq vendor_b.id
     end

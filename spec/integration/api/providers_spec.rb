@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'integration/integration_spec_helper'
+require 'spec/integration/integration_spec_helper'
 
 describe Paasal::API::V1::Providers do
   after { Paasal::TestDataGenerator.clean }

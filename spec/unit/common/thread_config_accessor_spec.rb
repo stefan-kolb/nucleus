@@ -1,3 +1,4 @@
+require 'spec/unit/unit_spec_helper'
 require 'app/core/common/thread_config_accessor'
 
 class ThreadedConfig

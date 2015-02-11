@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'integration/integration_spec_helper'
+require 'spec/integration/integration_spec_helper'
 
 describe 'Swagger schema' do
   context 'with an invalid version can not access' do

@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'integration/integration_spec_helper'
+require 'spec/integration/integration_spec_helper'
 
 describe 'API Error schema' do
   context 'GET with invalid accept header' do
