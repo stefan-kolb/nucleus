@@ -33,8 +33,10 @@ module Paasal
     def namespace(namespaces)
       if namespaces.is_a?(String) && !namespaces.empty?
         "/#{namespaces}"
+      elsif !namespaces.nil? && !namespaces.empty?
+        "/#{namespaces.join('/')}"
       else
-        "/#{namespaces.join('/')}" unless namespaces.nil? || namespaces.empty?
+        ''
       end
     end
   end
