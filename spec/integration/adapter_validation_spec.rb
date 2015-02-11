@@ -17,7 +17,7 @@ describe 'Paasal::Adapters' do
             expect(Paasal::VendorParser.parse(file)).to_not be_nil
           end
 
-          let!(:adapter) { adapter_clazz.new 'fake endpoint url' }
+          let!(:adapter) { adapter_clazz.new 'https://api.example.org' }
           if Paasal::API.requirements(api_version)
             Paasal::API.requirements(api_version).methods.each do |required_method|
               describe "method #{required_method.name}" do

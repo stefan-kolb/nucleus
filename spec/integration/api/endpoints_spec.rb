@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'integration/integration_spec_helper'
+require 'spec/spec_helper'
+require 'spec/integration/integration_spec_helper'
 
 describe Paasal::API::V1::Endpoints do
   after { Paasal::TestDataGenerator.clean }
@@ -10,7 +10,7 @@ describe Paasal::API::V1::Endpoints do
   let!(:endpoint_b) { create(:endpoint, provider: provider.id) }
 
   context 'GET /endpoints response' do
-    before { get '/endpoints' }
+    before { get "/providers/#{provider[:id]}/endpoints" }
     include_examples 'a valid GET request'
     it 'has endpoint-list like structure' do
       expect_json_types(size: :int, endpoints: :array_of_objects, _links: :object)
@@ -47,7 +47,7 @@ describe Paasal::API::V1::Endpoints do
     include_examples 'a valid DELETE request'
 
     context 'causes the endpoint list' do
-      before { get '/endpoints' }
+      before { get "/providers/#{provider[:id]}/endpoints" }
       it 'to not include the endpoint anymore' do
         expect(json_body[:size]).to eq 1
         expect_json_sizes(endpoints: 1)
@@ -124,7 +124,7 @@ describe Paasal::API::V1::Endpoints do
 
       context 'causes the' do
         context 'endpoint list' do
-          before { get '/endpoints' }
+          before { get "/providers/#{provider[:id]}/endpoints" }
           include_examples 'a valid GET request'
           it 'to include one more endpoint' do
             expect(json_body[:size]).to eq 3
@@ -150,7 +150,7 @@ describe Paasal::API::V1::Endpoints do
       include_examples 'a bad request'
 
       context 'causes the endpoint list' do
-        before { get '/endpoints' }
+        before { get "/providers/#{provider[:id]}/endpoints" }
         include_examples 'a valid GET request'
         it 'to not contain more endpoints than before' do
           expect(json_body[:size]).to eq 2

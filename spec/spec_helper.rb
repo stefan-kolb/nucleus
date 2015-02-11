@@ -1,5 +1,33 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..')
 
+# figure out where we are being loaded from
+if $LOADED_FEATURES.grep(/spec\/spec_helper\.rb/).any?
+  begin
+    fail 'foo'
+  rescue => e
+    puts <<-MSG
+  ===================================================
+  It looks like spec_helper.rb has been loaded
+  multiple times. Normalize the require to:
+
+    require "spec/spec_helper"
+
+  Things like File.join and File.expand_path will
+  cause it to be loaded multiple times.
+
+  Loaded this time from:
+
+    #{e.backtrace.join("\n    ")}
+  ===================================================
+    MSG
+  end
+end
+
+require 'vcr'
+require 'factory_girl'
+require 'faker'
+require 'tmpdir'
+
 if ENV['CODECLIMATE_REPO_TOKEN']
   require 'codeclimate-test-reporter'
   CodeClimate::TestReporter.start
@@ -23,10 +51,9 @@ end
 # load configuration for integration tests
 require_relative '../scripts/load_config'
 # disable logging
+# TODO: disable logging via proper config option
 configatron.logging.level = Logger::Severity::FATAL
-
 # force tmp database
-require 'tmpdir'
 configatron.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.test.store"
 configatron.db.delete_on_shutdown = true
 configatron.db.override = true
@@ -37,13 +64,15 @@ require_relative '../scripts/load_app'
 # initialize db, versions and auth strategy
 require_relative '../scripts/initialize_core'
 
-# load FactoryGirl
-require 'factory_girl'
-RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
-end
-require 'faker'
 require_relative 'factories/models.rb'
 
 # require shared examples
 require_all 'spec/support'
+
+RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+  config.after(:each) do
+    Excon.defaults[:mock] = true
+    Excon.stubs.clear
+  end
+end

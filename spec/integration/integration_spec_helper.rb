@@ -1,6 +1,8 @@
+require 'spec/spec_helper'
 require 'scripts/initialize_core'
 require 'scripts/initialize_rack'
 require 'spec/integration/test_data_generator'
+require 'spec/support/shared_example_request_types'
 
 require 'airborne'
 Airborne.configure do |config|
