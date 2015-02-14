@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudFoundryAdapter < Paasal::Adapters::BaseAdapter
+      class CloudFoundryAdapter < Adapters::BaseAdapter
         include Paasal::Logging
 
         def initialize(endpoint_url, check_certificates = true)

@@ -49,7 +49,7 @@ module Paasal
 
         def delete_application(application_id)
           # returns the application, but we do not want any output
-          heroku_api.delete_app(application_id)
+          delete("/apps/#{application_id}")
         end
 
         def create_application(application)
@@ -130,10 +130,6 @@ module Paasal
         end
 
         private
-
-        def regions
-          heroku_api
-        end
 
         def heroku_api
           ::Heroku::API.new(headers: headers)

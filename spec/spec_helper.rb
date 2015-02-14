@@ -71,8 +71,10 @@ require_all 'spec/support'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
-  config.after(:each) do
+  config.before(:suite) do
     Excon.defaults[:mock] = true
+  end
+  config.after(:each) do
     Excon.stubs.clear
   end
 end

@@ -73,6 +73,56 @@ A sample `Accept` header would be:
 
     Accept = application/vnd.paasal-v1
 
+## Tests
+
+The tests are divided into 3 categories, _unit_, _integration_ and _adapter_ tests.
+You can either call all tests or each suite seperately.
+
+##### Invoke
+
+    bundle exec rake spec
+
+### Unit Tests
+
+##### Invoke
+
+    bundle exec rake spec:suite:unit
+
+### Integration Tests
+
+##### Invoke
+
+    bundle exec rake spec:suite:integration
+
+### Adapter Tests
+
+The adapter tests rely on previously recorded interactions with the provider's endpoints. They do not invoke external HTTP requests.
+When code changes result in different requests, the interactions have to be re-recorded.
+
+##### Invoke
+
+    bundle exec rake spec:suite:adapters
+
+##### Recording
+
+Recording new VCR cassettes requires you to have an account at the platform that shall be recorded.
+The credentials must be specified in the `config/.credentials` file.
+
+The file is ignored and shall _never_ be committed. It must use the following syntax:
+
+    heroku:
+      user:     'my_heroku_username'
+      password: 'my_heroku_usernames_password'
+      
+To record the interactions, you only have to call the Rake `record` task, eg. by calling: `bundle exec rake record`
+
+###### Missing or invalid VCR recording
+If the recorded cassette is invalid due to a recent change, the test that use this cassette are going to fail.
+
+###### Sensitive data
+Most of the requests contain sensitive data that we do not want to be included in the recorded cassettes.
+By implementation, the API tokens and **all** data that is specified in the `config/.credentials` file are filtered.
+
 ## Schema validation
 
 The generated schema can be validated against the [swagger specification](https://github.com/swagger-api/swagger-spec).
@@ -80,7 +130,7 @@ Please have a look at the [swagger-codegen project](https://github.com/swagger-a
 
 ## Versioning
 
-PaaSal follows the [Semantic Versioning](http://semver.org/) standard. 
+PaaSal follows the [Semantic Versioning](http://semver.org/) standard.
 Therefore, PaaSal also allows to serve multiple versions of the API and provide legacy support.
 
 However, be aware that

@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=invalid_username&password=invalid_password
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Sat, 14 Feb 2015 17:00:25 GMT
+      Request-Id:
+      - 8e580828-4218-4066-8140-af69d028c20e
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 404 Not Found
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Runtime:
+      - '0.01199085'
+      X-XSS-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '0'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Sat, 14 Feb 2015 17:00:25 GMT
+recorded_with: VCR 2.9.3

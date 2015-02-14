@@ -17,6 +17,12 @@ task :spec do
   Rake::Task['spec:suite:all'].invoke
 end
 
+task :record do
+  ENV['VCR_RECORD_MODE'] = 'all'
+  # recording only valid for adapter tests
+  Rake::Task['spec:suite:adapters'].invoke
+end
+
 task :environment do
   ENV['RACK_ENV'] ||= 'development'
   require 'configatron'

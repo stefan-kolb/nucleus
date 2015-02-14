@@ -22,9 +22,6 @@ RSpec.configure do |config|
     Paasal::TestDataGenerator.clean
   end
 
-  config.before(:each) do
-  end
-
   config.after(:each) do
     Excon.stubs.clear
   end
