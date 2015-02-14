@@ -1,8 +1,8 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::HerokuAdapter do
+describe Paasal::Adapters::V1::CloudFoundryAdapter do
   before do
-    @endpoint = 'heroku'
+    @endpoint = 'cf-stackato-local'
     @adapter = load_adapter(@endpoint, 'v1')
   end
 
@@ -19,7 +19,7 @@ describe Paasal::Adapters::V1::HerokuAdapter do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-    include_examples 'valid:#authenticate'
+    include_examples 'valid: OAuth2 #authenticate'
     include_examples 'compliant adapter with valid credentials'
   end
 end

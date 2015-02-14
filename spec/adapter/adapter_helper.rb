@@ -10,23 +10,24 @@ module Paasal
         def initialize
           # save them in hash via adapter clazz as key
           @version_based_adapters = {}
-          @version_based_endpoint_urls = {}
+          @version_based_endpoints = {}
           Paasal::ApiDetector.api_versions.each do |api_version|
             adapters = {}
-            secured_endpoint_urls = {}
+            endpoints = {}
             Paasal::Adapters.configuration_files.each do |adapter_config|
               vendor = Paasal::VendorParser.parse(adapter_config)
               adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, api_version)
               vendor.providers.each do |provider|
                 provider.endpoints.each do |endpoint|
-                  secured_endpoint_urls[endpoint.id] = secure_url(endpoint.url)
+                  endpoint.url = secure_url(endpoint.url)
+                  endpoints[endpoint.id] = endpoint
                   adapters[endpoint.id] = adapter_clazz
                 end
               end
             end
             # save adapters for this api_version
             @version_based_adapters[api_version] = adapters
-            @version_based_endpoint_urls[api_version] = secured_endpoint_urls
+            @version_based_endpoints[api_version] = endpoints
           end
         end
 
@@ -36,8 +37,8 @@ module Paasal
           # fail if no such adapter actually is available
           fail ArgumentError unless @version_based_adapters[api_version].key? endpoint_name
           adapter = @version_based_adapters[api_version][endpoint_name]
-          secured_endpoint_url = @version_based_endpoint_urls[api_version][endpoint_name]
-          adapter.new(secured_endpoint_url)
+          endpoint = @version_based_endpoints[api_version][endpoint_name]
+          adapter.new(endpoint.url, !endpoint.trust)
         end
       end
 

@@ -127,17 +127,21 @@ VCR.configure do |c|
 
   def filter_response_body(vcr_config, key)
     vcr_config.filter_sensitive_data("__#{key.underscore.upcase}__") do |i|
-      response_body = i.response.body.nil? || i.response.body.empty? ? {} : MultiJson.load(i.response.body)
-      if response_body.is_a? Array
-        replacements = response_body.collect { |entry| filter_body(entry, key, 'RESPONSE') }
-        replacements.each_with_index do |replace, index|
-          # replace sensitive value of the nested element
-          vcr_config.filter_sensitive_data("\"__#{key.underscore.upcase}_#{index}__\"") { |_i| replace }
+      begin
+        response_body = i.response.body.nil? || i.response.body.empty? ? {} : MultiJson.load(i.response.body)
+        if response_body.is_a? Array
+          replacements = response_body.collect { |entry| filter_body(entry, key, 'RESPONSE') }
+          replacements.each_with_index do |replace, index|
+            # replace sensitive value of the nested element
+            vcr_config.filter_sensitive_data("\"__#{key.underscore.upcase}_#{index}__\"") { |_i| replace }
+          end
+          # fake replacement, value shall not exist
+          "NO_ARRAY_BODY_TO_REPLACE_AS_OF_#{DateTime.now}"
+        else
+          filter_body(response_body, key, 'RESPONSE')
         end
-        # fake replacement, value shall not exist
-        "NO_ARRAY_BODY_TO_REPLACE_AS_OF_#{DateTime.now}"
-      else
-        filter_body(response_body, key, 'RESPONSE')
+      rescue
+        "INVALID_JSON_BODY_AS_OF_#{DateTime.now}"
       end
     end
   end
@@ -155,7 +159,7 @@ VCR.configure do |c|
 
   %w(token).each { |key| filter_query(c, key) }
   %w(Authorization).each { |key| filter_header(c, key) }
-  %w(api_key refresh_token access_token).each do |key|
+  %w(api_key token refresh_token access_token).each do |key|
     filter_request_body(c, key)
     filter_response_body(c, key)
   end
@@ -192,11 +196,15 @@ VCR.configure do |c|
 
   # filter heroku user identification
   c.filter_sensitive_data('__USER_ID__@users.heroku.com') do |i|
-    response_body = i.response.body.nil? || i.response.body.empty? ? {} : MultiJson.load(i.response.body)
-    if response_body.is_a?(Hash) && /^\S+@users.heroku.com$/ =~ response_body['id']
-      response_body['id']
-    else
-      "NO_HEROKU_USER_ID_IN_RESPONSE_BODY_TO_REPLACE_AS_OF_#{DateTime.now}"
+    begin
+      response_body = i.response.body.nil? || i.response.body.empty? ? {} : MultiJson.load(i.response.body)
+      if response_body.is_a?(Hash) && /^\S+@users.heroku.com$/ =~ response_body['id']
+        response_body['id']
+      else
+        "NO_HEROKU_USER_ID_IN_RESPONSE_BODY_TO_REPLACE_AS_OF_#{DateTime.now}"
+      end
+    rescue
+      "INVALID_JSON_BODY_AS_OF_#{DateTime.now}"
     end
   end
 

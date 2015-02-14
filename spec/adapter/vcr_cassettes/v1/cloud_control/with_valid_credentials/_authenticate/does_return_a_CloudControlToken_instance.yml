@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - POST, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 14 Feb 2015 19:28:54 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/token"
+      X-Varnish:
+      - '279739824'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '84'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"token": "__TOKEN__", "expires": "2015-02-14T19:43:54.749738"}'
+    http_version: 
+  recorded_at: Sat, 14 Feb 2015 19:28:54 GMT
+recorded_with: VCR 2.9.3

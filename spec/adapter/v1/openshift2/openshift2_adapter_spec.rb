@@ -1,8 +1,8 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::HerokuAdapter do
+describe Paasal::Adapters::V1::Openshift2Adapter do
   before do
-    @endpoint = 'heroku'
+    @endpoint = 'openshift-online'
     @adapter = load_adapter(@endpoint, 'v1')
   end
 
