@@ -43,9 +43,9 @@ end
 task schema_v1: :environment do
   require 'json'
   response = Paasal::API::RootAPI.call(
-      'REQUEST_METHOD' => 'GET',
-      'PATH_INFO' => '/schema',
-      'rack.input' => StringIO.new)[2].body[0]
+    'REQUEST_METHOD' => 'GET',
+    'PATH_INFO' => '/schema',
+    'rack.input' => StringIO.new)[2].body[0]
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
 end

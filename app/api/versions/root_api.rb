@@ -33,6 +33,7 @@ module Paasal
         else
           entity = env['api.endpoint'].build_error_entity(
             ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
+          # TODO: add file and line of the error cause
           env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) "\
             "in #{e.backtrace.first}:")
           # log the stacktrace only in debug mode
