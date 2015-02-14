@@ -17,7 +17,7 @@ group :development do
 end
 
 group :test do
-  gem 'airborne'
+  gem 'airborne', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'factory_girl'
   gem 'faker'
