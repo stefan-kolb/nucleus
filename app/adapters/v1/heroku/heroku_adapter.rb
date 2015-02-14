@@ -34,7 +34,7 @@ module Paasal
           # end
           # response_parsed
 
-          response = heroku_api.get_apps
+          response = get('/apps')
           apps = []
           response.body.each do |application|
             apps << to_paasal_app(application)
@@ -43,7 +43,7 @@ module Paasal
         end
 
         def application(application_id)
-          response = heroku_api.get_app(application_id)
+          response = get("/apps/#{application_id}")
           to_paasal_app response.body
         end
 
