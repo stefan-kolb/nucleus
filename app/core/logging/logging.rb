@@ -43,8 +43,8 @@ module Paasal
 
         # apply the log level from the app. configuration
         multi_logger = MultiLogger.new(
-            level: configatron.logging.key?(:level) ? configatron.logging.level : Logger::Severity::WARN,
-            loggers: [std_log, file_log])
+          level: configatron.logging.key?(:level) ? configatron.logging.level : Logger::Severity::WARN,
+          loggers: [std_log, file_log])
         multi_logger
       end
     end

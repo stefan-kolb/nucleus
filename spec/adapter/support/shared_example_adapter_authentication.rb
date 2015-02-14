@@ -2,7 +2,7 @@ shared_examples 'invalid:#authenticate' do
   describe '#authenticate' do
     it 'does throw unauthorized exception' do
       expect { @adapter.authenticate('invalid_username', 'invalid_password') }.to(
-          raise_error Paasal::Errors::AuthenticationError)
+        raise_error Paasal::Errors::AuthenticationError)
     end
   end
 end
