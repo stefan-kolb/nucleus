@@ -168,8 +168,10 @@ VCR.configure do |c|
     # Anonymize header authentication
     headers_1 = request_1.headers
     headers_1['Authorization'] = '__AUTHORIZATION__' if headers_1.key?('Authorization')
+    headers_1['User-Agent'] = '__USER_AGENT__' if headers_1.key?('User-Agent')
     headers_2 = request_2.headers
     headers_2['Authorization'] = '__AUTHORIZATION__' if headers_2.key?('Authorization')
+    headers_2['User-Agent'] = '__USER_AGENT__' if headers_2.key?('User-Agent')
     # finally, compare headers
     headers_1 == headers_2
   end
