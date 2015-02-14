@@ -9,7 +9,16 @@ module Paasal
         end
 
         def authenticate(username, password)
-          log.debug "Skip openshift authentication but create header for #{@endpoint_url}"
+          # access the user information to prove authentication is granted
+          response = Excon.get("#{@endpoint_url}/user",
+                               headers: { 'Accept' => 'application/json; version=1.7',
+                                          'Authorization' => 'Basic ' +
+                                              ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') })
+
+          # Openshift returns 401 for invalid credentials
+          fail Errors::AuthenticationError, 'Openshift says the credentials are invalid' if response.status == 401
+
+          # once authenticated, return the header
           { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
         end
 
