@@ -7,7 +7,12 @@ module Paasal
       @check_certificates = check_certificates
     end
 
-    # TODO: documentation
+    # Authenticate with the given username and password at the auth url.
+    # @param[String] username username
+    # @param[String] password password to the username
+    # @raise[Paasal::Errors::OAuth2AuthenticationError] if authentication failed due to the username and / or password
+    # @raise[Paasal::Errors::UnknownAdapterCallError] if the OAuth2Client does not match the endpoint's auth method
+    # @return[Paasal::O2AuthClient] current OAuth2Client instance
     def authenticate(username, password)
       return self if @access_token
       response = post(query: { grant_type: 'password', username: username, password: password })
@@ -21,7 +26,10 @@ module Paasal
       self
     end
 
-    # TODO: documentation
+    # Get the authentication header for the current OAuth2Client instance.
+    # If the authentication is expired, a token refresh will be made.
+    # @raise[Paasal::Errors::OAuth2AuthenticationError] if token refresh failed
+    # @return[Hash<String, String>] authentication header that enables requests against the endpoint
     def auth_header
       if expired?
         # token is expired, renew first
@@ -31,7 +39,10 @@ module Paasal
       header
     end
 
-    # TODO: documentation
+    # Refresh the access token.
+    # Should be called if the authentication is expired.
+    # @raise[Paasal::Errors::OAuth2AuthenticationError] if token refresh failed or authentication never succeeded
+    # @return[Paasal::O2AuthClient] current OAuth2Client instance
     def refresh
       if @refresh_token.nil?
         fail Errors::OAuth2AuthenticationError.new("Can't refresh token before initial authentication", self)
