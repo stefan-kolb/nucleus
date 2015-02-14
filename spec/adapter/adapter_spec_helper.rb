@@ -88,6 +88,8 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.hook_into :excon
   c.ignore_localhost = false
+  # ignore host as requested by codeclimate
+  c.ignore_hosts 'codeclimate.com'
   # record once, but do not make updates
   c.default_cassette_options = { record: vcr_record_mode }
 
