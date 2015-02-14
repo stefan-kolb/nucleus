@@ -6,9 +6,8 @@ module Paasal
       class HerokuAdapter < Paasal::Adapters::BaseAdapter
         include Paasal::Logging
 
-        # TODO: how to assert that the class implements all required operations?
-        def initialize(endpoint_url)
-          super(endpoint_url)
+        def initialize(endpoint_url, check_certificates = true)
+          super(endpoint_url, check_certificates)
         end
 
         def start(application_id)

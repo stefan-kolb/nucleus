@@ -2,6 +2,12 @@ module Paasal
   module Adapters
     module V1
       class CloudFoundryAdapter < Paasal::Adapters::BaseAdapter
+        include Paasal::Logging
+
+        def initialize(endpoint_url, check_certificates = true)
+          super(endpoint_url, check_certificates)
+        end
+
         def authenticate(username, password)
           log.debug "Authenticate @ #{@endpoint_url}/uaa/oauth/token"
           oauth2_client = oauth2("#{@endpoint_url}/uaa/oauth/token")

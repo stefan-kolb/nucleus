@@ -4,6 +4,12 @@ module Paasal
   module Adapters
     module V1
       class CloudControlAdapter < Paasal::Adapters::BaseAdapter
+        include Paasal::Logging
+
+        def initialize(endpoint_url, check_certificates = true)
+          super(endpoint_url, check_certificates)
+        end
+
         def authenticate(username, password)
           log.debug "Authenticate @ #{@endpoint_url}/token"
           auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
