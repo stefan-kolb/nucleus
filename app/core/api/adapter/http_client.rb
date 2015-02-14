@@ -78,7 +78,7 @@ module Paasal
         response = Excon.new(url, excon_connection_params).request(add_common_request_params.merge(params))
         # log.debug("Response received for request to #{url}")
         # we never want the JSON string, but always the hash representation
-        response.body = hash_of(decompress(response).body)
+        response.body = hash_of(response.body)
         response
       rescue Excon::Errors::HTTPStatusError => e
         handle_execute_request_error(e, url)
@@ -132,17 +132,14 @@ module Paasal
         end
       end
 
-      def decompress(response)
-        return response unless response.headers['Content-Encoding'] == 'gzip'
-        response.body = Zlib::GzipReader.new(StringIO.new(response.body)).read
-        response
-      end
-
       def add_common_request_params(params)
         common_params = { connection_timeout: 600, write_timeout: 300, read_timeout: 90 }
         # allow to follow redirects in the APIs
         params[:expects] = [301, 302, 303, 307, 308].push(*params[:expects]).uniq
+        # use default or customized headers
         params[:headers] = headers unless params[:headers]
+        # specify encoding if not done yet: use only gzip since deflate does cause issues with VCR cassettes in tests
+        params[:headers]['Accept-Encoding'] = 'gzip' unless params[:headers].key? 'Accept-Encoding'
         params[:body] = params[:body].to_json if params.key? :body
         # merge and return
         common_params.merge params
