@@ -14,7 +14,7 @@ module Paasal
             instance[:items].nil? ? 0 : instance[:items].size
           end
 
-          expose :items, as: key, documentation: {
+          expose :items, as: key.to_sym, documentation: {
             type: model_class_name, desc: "List of #{full_name}", is_array: true,
             required_details: { response: true }
           }, using: model
