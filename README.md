@@ -7,10 +7,49 @@
 
 # PaaSal
 
-_PaaSal_ is a RESTful abstraction layer for the management functions of Platform-as-a-Service (PaaS) providers.  
+_PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions of Platform-as-a-Service (PaaS) providers.  
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape). It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
-## Use in your application
+PaaSal differs between Vendor, Providers and Endpoints.
+A *Vendor* is the organziation that developed the platform.
+The *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
+
+## Table of Contents
+
+* [Supported Vendors](#supported-vendors)
+* [Usage](#usage)
+  * [Use in your application](#use-in-your-application)
+  * [Use the API](#use-the-api)
+      * [Start the server:](#start-the-server:)
+    * [API endpoints](#api-endpoints)
+* [Functionality](#functionality)
+* [Configuration](#configuration)
+  * [Vendors, Providers and Endpoints](#vendors,-providers-and-endpoints)
+  * [Application configuration](#application-configuration)
+* [API client(s)](#api-clients)
+  * [Accept Header](#accept-header)
+  * [Language specific clients](#language-specific-clients)
+* [Tests](#tests)
+  * [Unit Tests](#unit-tests)
+  * [Integration Tests](#integration-tests)
+  * [Adapter Tests](#adapter-tests)
+    * [Recording](#recording)
+      * [Missing or invalid VCR recording](#missing-or-invalid-vcr-recording)
+      * [Sensitive data](#sensitive-data)
+* [Schema validation](#schema-validation)
+* [Versioning](#versioning)
+* [Contributing](#contributing)
+
+## Supported Vendors
+
+- ~~Heroku~~
+- ~~CloudFoundry (tested with Stackato and IBM Bluemix)~~
+- ~~Openshift 2~~
+- ~~CloudControl~~
+
+## Usage
+
+### Use in your application
 
 Add this line to your application's Gemfile:
 
@@ -31,11 +70,12 @@ Finally require the gem in your application
 	require 'paasal'
 
 
-## Use the API
+### Use the API
 
 Besides including the abstraction layer in your application, PaaSal can also be started and serve the RESTful API:
 
-#### Start a `rack` server
+#### Start the server:
+
 A rack server can be started in multiple ways.
 The most convinient solution is to use the provided script:  
 
@@ -47,23 +87,73 @@ Hower, you can also start the API using another rack compliant server, e.g. [thi
 
 #### API endpoints
 
-TODO
+**TODO: add more documentation here, especially examples (!)**
+
+The API of PaaSal is documented by the use of swagger.
+After your started a server insatnce, you can access an interactive UI at the `/docs` path.
+
+## Functionality
+
+**TODO: specify what can already be done**
 
 ## Configuration
 
-TODO
+**TODO**
+
+Several parts of PaaSal can be configured, e.g. whether to persist your data or always start with a clean instance.
+
+### Vendors, Providers and Endpoints
+
+A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or be configured in `.yaml` files. These adapter configuration files are located in the project directory at `config/adapters`.
+
+###### Example adapter configuration, here: Openshift 2
+
+    --- 
+    name: "Openshift 2"
+    id: "openshift2"
+    providers:
+      - 
+        name: "Openshift Online"
+        id: "openshift-online"
+        endpoints:
+          - 
+            name: "Openshift Online"
+            id: "openshift-online"
+            url: "openshift.redhat.com/broker/rest"
+            
+### Application configuration
+
+Some aspects, for instance where the server shall save its storage files, can be adjusted.
+
+    # [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
+    configatron.logging.level = Logger::Severity::WARN
+
+    # [optional] Please specify the DB directory if you plan to persist your vendors, providers and their endpoints. Comment-out to use a temporary directory
+    # configatron.db.path = '/path/to/the/application/paasal/store/'
+    # [optional] If true, the DB will be deleted when the server is being closed.
+    # configatron.db.delete_on_shutdown = false
+    # [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values, which may partially override previously persisted entities. False keeps the changes that were applied during runtime.
+    # configatron.db.override = false
+
+	# You can change these values if you host the application and offer access to other users
+    configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'
+    configatron.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
+    configatron.api.contact = 'youremail@example.org'
+    # The name of the license.
+    configatron.api.license = ''
+    # The URL of the license.
+    configatron.api.license_url = ''
+    # The URL of the API terms and conditions.
+    configatron.api.terms_of_service_url = 'API still under development, no guarantees (!)'
 
 
+## API clients
 
-## API client(s)
+### REST client
 
-As of now, there is no API client available.
-As a reward of providing swagger-compatible API docs, clients can be generated for several languages:
-`Scala`, `Flash`, `Java`, `Objc`, `PHP`, `Python`, `Python3`, `Ruby`
+The API can be used with the REST client of your choice.
 
-For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
-
-### Accept Header
+##### Accept Header
 
 Paasal always uses the latest API version if no `Accept` header is specified.
 We therefore **strongly encourage** you to always specify the `Accept` header.
@@ -73,24 +163,34 @@ A sample `Accept` header would be:
 
     Accept = application/vnd.paasal-v1
 
+### Language specific clients
+
+As of now, there is no language specific API client available.
+As a reward of providing swagger-compatible API docs, clients can be generated for several languages:
+`Scala`, `Flash`, `Java`, `Objc`, `PHP`, `Python`, `Python3`, `Ruby`
+
+For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
+
+
+
 ## Tests
 
 The tests are divided into 3 categories, _unit_, _integration_ and _adapter_ tests.
 You can either call all tests or each suite seperately.
 
-##### Invoke
+**Invoke:**
 
     bundle exec rake spec
 
 ### Unit Tests
 
-##### Invoke
+**Invoke:**
 
     bundle exec rake spec:suite:unit
 
 ### Integration Tests
 
-##### Invoke
+**Invoke:**
 
     bundle exec rake spec:suite:integration
 
@@ -99,7 +199,7 @@ You can either call all tests or each suite seperately.
 The adapter tests rely on previously recorded interactions with the provider's endpoints. They do not invoke external HTTP requests.
 When code changes result in different requests, the interactions have to be re-recorded.
 
-##### Invoke
+**Invoke:**
 
     bundle exec rake spec:suite:adapters
 

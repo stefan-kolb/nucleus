@@ -2,12 +2,13 @@
 configatron.logging.level = Logger::Severity::DEBUG
 
 # [optional] Please specify the DB directory if you plan to persist
-# your vendors, providers and their endpoints
+# your vendors, providers and their endpoints.  Comment-out to use a temporary directory.
 configatron.db.path = '/Users/cmr/Documents/workspace-rubymine/paasal/store/'
 # [optional] If true, the DB will be deleted when the server is being closed.
 configatron.db.delete_on_shutdown = true
-# [optional] If true, the DB will be initialized with default values,
-# which may partially override previously persisted entities
+# [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values,
+# which may partially override previously persisted entities.
+# False keeps the changes that were applied during runtime.
 configatron.db.override = false
 
 configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'
