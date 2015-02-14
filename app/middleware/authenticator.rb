@@ -3,6 +3,7 @@ require 'rack/response'
 module Paasal
   class Authenticator
     include Paasal::ErrorBuilder
+    include Paasal::Logging
 
     def initialize(app, realm = nil, &authenticator)
       @app, @realm, @authenticator = app, realm, authenticator

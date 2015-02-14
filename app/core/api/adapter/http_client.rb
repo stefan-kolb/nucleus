@@ -75,7 +75,7 @@ module Paasal
       def execute_request(path, params)
         url = to_url path
         # log.debug("#{params[:method]} --> #{url}")
-        response = Excon.new(url, excon_connection_params).request(add_common_request_params.merge(params))
+        response = Excon.new(url, excon_connection_params).request(add_common_request_params(params))
         # log.debug("Response received for request to #{url}")
         # we never want the JSON string, but always the hash representation
         response.body = hash_of(response.body)
