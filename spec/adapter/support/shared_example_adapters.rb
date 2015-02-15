@@ -2,10 +2,15 @@ require 'spec/adapter/support/shared_example_adapter_authentication'
 require 'spec/adapter/support/shared_example_adapter_applications'
 require 'spec/adapter/support/shared_example_adapter_domains'
 require 'spec/adapter/support/shared_example_adapter_vars'
+require 'spec/adapter/support/shared_example_adapter_regions'
 
 shared_examples 'compliant adapter with valid credentials' do
   describe 'is compliant and' do
     # TODO: prepare test and delete all applications
+
+    # region list and get
+    include_examples 'valid:regions:list'
+    include_examples 'valid:regions:get'
 
     # empty application list
     include_examples 'valid:applications:list'
@@ -87,7 +92,7 @@ shared_examples 'compliant adapter with invalid credentials' do
     browser = Rack::Test::Session.new(Rack::MockSession.new(Airborne.configuration.rack_app))
     browser.send('get', '/schema/endpoints', {}, {})
     operations = MultiJson.load(browser.last_response.body, symbolize_keys: true)[:apis].collect do |api|
-      if api[:path].include?('applications')
+      if api[:path].include?('/endpoints/{endpoint_id}/')
         { path: api[:path], methods: api[:operations].collect { |operation| operation[:method] } }
       end
     end.compact.flatten

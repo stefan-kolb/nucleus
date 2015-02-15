@@ -52,7 +52,9 @@ module Paasal
           post '/' do
             application_params = declared(params, include_missing: false)[:application]
             # allow ALL values in the vendor specific section
-            application_params = application_params.merge params[:application][:vendor_specific]
+            if params[:application].key? :vendor_specific
+              application_params = application_params.merge params[:application][:vendor_specific]
+            end
             application = with_authentication { adapter.create_application application_params }
             present application, with: Models::Application
           end

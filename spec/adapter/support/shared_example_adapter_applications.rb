@@ -23,24 +23,28 @@ shared_examples 'valid:applications:get:404' do
   end
 end
 
-shared_examples 'valid:applications:create:400' do
-  describe 'create application fails ' do
-    xit 'with missing properties' do
-      # TODO: implement this test
-    end
-    xit 'with invalid properties' do
-      # TODO: implement this test
-    end
-  end
-end
-
 shared_examples 'valid:applications:create' do
-  describe 'create application fails' do
-    xit 'with invalid properties' do
-      # TODO: implement this test
+  describe 'create application fails ' do
+    describe 'with missing' do
+      # TODO: implement further tests
+      describe 'name property' do
+        before do
+          post "/endpoints/#{@endpoint}/applications", { application: { autoscaled: false } }, request_headers
+        end
+        include_examples 'a bad request'
+      end
     end
-    xit 'with missing properties' do
-      # TODO: implement this test
+    describe 'with invalid' do
+      # TODO: implement further tests
+      describe 'region' do
+        before do
+          application = {
+            application: { name: 'paasal_test_create_with_invalid_region', region: 'anyinvalidregion' }
+          }
+          post "/endpoints/#{@endpoint}/applications", application, request_headers
+        end
+        include_examples 'a bad request'
+      end
     end
   end
 

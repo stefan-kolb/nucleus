@@ -37,6 +37,9 @@ module Paasal
 
         # application list
         mount Paasal::API::V1::Applications
+        # regions list
+        mount Paasal::API::V1::Regions
+
         # # lifecycle operations
         # mount Paasal::API::V1::Lifecycle::Start
         # mount Paasal::API::V1::Lifecycle::Stop

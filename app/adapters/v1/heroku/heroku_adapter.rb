@@ -53,7 +53,14 @@ module Paasal
         end
 
         def create_application(application)
-          # TODO: implement me
+          if application.key? :region
+            found_region = native_region(application[:region])
+            fail Errors::AdapterRequestError,
+                 "Region '#{application[:region]}' does not exist at the endpoint" if found_region.nil?
+            application[:region] = found_region[:id]
+          end
+
+          # TODO: polish me
           response = post('/apps', body: application)
           to_paasal_app(response.body)
         end
@@ -82,6 +89,8 @@ module Paasal
         def handle_error(error_response)
           if error_response.status == 422 && error_response.body[:id] == 'invalid_params'
             fail Errors::AdapterRequestError, error_response.body[:message]
+          elsif error_response.status == 404 && error_response.body[:id] == 'not_found'
+            fail Errors::AdapterResourceNotFoundError, error_response.body[:message]
           else
             # TODO: implement me
             log.warn 'Still unhandled---'
@@ -129,7 +138,35 @@ module Paasal
           # TODO: implement me
         end
 
+        def regions
+          response = get('/regions').body
+          response.each do |region|
+            region[:id] = region.delete(:name).upcase
+          end
+          response
+        end
+
+        def region(region_name)
+          found_region = native_region(region_name)
+          fail Errors::AdapterResourceNotFoundError,
+               "Region '#{region_name}' does not exist at the endpoint" if found_region.nil?
+          found_region[:id] = found_region.delete(:name).upcase
+          found_region
+        end
+
         private
+
+        def native_region(region_name)
+          response = get('/regions').body
+          response.find { |region| region[:name].casecmp(region_name) == 0 }
+        end
+
+        # TODO: use in create application
+        def region?(region_name)
+          response = get('/regions').body
+          found_region = response.find { |region| region[:name].casecmp(region_name) == 0 }
+          !found_region.nil?
+        end
 
         def heroku_api
           ::Heroku::API.new(headers: headers)

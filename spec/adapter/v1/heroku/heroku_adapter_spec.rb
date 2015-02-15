@@ -5,6 +5,7 @@ describe Paasal::Adapters::V1::HerokuAdapter do
     @endpoint = 'heroku'
     @api_version = 'v1'
     @adapter = load_adapter(@endpoint, @api_version)
+    @application_region = 'US'
   end
 
   context 'with invalid credentials' do

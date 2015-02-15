@@ -16,7 +16,11 @@ module Paasal
         }
 
         # TODO: runtime: Node.js, ? ? ?
-        # TODO: region
+
+        expose :region, documentation: {
+          type: String, desc: 'Deployment region',
+          required_details: { request: false, response: true }
+        }
 
         expose :autoscaled, documentation: {
           # TODO: handle boolean properly
