@@ -117,8 +117,8 @@ module Paasal
 
       def excon_connection_params
         middleware = Excon.defaults[:middlewares].dup
-        middleware << Excon::Middleware::Decompress
-        middleware << Excon::Middleware::RedirectFollower
+        middleware = [Excon::Middleware::ResponseParser, Excon::Middleware::RedirectFollower,
+                      Excon::Middleware::Decompress].push(*middleware).uniq
         { middlewares: middleware, ssl_verify_peer: @check_certificates }
       end
 
