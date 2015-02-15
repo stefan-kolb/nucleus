@@ -3,7 +3,8 @@ require 'spec/adapter/adapter_spec_helper'
 describe Paasal::Adapters::V1::CloudFoundryAdapter do
   before do
     @endpoint = 'cf-stackato-local'
-    @adapter = load_adapter(@endpoint, 'v1')
+    @api_version = 'v1'
+    @adapter = load_adapter(@endpoint, @api_version)
   end
 
   context 'with invalid credentials' do

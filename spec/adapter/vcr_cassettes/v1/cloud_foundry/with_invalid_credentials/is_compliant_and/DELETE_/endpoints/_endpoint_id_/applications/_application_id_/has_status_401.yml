@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stackato-vm1.local/uaa/oauth/token?grant_type=password&password=an_invalid_password&username=an_invalid_username
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.2
+      Authorization:
+      - __AUTHORIZATION__
+  response:
+    status:
+      code: 400
+      message: 
+    headers:
+      content-type:
+      - application/json
+      content-length:
+      - '250'
+      set-cookie:
+      - rack.session=xEnkV29h17HzNhBLO88i7dtRyLyj5bpUaWJWD7aJ5DaGokH3n_pY6TEfURjVRriwjZiuuvf7bAGY4PYx8rUQ-3_7pefTziUiftnkfFd9vJPyU8UBMWOHWF2sI1rT7hY2qUvxhWPjQSLg9jVD54aNaEWnL2n7z6J38y5NWVB7TfMZtnD3qsS01gj3KFMFdBPDlPjq72N6b867KS2AzvZ9snqbbrzbhTI8JuA;
+        path=/; expires=Sun, 15 Feb 2015 14:12:01 -0000; HttpOnly
+      x-content-type-options:
+      - nosniff
+      connection:
+      - close
+      server:
+      - thin 1.6.1 codename Death Proof
+      Date:
+      - Sun, 15 Feb 2015 12:12:01 GMT
+    body:
+      encoding: UTF-8
+      string: '{"error":"invalid_grant","error_description":"The provided access grant
+        is invalid, expired, or revoked (e.g. invalid assertion, expired authorization
+        token, bad end-user password credentials, or mismatching authorization code
+        and redirection URI)."}'
+    http_version: 
+  recorded_at: Sun, 15 Feb 2015 12:50:29 GMT
+recorded_with: VCR 2.9.3
