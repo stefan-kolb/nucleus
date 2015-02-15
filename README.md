@@ -161,6 +161,28 @@ A sample `Accept` header would be:
 
     Accept = application/vnd.paasal-v1
 
+##### Error codes
+
+The application uses the following subset of error codes:
+
+    400: Bad Request
+    401: Unauthorized
+    403: Forbidden
+    404: Resource not found
+    406: API vendor or version not found
+    422: Unprocessable Entity due to invalid parameters
+    500: Internal processing error
+
+All errors are returned in a common schema:
+
+    {
+      "status": HTTP_STATUS_CODE,
+      "message": SIMPLE_ERROR_MESSAGE,
+      "dev_message": DEVELOPER_MESSAGE_WITH_TECHNICAL_DETAILS_TO_RESOLUTION,
+      "error_code": UNIQUE_ERROR_CODE,
+      "more_info": LINK_TO_DOCUMENTATION_DESCRIBING_THE_ERROR
+    }
+
 ### Language specific clients
 
 As of now, there is no language specific API client available.
