@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stackato-vm1.local/uaa/oauth/token?grant_type=password&password=__cf-stackato-local:password__&username=__cf-stackato-local:username__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.2
+      Authorization:
+      - __AUTHORIZATION__
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      content-type:
+      - application/json
+      content-length:
+      - '921'
+      cache-control:
+      - no-store
+      pragma:
+      - no-cache
+      set-cookie:
+      - rack.session=8kU-uEN9geVmHP0zOyF3aZ1vwR2t65d7lKM8EiMDaN6Jlh7Vz29uSDF8gETyo6egCQ2p2uCWgM41w0P0xo-sgktEAznCaffgu-k_S5RARcGpA4imCHCCC6oZchRFVR9PeE1CH-bAOAP6lJVPi7tnQLN7N5NDo1uNxG5yJmALs9QuNUz4o9gYM7SMY6tKXCROgujW2BsdrRQe22NBXDfvpXGMC6Jc4m8-pUk;
+        path=/; expires=Sun, 15 Feb 2015 22:47:08 -0000; HttpOnly
+      x-content-type-options:
+      - nosniff
+      connection:
+      - close
+      server:
+      - thin 1.6.1 codename Death Proof
+      Date:
+      - Sun, 15 Feb 2015 20:47:08 GMT
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","refresh_token":"__REFRESH_TOKEN__","token_type":"bearer","expires_in":86399,"scope":"openid
+        password.write cloud_controller.admin cloud_controller.read cloud_controller.write
+        scim.read scim.write"}'
+    http_version: 
+  recorded_at: Mon, 16 Feb 2015 07:57:53 GMT
+recorded_with: VCR 2.9.3

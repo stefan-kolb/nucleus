@@ -5,6 +5,7 @@ describe Paasal::Adapters::V1::CloudFoundryAdapter do
     @endpoint = 'cf-stackato-local'
     @api_version = 'v1'
     @adapter = load_adapter(@endpoint, @api_version)
+    @application_region = 'default'
   end
 
   context 'with invalid credentials' do
