@@ -21,6 +21,9 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
       * [Start the server:](#start-the-server:)
     * [API endpoints](#api-endpoints)
 * [Functionality](#functionality)
+  * [Native calls (experimental)](#native-calls-(experimental))
+    * [Execute a native API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
+    * [Execute a native API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoint's-application)
 * [Configuration](#configuration)
   * [Vendors, Providers and Endpoints](#vendors,-providers-and-endpoints)
   * [Application configuration](#application-configuration)
@@ -93,6 +96,63 @@ After your started a server insatnce, you can access an interactive UI at the `/
 ## Functionality
 
 **TODO: specify what can already be done**
+
+### Native calls (experimental)
+
+You can also execute native calls against the endpoint's API by using PaaSal.
+This feature is included as experimental functionality and **does not returned unified objects or errors**.
+The response of the API is passed 1:1 to the REST client.
+
+The native calls can be made either against the endpoint or against an application.
+Allowed HTTP methods are `GET`, `POST`,`PATCH`, `PUT` and `DELETE`.
+Data embedded in a requests body is used 1:1 in the API call, header information are going to be discarded.
+
+##### Execute a native API call against the endpoint
+In this example we want to get the current user's account information.
+we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
+
+    GET: http://{PASSAL_API_AND_PORT}/api/endpoints/heroku/call/account
+    -----
+    {
+      "allow_tracking": true,
+      "beta": false,
+      "email": "theusersemail@provider.domain",
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "last_login": "2014-11-25T08:52:59Z",
+      "name": " ",
+      "two_factor_authentication": false,
+      "verified": false,
+      "created_at": "2014-11-18T09:37:21Z",
+      "updated_at": "2015-02-18T18:57:33Z",
+      "default_organization": null
+    }
+
+##### Execute a native API call against an endpoint's application
+In this example we try to list the builds of an Heroku application.
+Therefore we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
+
+    GET: http://{PASSAL_API_AND_PORT}/api/endpoints/heroku/applications/the_application_name/call/builds
+    -----
+    [
+      {
+        "created_at": "2014-11-18T10:33:25+00:00",
+        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "slug": {
+          "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        },
+        "source_blob": {
+          "url": null,
+          "version": null,
+          "version_description": null
+        },
+        "status": "succeeded",
+        "updated_at": "2014-11-18T10:43:34+00:00",
+        "user": {
+          "email": "theusersemail@provider.domain",
+          "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        }
+      }
+    ]
 
 ## Configuration
 
