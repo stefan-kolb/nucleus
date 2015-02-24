@@ -154,6 +154,11 @@ module Paasal
           found_region
         end
 
+        def application_call(application_id, method, path, params)
+          path = "/apps/#{application_id}/#{path}"
+          endpoint_call(method, path, params)
+        end
+
         private
 
         def native_region(region_name)

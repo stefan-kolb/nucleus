@@ -52,6 +52,24 @@ module Paasal
         auth_object.auth_header
       end
 
+      # TODO: documentation
+      def endpoint_call(method, path, params)
+        case method
+        when :GET
+          get(path, native_call: true).body
+        when :POST
+          post(path, native_call: true, body: params).body
+        when :DELETE
+          delete(path, native_call: true).body
+        when :PUT
+          put(path, native_call: true, body: params).body
+        when :PATCH
+          patch(path, native_call: true, body: params).body
+        else
+          fail AdapterRequestError, 'Unsupported adapter call method. Allowed are: GET, POST, PATCH, PUT, DELETE'
+        end
+      end
+
       private
 
       def cache_key(username, password)
