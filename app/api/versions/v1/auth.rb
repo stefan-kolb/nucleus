@@ -35,6 +35,9 @@ module Paasal
         ### Mount all protected routes ###
         ##################################
 
+        # enable native endpoint calls, no param checks, no uniform responses (!)
+        mount Paasal::API::V1::Calls
+
         # application list
         mount Paasal::API::V1::Applications
         # regions list
