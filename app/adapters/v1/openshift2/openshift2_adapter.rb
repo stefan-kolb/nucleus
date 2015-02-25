@@ -37,10 +37,6 @@ module Paasal
           to_paasal_app app_response.body[:data], app_gear_groups.body[:data]
         end
 
-        def default_deployment(application_id)
-          get("/app/#{application_id}/deployment/default")
-        end
-
         def create_application(entity_hash)
           # TODO: implement me
         end
