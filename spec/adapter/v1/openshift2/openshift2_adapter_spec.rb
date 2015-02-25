@@ -23,5 +23,22 @@ describe Paasal::Adapters::V1::Openshift2Adapter do
     let!(:request_headers) { credentials(@endpoint) }
     include_examples 'valid:#authenticate'
     include_examples 'compliant adapter with valid credentials'
+
+    describe 'native adapter call' do
+      describe 'against endpoint' do
+        describe 'does fetch all cartridges' do
+          before do
+            get "/endpoints/#{@endpoint}/call/cartridges", request_headers
+          end
+          include_examples 'a valid GET request'
+          it 'with the specified structure' do
+            expect_json_keys(:api_version, :data, :messages, :status, :supported_api_versions, :type, :version)
+          end
+          it 'with the matching content declaration' do
+            expect_json(type: 'cartridges', status: 'ok')
+          end
+        end
+      end
+    end
   end
 end

@@ -42,5 +42,23 @@ describe Paasal::Adapters::V1::CloudControlAdapter do
     end
 
     include_examples 'compliant adapter with valid credentials'
+
+    describe 'native adapter call' do
+      describe 'against endpoint' do
+        describe 'does fetch all available addons' do
+          before do
+            get "/endpoints/#{@endpoint}/call/addon", request_headers
+          end
+          include_examples 'a valid GET request'
+          it 'with the specified structure' do
+            # assumes there is at least one addon
+            expect(json_body[0].keys).to include(:name, :stage, :options)
+          end
+          it 'with the matching content declaration' do
+            expect_json_types(:array)
+          end
+        end
+      end
+    end
   end
 end

@@ -1,0 +1,104 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=__heroku:user__&password=__heroku:password__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.2
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 24 Feb 2015 23:06:58 GMT
+      Request-Id:
+      - f96ce991-1c97-4864-aadd-6c5922d5cb94
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.14491884'
+      Content-Length:
+      - '378'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"api_key":"__API_KEY__","beta":null,"confirmed":true,"confirmed_at":"2014/11/18
+        01:37:21 -0800","created_at":"2014/11/18 01:37:21 -0800","id":"__USER_ID__@users.heroku.com","email":"__heroku:user__","last_login":"2014/11/25
+        00:52:59 -0800","name":" ","updated_at":"2015/02/18 10:57:33 -0800","verified":false,"verified_at":null}'
+    http_version: 
+  recorded_at: Tue, 24 Feb 2015 23:06:59 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/account
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.2
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 24 Feb 2015 23:06:59 GMT
+      ETag:
+      - '"da8185c2e50b75ff3a657cd268ccd51f"'
+      Last-Modified:
+      - Wed, 18 Feb 2015 18:57:33 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global identity
+      RateLimit-Remaining:
+      - '2399'
+      Request-Id:
+      - 91d27be9-8830-4e72-a80f-ff70706d1efa
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.034261649'
+      Content-Length:
+      - '241'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"beta":false,"email":"__heroku:user__","id":"__heroku:id__","last_login":"2014-11-25T08:52:59Z","name":"
+        ","two_factor_authentication":false,"verified":false,"created_at":"2014-11-18T09:37:21Z","updated_at":"2015-02-18T18:57:33Z","default_organization":null}'
+    http_version: 
+  recorded_at: Tue, 24 Feb 2015 23:06:59 GMT
+recorded_with: VCR 2.9.3

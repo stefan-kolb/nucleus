@@ -23,5 +23,19 @@ describe Paasal::Adapters::V1::CloudFoundryAdapter do
     let!(:request_headers) { credentials(@endpoint) }
     include_examples 'valid: OAuth2 #authenticate'
     include_examples 'compliant adapter with valid credentials'
+
+    describe 'native adapter call' do
+      describe 'against endpoint' do
+        describe 'does fetch all app usage events' do
+          before do
+            get "/endpoints/#{@endpoint}/call/v2/app_usage_events", request_headers
+          end
+          include_examples 'a valid GET request'
+          it 'with the specified structure' do
+            expect_json_keys(:total_results, :total_pages, :resources)
+          end
+        end
+      end
+    end
   end
 end

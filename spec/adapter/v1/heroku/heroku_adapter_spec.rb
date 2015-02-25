@@ -23,5 +23,19 @@ describe Paasal::Adapters::V1::HerokuAdapter do
     let!(:request_headers) { credentials(@endpoint) }
     include_examples 'valid:#authenticate'
     include_examples 'compliant adapter with valid credentials'
+
+    describe 'native adapter call' do
+      describe 'against endpoint' do
+        describe 'does fetch account data' do
+          before do
+            get "/endpoints/#{@endpoint}/call/account", request_headers
+          end
+          include_examples 'a valid GET request'
+          it 'with the specified structure' do
+            expect_json_keys(:created_at, :description, :doc_url, :enabled, :id, :name, :state, :updated_at)
+          end
+        end
+      end
+    end
   end
 end
