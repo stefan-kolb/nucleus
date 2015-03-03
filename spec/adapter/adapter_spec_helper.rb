@@ -32,6 +32,17 @@ def vcr_record_mode
   (ENV['VCR_RECORD_MODE'] || :none).to_sym
 end
 
+def example_group_cassette(metadata)
+  example_group_as_cassette = metadata.key?(:example_group) ? metadata[:example_group][:as_cassette] : false
+  parent_as_cassette = metadata.key?(:parent_example_group) ? metadata[:parent_example_group][:as_cassette] : false
+
+  # process recursive
+  return example_group_cassette(metadata[:parent_example_group]) if parent_as_cassette
+  return metadata[:example_group] if example_group_as_cassette
+  # no cassette for the shared example group was found
+  nil
+end
+
 ################
 # RSPEC CONFIG #
 ################
@@ -60,7 +71,8 @@ RSpec.configure do |config|
     Paasal::Adapters::BaseAdapter.auth_objects_cache.clear
 
     example = test.respond_to?(:metadata) ? test : test.example
-    cassette_name = vcr_cassette_name_for[example.metadata]
+    group_cassette = example_group_cassette(example.metadata)
+    cassette_name = group_cassette ? vcr_cassette_name_for[group_cassette] : vcr_cassette_name_for[example.metadata]
 
     # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
     # Use exclusive option to prevent accidental matching requests in different application states
