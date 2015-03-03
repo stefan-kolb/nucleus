@@ -4,6 +4,11 @@ shared_examples 'contains the request ID' do
   end
 end
 
+shared_examples 'valid error' do
+  include_examples 'contains the request ID'
+  include_examples 'valid error schema'
+end
+
 shared_examples 'valid error schema' do
   it 'complies with the error schema' do
     expect_json_keys(:status, :dev_message, :message, :error_code, :more_info)
@@ -11,8 +16,10 @@ shared_examples 'valid error schema' do
   it 'status matches error schema status' do
     expect(json_body[:status]).to eq(response.status)
   end
-  it 'has a developer message' do
+  it 'has a not nil developer message' do
     expect(json_body[:dev_message]).to_not be_nil
+  end
+  it 'has a non empty developer message' do
     expect(json_body[:dev_message].strip.length).to be > 0
   end
 end
@@ -32,20 +39,25 @@ shared_examples 'an unauthorized request' do
 end
 
 shared_examples 'a bad request' do
-  include_examples 'contains the request ID'
-  include_examples 'valid error schema'
+  include_examples 'valid error'
   it 'has status 400' do
     expect_status 400
   end
   it 'has a developer message' do
     expect(json_body[:dev_message]).to_not be_nil
-    expect(json_body[:dev_message]).to_not be_nil
+    expect(json_body[:dev_message].strip.length).to be > 0
+  end
+end
+
+shared_examples 'a semantically invalid request' do
+  include_examples 'valid error'
+  it 'has status 422' do
+    expect_status 422
   end
 end
 
 shared_examples 'a not accepted request' do
-  include_examples 'contains the request ID'
-  include_examples 'valid error schema'
+  include_examples 'valid error'
   it 'has status 406' do
     expect_status 406
   end

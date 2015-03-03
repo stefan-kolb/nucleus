@@ -1,5 +1,5 @@
 shared_examples 'invalid:applications:list' do
-  describe 'list applications' do
+  describe 'list applications', :as_cassette do
     before { get "/endpoints/#{@endpoint}/applications", request_headers }
     include_examples 'an unauthorized request'
   end
@@ -18,55 +18,109 @@ shared_examples 'application entity schema' do
 end
 
 shared_examples 'valid:applications:get:404' do
-  xit 'get of non-existent application fails' do
-    # TODO: implement this test
+  describe 'get of non-existent application fails', :as_cassette do
+    before do
+      get "/endpoints/#{@endpoint}/applications/this_app_shall_never_exist_#{SecureRandom.uuid}", request_headers
+    end
+    include_examples 'an unknown requested resource'
   end
 end
 
 shared_examples 'valid:applications:create' do
-  describe 'create application fails ' do
+  describe 'create application fails' do
     describe 'with missing' do
-      # TODO: implement further tests
-      describe 'name property' do
+      describe 'name property', :as_cassette do
         before do
-          post "/endpoints/#{@endpoint}/applications", { application: { autoscaled: false } }, request_headers
+          post "/endpoints/#{@endpoint}/applications",
+            { application: { runtimes: ['nodejs'] } }, request_headers
+        end
+        include_examples 'a bad request'
+      end
+      describe 'runtimes property', :as_cassette do
+        before do
+          post "/endpoints/#{@endpoint}/applications",
+            { application: { name: 'paasal_test_create_with_missing_runtimes' } }, request_headers
         end
         include_examples 'a bad request'
       end
     end
     describe 'with invalid' do
-      # TODO: implement further tests
-      describe 'region' do
+      describe 'region', :as_cassette do
         before do
           application = {
-            application: { name: 'paasal_test_create_with_invalid_region', region: 'anyinvalidregion' }
+            application: { name: 'paasal_test_create_with_invalid_region', runtimes: [], region: 'anyinvalidregion' }
           }
           post "/endpoints/#{@endpoint}/applications", application, request_headers
         end
         include_examples 'a bad request'
+        it 'bad request refers to invalid region' do
+          expect(json_body[:dev_message]).to include('anyinvalidregion')
+        end
+      end
+      describe 'runtimes' do
+        describe 'by bad URL and unknown name', :as_cassette do
+          before do
+            application = {
+              application: { name: 'paasal_test_create_with_invalid_runtime_name', runtimes: ['youdontknowmert'] }
+            }
+            post "/endpoints/#{@endpoint}/applications", application, request_headers
+          end
+          include_examples 'a bad request'
+          it 'bad request refers to bad name' do
+            expect(json_body[:dev_message]).to include('youdontknowmert')
+          end
+        end
       end
     end
   end
 
-  xit 'create application' do
-    # TODO: implement this test
+  describe 'create application' do
+    describe 'of type nodejs with all properties', :as_cassette do
+      before do
+        application = {
+          application: {
+            name: 'paasal-test-app-all-properties', runtimes: ['nodejs'], region: 'eu', autoscaled: false
+          }
+        }
+        post "/endpoints/#{@endpoint}/applications", application, request_headers
+      end
+      include_examples 'a valid POST request'
+      include_examples 'application entity schema'
+    end
+
+    describe 'of type nodejs with minimal properties', :as_cassette do
+      before do
+        application = { application: { name: 'paasal-test-app-min-properties', runtimes: ['nodejs'] } }
+        post "/endpoints/#{@endpoint}/applications", application, request_headers
+      end
+      include_examples 'a valid POST request'
+      include_examples 'application entity schema'
+    end
   end
 end
 
 shared_examples 'valid:applications:create:422' do
-  xit 'create application fails with duplicate name' do
-    # TODO: implement this test
+  describe 'create application (repeated) fails with duplicate name', :as_cassette do
+    before do
+      # repeat create with minimal properties
+      application = { application: { name: 'paasal-test-app-min-properties', runtimes: ['nodejs'] } }
+      post "/endpoints/#{@endpoint}/applications", application, request_headers
+    end
+    include_examples 'a semantically invalid request'
   end
 end
 
 shared_examples 'valid:applications:get' do
-  xit 'get application' do
-    # TODO: implement this test
+  describe 'get application', :as_cassette do
+    # get previously created application
+    before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-min-properties", request_headers }
+    include_examples 'a valid GET request'
+    include_examples 'application entity schema'
   end
 end
 
 shared_examples 'valid:applications:list' do
-  describe 'list applications' do
+  describe 'list applications', :as_cassette do
     before { get "/endpoints/#{@endpoint}/applications", request_headers }
     include_examples 'a valid GET request'
     include_examples 'application list schema'
