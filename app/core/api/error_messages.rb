@@ -77,7 +77,14 @@ module Paasal
         status: 422,
         error_code: 422_401,
         message: 'Unprocessable Entity: Request format was valid, but has been rejected by the endpoint, '\
-                 'saying the message contains data that can not be processed by this specific platform.'
+          'saying the message contains data that can not be processed by this specific platform.'
+      }
+
+      PLATFORM_QUOTA_ERROR = {
+        status: 422,
+        error_code: 422_402,
+        message: 'Unprocessable Entity: Request format was valid, but has been rejected by the endpoint. '\
+          'Your account would exceed its quota limits. Please check your account and its billing status.'
       }
 
       #################
