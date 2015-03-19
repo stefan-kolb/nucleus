@@ -194,7 +194,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'unsupported archive compression of type .tbz2', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/data/deploy",
-               { file: Rack::Test::UploadedFile.new('spec/data/valid-sample-app.tbz2', 'application/x-gtar') },
+               { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.tbz2',
+                                                    'application/x-gtar') },
                request_headers
         end
         include_examples 'a bad request'
@@ -203,7 +204,8 @@ shared_examples 'valid:applications:data:deploy' do
                :as_cassette, :mock_fs_on_replay do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/data/deploy",
-               { file: Rack::Test::UploadedFile.new('spec/data/valid-sample-app.tbz2', 'application/gzip') },
+               { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.tbz2',
+                                                    'application/gzip') },
                request_headers
         end
         include_examples 'a bad request'
@@ -211,7 +213,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'corrupted .zip archive', :as_cassette, :mock_fs_on_replay do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/data/deploy",
-               { file: Rack::Test::UploadedFile.new('spec/data/corrupted-archive.zip', 'application/zip') },
+               { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/corrupted-archive.zip',
+                                                    'application/zip') },
                request_headers
         end
         include_examples 'a bad request'
@@ -219,7 +222,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'corrupted .tar.gz archive', :as_cassette, :mock_fs_on_replay do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/data/deploy",
-               { file: Rack::Test::UploadedFile.new('spec/data/corrupted-archive.tar.gz', 'application/gzip') },
+               { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/corrupted-archive.tar.gz',
+                                                    'application/gzip') },
                request_headers
         end
         include_examples 'a bad request'
@@ -230,7 +234,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'valid .zip application archive', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/data/deploy",
-               { file: Rack::Test::UploadedFile.new('spec/data/valid-sample-app.zip', 'application/zip') },
+               { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.zip',
+                                                    'application/zip') },
                request_headers
         end
         include_examples 'contains the request ID'
@@ -249,7 +254,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'valid .tar.gz application archive', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/data/deploy",
-               { file: Rack::Test::UploadedFile.new('spec/data/valid-sample-app.tar.gz', 'application/gzip') },
+               { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.tar.gz',
+                                                    'application/gzip') },
                request_headers
         end
         include_examples 'contains the request ID'
@@ -319,7 +325,7 @@ shared_examples 'valid:applications:data:download' do
         end
         it 'contents are identical to the deployed zip archive' do
           # archives won't be equal due to different zip compression, etc., but files should be identical
-          deployed_md5 = deployed_files_md5('spec/data/valid-sample-app.zip', 'zip')
+          deployed_md5 = deployed_files_md5('spec/adapter/application-archives/valid-sample-app.zip', 'zip')
           downlaod_md5 = response_files_md5(body, 'zip')
 
           # must contain at least all deployed files
@@ -353,7 +359,7 @@ shared_examples 'valid:applications:data:download' do
         end
         it 'contents are identical to the deployed tar.gz archive' do
           # archives won't be equal due to different zip compression, etc., but files should be identical
-          deployed_md5 = deployed_files_md5('spec/data/valid-sample-app.tar.gz', 'tar.gz')
+          deployed_md5 = deployed_files_md5('spec/adapter/application-archives/valid-sample-app.tar.gz', 'tar.gz')
           downlaod_md5 = response_files_md5(body, 'tar.gz')
 
           # must contain at least all deployed files
@@ -402,6 +408,7 @@ shared_examples 'valid:applications:web' do
       before do
         app = get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated", request_headers)
         # use excon so that the external request is recorded
+        p "Access (all): #{app[:web_url]}"
         @live_app = Excon.get(app[:web_url])
       end
       include_examples 'valid:app:wordfinder'
@@ -411,6 +418,7 @@ shared_examples 'valid:applications:web' do
       before do
         app = get("/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated", request_headers)
         # use excon so that the external request is recorded
+        p "Access (min): #{app[:web_url]}"
         @live_app = Excon.get(app[:web_url])
       end
       include_examples 'valid:app:wordfinder'
