@@ -2,7 +2,7 @@ require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::CloudFoundryAdapter do
   before do
-    @endpoint = 'cf-stackato-local'
+    @endpoint = 'cf-bosh-local'
     @api_version = 'v1'
     @adapter = load_adapter(@endpoint, @api_version)
     @application_region = 'default'
