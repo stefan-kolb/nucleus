@@ -11,11 +11,8 @@ module Paasal
       helpers Paasal::ResponseHelper
       helpers Paasal::SharedParamsHelper
 
-      # TODO: mayby we need those for request parameters?
-      # content_type :xml, 'application/xml'
+      # we currently use only JSON messages
       content_type :json, 'application/json'
-      # content_type :binary, 'application/octet-stream'
-      # content_type :txt, 'text/plain'
       default_format :json
       default_error_formatter :json
       format :json

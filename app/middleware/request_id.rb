@@ -14,6 +14,8 @@ module Paasal
       end
 
       def call(env)
+        # TODO: handle cascade, id already assigned to the thread
+        # TODO: save per request !?
         # fetch the ID
         Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID'] || SecureRandom.uuid
         # execute call

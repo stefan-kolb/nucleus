@@ -57,6 +57,7 @@ module Paasal
     # @raise [Paasal::Errors::AuthenticationError] if authentication at the endpoint fails
     # @return [void]
     def re_authenticate
+      log.debug('Invokded re-authentication')
       RequestStore.store[:adapter].uncache RequestStore.store[:cache_key]
       # resolve username & password for authentication request
       auth_keys = %w(HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION)
