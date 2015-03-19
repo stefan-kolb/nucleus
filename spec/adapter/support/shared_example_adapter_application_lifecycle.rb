@@ -6,7 +6,7 @@ shared_examples 'valid:applications:lifecycle' do
           post("/endpoints/#{@endpoint}/applications/#{app_name}/actions/start", {}, request_headers)
         end
         it 'changes state to running within timeout period' do
-          wait(20.seconds).for do
+          wait(40.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]
           end.to eq('running')
         end
@@ -16,9 +16,7 @@ shared_examples 'valid:applications:lifecycle' do
           post("/endpoints/#{@endpoint}/applications/#{app_name}/actions/start", {}, request_headers)
         end
         it 'changes state to running within timeout period' do
-          wait(20.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]
-          end.to eq('running')
+            expect(get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]).to eql('running')
         end
       end
       describe "stop succeeds for #{app_name} if currently running", :as_cassette do
@@ -36,9 +34,7 @@ shared_examples 'valid:applications:lifecycle' do
           post("/endpoints/#{@endpoint}/applications/#{app_name}/actions/stop", {}, request_headers)
         end
         it 'changes state to stopped within timeout period' do
-          wait(20.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]
-          end.to eq('stopped')
+          expect(get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]).to eql('stopped')
         end
       end
       describe "restart succeeds for #{app_name} if currently stopped", :as_cassette do

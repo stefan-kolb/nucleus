@@ -408,7 +408,6 @@ shared_examples 'valid:applications:web' do
       before do
         app = get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated", request_headers)
         # use excon so that the external request is recorded
-        p "Access (all): #{app[:web_url]}"
         @live_app = Excon.get(app[:web_url])
       end
       include_examples 'valid:app:wordfinder'
@@ -418,7 +417,6 @@ shared_examples 'valid:applications:web' do
       before do
         app = get("/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated", request_headers)
         # use excon so that the external request is recorded
-        p "Access (min): #{app[:web_url]}"
         @live_app = Excon.get(app[:web_url])
       end
       include_examples 'valid:app:wordfinder'
