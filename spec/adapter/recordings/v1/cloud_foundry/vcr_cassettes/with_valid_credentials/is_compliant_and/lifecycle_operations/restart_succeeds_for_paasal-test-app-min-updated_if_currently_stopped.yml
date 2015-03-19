@@ -1,0 +1,1032 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/info
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '331'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:11 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - ee72dfac-cd4d-4b89-423c-55f7ad3f6d32
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - d50324f3-40f0-45b1-4cd9-3b825767ae43::588635d7-c0fd-4b7a-9fa9-3f574e3f1c54
+    body:
+      encoding: UTF-8
+      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+        Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:11 GMT
+- request:
+    method: post
+    uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Cache-Control:
+      - no-cache, no-store, no-store
+      Connection:
+      - close
+      Content-Length:
+      - '1856'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:12 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache, no-cache
+      Server:
+      - Apache-Coyote/1.1
+      X-Cf-Requestid:
+      - 013ace8f-a3b4-4d00-58bb-e558fa1c8f02, 01bcc5bb-5a58-467b-624c-c969c47f10ee
+      X-Frame-Options:
+      - DENY
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"daec202e-6a35-4a53-8ff4-ea664366f1aa"}'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:12 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Apaasal-test-app-min-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1712'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:12 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - e1fe1020-f058-4c64-48c9-6fa2ebc17f69
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 5bf84e88-e688-44bc-78c5-98c8c0dd779c::18e9e843-9f69-46b3-b32f-8d0097949374
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "created_at": "2015-03-19T16:33:07+00:00",
+                "updated_at": "2015-03-19T16:35:10+00:00"
+              },
+              "entity": {
+                "name": "paasal-test-app-min-updated",
+                "production": false,
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+                "buildpack": "nodejs_buildpack",
+                "detected_buildpack": null,
+                "environment_json": {
+                  "our_test_var_key": "our_test_var_value"
+                },
+                "memory": 256,
+                "instances": 1,
+                "disk_quota": 1024,
+                "state": "STOPPED",
+                "version": "675449ba-a5a5-48ae-a6a1-c8b04cfd2f5e",
+                "command": null,
+                "console": false,
+                "debug": null,
+                "staging_task_id": "5b443067892d4b8e840ea4a44e9507e4",
+                "package_state": "STAGED",
+                "health_check_timeout": null,
+                "staging_failed_reason": null,
+                "docker_image": null,
+                "package_updated_at": "2015-03-19T16:33:52+00:00",
+                "detected_start_command": "node server.js",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+                "events_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/events",
+                "service_bindings_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/service_bindings",
+                "routes_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:12 GMT
+- request:
+    method: head
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/download
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '2156448'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:12 GMT
+      Etag:
+      - '"550afa70-20e7a0"'
+      Last-Modified:
+      - Thu, 19 Mar 2015 16:33:52 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 8c7fd8ff-7683-4c41-751a-2a6c5e2b671d
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:12 GMT
+- request:
+    method: put
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef
+    body:
+      encoding: UTF-8
+      string: '{"state":"STOPPED"}'
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Length:
+      - '1449'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:13 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 6c480909-7fc0-4118-558d-5f4c39a36d52
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - ad1f6fcd-c628-4b3f-5911-2b871cfab12e::0e48a97b-07ca-4215-8670-0b73eb35c7d7
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+            "url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef",
+            "created_at": "2015-03-19T16:33:07+00:00",
+            "updated_at": "2015-03-19T16:35:12+00:00"
+          },
+          "entity": {
+            "name": "paasal-test-app-min-updated",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "nodejs_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+              "our_test_var_key": "our_test_var_value"
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STOPPED",
+            "version": "675449ba-a5a5-48ae-a6a1-c8b04cfd2f5e",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": "5b443067892d4b8e840ea4a44e9507e4",
+            "package_state": "STAGED",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": "2015-03-19T16:33:52+00:00",
+            "detected_start_command": "node server.js",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/events",
+            "service_bindings_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/service_bindings",
+            "routes_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:12 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '775'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:13 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 0f431f3a-3976-48c5-6ad2-da4f35745adf
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - b46713b8-2d49-4064-5f06-30b64f76aedf::df3092f1-a159-471a-9dcd-a12e8f018a9c
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "c616eb0b-1b71-47a2-9496-0c4d80db567f",
+                "url": "/v2/routes/c616eb0b-1b71-47a2-9496-0c4d80db567f",
+                "created_at": "2015-03-19T16:33:08+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/c616eb0b-1b71-47a2-9496-0c4d80db567f/apps"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:13 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '283'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:13 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 75a485bf-a43d-43e5-6eda-30f2fd103c04
+      X-Cf-Warnings:
+      - Endpoint+deprecated
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - a62c8a00-ae2b-45c6-4b72-800a0d287cd6::e0ea355e-13b4-4c5d-91d2-39322c95f90f
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "created_at": "2014-12-05T16:23:46+00:00",
+            "updated_at": "2015-03-19T07:07:29+00:00"
+          },
+          "entity": {
+            "name": "10.244.0.34.xip.io"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:13 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Apaasal-test-app-min-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1712'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:13 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - d3bee6f4-bcdd-4a05-6adc-58b1403f6706
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 0d45caab-0bf1-4112-408b-371f19094400::b86a006b-c5cd-4068-ace2-bd0a91f7df75
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "created_at": "2015-03-19T16:33:07+00:00",
+                "updated_at": "2015-03-19T16:35:12+00:00"
+              },
+              "entity": {
+                "name": "paasal-test-app-min-updated",
+                "production": false,
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+                "buildpack": "nodejs_buildpack",
+                "detected_buildpack": null,
+                "environment_json": {
+                  "our_test_var_key": "our_test_var_value"
+                },
+                "memory": 256,
+                "instances": 1,
+                "disk_quota": 1024,
+                "state": "STOPPED",
+                "version": "675449ba-a5a5-48ae-a6a1-c8b04cfd2f5e",
+                "command": null,
+                "console": false,
+                "debug": null,
+                "staging_task_id": "5b443067892d4b8e840ea4a44e9507e4",
+                "package_state": "STAGED",
+                "health_check_timeout": null,
+                "staging_failed_reason": null,
+                "docker_image": null,
+                "package_updated_at": "2015-03-19T16:33:52+00:00",
+                "detected_start_command": "node server.js",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+                "events_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/events",
+                "service_bindings_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/service_bindings",
+                "routes_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:13 GMT
+- request:
+    method: head
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/download
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '2156448'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:13 GMT
+      Etag:
+      - '"550afa70-20e7a0"'
+      Last-Modified:
+      - Thu, 19 Mar 2015 16:33:52 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 2e5ceb64-eae9-43f5-7f4c-d4135618d35f
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:13 GMT
+- request:
+    method: put
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef
+    body:
+      encoding: UTF-8
+      string: '{"state":"STARTED"}'
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Length:
+      - '1449'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:13 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 28796098-3890-428b-591d-effb22c92b5b
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 9a6b6d42-03dd-461c-69c6-6ccf8a36dbe8::3e92c543-74f3-4711-92d3-fb0fa9d45626
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+            "url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef",
+            "created_at": "2015-03-19T16:33:07+00:00",
+            "updated_at": "2015-03-19T16:35:13+00:00"
+          },
+          "entity": {
+            "name": "paasal-test-app-min-updated",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "nodejs_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+              "our_test_var_key": "our_test_var_value"
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STARTED",
+            "version": "48ef8a2d-53c9-4ad2-89e0-20ce2de22a54",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": "5b443067892d4b8e840ea4a44e9507e4",
+            "package_state": "STAGED",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": "2015-03-19T16:33:52+00:00",
+            "detected_start_command": "node server.js",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/events",
+            "service_bindings_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/service_bindings",
+            "routes_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:13 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '775'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:14 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 7da86047-7c27-4a1b-5ebb-a0d45773789c
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 52e2aa5d-3547-4de7-55e2-710a4adfac31::06996c4b-b354-49ad-9ad2-9d9e6fffa2ca
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "c616eb0b-1b71-47a2-9496-0c4d80db567f",
+                "url": "/v2/routes/c616eb0b-1b71-47a2-9496-0c4d80db567f",
+                "created_at": "2015-03-19T16:33:08+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/c616eb0b-1b71-47a2-9496-0c4d80db567f/apps"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:13 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '283'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:14 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 53c5f583-b180-4722-4036-ced3e02c857c
+      X-Cf-Warnings:
+      - Endpoint+deprecated
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 7adc11f3-eebe-457d-6e82-4a78e2290008::a659c733-433e-4f8d-bd11-bef55c4ee6ab
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "created_at": "2014-12-05T16:23:46+00:00",
+            "updated_at": "2015-03-19T07:07:29+00:00"
+          },
+          "entity": {
+            "name": "10.244.0.34.xip.io"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:14 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Apaasal-test-app-min-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1712'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:14 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 566389b4-e27c-46b5-5dc7-9967acb34564
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 7a2d90bc-6983-451e-692d-7a54bf4b29f6::76ea015a-f38a-48c2-8220-a8b1b4fabd3e
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "created_at": "2015-03-19T16:33:07+00:00",
+                "updated_at": "2015-03-19T16:35:13+00:00"
+              },
+              "entity": {
+                "name": "paasal-test-app-min-updated",
+                "production": false,
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+                "buildpack": "nodejs_buildpack",
+                "detected_buildpack": null,
+                "environment_json": {
+                  "our_test_var_key": "our_test_var_value"
+                },
+                "memory": 256,
+                "instances": 1,
+                "disk_quota": 1024,
+                "state": "STARTED",
+                "version": "48ef8a2d-53c9-4ad2-89e0-20ce2de22a54",
+                "command": null,
+                "console": false,
+                "debug": null,
+                "staging_task_id": "5b443067892d4b8e840ea4a44e9507e4",
+                "package_state": "STAGED",
+                "health_check_timeout": null,
+                "staging_failed_reason": null,
+                "docker_image": null,
+                "package_updated_at": "2015-03-19T16:33:52+00:00",
+                "detected_start_command": "node server.js",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+                "events_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/events",
+                "service_bindings_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/service_bindings",
+                "routes_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:14 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1449'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:14 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 84228374-b97d-4cb7-5164-710a60a038ba
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 58862654-ab08-48c0-5d36-f24dcb9ab103::65921bf7-1b95-400a-98f9-3db604a0eb2b
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+            "url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef",
+            "created_at": "2015-03-19T16:33:07+00:00",
+            "updated_at": "2015-03-19T16:35:13+00:00"
+          },
+          "entity": {
+            "name": "paasal-test-app-min-updated",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "nodejs_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+              "our_test_var_key": "our_test_var_value"
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STARTED",
+            "version": "48ef8a2d-53c9-4ad2-89e0-20ce2de22a54",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": "5b443067892d4b8e840ea4a44e9507e4",
+            "package_state": "STAGED",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": "2015-03-19T16:33:52+00:00",
+            "detected_start_command": "node server.js",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/events",
+            "service_bindings_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/service_bindings",
+            "routes_url": "/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:14 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3e847486-eb74-4210-9f99-cc1c2a2650ef/routes
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '775'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:14 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - f9e6824e-5c63-43a2-48cb-b4ced7f04fd2
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 10699023-f9b6-4b7a-4e1b-94e3d420ddd4::273a450f-d010-40ea-bb21-9c0db51cc775
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "c616eb0b-1b71-47a2-9496-0c4d80db567f",
+                "url": "/v2/routes/c616eb0b-1b71-47a2-9496-0c4d80db567f",
+                "created_at": "2015-03-19T16:33:08+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3e847486-eb74-4210-9f99-cc1c2a2650ef",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/c616eb0b-1b71-47a2-9496-0c4d80db567f/apps"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:14 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '283'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:35:14 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 937c9147-578d-4e92-4743-2f461f7dba06
+      X-Cf-Warnings:
+      - Endpoint+deprecated
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 2ecfa18e-f588-40d1-688c-447c564e21ef::cea10ee7-9814-4cde-a31d-fdf0fe8ba9d5
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "created_at": "2014-12-05T16:23:46+00:00",
+            "updated_at": "2015-03-19T07:07:29+00:00"
+          },
+          "entity": {
+            "name": "10.244.0.34.xip.io"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:35:14 GMT
+recorded_with: VCR 2.9.3

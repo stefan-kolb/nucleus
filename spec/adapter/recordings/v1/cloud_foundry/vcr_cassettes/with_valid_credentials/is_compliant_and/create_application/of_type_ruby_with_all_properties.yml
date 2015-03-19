@@ -1,0 +1,1455 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/info
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '331'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:04 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 466a8733-7a05-49e3-6236-bac126245c16
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 06b9b51d-c158-46cf-712d-3fd8fc5113de::f1f05789-2f65-4cb8-9cb8-aa206eed279b
+    body:
+      encoding: UTF-8
+      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+        Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:04 GMT
+- request:
+    method: post
+    uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Cache-Control:
+      - no-cache, no-store, no-store
+      Connection:
+      - close
+      Content-Length:
+      - '1856'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache, no-cache
+      Server:
+      - Apache-Coyote/1.1
+      X-Cf-Requestid:
+      - 9c55667e-6484-47e2-525c-3dfb92b3cf11, 61156189-c869-4ca4-774c-f37cf9756e43
+      X-Frame-Options:
+      - DENY
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"17a1c5fc-0b89-4083-a947-84751c17877a"}'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/spaces
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1465'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - f2f566ba-a956-42f4-5f8f-b04979a01c01
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - c6c40710-00d1-43b9-642c-e68751d3f170::edca4fab-4c37-4f6d-972b-5efd761a4314
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "created_at": "2015-03-19T07:21:47+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "name": "development",
+                "organization_guid": "d94caddf-45be-4c92-bb2d-62d3a65cbec0",
+                "space_quota_definition_guid": null,
+                "organization_url": "/v2/organizations/d94caddf-45be-4c92-bb2d-62d3a65cbec0",
+                "developers_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/developers",
+                "managers_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/managers",
+                "auditors_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/auditors",
+                "apps_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/apps",
+                "routes_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/routes",
+                "domains_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/domains",
+                "service_instances_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/service_instances",
+                "app_events_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/app_events",
+                "events_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/events",
+                "security_groups_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/security_groups"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: post
+    uri: https://api.10.244.0.34.xip.io/v2/apps
+    body:
+      encoding: UTF-8
+      string: '{"space_guid":"d3483f4f-6706-4fe1-ad90-1bd45d50e940","name":"paasal-test-app-all-properties","autoscaled":false,"memory":256,"buildpack":"ruby_buildpack"}'
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Length:
+      - '1315'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Location:
+      - "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3"
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - bb9b758c-7ffe-42f3-4b4a-19610dadf8ca
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 9a9c6a27-e6cc-4a24-7d20-fd95f626d4a4::41f4565d-5015-49a2-9c84-fd44113fff2f
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "created_at": "2015-03-19T16:33:05+00:00",
+            "updated_at": null
+          },
+          "entity": {
+            "name": "paasal-test-app-all-properties",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "ruby_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STOPPED",
+            "version": "19759107-f3a5-41c0-8992-7e9a7aad5106",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": null,
+            "package_state": "PENDING",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": null,
+            "detected_start_command": "",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/events",
+            "service_bindings_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/service_bindings",
+            "routes_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/routes"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/private_domains
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '615'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 921ccf7c-f27c-4261-6414-12ddb6fc4f24
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - d3b9fa4d-c59b-41de-40fd-ffe11025f141::8546ce8b-d5af-4576-bf47-4976b60c5d31
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "49388e38-4f2e-427a-ab22-bb9f2c249e7b",
+                "url": "/v2/private_domains/49388e38-4f2e-427a-ab22-bb9f2c249e7b",
+                "created_at": "2015-03-19T16:29:36+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "name": "adomainthatishopefullynotusedontheplatform.de",
+                "owning_organization_guid": "d94caddf-45be-4c92-bb2d-62d3a65cbec0",
+                "owning_organization_url": "/v2/organizations/d94caddf-45be-4c92-bb2d-62d3a65cbec0"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/shared_domains
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '441'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 7d11066d-57cf-40f2-4f06-6f34abbadebd
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 4e0bdd90-475a-48ae-6c2f-70b2f04574a0::870c60d0-d256-444e-97dc-5dc434150a5b
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "url": "/v2/shared_domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "created_at": "2014-12-05T16:23:46+00:00",
+                "updated_at": "2015-03-19T07:07:29+00:00"
+              },
+              "entity": {
+                "name": "10.244.0.34.xip.io"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/routes
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '24896'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - d026ea68-75a8-4272-6bd4-926b50d6c9db
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 222223ba-f651-4e77-7802-709a4cbeec73::6959dcc5-2d2e-41ad-becd-04d72f0f2e31
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 37,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "334a825b-979e-4a2e-a76b-20c4d9c5867a",
+                "url": "/v2/routes/334a825b-979e-4a2e-a76b-20c4d9c5867a",
+                "created_at": "2015-03-19T08:21:46+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "522497bf-17fc-4d4f-9b86-154fe9fe3a15",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/334a825b-979e-4a2e-a76b-20c4d9c5867a/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "44f7752e-4237-4ec1-a682-eabb20149c38",
+                "url": "/v2/routes/44f7752e-4237-4ec1-a682-eabb20149c38",
+                "created_at": "2015-03-19T08:22:28+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3927b54a-1674-4215-8367-6fe7b6ab0f1f",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/44f7752e-4237-4ec1-a682-eabb20149c38/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "7f28e593-d9e2-4aad-8861-191aedc08567",
+                "url": "/v2/routes/7f28e593-d9e2-4aad-8861-191aedc08567",
+                "created_at": "2015-03-19T08:22:28+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "0771ec82-4693-481f-9a4f-7cac35254346",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/7f28e593-d9e2-4aad-8861-191aedc08567/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "1921c49d-99e4-4c21-8f37-af73469ef31e",
+                "url": "/v2/routes/1921c49d-99e4-4c21-8f37-af73469ef31e",
+                "created_at": "2015-03-19T08:34:46+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "e1d1a71b-14b2-431e-a036-e7e30563a312",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/1921c49d-99e4-4c21-8f37-af73469ef31e/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "bb04d71f-0aab-487a-9ce3-f6f690504413",
+                "url": "/v2/routes/bb04d71f-0aab-487a-9ce3-f6f690504413",
+                "created_at": "2015-03-19T08:48:19+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "4a2f900f-8ccf-4636-b0ad-c2e3799b0e73",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/bb04d71f-0aab-487a-9ce3-f6f690504413/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "f5ee451a-d973-4210-a315-98190c483301",
+                "url": "/v2/routes/f5ee451a-d973-4210-a315-98190c483301",
+                "created_at": "2015-03-19T08:48:50+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "5cbded2d-1435-4fa7-bfc2-31fb5fb15ae8",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/f5ee451a-d973-4210-a315-98190c483301/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "9a570e10-23b5-4f3b-9633-d4f819201125",
+                "url": "/v2/routes/9a570e10-23b5-4f3b-9633-d4f819201125",
+                "created_at": "2015-03-19T08:48:50+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "722de268-acfe-47fe-9bd4-28bd1640410f",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/9a570e10-23b5-4f3b-9633-d4f819201125/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "dcdf6036-19a7-4b45-b0a8-6f9c15f362a7",
+                "url": "/v2/routes/dcdf6036-19a7-4b45-b0a8-6f9c15f362a7",
+                "created_at": "2015-03-19T08:53:16+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "815c0709-884d-408d-abc7-2c0f88b02611",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/dcdf6036-19a7-4b45-b0a8-6f9c15f362a7/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "da719833-bf9d-4e01-b097-f66bd06c676e",
+                "url": "/v2/routes/da719833-bf9d-4e01-b097-f66bd06c676e",
+                "created_at": "2015-03-19T08:54:19+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "f7f94d09-8037-4bf8-966a-91c5dbd26471",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/da719833-bf9d-4e01-b097-f66bd06c676e/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "7525962e-b10d-4ed9-be5e-d59f68005dfa",
+                "url": "/v2/routes/7525962e-b10d-4ed9-be5e-d59f68005dfa",
+                "created_at": "2015-03-19T09:43:42+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "d3c01775-1c0a-4e1f-99e3-045909915034",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/7525962e-b10d-4ed9-be5e-d59f68005dfa/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "eb059c50-aad1-4fbf-ae22-864a42d20ac4",
+                "url": "/v2/routes/eb059c50-aad1-4fbf-ae22-864a42d20ac4",
+                "created_at": "2015-03-19T09:43:43+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "7b3fde5d-b18a-494a-8053-dfd6b0c8b8c4",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/eb059c50-aad1-4fbf-ae22-864a42d20ac4/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "4f85ae56-715e-450e-b003-cdb98f557bb8",
+                "url": "/v2/routes/4f85ae56-715e-450e-b003-cdb98f557bb8",
+                "created_at": "2015-03-19T09:51:02+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "6bceaa6c-07a0-4215-b813-2ac259bb9c96",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/4f85ae56-715e-450e-b003-cdb98f557bb8/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "08012048-d01b-4f67-b402-54a1f22258de",
+                "url": "/v2/routes/08012048-d01b-4f67-b402-54a1f22258de",
+                "created_at": "2015-03-19T09:51:03+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "cf846209-bacd-43df-a7c4-1134f03f7678",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/08012048-d01b-4f67-b402-54a1f22258de/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "ef83076e-43aa-486b-b4b6-146f69c11cb6",
+                "url": "/v2/routes/ef83076e-43aa-486b-b4b6-146f69c11cb6",
+                "created_at": "2015-03-19T10:05:49+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3048275a-63fd-4c10-9538-1bafc6934949",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/ef83076e-43aa-486b-b4b6-146f69c11cb6/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "fa3819d3-6c4a-4633-93a5-c16ba3fca414",
+                "url": "/v2/routes/fa3819d3-6c4a-4633-93a5-c16ba3fca414",
+                "created_at": "2015-03-19T10:05:50+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "90725718-a1d8-4be6-bf63-3a2a67ede5e0",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/fa3819d3-6c4a-4633-93a5-c16ba3fca414/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "e8d909d8-7148-4fa5-ad19-29e213735136",
+                "url": "/v2/routes/e8d909d8-7148-4fa5-ad19-29e213735136",
+                "created_at": "2015-03-19T10:08:21+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "a08414f7-6cca-438f-bfa2-17d8b77b6436",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/e8d909d8-7148-4fa5-ad19-29e213735136/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "5c24b0a6-2a5a-47c6-aeec-bfa37549d09e",
+                "url": "/v2/routes/5c24b0a6-2a5a-47c6-aeec-bfa37549d09e",
+                "created_at": "2015-03-19T10:08:22+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "f02591a8-3f1b-451b-a949-7ac8ba0c882d",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/5c24b0a6-2a5a-47c6-aeec-bfa37549d09e/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "b86f22a7-b309-409d-8afe-56408096a3da",
+                "url": "/v2/routes/b86f22a7-b309-409d-8afe-56408096a3da",
+                "created_at": "2015-03-19T12:45:57+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "c1e3327b-96cb-4538-9cd6-cc756dc737ca",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/b86f22a7-b309-409d-8afe-56408096a3da/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "5ecdd93f-510b-4b7b-a39b-43bc326ae192",
+                "url": "/v2/routes/5ecdd93f-510b-4b7b-a39b-43bc326ae192",
+                "created_at": "2015-03-19T12:46:00+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "9e0e8595-ecb6-49f2-83e9-d015afa53ddc",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/5ecdd93f-510b-4b7b-a39b-43bc326ae192/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "7dbc6b25-611b-4da6-af1f-f8ba5d883efd",
+                "url": "/v2/routes/7dbc6b25-611b-4da6-af1f-f8ba5d883efd",
+                "created_at": "2015-03-19T13:23:33+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "7dc32b5c-11e7-41e1-a474-b8b039bdc672",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/7dbc6b25-611b-4da6-af1f-f8ba5d883efd/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "54dfb0ab-8dd1-4a84-b386-bda8f341a68c",
+                "url": "/v2/routes/54dfb0ab-8dd1-4a84-b386-bda8f341a68c",
+                "created_at": "2015-03-19T13:23:34+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "50e516c9-aa27-46d2-8658-1bdccaec4680",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/54dfb0ab-8dd1-4a84-b386-bda8f341a68c/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "3005e6c0-a9a1-4e4d-bd43-8140783f8aae",
+                "url": "/v2/routes/3005e6c0-a9a1-4e4d-bd43-8140783f8aae",
+                "created_at": "2015-03-19T13:29:46+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "08ea0b60-6ae8-4f8b-bb51-12b55f469263",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/3005e6c0-a9a1-4e4d-bd43-8140783f8aae/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "37c930bf-0c71-4bdb-a89b-a5f205f1f4f3",
+                "url": "/v2/routes/37c930bf-0c71-4bdb-a89b-a5f205f1f4f3",
+                "created_at": "2015-03-19T13:29:47+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "d640ad58-5232-489e-bffa-503d06e96cb2",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/37c930bf-0c71-4bdb-a89b-a5f205f1f4f3/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "679ab260-ecc2-40da-b20a-0dc245c2e988",
+                "url": "/v2/routes/679ab260-ecc2-40da-b20a-0dc245c2e988",
+                "created_at": "2015-03-19T13:38:59+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "8a757678-16ba-4a84-8428-a00544f1a445",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/679ab260-ecc2-40da-b20a-0dc245c2e988/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "b3700df5-292f-4ea9-8a42-ffa4161af6fb",
+                "url": "/v2/routes/b3700df5-292f-4ea9-8a42-ffa4161af6fb",
+                "created_at": "2015-03-19T13:39:00+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "d0454cec-46d3-48fc-868d-28907f54ebc0",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/b3700df5-292f-4ea9-8a42-ffa4161af6fb/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "0054a394-1849-479e-b47e-b6aa01a7e295",
+                "url": "/v2/routes/0054a394-1849-479e-b47e-b6aa01a7e295",
+                "created_at": "2015-03-19T16:03:49+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3f74434c-70e6-48f7-a7ec-60f1bb6bb88c",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/0054a394-1849-479e-b47e-b6aa01a7e295/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "a7e12638-7570-4286-ae8f-9d9958157308",
+                "url": "/v2/routes/a7e12638-7570-4286-ae8f-9d9958157308",
+                "created_at": "2015-03-19T16:03:50+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "34744fd8-feb3-4105-871d-7495ce87c803",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/a7e12638-7570-4286-ae8f-9d9958157308/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "a122e132-212b-4504-9a43-efab5190c291",
+                "url": "/v2/routes/a122e132-212b-4504-9a43-efab5190c291",
+                "created_at": "2015-03-19T16:05:32+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "ff67af4b-3e75-4271-86ba-9d2027b233fb",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/a122e132-212b-4504-9a43-efab5190c291/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "a7acc357-dfe5-4d62-87e9-920e591a9c84",
+                "url": "/v2/routes/a7acc357-dfe5-4d62-87e9-920e591a9c84",
+                "created_at": "2015-03-19T16:05:33+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "31148625-6625-4029-a250-08427a4c2c3e",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/a7acc357-dfe5-4d62-87e9-920e591a9c84/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "8b7e33ab-1b63-4cd3-8a7d-7bbe551e7be1",
+                "url": "/v2/routes/8b7e33ab-1b63-4cd3-8a7d-7bbe551e7be1",
+                "created_at": "2015-03-19T16:07:55+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "01956780-248a-43d7-b9f2-bc1f3069eb8a",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/8b7e33ab-1b63-4cd3-8a7d-7bbe551e7be1/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "ec4fb8f7-eaa1-425a-b471-b255130115df",
+                "url": "/v2/routes/ec4fb8f7-eaa1-425a-b471-b255130115df",
+                "created_at": "2015-03-19T16:08:02+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "8e693271-9bcb-4c22-8db4-63177fb85acd",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/ec4fb8f7-eaa1-425a-b471-b255130115df/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "28d86543-a7b9-4a3c-be28-dc50a2334c8f",
+                "url": "/v2/routes/28d86543-a7b9-4a3c-be28-dc50a2334c8f",
+                "created_at": "2015-03-19T16:14:45+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "99b8c5bb-78a0-48e3-98e0-13c0505fe2a3",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/28d86543-a7b9-4a3c-be28-dc50a2334c8f/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "0b027362-851f-4e6f-a76c-828438084364",
+                "url": "/v2/routes/0b027362-851f-4e6f-a76c-828438084364",
+                "created_at": "2015-03-19T16:14:47+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "b60c1627-1619-44e1-82b1-c12779787b62",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/0b027362-851f-4e6f-a76c-828438084364/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "f2c3cba0-4d4d-4881-8665-8fc847e9ca39",
+                "url": "/v2/routes/f2c3cba0-4d4d-4881-8665-8fc847e9ca39",
+                "created_at": "2015-03-19T16:22:43+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "ae12c707-ce2d-4084-8bf7-36f5cec45af3",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/f2c3cba0-4d4d-4881-8665-8fc847e9ca39/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "78c3fbe9-fa75-4e15-9910-233b14267c23",
+                "url": "/v2/routes/78c3fbe9-fa75-4e15-9910-233b14267c23",
+                "created_at": "2015-03-19T16:22:45+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "2334cbf5-516b-4eaa-ba58-f1983c76a3ea",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/78c3fbe9-fa75-4e15-9910-233b14267c23/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "161abd42-4769-4de8-87f3-cc7fb8ae4ee0",
+                "url": "/v2/routes/161abd42-4769-4de8-87f3-cc7fb8ae4ee0",
+                "created_at": "2015-03-19T16:28:44+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "b15994d9-a4e0-48fc-bc6d-40e114e8bbac",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/161abd42-4769-4de8-87f3-cc7fb8ae4ee0/apps"
+              }
+            },
+            {
+              "metadata": {
+                "guid": "ed99b509-ec99-40b8-ab78-d903eb8c5e83",
+                "url": "/v2/routes/ed99b509-ec99-40b8-ab78-d903eb8c5e83",
+                "created_at": "2015-03-19T16:28:46+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "b49c2c70-aaea-4904-a2a3-054784228124",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/ed99b509-ec99-40b8-ab78-d903eb8c5e83/apps"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/spaces
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1465'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:05 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 98ff9338-7b59-44f6-63da-79c0b08de212
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 19436a3d-5ebd-454d-4649-b092a7fb27a1::b17cf1e4-57f7-4869-bfb6-9935480cdb46
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "created_at": "2015-03-19T07:21:47+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "name": "development",
+                "organization_guid": "d94caddf-45be-4c92-bb2d-62d3a65cbec0",
+                "space_quota_definition_guid": null,
+                "organization_url": "/v2/organizations/d94caddf-45be-4c92-bb2d-62d3a65cbec0",
+                "developers_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/developers",
+                "managers_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/managers",
+                "auditors_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/auditors",
+                "apps_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/apps",
+                "routes_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/routes",
+                "domains_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/domains",
+                "service_instances_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/service_instances",
+                "app_events_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/app_events",
+                "events_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/events",
+                "security_groups_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940/security_groups"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: post
+    uri: https://api.10.244.0.34.xip.io/v2/routes
+    body:
+      encoding: UTF-8
+      string: '{"domain_guid":"0a7ac015-b059-47d3-b1a2-873a6e370f36","host":"2f12c8fe-19b7-4bc2-aeba-062177502ce3","space_guid":"d3483f4f-6706-4fe1-ad90-1bd45d50e940"}'
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Length:
+      - '604'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:06 GMT
+      Location:
+      - "/v2/routes/f054f24d-1eb1-40c6-ada4-71f373f401c1"
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 5924235a-ee66-4be8-605b-a998adc45231
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - f924f3ee-768f-4ba9-767b-e8ca88f4c318::a28ad9ba-07c2-41da-8464-04da5b7555eb
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "f054f24d-1eb1-40c6-ada4-71f373f401c1",
+            "url": "/v2/routes/f054f24d-1eb1-40c6-ada4-71f373f401c1",
+            "created_at": "2015-03-19T16:33:06+00:00",
+            "updated_at": null
+          },
+          "entity": {
+            "host": "2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "apps_url": "/v2/routes/f054f24d-1eb1-40c6-ada4-71f373f401c1/apps"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:05 GMT
+- request:
+    method: put
+    uri: https://api.10.244.0.34.xip.io/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/routes/f054f24d-1eb1-40c6-ada4-71f373f401c1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Length:
+      - '1338'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:06 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 7d9ae0cf-1c43-4f08-61fa-20532ffda230
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - b1b754b3-f80c-430f-7b72-aa2bdcf57df1::d230e9a6-2f82-4288-99de-07f6e1b56d76
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "created_at": "2015-03-19T16:33:05+00:00",
+            "updated_at": "2015-03-19T16:33:06+00:00"
+          },
+          "entity": {
+            "name": "paasal-test-app-all-properties",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "ruby_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STOPPED",
+            "version": "e2fe3400-b4cc-4913-9fca-5eadb6e76892",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": null,
+            "package_state": "PENDING",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": null,
+            "detected_start_command": "",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/events",
+            "service_bindings_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/service_bindings",
+            "routes_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/routes"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:06 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '1338'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:06 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - e7b15317-e184-41f0-4d33-9193df64cf5c
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 07ef4eec-7f54-4efd-7dac-6ba98efc28bd::8f2ce2b9-8ca3-4195-b93f-ed2cd7531aef
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+            "created_at": "2015-03-19T16:33:05+00:00",
+            "updated_at": "2015-03-19T16:33:06+00:00"
+          },
+          "entity": {
+            "name": "paasal-test-app-all-properties",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "ruby_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STOPPED",
+            "version": "e2fe3400-b4cc-4913-9fca-5eadb6e76892",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": null,
+            "package_state": "PENDING",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": null,
+            "detected_start_command": "",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/events",
+            "service_bindings_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/service_bindings",
+            "routes_url": "/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/routes"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:06 GMT
+- request:
+    method: head
+    uri: https://api.10.244.0.34.xip.io/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/download
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Length:
+      - '155'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:06 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 0cd6a552-4118-45f5-499a-59ec6f861634
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 0350c4da-6936-4413-527d-16e60f919021::132f70fb-27b5-42bc-b593-9716d09ffe9d
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:06 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/apps/2f12c8fe-19b7-4bc2-aeba-062177502ce3/routes
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '775'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:06 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 961b18c1-d9cc-432c-5d17-61d807bb846b
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - ef40a12f-3eea-4053-57eb-4497650af974::56c2e7fc-1f30-48b7-abfd-03cfdd7e9258
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "f054f24d-1eb1-40c6-ada4-71f373f401c1",
+                "url": "/v2/routes/f054f24d-1eb1-40c6-ada4-71f373f401c1",
+                "created_at": "2015-03-19T16:33:06+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "2f12c8fe-19b7-4bc2-aeba-062177502ce3",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/f054f24d-1eb1-40c6-ada4-71f373f401c1/apps"
+              }
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:06 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '283'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Thu, 19 Mar 2015 16:33:06 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - cffe9f9c-7721-4cb9-7854-6a4620428b0a
+      X-Cf-Warnings:
+      - Endpoint+deprecated
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - ca5b9da4-1038-467f-5042-cf6a089452b7::8e166747-f8d0-4f59-bdaf-6990ce9e7ef0
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "created_at": "2014-12-05T16:23:46+00:00",
+            "updated_at": "2015-03-19T07:07:29+00:00"
+          },
+          "entity": {
+            "name": "10.244.0.34.xip.io"
+          }
+        }
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:33:06 GMT
+recorded_with: VCR 2.9.3
