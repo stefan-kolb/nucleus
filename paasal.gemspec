@@ -23,13 +23,16 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'daybreak'
   spec.add_runtime_dependency 'excon'
   spec.add_runtime_dependency 'filesize'
+  spec.add_runtime_dependency 'git'
   # spec.add_runtime_dependency 'grape'
   # spec.add_runtime_dependency 'grape-entity'
   # spec.add_runtime_dependency 'grape-swagger'
   spec.add_runtime_dependency 'kwalify'
   spec.add_runtime_dependency 'logger'
+  spec.add_runtime_dependency 'mime-types'
   spec.add_runtime_dependency 'request_store'
   spec.add_runtime_dependency 'require_all'
+  spec.add_runtime_dependency 'rubyzip'
 
   # use gems of selected PaaS vendors
   spec.add_runtime_dependency 'heroku-api'

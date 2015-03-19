@@ -9,8 +9,18 @@ require 'kwalify'
 require 'daybreak'
 require 'tmpdir'
 require 'securerandom'
+
+# Currently we need excon AND rest_client, due to excon not supporting multipart requests. See also:
+# https://github.com/excon/excon/issues/353
 require 'excon'
+require 'rest_client'
+
 require 'request_store'
+require 'git'
+require 'mime-types'
+
+# require url regex
+require 'regexp'
 
 # models
 require_all 'app/models'

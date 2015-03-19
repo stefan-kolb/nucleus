@@ -3,13 +3,15 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in paasal.gemspec
 gemspec
 
+# TODO: Should be removed as soon as excon supports multipart requests
+gem 'rest-client'
+
 # Patched gems
 gem 'grape', git: 'https://github.com/croeck/grape.git',
              branch: 'paasal', require: 'grape'
-gem 'grape-entity', '0.4.5', git: 'https://github.com/croeck/grape-entity.git',
-                             branch: 'safe-exposure-of-hash-objects', require: 'grape-entity'
+gem 'grape-entity', git: 'https://github.com/intridea/grape-entity.git'
 gem 'grape-swagger', git: 'https://github.com/croeck/grape-swagger.git',
-                     branch: 'required-details-feature', require: 'grape-swagger'
+                     branch: 'paasal', require: 'grape-swagger'
 
 group :development do
   # use patched version to prevent freezing
