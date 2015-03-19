@@ -6,6 +6,7 @@ describe Paasal::Adapters::V1::CloudFoundryAdapter do
     @api_version = 'v1'
     @adapter = load_adapter(@endpoint, @api_version)
     @application_region = 'default'
+    @application_params = { memory: 256.to_i }
   end
 
   context 'with invalid credentials' do
@@ -26,9 +27,9 @@ describe Paasal::Adapters::V1::CloudFoundryAdapter do
 
     describe 'native adapter call' do
       describe 'against endpoint' do
-        describe 'does fetch all app usage events' do
+        describe 'does fetch all buildpacks', :as_cassette do
           before do
-            get "/endpoints/#{@endpoint}/call/v2/app_usage_events", request_headers
+            get "/endpoints/#{@endpoint}/call/v2/buildpacks", request_headers
           end
           include_examples 'a valid GET request'
           it 'with the specified structure' do

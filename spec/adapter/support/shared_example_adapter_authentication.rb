@@ -8,7 +8,7 @@ shared_examples 'invalid:#authenticate' do
 end
 
 shared_examples 'valid:#authenticate' do
-  describe '#authenticate' do
+  describe '#authenticate', :as_cassette do
     before do
       username, password = username_password(@endpoint)
       @auth_header = @adapter.authenticate(username, password)
@@ -27,7 +27,7 @@ shared_examples 'valid:#authenticate' do
 end
 
 shared_examples 'valid: OAuth2 #authenticate' do
-  describe '#authenticate' do
+  describe '#authenticate', :as_cassette do
     before do
       username, password = username_password(@endpoint)
       @auth_client = @adapter.authenticate(username, password)

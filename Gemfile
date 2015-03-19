@@ -17,6 +17,9 @@ group :development do
 end
 
 group :test do
+  # includes required fix for empty arrays as param value, see issue #122 and pull request #125
+  gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'empty-array-param'
+  gem 'rspec-wait'
   gem 'airborne', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'factory_girl'

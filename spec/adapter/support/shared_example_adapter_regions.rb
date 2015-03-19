@@ -11,7 +11,7 @@ shared_examples 'region entity schema' do
 end
 
 shared_examples 'valid:regions:list' do
-  describe 'list regions' do
+  describe 'list regions', :as_cassette do
     before { get("/endpoints/#{@endpoint}/regions", request_headers) }
     include_examples 'region list schema'
     include_examples 'a valid GET request'
@@ -19,12 +19,11 @@ shared_examples 'valid:regions:list' do
       expect(json_body).to_not be_nil
       expect(json_body[:size]).to be >= 1
     end
-    # TODO: implement this test
   end
 end
 
 shared_examples 'valid:regions:get' do
-  describe 'get region' do
+  describe 'get region', :as_cassette do
     before { get("/endpoints/#{@endpoint}/regions/#{@application_region}", request_headers) }
     include_examples 'region entity schema'
     include_examples 'a valid GET request'

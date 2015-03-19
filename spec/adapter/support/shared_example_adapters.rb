@@ -1,19 +1,20 @@
 require 'spec/adapter/support/shared_example_adapter_authentication'
 require 'spec/adapter/support/shared_example_adapter_applications'
-require 'spec/adapter/support/shared_example_adapter_domains'
+require 'spec/adapter/support/shared_example_adapter_application_lifecycle'
+require 'spec/adapter/support/shared_example_adapter_application_scaling'
+require 'spec/adapter/support/shared_example_adapter_application_states'
+require 'spec/adapter/support/shared_example_adapter_application_domains'
 require 'spec/adapter/support/shared_example_adapter_vars'
 require 'spec/adapter/support/shared_example_adapter_regions'
 
 shared_examples 'compliant adapter with valid credentials' do
   describe 'is compliant and' do
-    # TODO: prepare test and delete all applications
+    # TODO: shall we prepare the test and delete all applications?
 
     # region list and get
     include_examples 'valid:regions:list'
     include_examples 'valid:regions:get'
 
-    # empty application list
-    include_examples 'valid:applications:list'
     # non-existent application
     include_examples 'valid:applications:get:404'
     # create our test application
@@ -29,51 +30,51 @@ shared_examples 'compliant adapter with valid credentials' do
     # failed lifecycle operations when there is no deployment
     include_examples 'valid:applications:lifecycle:422'
     # can't download bits when no deployment was done before
-    include_examples 'valid:applications:download:422'
-    # failed scaling operations when there is no deployment
-    include_examples 'valid:applications:scaling:422:deployment'
+    include_examples 'valid:applications:data:download:422'
+    # can't rebuild when no deployment was done before
+    include_examples 'valid:applications:data:rebuild:422'
 
     # empty vars list
-    include_examples 'valid:vars:list'
+    include_examples 'valid:vars:list:empty'
     include_examples 'valid:vars:get:404'
     # create fails with bad arguments
+    include_examples 'valid:vars:create:400'
     include_examples 'valid:vars:create'
+    # create fails with duplicate arguments
+    include_examples 'valid:vars:create:422'
+    include_examples 'valid:vars:update:400'
     include_examples 'valid:vars:update'
+    include_examples 'valid:vars:update:404'
     include_examples 'valid:vars:get'
     # vars list with entity
     include_examples 'valid:vars:list'
 
     # empty domain list
-    include_examples 'valid:domains:list'
+    include_examples 'valid:domains:list:empty'
     include_examples 'valid:domains:get:404'
     # create fails with bad arguments
     include_examples 'valid:domains:create'
-    include_examples 'valid:domains:update'
+    include_examples 'valid:domains:create:422'
     include_examples 'valid:domains:get'
     # domain list with entity
     include_examples 'valid:domains:list'
 
     # deploy the application data
-    include_examples 'valid:applications:deploy'
+    include_examples 'valid:applications:data:deploy'
 
     # lifecycle operations
     include_examples 'valid:applications:lifecycle'
 
     # download the deployed container bits
-    include_examples 'valid:applications:download'
+    include_examples 'valid:applications:data:download'
+    include_examples 'valid:applications:data:rebuild'
 
     # access the application at its URL
     include_examples 'valid:applications:web'
 
     # scaling operations
-    # fail scale when already on lowest level
-    include_examples 'valid:applications:scaling:in:422:level'
-    include_examples 'valid:applications:scaling:out'
-    include_examples 'valid:applications:scaling:in'
-    # fail scale when already on lowest level
-    include_examples 'valid:applications:scaling:down:422:level'
-    include_examples 'valid:applications:scaling:up'
-    include_examples 'valid:applications:scaling:down'
+    include_examples 'valid:applications:scale:400'
+    include_examples 'valid:applications:scale'
 
     # delete operations
     include_examples 'valid:domains:delete'
@@ -85,9 +86,8 @@ shared_examples 'compliant adapter with valid credentials' do
 end
 
 shared_examples 'compliant adapter with invalid credentials' do
+  # tests all existing routes behind the application (according to swagger)
   describe 'is compliant and' do
-    # TODO: test all endpoints behind the application
-
     # get the swagger schema that includes all application endpoints
     browser = Rack::Test::Session.new(Rack::MockSession.new(Airborne.configuration.rack_app))
     browser.send('get', '/schema/endpoints', {}, {})

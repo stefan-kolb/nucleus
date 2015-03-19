@@ -1,9 +1,11 @@
 require 'airborne'
+require 'rspec/wait'
 require 'scripts/initialize_core'
 require 'scripts/initialize_rack'
 require 'spec/spec_helper'
 require 'spec/support/shared_example_request_types'
 require 'spec/adapter/credentials_helper'
+require 'spec/adapter/method_response_recorder'
 require 'spec/adapter/adapter_helper'
 require 'spec/adapter/support/shared_example_adapters'
 
@@ -32,15 +34,58 @@ def vcr_record_mode
   (ENV['VCR_RECORD_MODE'] || :none).to_sym
 end
 
-def example_group_cassette(metadata)
-  example_group_as_cassette = metadata.key?(:example_group) ? metadata[:example_group][:as_cassette] : false
-  parent_as_cassette = metadata.key?(:parent_example_group) ? metadata[:parent_example_group][:as_cassette] : false
+def example_group_property(metadata, property)
+  example_group_property = metadata.key?(:example_group) ? metadata[:example_group][property] : false
+  parent_group_property = metadata.key?(:parent_example_group) ? metadata[:parent_example_group][property] : false
 
   # process recursive
-  return example_group_cassette(metadata[:parent_example_group]) if parent_as_cassette
-  return metadata[:example_group] if example_group_as_cassette
-  # no cassette for the shared example group was found
+  return example_group_property(metadata[:parent_example_group], property) if parent_group_property
+  return metadata[:example_group] if example_group_property
+  # property for the shared example group was not found
   nil
+end
+
+# used to calculate the MD5 sums of all files in a deployed application archive
+def deployed_files_md5(deployed_archive, deployed_archive_format)
+  # extract deployed archive and sanitize to allow a fair comparison
+  dir_deployed = "#{Dir.tmpdir}/paasal.test.#{SecureRandom.uuid}_deployed"
+  Paasal::ArchiveExtractor.new.extract(deployed_archive, dir_deployed, deployed_archive_format)
+  Paasal::ApplicationRepoSanitizer.new.sanitize(dir_deployed)
+
+  # generate MD5 hashes of deployed files
+  deployed_md5 = {}
+  Find.find(dir_deployed) do |file|
+    next if File.directory? file
+    relative_name = file.sub(/^#{Regexp.escape dir_deployed}\/?/, '')
+    deployed_md5[relative_name] = Digest::MD5.file(file).hexdigest
+  end
+  deployed_md5
+ensure
+  FileUtils.rm_r(dir_deployed) unless dir_deployed.nil?
+end
+
+# used to calculate the MD5 sums of all files in a received application download response
+def response_files_md5(response, downlaod_archive_format)
+  response_file = "#{Dir.tmpdir}/paasal.test.#{SecureRandom.uuid}_response"
+  # write response to disk
+  File.open(response_file, 'wb') { |file| file.write response }
+
+  # extract downloaded response and sanitize to allow a fair comparison
+  dir_download = "#{Dir.tmpdir}/paasal.test.#{SecureRandom.uuid}_downlaod"
+  Paasal::ArchiveExtractor.new.extract(response_file, dir_download, downlaod_archive_format)
+  Paasal::ApplicationRepoSanitizer.new.sanitize(dir_download)
+
+  # generate MD5 hashes of downloaded files
+  downlaod_md5 = {}
+  Find.find(dir_download) do |file|
+    next if File.directory? file
+    relative_name = file.sub(/^#{Regexp.escape dir_download}\/?/, '')
+    downlaod_md5[relative_name] = Digest::MD5.file(file).hexdigest
+  end
+  downlaod_md5
+ensure
+  FileUtils.rm(response_file) unless response_file.nil?
+  FileUtils.rm_r(dir_download) unless dir_download.nil?
 end
 
 ################
@@ -71,20 +116,59 @@ RSpec.configure do |config|
     Paasal::Adapters::BaseAdapter.auth_objects_cache.clear
 
     example = test.respond_to?(:metadata) ? test : test.example
-    group_cassette = example_group_cassette(example.metadata)
+    group_cassette = example_group_property(example.metadata, :as_cassette)
+    group_mock_fs = example_group_property(example.metadata, :mock_fs_on_replay)
     cassette_name = group_cassette ? vcr_cassette_name_for[group_cassette] : vcr_cassette_name_for[example.metadata]
 
     # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
     # Use exclusive option to prevent accidental matching requests in different application states
     VCR.insert_cassette(cassette_name, exclusive: true,
                         allow_unused_http_interactions: false,
-                        match_requests_on: [:method, :uri_no_auth, :body, :headers_no_auth],
+                        match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
                         decode_compressed_response: true)
+
+    # Fake Git and Filesystem interactions on replay
+    if group_mock_fs
+      # fake UUIDs to have identical filenames in repetitive tests
+      allow(SecureRandom).to receive(:uuid) do
+        @counter = '000000000000' unless @counter
+        "2d931510-d99f-494a-8c67-#{@counter.next!}"
+      end
+
+      # fake random filename generation for tmpfiles
+      allow(Dir::Tmpname).to receive(:make_tmpname) do |prefix_suffix, _n|
+        case prefix_suffix
+        when String
+          prefix = prefix_suffix
+          suffix = ''
+        when Array
+          prefix = prefix_suffix[0]
+          suffix = prefix_suffix[1]
+        else
+          fail ArgumentError, "unexpected prefix_suffix: #{prefix_suffix.inspect}"
+        end
+        # random part of equal length (!) so that the message length is always equal
+        random_part = (0...16).map { (65 + rand(26)).chr }.join
+        "#{prefix}-paasal-created-tempfile-#{random_part}#{suffix}"
+      end
+
+      # force a static boundary
+      allow_any_instance_of(RestClient::Payload::Multipart).to receive(:boundary) do
+        'PaaSal771096PaaSal'
+      end
+
+      recorder = Paasal::MethodResponseRecorder.new(File.join(File.dirname(__FILE__), 'method_cassettes'))
+      recorder.setup(self, Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
+      recorder.setup(self, Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
+      recorder.setup(self, Paasal::Adapters::ArchiveConverter, [:convert])
+    end
   end
 
   config.after(:each) do |test|
     example = test.respond_to?(:metadata) ? test : test.example
     VCR.eject_cassette(skip_no_unused_interactions_assertion: !example.exception.nil?)
+    # clear request store
+    RequestStore.clear!
   end
 end
 
@@ -104,6 +188,10 @@ VCR.configure do |c|
   c.ignore_hosts 'codeclimate.com'
   # record once, but do not make updates
   c.default_cassette_options = { record: vcr_record_mode }
+
+  c.preserve_exact_body_bytes do |http_message|
+    http_message.body.encoding.name == 'ASCII-8BIT' || !http_message.body.valid_encoding?
+  end
 
   def filter_header(vcr_config, key)
     vcr_config.filter_sensitive_data("__#{key.underscore.upcase}__") do |i|
@@ -162,13 +250,20 @@ VCR.configure do |c|
 
   def filter_request_body(vcr_config, key)
     vcr_config.filter_sensitive_data("__#{key.underscore.upcase}__") do |i|
-      request_body = i.request.body.nil? || i.request.body.empty? ? {} : MultiJson.load(i.request.body)
-      if request_body.is_a? Array
-        request_body.each { |entry| filter_body(entry, key, 'REQUEST') }
-      else
-        filter_body(request_body, key, 'REQUEST')
+      # TODO: skipping multipart / ASCII-8BIT requests for now
+      if multipart?(i) && !i.request.body.encoding.to_s == 'ASCII-8BIT'
+        request_body = i.request.body.nil? || i.request.body.empty? ? {} : MultiJson.load(i.request.body)
+        if request_body.is_a? Array
+          request_body.each { |entry| filter_body(entry, key, 'REQUEST') }
+        else
+          filter_body(request_body, key, 'REQUEST')
+        end
       end
     end
+  end
+
+  def multipart?(i)
+    i.request.headers['Content-Type'] && !i.request.headers['Content-Type'][0].start_with?('multipart/form')
   end
 
   %w(token).each { |key| filter_query(c, key) }
@@ -183,11 +278,33 @@ VCR.configure do |c|
     headers_1 = request_1.headers
     headers_1['Authorization'] = '__AUTHORIZATION__' if headers_1.key?('Authorization')
     headers_1['User-Agent'] = '__USER_AGENT__' if headers_1.key?('User-Agent')
+
     headers_2 = request_2.headers
     headers_2['Authorization'] = '__AUTHORIZATION__' if headers_2.key?('Authorization')
     headers_2['User-Agent'] = '__USER_AGENT__' if headers_2.key?('User-Agent')
+
     # finally, compare headers
     headers_1 == headers_2
+  end
+
+  c.register_request_matcher :multipart_tempfile_agnostic_body do |request_1, request_2|
+    # force custom boundary on multipart requests
+    headers_1 = request_1.headers
+    if headers_1.key?('Content-Type') && headers_1['Content-Type'][0].include?('boundary=')
+      # harmonize random filename of tempfiles
+      filename_1 = /filename="([-\.\w]+)"/i.match(request_1.body)
+      request_1.body.gsub!(filename_1[1], 'filename="multipart-uploaded-file-by-paasal-42"') if filename_1
+    end
+
+    headers_2 = request_2.headers
+    if headers_2.key?('Content-Type') && headers_2['Content-Type'][0].include?('boundary=')
+      # harmonize random filename of tempfiles
+      filename_2 = /filename="([-\.\w]+)"/i.match(request_2.body)
+      request_2.body.gsub!(filename_2[1], 'filename="multipart-uploaded-file-by-paasal-42"') if filename_2
+    end
+
+    # excute default comparison
+    request_1.body == request_2.body
   end
 
   c.register_request_matcher :uri_no_auth do |request_1, request_2|
@@ -226,9 +343,7 @@ VCR.configure do |c|
 
   # filter all sensitive data stored in the credentials config
   Paasal::Spec::Config.credentials.sensitive_data.each do |replacement, replace|
-    c.filter_sensitive_data("__#{replacement}__") { |_i| replace }
+    # enforce ASCII encoding to prevent VCR from crashing when credentials include umlauts or other characters
+    c.filter_sensitive_data("__#{replacement}__") { |_i| replace.unpack('U*').map(&:chr).join }
   end
-
-  # log VCR interactions
-  # c.debug_logger = File.open('log/vcr.log', 'w')
 end

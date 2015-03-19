@@ -14,7 +14,7 @@ describe Paasal::Adapters::V1::HerokuAdapter do
     include_examples 'compliant adapter with invalid credentials'
   end
 
-  describe 'with missing credentials' do
+  context 'with missing credentials' do
     let!(:request_headers) { {} }
     include_examples 'compliant adapter with invalid credentials'
   end
