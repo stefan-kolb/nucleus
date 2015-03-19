@@ -16,7 +16,7 @@ shared_examples 'valid:applications:lifecycle' do
           post("/endpoints/#{@endpoint}/applications/#{app_name}/actions/start", {}, request_headers)
         end
         it 'changes state to running within timeout period' do
-            expect(get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]).to eql('running')
+          expect(get("/endpoints/#{@endpoint}/applications/#{app_name}", request_headers)[:state]).to eql('running')
         end
       end
       describe "stop succeeds for #{app_name} if currently running", :as_cassette do
