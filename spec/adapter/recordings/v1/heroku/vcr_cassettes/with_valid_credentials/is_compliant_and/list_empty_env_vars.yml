@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=__heroku:user__&password=__heroku:password__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 19 Mar 2015 16:29:24 GMT
+      Request-Id:
+      - f8b0a6e9-7820-4f84-a571-9c7302a8a771
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.126405499'
+      Content-Length:
+      - '378'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"api_key":"__API_KEY__","beta":null,"confirmed":true,"confirmed_at":"2014/11/18
+        01:37:21 -0800","created_at":"2014/11/18 01:37:21 -0800","id":"__USER_ID__@users.heroku.com","email":"__heroku:user__","last_login":"2014/11/25
+        00:52:59 -0800","name":" ","updated_at":"2015/03/19 09:27:04 -0700","verified":false,"verified_at":null}'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:29:24 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/config-vars
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 19 Mar 2015 16:29:25 GMT
+      ETag:
+      - '"cf74f7d60d5152d370d341846a2318b4"'
+      Last-Modified:
+      - Thu, 19 Mar 2015 16:28:10 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read-protected write-protected
+      RateLimit-Remaining:
+      - '1984'
+      Request-Id:
+      - 031166a3-0619-4a79-9c32-14e4744f3831
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.040605224'
+      Content-Length:
+      - '28'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "{}"
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:29:25 GMT
+recorded_with: VCR 2.9.3

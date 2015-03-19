@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=__heroku:user__&password=__heroku:password__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 19 Mar 2015 16:29:53 GMT
+      Request-Id:
+      - 449ea48c-a3f7-4418-a53e-a309fca44f83
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.162897264'
+      Content-Length:
+      - '378'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"api_key":"__API_KEY__","beta":null,"confirmed":true,"confirmed_at":"2014/11/18
+        01:37:21 -0800","created_at":"2014/11/18 01:37:21 -0800","id":"__USER_ID__@users.heroku.com","email":"__heroku:user__","last_login":"2014/11/25
+        00:52:59 -0800","name":" ","updated_at":"2015/03/19 09:27:04 -0700","verified":false,"verified_at":null}'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:29:53 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/domains
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - hostname, id
+      Content-Encoding:
+      - ''
+      Content-Range:
+      - hostname paasal-test-app-all-updated.herokuapp.com..paasal-test-app-all-updated.herokuapp.com
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 19 Mar 2015 16:29:54 GMT
+      ETag:
+      - '"e053aed708ce285d1a7a1adae4413f37"'
+      Last-Modified:
+      - Thu, 19 Mar 2015 16:28:37 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '1986'
+      Request-Id:
+      - f3d373b0-f887-485e-a000-778d41558fb5
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.035592054'
+      Content-Length:
+      - '192'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"app":{"id":"2b04388f-0b2a-48e1-b7d6-3301afb77c4d","name":"paasal-test-app-all-updated"},"created_at":"2015-03-19T16:28:10Z","hostname":"paasal-test-app-all-updated.herokuapp.com","id":"31b7403a-83ab-4be2-9c26-176361a67165","updated_at":"2015-03-19T16:28:37Z"}]'
+    http_version: 
+  recorded_at: Thu, 19 Mar 2015 16:29:53 GMT
+recorded_with: VCR 2.9.3
