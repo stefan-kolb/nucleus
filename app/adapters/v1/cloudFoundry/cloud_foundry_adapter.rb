@@ -3,67 +3,34 @@ module Paasal
     module V1
       class CloudFoundryAdapter < Adapters::BaseAdapter
         include Paasal::Logging
+        include Paasal::Adapters::V1::CloudFoundryBuildpacks
+        include Paasal::Adapters::V1::CloudFoundryAdapterApplication
+        include Paasal::Adapters::V1::CloudFoundryAdapterData
+        include Paasal::Adapters::V1::CloudFoundryAdapterDomains
+        include Paasal::Adapters::V1::CloudFoundryAdapterLifecycle
+        include Paasal::Adapters::V1::CloudFoundryAdapterVars
+        # all cloud foundry specific semantic errors shall have an error code of 422_5XXX
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
         def authenticate(username, password)
-          log.debug "Authenticate @ #{@endpoint_url}/uaa/oauth/token"
-          oauth2_client = oauth2("#{@endpoint_url}/uaa/oauth/token")
+          auth_endpoint = endpoint_info[:authorization_endpoint]
+          log.debug "Authenticate @ #{auth_endpoint}/oauth/token"
+          oauth2_client = oauth2("#{auth_endpoint}/oauth/token")
           # build the client and authenticate for the first time
           oauth2_client.authenticate(username, password)
           oauth2_client
-        end
-
-        def applications
-          response = get('/v2/apps')
-          apps = []
-          response.body[:resources].each do |application_resource|
-            apps << to_paasal_app(application_resource)
-          end
-          apps
-        end
-
-        def application(application_id)
-          response = get("/v2/apps/#{application_id}")
-          to_paasal_app(response.body)
-        end
-
-        def create_application(application)
-          # TODO: implement me
-          default_params = { space_guid: default_space_guid }
-          application = default_params.merge(application)
-
-          response = post('/v2/apps', body: application)
-          to_paasal_app(response.body)
-        end
-
-        def update_application(application_id, application_form)
-          # TODO: implement me
-          # current_application = get("/v2/apps/#{application_id}").body
-          # merge existing information with updated values
-          # updated_application = current_application.merge application_form
-          response = put("/v2/apps/#{application_id}", body: application_form)
-          to_paasal_app(response.body)
-        end
-
-        def delete_application(application_id)
-          delete("/v2/apps/#{application_id}", expects: 204)
         end
 
         def handle_error(error)
           cf_error = error.body[:code]
           case error.status
           when 400
-            if cf_error > 100_000 && cf_error < 109_999
-              # Indicating semantically invalid parameters
-              fail Errors::SemanticAdapterRequestError, error.body[:description]
-            end
+            handle_400_error(error, cf_error)
           when 404
-            if cf_error > 10_000
-              fail Errors::AdapterResourceNotFoundError, error.body[:description]
-            end
+            fail Errors::AdapterResourceNotFoundError, error.body[:description] if cf_error > 10_000
           else
             if [1001].include? cf_error
               fail Errors::AdapterRequestError, "#{error.body[:description]} (#{cf_error} - #{error.body[:error_code]})"
@@ -71,58 +38,22 @@ module Paasal
               fail Errors::OAuth2AuthenticationError, 'Endpoint authentication failed with OAuth2 token'
             end
           end
+          log.debug 'Unhandled CF error'
+          log.debug error
         end
 
-        def domains(application_id)
-          # TODO: implement me
+        def handle_400_error(error, cf_error)
+          if cf_error == 150_001 || cf_error == 160_001 || cf_error > 100_000 && cf_error < 109_999
+            # Indicating semantically invalid parameters
+            fail Errors::SemanticAdapterRequestError, error.body[:description]
+          elsif cf_error == 170_002
+            fail Errors::PlatformSpecificSemanticError, 'Application is still building'
+          end
         end
 
-        def domain(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def create_domain(application_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def update_domain(application_id, entity_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def delete_domain(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def env_vars(application_id)
-          # TODO: implement me
-        end
-
-        def env_var(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def create_env_var(application_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def update_env_var(application_id, entity_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def delete_env_var(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def start(application_id)
-          # TODO: implement me
-        end
-
-        def stop(application_id)
-          # TODO: implement me
-        end
-
-        def restart(application_id)
-          # TODO: implement me
+        def scale(application_name_or_id, instances)
+          # update the number of instances on the application
+          update_application(application_name_or_id, instances: instances)
         end
 
         def regions
@@ -137,6 +68,49 @@ module Paasal
 
         private
 
+        def default_organization_guid
+          get("/v2/spaces/#{user_space_guid}").body[:entity][:organization_guid]
+        end
+
+        def app_guid(app_name_or_id)
+          if /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.match(app_name_or_id)
+            # app name is a UUID and therefore most likely the CF GUID
+            return app_name_or_id
+          end
+          find_app_guid_by_name(app_name_or_id)
+        end
+
+        def find_app_guid_by_name(application_name)
+          filtered_list_response = get('/v2/apps', query: { q: "name:#{application_name}" })
+          if filtered_list_response.body[:resources].length == 0
+            fail Errors::AdapterResourceNotFoundError,
+                 "Couldn't find app with name '#{application_name}' on the platform"
+          end
+          # return the found guid
+          filtered_list_response.body[:resources][0][:metadata][:guid]
+        end
+
+        def find_app_id_by_name(application_name, previous_response)
+          filtered_list_response = get('/v2/apps', query: { q: "name:#{application_name}" })
+          # fail as expected if the app can also not be found by its name
+          fail Errors::AdapterResourceNotFoundError,
+               previous_response.body[:description] if filtered_list_response.body[:resources].length == 0
+          # return the found guid
+          filtered_list_response.body[:resources][0][:metadata][:guid]
+        end
+
+        def endpoint_info
+          get('/v2/info', headers: {}).body
+        end
+
+        def user_info
+          get("#{endpoint_info[:authorization_endpoint]}/userinfo").body
+        end
+
+        def user
+          get("/v2/users/#{user_info[:user_id]}").body
+        end
+
         def default_region
           {
             id: 'default',
@@ -146,37 +120,74 @@ module Paasal
           }
         end
 
-        def default_space_guid
-          default_space = spaces.detect { |space_resource| space_resource[:entity][:is_default] == true }
-          default_space[:metadata][:guid]
-        end
-
-        def spaces
-          response = get('/v2/spaces')
-          response.body[:resources]
+        def user_space_guid
+          users_spaces = get('/v2/spaces').body[:resources]
+          # only once space accessible
+          return users_spaces[0][:metadata][:guid] if users_spaces.length == 1
+          # use default space (stackato feature)
+          default_space = users_spaces.detect { |space_resource| space_resource[:entity][:is_default] == true }
+          return default_space[:metadata][:guid] if default_space
+          # check the users spaces for default
+          user_default_space_guid = user[:entity][:default_space_guid]
+          return user_default_space_guid if user_default_space_guid
+          # TODO: find a more suitable approach to detect the right space !?
+          # multiple spaces and no default space (dammit), choose the first one...
+          return users_spaces[0][:metadata][:guid] if users_spaces
+          # user has no space assigned, fail since we cant determine a space guid
+          fail Errors::SemanticAdapterRequestError.new('User is not assigned to any space', '422_5002')
         end
 
         def headers
-          super.merge(
-            'Basic' => 'Y2Y6',
-            'Content-Type' => 'application/json'
-          )
+          super.merge('Basic' => 'Y2Y6', 'Content-Type' => 'application/json')
+        end
+
+        def deployed?(application_guid)
+          response = head("/v2/apps/#{application_guid}/download", follow_redirects: false, expects: [200, 302, 404])
+          return true if response.status == 200 || response.status == 302
+          return false if response.status == 404
+          # if the response is neither one of the codes, the call fails anyway...
+        end
+
+        def application_state(app_resource)
+          if app_resource[:entity][:state] == 'STARTED'
+            # 1: crashed
+            return API::Application::States::CRASHED if app_resource[:entity][:package_state] == 'FAILED'
+            # 1: started
+            return API::Application::States::RUNNING if app_resource[:entity][:package_state] == 'STAGED'
+          end
+
+          # 4: stopped if there is a detected buildpack
+          return API::Application::States::STOPPED unless app_resource[:entity][:staging_task_id].nil?
+          # 3: deployed if stopped but no data can be downloaded
+          return API::Application::States::DEPLOYED if deployed?(app_resource[:metadata][:guid])
+          # 2: created if stopped and no buildpack detected
+          API::Application::States::CREATED
+        end
+
+        # TODO: handle duplicate name
+        # TODO: handle CF-AppMemoryQuotaExceeded --> QuotaError as custom 422
+
+        def app_web_url(app_guid)
+          "#{app_guid}.#{@endpoint_app_domain}" if @endpoint_app_domain
         end
 
         def to_paasal_app(app_resource)
+          metadata = app_resource[:metadata]
           app = app_resource[:entity]
-          app[:id] = app.delete :guid
-          app[:created_at] = app_resource[:metadata][:created_at]
-          app[:updated_at] = app_resource[:metadata][:updated_at] || app_resource[:metadata][:created_at]
 
-          # TODO: Stackato supports autoscaling
+          app[:id] = metadata[:guid]
+          app[:created_at] = metadata[:created_at]
+          app[:updated_at] = metadata[:updated_at] || metadata[:created_at]
+          app[:state] = application_state(app_resource)
+          app[:web_url] = "http://#{app_web_url(metadata[:guid])}"
+          # route could have been deleted by the user
+          app[:web_url] = nil unless domain?(metadata[:guid], app[:web_url])
+          # Stackato does support autoscaling
           app[:autoscaled] = app.delete(:autoscale_enabled) || false
           app[:region] = 'default'
-
-          # add missing fields to the application representation
-          # cf_application[:web_url] = "TO BE DETERMINED"
-          # TODO: fetch domains
-          # TODO: fetch env vars
+          app[:active_runtime] = app[:detected_buildpack]
+          app[:runtimes] = app[:buildpack] ? [app[:buildpack]] : []
+          app[:release_version] = app.delete(:version)
           app
         end
       end
