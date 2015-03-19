@@ -2,6 +2,17 @@
 name: "Cloud Foundry"
 id: "cloud-foundry"
 providers:
+  -
+    name: "bosh"
+    id: "cf-bosh"
+    endpoints:
+      -
+        name: "bosh local"
+        id: "cf-bosh-local"
+        url: "api.10.244.0.34.xip.io"
+        app_domain: "10.244.0.34.xip.io"
+        # trust endpoint, no ssl certificate verification
+        trust: true
   - 
     name: "Pivotal"
     id: "cf-pivotal"
@@ -10,6 +21,7 @@ providers:
         name: "Pivotal CF"
         id: "cf-pivotal-api"
         url: "api.run.pivotal.io"
+        app_domain: "cfapps.io"
   - 
     name: "Stackato 3.4"
     id: "cf-stackato"
@@ -18,6 +30,7 @@ providers:
         name: "Local installation"
         id: "cf-stackato-local"
         url: "api.stackato-vm1.local"
+        app_domain: "stackato-vm1.local"
         # trust endpoint, no ssl certificate verification
         trust: true
   -
@@ -28,7 +41,9 @@ providers:
         name: "Europe - Great Britain"
         id: "bluemix-eu-gb"
         url: "api.eu-gb.bluemix.net"
+        app_domain: "eu-gb.mybluemix.net"
       -
         name: "United States - South"
         id: "bluemix-us-south"
         url: "api.ng.bluemix.net"
+        app_domain: "ng.mybluemix.net"
