@@ -93,12 +93,16 @@ end
 ################
 
 RSpec.configure do |config|
+  vendor_name = lambda do |meta|
+    meta[:described_class].to_s.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, '')
+  end
+
   vcr_cassette_name_for = lambda do |meta|
     description = meta[:description]
     example_group = meta.key?(:example_group) ? meta[:example_group] : meta[:parent_example_group]
-    return [vcr_cassette_name_for[example_group], description].join('/') if example_group
+    return File.join(vcr_cassette_name_for[example_group], description) if example_group
     # modify adapter name and split by API version
-    description.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, '')
+    File.join(description.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, ''), 'vcr_cassettes')
   end
 
   config.before(:suite) do
@@ -157,7 +161,8 @@ RSpec.configure do |config|
         'PaaSal771096PaaSal'
       end
 
-      recorder = Paasal::MethodResponseRecorder.new(File.join(File.dirname(__FILE__), 'method_cassettes'))
+      recorder = Paasal::MethodResponseRecorder.new(File.join(File.dirname(__FILE__), 'recordings',
+                                                              vendor_name[example.metadata], 'method_cassettes'))
       recorder.setup(self, Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
       recorder.setup(self, Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
       recorder.setup(self, Paasal::Adapters::ArchiveConverter, [:convert])
@@ -178,7 +183,7 @@ end
 
 VCR.configure do |c|
   # save cassettes here
-  c.cassette_library_dir = File.join(File.dirname(__FILE__), 'vcr_cassettes')
+  c.cassette_library_dir = File.join(File.dirname(__FILE__), 'recordings')
   # Hooks into: Net::HTTP, HTTPClient, Patron, Curb (Curl::Easy, but not Curl::Multi) EM HTTP Request,
   # Typhoeus (Typhoeus::Hydra, but not Typhoeus::Easy or Typhoeus::Multi) and Excon
   c.hook_into :webmock
