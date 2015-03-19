@@ -1,5 +1,3 @@
-require 'filesize'
-
 module Paasal
   module DB
     class MetaStore

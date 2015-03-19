@@ -1,5 +1,3 @@
-require 'rack/response'
-
 module Paasal
   class Authenticator
     include Paasal::ErrorBuilder

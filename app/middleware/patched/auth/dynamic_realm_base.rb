@@ -1,5 +1,3 @@
-require 'rack/auth/basic'
-
 module Grape
   module Middleware
     module Auth

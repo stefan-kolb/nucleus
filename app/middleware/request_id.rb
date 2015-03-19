@@ -1,5 +1,3 @@
-require 'securerandom'
-
 module Paasal
   module Rack
     # This Rack middleware class assigns the 'HTTP_X_REQUEST_ID'

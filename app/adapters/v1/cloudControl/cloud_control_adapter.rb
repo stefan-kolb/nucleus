@@ -1,5 +1,3 @@
-require 'pp'
-
 module Paasal
   module Adapters
     module V1

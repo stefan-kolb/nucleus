@@ -8,7 +8,15 @@ require 'logger'
 require 'kwalify'
 require 'daybreak'
 require 'tmpdir'
+require 'find'
+require 'filesize'
+require 'time'
 require 'securerandom'
+
+require 'rack/body_proxy'
+require 'rack/utils'
+require 'rack/response'
+require 'rack/auth/basic'
 
 # Currently we need excon AND rest_client, due to excon not supporting multipart requests. See also:
 # https://github.com/excon/excon/issues/353
@@ -18,6 +26,11 @@ require 'rest_client'
 require 'request_store'
 require 'git'
 require 'mime-types'
+
+# require archive dependencies
+require 'zip'
+require 'zlib'
+require 'rubygems/package'
 
 # require url regex
 require 'regexp'

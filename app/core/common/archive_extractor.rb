@@ -1,8 +1,3 @@
-require 'find'
-require 'rubygems'
-require 'zip'
-require 'zlib'
-
 module Paasal
   class ArchiveExtractor
     def initialize(exclude_git = true)

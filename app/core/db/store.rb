@@ -1,6 +1,3 @@
-require 'filesize'
-require 'time'
-
 module Paasal
   module DB
     class Store

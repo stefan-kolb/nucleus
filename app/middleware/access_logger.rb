@@ -1,6 +1,3 @@
-require 'rack/body_proxy'
-require 'rack/utils'
-
 module Rack
   # Rack::AccessLogger forwards every request to the given +app+, and
   # logs a line to the +logger+.
