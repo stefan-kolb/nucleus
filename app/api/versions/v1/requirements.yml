@@ -4,69 +4,124 @@ methods:
   -
     name: "endpoint_call"
     arguments: 3
-  -
-    name: "application_call"
-    arguments: 4
+    # has a default implementation
+    # arguments: method, path, params
+    # response: JSON
   -
     name: "regions"
     arguments: 0
+    # response: Regions
   -
     name: "region"
     arguments: 1
-  -
-    name: "start"
-    arguments: 1
-  -
-    name: "stop"
-    arguments: 1
-  -
-    name: "restart"
-    arguments: 1
+    # arguments: region_id
+    # response: Region
   -
     name: "authenticate"
     arguments: 2
+    # arguments: username, password
+    # response: authentication header || authentication object, e.g. OAuth2
   -
     name: "applications"
     arguments: 0
+    # response: Applications
   -
     name: "application"
     arguments: 1
+    # arguments: app_id
+    # response: Application
   -
     name: "create_application"
     arguments: 1
+    # arguments: app_id, app
+    # response: Application
   -
     name: "update_application"
     arguments: 2
+    # arguments: app_id, app
+    # response: Application
   -
     name: "delete_application"
     arguments: 1
+    # arguments: app_id
+    # response: -
+  -
+    name: "start"
+    arguments: 1
+    # arguments: app_id
+    # response: Application
+  -
+    name: "stop"
+    arguments: 1
+    # arguments: app_id
+    # response: Application
+  -
+    name: "restart"
+    arguments: 1
+    # arguments: app_id
+    # response: Application
+  -
+    name: "deploy"
+    arguments: 3
+    # arguments: app_id, application_archive, compression_format
+    # response: -
+  -
+    name: "rebuild"
+    arguments: 1
+    # arguments: app_id, application_archive
+    # response: Application
+  -
+    name: "download"
+    arguments: 2
+    # arguments: app_id, compression_format
+    # response: StringIO
   -
     name: "env_vars"
     arguments: 1
+    # arguments: app_id
+    # response: EnvVars
   -
     name: "env_var"
     arguments: 2
+    # arguments: app_id, env_var_key
+    # response: EnvVar
   -
     name: "create_env_var"
     arguments: 2
+    # arguments: app_id, env_var
+    # response: EnvVar
   -
     name: "update_env_var"
     arguments: 3
+    # arguments: app_id, env_var_key, env_var
+    # response: EnvVar
   -
     name: "delete_env_var"
     arguments: 2
+    # arguments: app_id, env_var_key
+    # response: -
   -
     name: "domains"
     arguments: 1
+    # arguments: app_id
+    # response: Domains
   -
     name: "domain"
     arguments: 2
+    # arguments: app_id, domain_id
+    # response: Domain
   -
     name: "create_domain"
     arguments: 2
-  -
-    name: "update_domain"
-    arguments: 3
+    # arguments: app_id, domain
+    # response: Domain
   -
     name: "delete_domain"
     arguments: 2
+    # arguments: app_id, domain_id
+    # response: -
+  -
+    name: "scale"
+    arguments: 2
+    # arguments: app_id, instances
+    # response: Application

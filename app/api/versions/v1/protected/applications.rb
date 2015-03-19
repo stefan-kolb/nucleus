@@ -4,7 +4,8 @@ module Paasal
       class Applications < Grape::API
         helpers Paasal::SharedParamsHelper
 
-        resource 'endpoints/:endpoint_id/applications/' do
+        resource 'endpoints/:endpoint_id/applications', desc: 'Endpoint\'s applications',
+                 swagger: { name: 'applications', nested: false } do
           desc 'Get all applications that are registered at the endpoint' do
             success Models::Applications
             failure ErrorResponses.standard_responses
@@ -70,7 +71,9 @@ module Paasal
           patch '/:application_id' do
             application_params = declared(params, include_missing: false)[:application]
             # allow ALL values in the vendor specific section
-            application_params = application_params.merge params[:application][:vendor_specific]
+            if params[:application].key? :vendor_specific
+              application_params = application_params.merge params[:application][:vendor_specific]
+            end
             application = with_authentication do
               adapter.update_application(params[:application_id], application_params)
             end

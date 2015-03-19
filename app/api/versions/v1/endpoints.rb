@@ -4,7 +4,8 @@ module Paasal
       class Endpoints < Grape::API
         helpers Paasal::SharedParamsHelper
 
-        resource :endpoints do
+        # TODO: describe params only once for the resource
+        resource :endpoints, desc: 'Endpoint and Application operations' do
           # GET endpoint
           desc 'Get a selected endpoint entity via its ID' do
             success Models::Endpoint

@@ -4,7 +4,7 @@ module Paasal
       class Regions < Grape::API
         helpers Paasal::SharedParamsHelper
 
-        resource 'endpoints/:endpoint_id/regions/' do
+        resource 'endpoints/:endpoint_id/regions' do
           desc 'Get all deployment regions that can be used with this endpoint' do
             success Models::Regions
             failure ErrorResponses.standard_responses

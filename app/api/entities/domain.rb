@@ -7,11 +7,9 @@ module Paasal
         end
 
         expose :name, documentation: {
-          type: String, desc: 'Domain name, e.g. \'mydomain.com\'',
-          required_details: { request: { POST: true, PATCH: false }, response: true }
+          type: String, desc: 'FQDN of the domain name, e.g. \'mydomain.com\'',
+          required_details: { request: { POST: true }, response: true }
         }
-
-        # TODO: domain description
 
         expose :_links, using: Paasal::API::Models::BasicReferences, documentation: {
           type: 'References', desc: 'Resource links', is_array: true } do |instance, o|

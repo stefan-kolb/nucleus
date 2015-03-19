@@ -12,6 +12,14 @@ module Paasal
       requires :application_id, type: String, desc: "The application's ID"
     end
 
+    params :env_var_id do
+      requires :env_var_id, type: String, desc: "The environment variable's ID"
+    end
+
+    params :domain_id do
+      requires :domain_id, type: String, desc: "The domain's ID"
+    end
+
     params :create_provider do
       # require the keys of the provider in the json object 'provider'
       requires :provider, type: Hash do
@@ -47,17 +55,19 @@ module Paasal
       requires :application, type: Hash do
         # name is required, but we must use :all to get the presence validator. Name is selected via :using
         requires :all, using: Paasal::API::Models::Application.documentation.slice(:name)
+        requires :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
         # everything else is optional
         optional :all, using: Paasal::API::Models::Application.documentation
-          .except(:id, :name, :state, :created_at, :updated_at, :_links)
+          .except(:id, :web_url, :runtimes, :name, :instances, :active_runtime, :state,
+                  :created_at, :updated_at, :_links)
       end
     end
 
     params :update_application do
       # require the keys of the application in the json object 'application'
       requires :application, type: Hash do
-        optional :all, using: Paasal::API::Models::Application.documentation
-          .except(:id, :state, :created_at, :updated_at, :_links)
+        optional :all, using: Paasal::API::Models::Application.documentation.slice(:name)
+        optional :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
       end
     end
   end

@@ -40,25 +40,21 @@ module Paasal
         # enable native endpoint calls, no param checks, no uniform responses (!)
         mount Paasal::API::V1::Calls
 
-        # application list
-        mount Paasal::API::V1::Applications
         # regions list
         mount Paasal::API::V1::Regions
 
-        # # lifecycle operations
-        # mount Paasal::API::V1::Lifecycle::Start
-        # mount Paasal::API::V1::Lifecycle::Stop
-        # mount Paasal::API::V1::Lifecycle::Restart
-        # # data operations
-        # mount Paasal::API::V1::Data::Rebuild
-        # mount Paasal::API::V1::Data::Upload
-        # mount Paasal::API::V1::Data::Download
-        # domain operations
-        # mount Paasal::API::V1::Domains::Get
-        mount Paasal::API::V1::Domains::List
-        # mount Paasal::API::V1::Domains::Create
-        # mount Paasal::API::V1::Domains::Update
-        # mount Paasal::API::V1::Domains::Delete
+        # application operations
+        mount Paasal::API::V1::Applications
+        # application - data operations
+        mount Paasal::API::V1::ApplicationData
+        # application - domain operations
+        mount Paasal::API::V1::ApplicationDomains
+        # application - environment variables
+        mount Paasal::API::V1::ApplicationEnvVars
+        # application - lifecycle operations
+        mount Paasal::API::V1::ApplicationLifecycle
+        # application - scaling operations
+        mount Paasal::API::V1::ApplicationScaling
       end
     end
   end
