@@ -3,6 +3,11 @@ module Paasal
     module V1
       class Openshift2Adapter < Paasal::Adapters::BaseAdapter
         include Paasal::Logging
+        include Paasal::Adapters::V1::Openshift2AdapterApplication
+        include Paasal::Adapters::V1::Openshift2AdapterData
+        include Paasal::Adapters::V1::Openshift2AdapterDomains
+        include Paasal::Adapters::V1::Openshift2AdapterLifecycle
+        include Paasal::Adapters::V1::Openshift2AdapterVars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
@@ -22,85 +27,6 @@ module Paasal
           { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
         end
 
-        def applications
-          response = get('/applications')
-          apps = []
-          response.body[:data].each do |application|
-            apps << application(application[:id])
-          end
-          apps
-        end
-
-        def application(application_id)
-          app_response = get("/application/#{application_id}")
-          app_gear_groups = get("/application/#{application_id}/gear_groups")
-          to_paasal_app app_response.body[:data], app_gear_groups.body[:data]
-        end
-
-        def create_application(entity_hash)
-          # TODO: implement me
-        end
-
-        def update_application(entity_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def delete_application(entity_id)
-          # TODO: implement me
-        end
-
-        def domains(application_id)
-          # TODO: implement me
-        end
-
-        def domain(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def create_domain(application_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def update_domain(application_id, entity_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def delete_domain(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def env_vars(application_id)
-          # TODO: implement me
-        end
-
-        def env_var(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def create_env_var(application_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def update_env_var(application_id, entity_id, entity_hash)
-          # TODO: implement me
-        end
-
-        def delete_env_var(application_id, entity_id)
-          # TODO: implement me
-        end
-
-        def start(application_id)
-          # TODO: implement me
-        end
-
-        def stop(application_id)
-          # TODO: implement me
-        end
-
-        def restart(application_id)
-          # TODO: implement me
-        end
-
         def regions
           response = get('/regions').body[:data]
           response.each { |region| to_paasal_region(region) }
@@ -114,6 +40,10 @@ module Paasal
           fail Errors::AdapterResourceNotFoundError,
                "Region '#{region_name}' does not exist at the endpoint" if region.nil?
           region
+        end
+
+        def scale(application_id, instances)
+          # TODO: implement me
         end
 
         private
@@ -156,6 +86,9 @@ module Paasal
           app[:web_url] = app.delete :app_url
           app[:autoscaled] = app.delete :scalable
           app[:region] = parse_region_name(gear_groups[0][:gears][0][:region])
+          # TODO: verify
+          deployments = get("/application/#{app[:id]}/deployments").body
+          app[:release_version] = deployments[0][:sha1]
           app
         end
       end
