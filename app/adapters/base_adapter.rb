@@ -4,9 +4,10 @@ module Paasal
       include Paasal::Adapters::HttpClient
       include Paasal::Logging
 
-      def initialize(endpoint_url, check_certificates = true)
+      def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
         fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
         @endpoint_url = endpoint_url
+        @endpoint_app_domain = endpoint_app_domain
         @check_certificates = check_certificates
       end
 

@@ -4,8 +4,8 @@ module Paasal
       class CloudFoundryAdapter < Adapters::BaseAdapter
         include Paasal::Logging
 
-        def initialize(endpoint_url, check_certificates = true)
-          super(endpoint_url, check_certificates)
+        def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
+          super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
         def authenticate(username, password)

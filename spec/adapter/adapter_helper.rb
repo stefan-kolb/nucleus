@@ -38,7 +38,7 @@ module Paasal
           fail ArgumentError unless @version_based_adapters[api_version].key? endpoint_name
           adapter = @version_based_adapters[api_version][endpoint_name]
           endpoint = @version_based_endpoints[api_version][endpoint_name]
-          adapter.new(endpoint.url, !endpoint.trust)
+          adapter.new(endpoint.url, endpoint.app_domain, !endpoint.trust)
         end
       end
 

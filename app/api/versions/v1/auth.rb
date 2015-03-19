@@ -17,7 +17,9 @@ module Paasal
             index_entry = adapter_dao.get params[:endpoint_id]
             # save info for the current request, no need to retrieve multiple times
             RequestStore.store[:endpoint] = endpoint
-            RequestStore.store[:adapter] = index_entry.adapter_clazz.new(index_entry.url, !endpoint.trust)
+            # use the already secured (https) URL of the index_entry
+            RequestStore.store[:adapter] = index_entry.adapter_clazz.new(index_entry.url,
+                                                                         endpoint.app_domain, !endpoint.trust)
 
             unless RequestStore.store[:adapter].cache?(username, password)
               # no auth object available, perform authentication first

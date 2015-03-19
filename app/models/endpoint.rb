@@ -5,6 +5,7 @@ module Paasal
     attr_accessor :provider
     attr_accessor :name             # text
     attr_accessor :url              # str
+    attr_accessor :app_domain       # str
     attr_accessor :trust            # bool
 
     def initialize(hash = nil)
@@ -12,6 +13,7 @@ module Paasal
       hash = HashWithIndifferentAccess.new hash
       @name = hash[:name]
       @url = hash[:url]
+      @app_domain = hash[:app_domain]
       @id = hash[:id]
       @trust = hash.key? :trust ? hash[:trust] : false
     end
