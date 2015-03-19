@@ -18,9 +18,19 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Usage](#usage)
   * [Use in your application](#use-in-your-application)
   * [Use the API](#use-the-api)
-      * [Start the server:](#start-the-server:)
+    * [Start the server:](#start-the-server:)
     * [API endpoints](#api-endpoints)
 * [Functionality](#functionality)
+  * [Authentication](#authentication)
+    * [Special characters (umlauts, ....)](#special-characters-(umlauts,-....))
+  * [Core constructs](#core-constructs)
+    * [Vendors](#vendors)
+    * [Providers](#providers)
+      * [List all providers that are registered for a vendor's platform:](#list-all-providers-that-are-registered-for-a-vendor's-platform:)
+      * [Register new provider](#register-new-provider)
+    * [Endpoints](#endpoints)
+      * [List all endpoints that are registered for a provider](#list-all-endpoints-that-are-registered-for-a-provider)
+      * [Register new endpoint](#register-new-endpoint)
   * [Native calls (experimental)](#native-calls-(experimental))
     * [Execute a native API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
     * [Execute a native API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoint's-application)
@@ -97,6 +107,251 @@ After your started a server insatnce, you can access an interactive UI at the `/
 
 **TODO: specify what can already be done**
 
+### Authentication
+
+Authentication against the endpoint is managed by PaaSal.
+The credentials must be provided as `Basic authentication` header **within each single request**.
+
+    Authorization: Basic thebase64encodedcredentialsstring
+
+#### Special characters (umlauts, ....)
+
+The usage of special characters, for instance the german umlauts as ä, ö and ü may cause issues with some platforms.
+Please make sure to select the correct encoding for your credentials before encoding them with base64:
+
+Provider | Encoding | Known issues
+:--|:-:|:--
+heroku||
+cf-stackato|utf-8|Different encodings cause the requests to crash and return status 500
+
+### Core constructs
+
+Vendors, Providers, Endpoints
+
+**TODO: explain what is behind it**
+
+All changes made to these entities at runtime will be discarded, unless you enable the functionality in the configuration and specify a location where to persist the data to.
+
+#### Vendors
+You can use the API of PaaSal to show a list of all currently supported vendors.
+This request if publicly available and does not require any authentication.
+
+    GET /api/vendors/cloud-foundry/providers
+    -----
+    {
+      "size": 4,
+      "vendors": [
+        {
+          "id": "cloudcontrol",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "cloudControl",
+          "key": "cloudcontrol",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/vendors/cloudcontrol"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api"
+            },
+            "providers": {
+              "href": "http://localhost:9292/api/vendors/cloudcontrol/providers"
+            }
+          }
+        },
+        {
+          "id": "cloud-foundry",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "Cloud Foundry",
+          "key": "cloud-foundry",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/vendors/cloud-foundry"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api"
+            },
+            "providers": {
+              "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+            }
+          }
+        },
+        {
+          "id": "heroku",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "Heroku",
+          "key": "heroku",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/vendors/heroku"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api"
+            },
+            "providers": {
+              "href": "http://localhost:9292/api/vendors/heroku/providers"
+            }
+          }
+        },
+        {
+          "id": "openshift2",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "Openshift 2",
+          "key": "openshift-2",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/vendors/openshift2"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api"
+            },
+            "providers": {
+              "href": "http://localhost:9292/api/vendors/openshift2/providers"
+            }
+          }
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/vendors"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api"
+        }
+      }
+    }
+
+You can't create, delete or update a vendor at runtime because they represent the logic to communicate with their platform.
+
+#### Providers
+
+Providers can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
+
+##### List all providers that are registered for a vendor's platform:
+
+    GET /api/vendors/cloud-foundry/providers
+    -----
+    {
+      "size": 2,
+      "providers": [
+        {
+          "id": "cf-pivotal",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "Pivotal",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/providers/cf-pivotal"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api/vendors/cloud-foundry"
+            },
+            "endpoints": {
+              "href": "http://localhost:9292/api/providers/cf-pivotal/endpoints"
+            }
+          }
+        },
+        {
+          "id": "bluemix",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "IBM Bluemix",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/providers/bluemix"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api/vendors/cloud-foundry"
+            },
+            "endpoints": {
+              "href": "http://localhost:9292/api/providers/bluemix/endpoints"
+            }
+          }
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api/vendors/cloud-foundry"
+        }
+      }
+    }
+
+##### Register new provider
+The only requirement is that the name must be unique amongst the providers of *all* vendors:
+
+    POST /api/vendors/cloud-foundry/providers
+    body: {"provider":{"name":"mynewcloudfoundryprovider"}}
+
+#### Endpoints
+
+Endpoints can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
+
+##### List all endpoints that are registered for a provider
+
+    GET /api/providers/bluemix/endpoints
+    -----
+    {
+      "size": 2,
+      "endpoints": [
+        {
+          "id": "bluemix-eu-gb",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "Europe - Great Britain",
+          "url": "https://api.eu-gb.bluemix.net",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/endpoints/bluemix-eu-gb"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api/providers/bluemix"
+            },
+            "applications": {
+              "href": "http://localhost:9292/api/endpoints/bluemix-eu-gb/applications"
+            }
+          }
+        },
+        {
+          "id": "bluemix-us-south",
+          "created_at": "2015-02-25T08:38:30Z",
+          "updated_at": "2015-02-25T08:38:30Z",
+          "name": "United States - South",
+          "url": "https://api.ng.bluemix.net",
+          "_links": {
+            "self": {
+              "href": "http://localhost:9292/api/endpoints/bluemix-us-south"
+            },
+            "parent": {
+              "href": "http://localhost:9292/api/providers/bluemix"
+            },
+            "applications": {
+              "href": "http://localhost:9292/api/endpoints/bluemix-us-south/applications"
+            }
+          }
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/providers/bluemix/endpoints"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api/providers/bluemix"
+        }
+      }
+    }
+
+##### Register new endpoint
+The only requirement is that the name must be unique amongst the endpoints of *all* providers:
+
+    POST /api/providers/cloud-foundry/endpoints
+    body: {"endpoint":{"name":"mynewcloudfoundryendpoint"}}
+
 ### Native calls (experimental)
 
 You can also execute native calls against the endpoint's API by using PaaSal.
@@ -107,11 +362,14 @@ The native calls can be made either against the endpoint or against an applicati
 Allowed HTTP methods are `GET`, `POST`,`PATCH`, `PUT` and `DELETE`.
 Data embedded in a requests body is used 1:1 in the API call, header information are going to be discarded.
 
+Please be aware that you must also include the API version in the path if required by the platform.
+For instance Cloud Foundry requests would have to look like: `.../call/v2/app_usage_events`
+
 ##### Execute a native API call against the endpoint
 In this example we want to get the current user's account information.
 we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
 
-    GET: http://{PASSAL_API_AND_PORT}/api/endpoints/heroku/call/account
+    GET /api/endpoints/heroku/call/account
     -----
     {
       "allow_tracking": true,
@@ -131,7 +389,7 @@ we append the `call` action to the endpoint, followed by the API's native path t
 In this example we try to list the builds of an Heroku application.
 Therefore we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
 
-    GET: http://{PASSAL_API_AND_PORT}/api/endpoints/heroku/applications/the_application_name/call/builds
+    GET /api/endpoints/heroku/applications/the_application_name/call/builds
     -----
     [
       {
@@ -293,8 +551,38 @@ The file is ignored and shall _never_ be committed. It must use the following sy
     heroku:
       user:     'my_heroku_username'
       password: 'my_heroku_usernames_password'
-      
+
+A complete .credentials file could then look like:
+
+    heroku:
+      id:       'my_heroku_user_id'
+      user:     'my_heroku_username'
+      password: 'my_heroku_usernames_password'
+
+    bluemix-eu-gb:
+      user:     'my_bluemix_username'
+      password: 'my_bluemix_usernames_password'
+      username: 'my_bluemix_username_with_encoded_umlauts'
+
+    cloudcontrol:
+      user:     'my_cc_email'
+      password: 'my_cc_usernames_password'
+      username: 'my_cc_username'
+
+    openshift-online:
+      user:     'my_os_email'
+      password: 'my_os_usernames_password'
+      id:       'my_os_user_id'
+
 To record the interactions, you only have to call the Rake `record` task, eg. by calling: `bundle exec rake record`
+You must be allowed to create at least 3 additional applications with your account,
+otherwise the quota restrictions will invalidate the test results.
+
+**
+WARNING:  
+The recording task deletes all applications that exist on the platform endpoints.
+Please make sure to use a test account for the recording or make sure all applications can be deleted (!)
+**
 
 ###### Missing or invalid VCR recording
 If the recorded cassette is invalid due to a recent change, the test that use this cassette are going to fail.
