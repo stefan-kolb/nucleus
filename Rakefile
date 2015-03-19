@@ -17,6 +17,19 @@ task :spec do
   Rake::Task['spec:suite:all'].invoke
 end
 
+task :doc_toc do
+  File.open('README.md', 'r') do |f|
+    f.each_line do |line|
+      forbidden_words = ['Table of contents', 'define', 'pragma']
+      next if !line.start_with?('#') || forbidden_words.any? { |w| line =~ /#{w}/ }
+
+      title = line.gsub('#', '').strip
+      href = title.gsub(' ', '-').downcase
+      puts '  ' * (line.count('#') - 1) + "* [#{title}](\##{href})"
+    end
+  end
+end
+
 task :record do
   ENV['VCR_RECORD_MODE'] = 'all'
   # recording only valid for adapter tests
