@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'request_store'
   spec.add_runtime_dependency 'require_all'
   spec.add_runtime_dependency 'rubyzip'
+  spec.add_runtime_dependency 'thin'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'guard'
@@ -43,7 +44,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'inch'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'thin'
   spec.add_development_dependency 'vcr'
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'yard'
