@@ -31,8 +31,13 @@ module Paasal
         end
 
         def handle_error(error_response)
-          if error_response.status == 422 && error_response.body[:id] == 'invalid_params'
-            fail Errors::SemanticAdapterRequestError, error_response.body[:message]
+          if error_response.status == 422
+            if error_response.body[:id] == 'invalid_params'
+              fail Errors::SemanticAdapterRequestError, error_response.body[:message]
+            elsif error_response.body[:id] == 'verification_required'
+              fail Errors::PlatformSpecificSemanticError.new(error_response.body[:message],
+                                                             API::ErrorMessages::PLATFORM_QUOTA_ERROR)
+            end
           elsif error_response.status == 404 && error_response.body[:id] == 'not_found'
             fail Errors::AdapterResourceNotFoundError, error_response.body[:message]
           else

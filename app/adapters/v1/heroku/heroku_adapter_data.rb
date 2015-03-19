@@ -11,7 +11,7 @@ module Paasal
 
           return unless application_state(app) == API::Application::States::CREATED
           # instantly remove all initially added dynos to keep the 'deployed' state on first deployment
-          p 'state was created, scale web to 0'
+          log.debug 'state before deployment was \'created\', scale web to 0'
           scale_web(application_id, 0)
         end
 
