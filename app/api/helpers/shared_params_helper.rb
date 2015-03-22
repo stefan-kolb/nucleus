@@ -20,6 +20,10 @@ module Paasal
       requires :domain_id, type: String, desc: "The domain's ID"
     end
 
+    params :log_id do
+      requires :log_id, type: String, desc: 'The ID of the logfile'
+    end
+
     params :create_provider do
       # require the keys of the provider in the json object 'provider'
       requires :provider, type: Hash do

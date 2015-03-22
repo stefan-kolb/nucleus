@@ -22,6 +22,7 @@ require 'rack/auth/basic'
 # https://github.com/excon/excon/issues/353
 require 'excon'
 require 'rest_client'
+require 'rack/stream'
 
 require 'request_store'
 require 'git'

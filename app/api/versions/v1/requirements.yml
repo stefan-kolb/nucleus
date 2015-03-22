@@ -125,3 +125,23 @@ methods:
     arguments: 2
     # arguments: app_id, instances
     # response: Application
+  -
+    name: "logs"
+    arguments: 1
+    # arguments: app_id
+    # response: Logs
+  -
+    name: "log?"
+    arguments: 2
+    # arguments: app_id, log_id
+    # response: Boolean
+  -
+    name: "tail"
+    arguments: 4
+    # arguments: app_id, log_id, on_message_callback, on_close_callback
+    # response: object.respond_to?(:close) == true
+  -
+    name: "log_entries"
+    arguments: 2
+    # arguments: app_id, log_id
+    # response: Array<String>

@@ -53,6 +53,8 @@ module Paasal
         mount Paasal::API::V1::ApplicationEnvVars
         # application - lifecycle operations
         mount Paasal::API::V1::ApplicationLifecycle
+        # application - logging operations
+        mount Paasal::API::V1::ApplicationLogs
         # application - scaling operations
         mount Paasal::API::V1::ApplicationScaling
       end

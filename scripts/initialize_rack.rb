@@ -36,6 +36,9 @@ module Paasal
         # we do not want robots to scan our API
         use ::Rack::Static, urls: { '/robots.txt' => 'robots.txt' }, root: 'public'
 
+        # request streaming, especially for tailing log files
+        use ::Rack::Stream
+
         run ::Rack::URLMap.new(
           # serve the dynamic API
           '/' => Paasal::API::RootAPI.new,

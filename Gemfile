@@ -12,6 +12,8 @@ gem 'grape', git: 'https://github.com/croeck/grape.git',
 gem 'grape-entity', git: 'https://github.com/intridea/grape-entity.git'
 gem 'grape-swagger', git: 'https://github.com/croeck/grape-swagger.git',
                      branch: 'paasal', require: 'grape-swagger'
+gem 'rack-stream', git: 'https://github.com/croeck/rack-stream.git',
+                   branch: 'lost_connection_callback', require: 'rack-stream'
 
 group :development do
   # use patched version to prevent freezing
