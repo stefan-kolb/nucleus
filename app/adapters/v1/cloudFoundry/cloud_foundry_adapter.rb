@@ -8,6 +8,7 @@ module Paasal
         include Paasal::Adapters::V1::CloudFoundry2::Data
         include Paasal::Adapters::V1::CloudFoundry2::Domains
         include Paasal::Adapters::V1::CloudFoundry2::Lifecycle
+        include Paasal::Adapters::V1::CloudFoundry2::Logs
         include Paasal::Adapters::V1::CloudFoundry2::Vars
         # all cloud foundry specific semantic errors shall have an error code of 422_5XXX
 

@@ -22,7 +22,11 @@ require 'rack/auth/basic'
 # https://github.com/excon/excon/issues/353
 require 'excon'
 require 'rest_client'
+# faye is used to fetch logs from cloud foundry, using websocket communication
+require 'faye'
+require 'faye/websocket'
 require 'rack/stream'
+require 'protobuf'
 
 require 'request_store'
 require 'git'

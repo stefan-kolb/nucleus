@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'excon'
   spec.add_runtime_dependency 'filesize'
   spec.add_runtime_dependency 'git'
+  spec.add_runtime_dependency 'faye-websocket', '~> 0.9'
   # spec.add_runtime_dependency 'grape'
   # spec.add_runtime_dependency 'grape-entity'
   # spec.add_runtime_dependency 'grape-swagger'
@@ -34,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'require_all'
   spec.add_runtime_dependency 'rubyzip'
   spec.add_runtime_dependency 'thin'
+  spec.add_runtime_dependency 'protobuf'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'guard'
