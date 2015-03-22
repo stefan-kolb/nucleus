@@ -3,12 +3,12 @@ module Paasal
     module V1
       class CloudFoundryAdapter < Adapters::BaseAdapter
         include Paasal::Logging
-        include Paasal::Adapters::V1::CloudFoundryBuildpacks
-        include Paasal::Adapters::V1::CloudFoundryAdapterApplication
-        include Paasal::Adapters::V1::CloudFoundryAdapterData
-        include Paasal::Adapters::V1::CloudFoundryAdapterDomains
-        include Paasal::Adapters::V1::CloudFoundryAdapterLifecycle
-        include Paasal::Adapters::V1::CloudFoundryAdapterVars
+        include Paasal::Adapters::V1::CloudFoundry2::Buildpacks
+        include Paasal::Adapters::V1::CloudFoundry2::Application
+        include Paasal::Adapters::V1::CloudFoundry2::Data
+        include Paasal::Adapters::V1::CloudFoundry2::Domains
+        include Paasal::Adapters::V1::CloudFoundry2::Lifecycle
+        include Paasal::Adapters::V1::CloudFoundry2::Vars
         # all cloud foundry specific semantic errors shall have an error code of 422_5XXX
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
