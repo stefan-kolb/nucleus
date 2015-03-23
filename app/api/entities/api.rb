@@ -5,7 +5,7 @@ module Paasal
       class Api < AbstractEntity
         expose :versions,  documentation: {
           type: 'Paasal::API::Version', is_array: true,
-          desc: 'List of the available versions of the API'
+          desc: 'List of available API versions'
         }, using: Models::ApiVersion
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
