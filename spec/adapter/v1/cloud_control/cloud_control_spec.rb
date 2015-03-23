@@ -1,6 +1,6 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::CloudControlAdapter do
+describe Paasal::Adapters::V1::CloudControl do
   before do
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
@@ -31,7 +31,7 @@ describe Paasal::Adapters::V1::CloudControlAdapter do
         expect(@cc_token).to_not be_nil
       end
       it 'does return a CloudControlToken instance' do
-        expect(@cc_token).to be_a Paasal::Adapters::V1::CloudControlToken
+        expect(@cc_token).to be_a Paasal::Adapters::V1::CloudControl::Token
       end
       it 'has access to an auth header' do
         expect(@cc_token.auth_header).to be_a Hash

@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      module CloudFoundry2
+      class CloudFoundry2 < BaseAdapter
         module Vars
           def env_vars(application_name_or_id)
             app_guid = app_guid(application_name_or_id)

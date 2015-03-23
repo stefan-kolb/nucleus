@@ -1,14 +1,15 @@
 module Paasal
   module Adapters
     module V1
-      class CloudControlAdapter < Paasal::Adapters::BaseAdapter
+      class CloudControl < BaseAdapter
         include Paasal::Logging
-        include Paasal::Adapters::V1::CloudControlBuildpacks
-        include Paasal::Adapters::V1::CloudControlAdapterApplication
-        include Paasal::Adapters::V1::CloudControlAdapterData
-        include Paasal::Adapters::V1::CloudControlAdapterDomains
-        include Paasal::Adapters::V1::CloudControlAdapterLifecycle
-        include Paasal::Adapters::V1::CloudControlAdapterVars
+        include Paasal::Adapters::V1::CloudControl::Application
+        include Paasal::Adapters::V1::CloudControl::Buildpacks
+        include Paasal::Adapters::V1::CloudControl::Domains
+        include Paasal::Adapters::V1::CloudControl::Data
+        include Paasal::Adapters::V1::CloudControl::Lifecycle
+        include Paasal::Adapters::V1::CloudControl::Logs
+        include Paasal::Adapters::V1::CloudControl::Vars
         # all cloud foundry specific semantic errors shall have an error code of 422_6XXX
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
@@ -21,7 +22,7 @@ module Paasal
           response = post('/token', headers: auth_headers)
           # parse date
           expires = Date.parse(response.body[:expires])
-          CloudControlToken.new(response.body[:token], expires)
+          Token.new(response.body[:token], expires)
         end
 
         def default_deployment(application_id)

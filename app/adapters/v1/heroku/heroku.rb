@@ -1,17 +1,18 @@
 module Paasal
   module Adapters
     module V1
-      class HerokuAdapter < Paasal::Adapters::BaseAdapter
+      class Heroku < BaseAdapter
         include Paasal::Logging
-        include Paasal::Adapters::V1::HerokuAdapterApplication
-        include Paasal::Adapters::V1::HerokuAdapterAppStates
-        include Paasal::Adapters::V1::HerokuAdapterBuildpacks
-        include Paasal::Adapters::V1::HerokuAdapterData
-        include Paasal::Adapters::V1::HerokuAdapterDomains
-        include Paasal::Adapters::V1::HerokuAdapterLifecycle
-        include Paasal::Adapters::V1::HerokuAdapterRegions
-        include Paasal::Adapters::V1::HerokuAdapterScaler
-        include Paasal::Adapters::V1::HerokuAdapterVars
+        include Paasal::Adapters::V1::Heroku::Application
+        include Paasal::Adapters::V1::Heroku::AppStates
+        include Paasal::Adapters::V1::Heroku::Buildpacks
+        include Paasal::Adapters::V1::Heroku::Data
+        include Paasal::Adapters::V1::Heroku::Domains
+        include Paasal::Adapters::V1::Heroku::Logs
+        include Paasal::Adapters::V1::Heroku::Lifecycle
+        include Paasal::Adapters::V1::Heroku::Regions
+        include Paasal::Adapters::V1::Heroku::Scaler
+        include Paasal::Adapters::V1::Heroku::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)

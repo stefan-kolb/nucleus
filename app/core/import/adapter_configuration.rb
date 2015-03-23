@@ -40,7 +40,7 @@ module Paasal
     # @return [String] path to the adapter's class file
     def self.adapter_file(adapter_config, api_version)
       log.debug "... trying to resolve adapter for config #{adapter_config} and API #{api_version}..."
-      adapter_name = File.basename(adapter_config).sub(/.[^.]+\z/, '_adapter.rb')
+      adapter_name = File.basename(adapter_config).sub(/.[^.]+\z/, '.rb')
       # file_search_path = File.expand_path("../../../adapters/#{api_version}/*/#{adapter_name}", __FILE__)
       file_search_path = "app/adapters/#{api_version}/*/#{adapter_name}"
       adapter_file = Dir.glob(file_search_path)

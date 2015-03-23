@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      module CloudFoundry2
+      class CloudFoundry2 < BaseAdapter
         module Logs
           LOGGREGATOR_TYPES = [API::Application::LogfileType::API, API::Application::LogfileType::APPLICATION,
                                API::Application::LogfileType::REQUEST, API::Application::LogfileType::SYSTEM]

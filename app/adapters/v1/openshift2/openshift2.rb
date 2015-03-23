@@ -1,13 +1,14 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2Adapter < Paasal::Adapters::BaseAdapter
+      class Openshift2 < BaseAdapter
         include Paasal::Logging
-        include Paasal::Adapters::V1::Openshift2AdapterApplication
-        include Paasal::Adapters::V1::Openshift2AdapterData
-        include Paasal::Adapters::V1::Openshift2AdapterDomains
-        include Paasal::Adapters::V1::Openshift2AdapterLifecycle
-        include Paasal::Adapters::V1::Openshift2AdapterVars
+        include Paasal::Adapters::V1::Openshift2::Application
+        include Paasal::Adapters::V1::Openshift2::Data
+        include Paasal::Adapters::V1::Openshift2::Domains
+        include Paasal::Adapters::V1::Openshift2::Lifecycle
+        include Paasal::Adapters::V1::Openshift2::Logs
+        include Paasal::Adapters::V1::Openshift2::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)

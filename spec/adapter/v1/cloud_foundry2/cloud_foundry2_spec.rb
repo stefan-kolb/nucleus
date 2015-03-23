@@ -1,11 +1,12 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::Openshift2Adapter do
+describe Paasal::Adapters::V1::CloudFoundry2 do
   before do
-    @endpoint = 'openshift-online'
+    @endpoint = 'cf-bosh-local'
     @api_version = 'v1'
     @adapter = load_adapter(@endpoint, @api_version)
-    @application_region = 'US'
+    @application_region = 'default'
+    @application_params = { memory: 256.to_i }
   end
 
   context 'with invalid credentials' do
@@ -21,23 +22,18 @@ describe Paasal::Adapters::V1::Openshift2Adapter do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-    include_examples 'valid:#authenticate'
-
-    # TODO: implement adapter so that tests pass
-    # include_examples 'compliant adapter with valid credentials'
+    include_examples 'valid: OAuth2 #authenticate'
+    include_examples 'compliant adapter with valid credentials'
 
     describe 'native adapter call' do
       describe 'against endpoint' do
-        describe 'does fetch all cartridges' do
+        describe 'does fetch all buildpacks', :as_cassette do
           before do
-            get "/endpoints/#{@endpoint}/call/cartridges", request_headers
+            get "/endpoints/#{@endpoint}/call/v2/buildpacks", request_headers
           end
           include_examples 'a valid GET request'
           it 'with the specified structure' do
-            expect_json_keys(:api_version, :data, :messages, :status, :supported_api_versions, :type, :version)
-          end
-          it 'with the matching content declaration' do
-            expect_json(type: 'cartridges', status: 'ok')
+            expect_json_keys(:total_results, :total_pages, :resources)
           end
         end
       end
