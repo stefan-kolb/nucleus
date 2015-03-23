@@ -37,7 +37,8 @@ module Paasal
         use ::Rack::Static, urls: { '/robots.txt' => 'robots.txt' }, root: 'public'
 
         # request streaming, especially for tailing log files
-        use ::Rack::Stream
+        # TODO: only use in tests, otherwise rack-test breaks due to missing EM reactor (no thin server) :(
+        use ::Rack::Stream unless $PROGRAM_NAME.end_with?('rspec')
 
         run ::Rack::URLMap.new(
           # serve the dynamic API
