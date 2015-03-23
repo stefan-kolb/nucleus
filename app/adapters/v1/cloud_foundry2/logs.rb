@@ -50,7 +50,7 @@ module Paasal
               download_file(app_guid, "logs/#{log_id}")
               # no error, file exists
               true
-            rescue Excon::Errors::NotFound
+            rescue Errors::UnknownAdapterCallError, Excon::Errors::NotFound, Excon::Errors::BadRequest
               false
             end
           end

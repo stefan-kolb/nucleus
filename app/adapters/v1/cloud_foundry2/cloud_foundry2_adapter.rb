@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudFoundryAdapter < Adapters::BaseAdapter
+      class CloudFoundry2Adapter < Adapters::BaseAdapter
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudFoundry2::Buildpacks
         include Paasal::Adapters::V1::CloudFoundry2::Application

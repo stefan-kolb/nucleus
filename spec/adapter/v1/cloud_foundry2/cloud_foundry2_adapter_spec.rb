@@ -1,6 +1,6 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::CloudFoundryAdapter do
+describe Paasal::Adapters::V1::CloudFoundry2Adapter do
   before do
     @endpoint = 'cf-bosh-local'
     @api_version = 'v1'
