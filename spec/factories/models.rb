@@ -19,6 +19,8 @@ FactoryGirl.define do
         provider = dao.get endpoint.provider
         provider.endpoints = [] if provider.endpoints.nil?
         provider.endpoints << endpoint.id
+        # save updated association
+        dao.set provider
       end
     end
   end
@@ -38,6 +40,8 @@ FactoryGirl.define do
         vendor = dao.get provider.vendor
         vendor.providers = [] if vendor.providers.nil?
         vendor.providers << provider.id
+        # save updated association
+        dao.set vendor
       end
     end
   end
