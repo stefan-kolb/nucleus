@@ -1,5 +1,3 @@
-require 'eventmachine'
-
 module Paasal
   module Adapters
     module V1
@@ -24,7 +22,7 @@ module Paasal
                 else
                   log_type = API::Application::LogfileType::OTHER
                 end
-                available_log_files.push({ id: log_filename, name: log_filename, type: log_type })
+                available_log_files.push(id: log_filename, name: log_filename, type: log_type)
               end
             end
 
@@ -57,10 +55,10 @@ module Paasal
             end
           end
 
-          def tail(application_name_or_id, log_id, on_message_callback, on_close_callback)
+          def tail(application_name_or_id, log_id, stream)
             app_guid = app_guid(application_name_or_id)
-            return tail_stream(app_guid, on_message_callback, on_close_callback) if log_stream?(log_id)
-            tail_file(app_guid, log_id, on_message_callback, on_close_callback)
+            return tail_stream(app_guid, stream) if log_stream?(log_id)
+            tail_file(app_guid, log_id, stream)
           end
 
           def log_entries(application_name_or_id, log_id)
@@ -99,21 +97,19 @@ module Paasal
 
           def construct_log_entry(decoded_message)
             # 2015-03-22T15:28:55.83+0100 [RTR/0]      OUT message...
-            "#{Time.at(decoded_message.timestamp/1000000000.0).iso8601} "\
+            "#{Time.at(decoded_message.timestamp / 1_000_000_000.0).iso8601} "\
               "[#{decoded_message.source_name}/#{decoded_message.source_id}] "\
               "#{decoded_message.message_type == 1 ? 'OUT' : 'ERR'} #{decoded_message.message}"
           end
 
           def download_logfile_entries(app_guid, log_id, headers_to_use = nil)
-            begin
-              # download log file
-              logfile_contents = download_file(app_guid, "logs/#{log_id}", false, headers_to_use)
-              # split file into entries by line breaks and return an array of log entries
-              logfile_contents.split(CRLF)
-            rescue Excon::Errors::NotFound
-              raise Errors::AdapterResourceNotFoundError,
-                    "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
-            end
+            # download log file
+            logfile_contents = download_file(app_guid, "logs/#{log_id}", false, headers_to_use)
+            # split file into entries by line breaks and return an array of log entries
+            logfile_contents.split(CRLF)
+          rescue Excon::Errors::NotFound
+            raise Errors::AdapterResourceNotFoundError,
+                  "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
           end
 
           def download_file(app_guid, file_path, do_not_fail = false, headers_to_use = nil)
@@ -171,10 +167,10 @@ module Paasal
           end
 
           def loggregator_endpoint
-            @endpoint_url.gsub(/^(\w*:\/\/)?(api)([-\.\w]+)$/i, 'loggregator\3')
+            @endpoint_url.gsub(%r{^(\w*://)?(api)([-\.\w]+)$}i, 'loggregator\3')
           end
 
-          def tail_file(app_guid, log_id, on_message_callback, on_close_callback)
+          def tail_file(app_guid, log_id, stream)
             log.debug 'Tailing CF log file'
             log_id = 'staging_task.log' if log_id.to_sym == API::Application::LogfileType::BUILD
 
@@ -184,62 +180,53 @@ module Paasal
 
             # update every 3 seconds
             @tail_file_timer = EM.add_periodic_timer(3) do
+              log.debug('Poll updated file tail...')
               begin
-                log.debug('Fetching file for tail response...')
-                entries = download_logfile_entries(app_guid, log_id, headers_to_use)
-                # file was shortened, close stream since we do not know where to continue
-                on_close_callback.call if entries.length < latest_pushed_line
-                entries.each_with_index do |entry, index|
-                  if index > latest_pushed_line
-                    p "push line #{index}"
-                    latest_pushed_line = index
-                    on_message_callback.call(entry)
-                  end
-                end
+                latest_pushed_line = push_file_tail(app_guid, log_id, stream, latest_pushed_line, headers_to_use)
               rescue Errors::AdapterResourceNotFoundError
                 log.debug('Logfile not found, finished tailing')
                 # file lost, close stream
                 @tail_file_timer.cancel if @tail_file_timer
-                on_close_callback.call
+                stream.close
               end
             end
-
-            close_listener = Object.new
-            close_listener.instance_variable_set(:@tail_file_timer, @tail_file_timer)
-            close_listener.define_singleton_method(:close) do
-              log.debug('Close file tailing, connection was closed')
-              @tail_file_timer.cancel if @tail_file_timer
-            end
-            close_listener
+            # listener to stop polling
+            StopListener.new(@tail_file_timer, :cancel)
           end
 
-          def tail_stream(app_guid, on_message_callback, on_close_callback)
-            # push current state
-            recent_log_messages(app_guid).each do |log_message|
-              on_message_callback.call(construct_log_entry(log_message))
+          def push_file_tail(app_guid, log_id, stream, pushed_line_idx, headers_to_use)
+            log.debug('Fetching file for tail response...')
+            entries = download_logfile_entries(app_guid, log_id, headers_to_use)
+            # file was shortened, close stream since we do not know where to continue
+            if entries.length < pushed_line_idx
+              log.debug('File was modified and shortened, stop tailing the file...')
+              stream.close
+            else
+              entries.each_with_index do |entry, index|
+                next if index <= pushed_line_idx
+                pushed_line_idx = index
+                stream.send_message(entry)
+              end
+              pushed_line_idx
             end
+          end
+
+          def tail_stream(app_guid, stream)
+            # push current state
+            recent_log_messages(app_guid).each { |log_entry| stream.send_message(construct_log_entry(log_entry)) }
 
             # Now register websocket to receive the latest updates
-            loggregator_tail_uri = "wss://#{loggregator_endpoint}:443/tail/?app=#{app_guid}"
-            ws = Faye::WebSocket::Client.new(loggregator_tail_uri, nil, headers: headers.slice('Authorization'))
-
-            ws.on :open do |event|
-              log.debug "Opening CF loggregator websocket: #{event}"
-            end
-
-            ws.on :error do |event|
-              log.debug "CF loggregator websocket crashed: #{event}"
-            end
+            ws = Faye::WebSocket::Client.new("wss://#{loggregator_endpoint}:443/tail/?app=#{app_guid}",
+                                             nil, headers: headers.slice('Authorization'))
 
             ws.on :message do |event|
               log.debug "CF loggregator message received: #{event}"
               begin
-                unpacked = event.data.pack('C*')
-                msg = Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(unpacked)
+                msg = Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(event.data.pack('C*'))
                 # notify stream to print new log line
-                on_message_callback.call(msg.message)
+                stream.send_message(construct_log_entry(msg))
               rescue StandardError => e
-                log.error "Cloud Foundry log message deserialization failed: #{e}"
+                log.error "Cloud Foundry log message de-serialization failed: #{e}"
               end
             end
 
@@ -247,10 +234,24 @@ module Paasal
               log.debug "Closing CF loggregator websocket: code=#{event.code}, reason=#{event.reason}"
               ws = nil
               # notify stream that no more update are to arrive and stream shall be closed
-              on_close_callback.call
+              stream.close
             end
-            # return ws so that it can be closed when the request is broken
-            ws
+            # return listener to stop websocket
+            StopListener.new(ws, :close)
+          end
+
+          # StopListener can be used to cancel a timer, e.g. when the underlying connection was terminated.
+          class StopListener
+            def initialize(polling, method_to_stop)
+              @polling = polling
+              @method_to_stop = method_to_stop
+            end
+            # Stop polling
+            # @return [void]
+            def stop
+              log.debug('Stop tail updates, connection was closed')
+              @polling.method(@method_to_stop).call
+            end
           end
 
           # Message class definition, matching the Protocol Buffer definition of the Cloud Foundry loggregator.

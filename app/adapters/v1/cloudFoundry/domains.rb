@@ -119,15 +119,16 @@ module Paasal
             created_domain = cf_domain(domain_name)
             unless created_domain
               # domain does not exist, create!
-              created_domain = post('/v2/private_domains',
-                                    body: { name: domain_name, owning_organization_guid: default_organization_guid }).body
+              domain_request_body = { name: domain_name, owning_organization_guid: default_organization_guid }
+              created_domain = post('/v2/private_domains', body: domain_request_body).body
             end
 
             created_route = cf_route(created_domain[:metadata][:guid], domain_host)
             unless created_route
               # route does not exist, create!
-              created_route = post('/v2/routes', body: { domain_guid: created_domain[:metadata][:guid],
-                                                         host: domain_host, space_guid: user_space_guid }).body
+              route_request_body =  { domain_guid: created_domain[:metadata][:guid],
+                                      host: domain_host, space_guid: user_space_guid }
+              created_route = post('/v2/routes', body: route_request_body).body
             end
 
             # assign the route to the application

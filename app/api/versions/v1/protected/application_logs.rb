@@ -50,14 +50,13 @@ module Paasal
               logs.each do |logfile|
                 log.debug "Including #{logfile[:id]} in archive download"
                 log_entries = with_authentication { adapter.log_entries(params[:application_id], logfile[:id]) }
-                if log_entries && log_entries.length > 0
-                  data = StringIO.new(log_entries.join("\r\n"))
-                  filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.#{logfile[:id]}.log"
-                  file_path = File.join(tmp_dir, filename)
-                  # write log entries to a file
-                  File.open(file_path, 'wb') { |f| f.print data.read }
-                  valid_logfiles += 1
-                end
+                next unless log_entries && log_entries.length > 0
+                data = StringIO.new(log_entries.join("\r\n"))
+                filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.#{logfile[:id]}.log"
+                file_path = File.join(tmp_dir, filename)
+                # write log entries to a file
+                File.open(file_path, 'wb') { |f| f.print data.read }
+                valid_logfiles += 1
               end
 
               if valid_logfiles == 0
@@ -100,7 +99,7 @@ module Paasal
             end
             params do
               optional :file_format, desc: 'File format to use for the returned logfile, '\
-                     'one of: \'log\', \'zip\', \'tar.gz\'. Defaults to \'txt\'.',
+                'one of: \'log\', \'zip\', \'tar.gz\'. Defaults to \'txt\'.',
                        values: Paasal::API::LogDownloadFormats.all,
                        default: Paasal::API::LogDownloadFormats::LOG
             end
@@ -108,7 +107,8 @@ module Paasal
               # returns an array of log entries
               log_entries = with_authentication { adapter.log_entries(params[:application_id], params[:log_id]) }
               data = StringIO.new(log_entries.join("\r\n"))
-              filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.#{params[:log_id]}.#{params[:file_format]}"
+              filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.log."\
+                "#{params[:log_id]}.#{params[:file_format]}"
               env['api.format'] = :binary
               # header 'Content-Disposition', "attachment; filename*=UTF-8''#{URI.escape(filename)}"
               header 'Content-Disposition', "attachment; filename=#{URI.escape(filename)}"
@@ -143,46 +143,58 @@ module Paasal
                      "Invalid log file '#{params[:log_id]}', not available for application '#{params[:application_id]}'"
               end
 
-              tail_listener = nil
-              closed = false
+              tail_polling = nil
+              stream = RackStreamCallback.new(self)
               after_connection_error do
                 # tidy resource when the connection was terminated with an error
                 log.debug('Connection error reported by rack-stream')
-                closed = true
+                stream.closed = true
                 close
               end
 
               after_open do
-                on_message_callback = lambda do |message|
-                  log.debug "New streamed message part: #{message}"
-                  chunk message
-                end
-                on_close_callback = lambda do
-                  log.debug 'Close API stream, invoked by adapter callback'
-                  tail_listener = nil if tail_listener
-                  # close API stream of the Rack server
-                  close unless closed
-                end
-
                 # execute the actual request and stream the logging message
-                tail_listener = with_authentication do
-                  adapter.tail(params[:application_id], params[:log_id], on_message_callback, on_close_callback)
+                tail_polling = with_authentication do
+                  adapter.tail(params[:application_id], params[:log_id], stream)
                 end
               end
 
               before_close do
-                log.debug 'Closing API stream...'
-                log.debug "Listener? #{!tail_listener.nil?} Responds to close? #{tail_listener.respond_to?(:close)}"
-                tail_listener.close if tail_listener && tail_listener.respond_to?(:close)
+                log.debug 'Closing API stream, stop tail updates...'
+                tail_polling.stop
               end
 
               status 200
               header 'Content-Type', 'text/html'
               # TODO: will be included in response, can this be avoided or is this standard conform?
-              ""
+              ''
             end
           end
         end # end of resource
+      end
+    end
+
+    class RackStreamCallback
+      attr_accessor :closed
+
+      def initialize(stream)
+        @stream = stream
+        @closed = false
+      end
+
+      # Send a message via the stream to the client
+      # @param [String] message content to send to the client
+      def send_message(message)
+        log.debug "New streamed message part: #{message}"
+        @stream.chunk message
+      end
+
+      # Close the stream
+      # @return [void]
+      def close
+        log.debug 'Close API stream, invoked by adapter callback'
+        # close API stream of the Rack server unless it was already closed
+        @stream.close unless @closed
       end
     end
   end

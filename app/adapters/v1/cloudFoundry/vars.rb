@@ -55,8 +55,8 @@ module Paasal
           def set_var(app_guid, key, value)
             request_body = get("/v2/apps/#{app_guid}/env").body[:environment_json]
             request_body[key] = value
-            vars = put("/v2/apps/#{app_guid}", body: { environment_json: request_body }).body[:entity][:environment_json]
-            { id: key, key: key, value: vars[key] }
+            vars = put("/v2/apps/#{app_guid}", body: { environment_json: request_body }).body[:entity]
+            { id: key, key: key, value: vars[:environment_json][key] }
           end
 
           # Checks if a variable with the env_var_key already exists.
