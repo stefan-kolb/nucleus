@@ -6,7 +6,7 @@ module Paasal
           'EnvironmentVariableList'
         end
         item_collection('env_vars', 'environment variables', Models::EnvironmentVariable)
-        basic_links('vars', 'endpoints/%{:endpoint_id}/applications/%{:application_id}')
+        basic_links('endpoints/%{endpoint_id}/applications/%{application_id}', 'vars')
       end
     end
   end

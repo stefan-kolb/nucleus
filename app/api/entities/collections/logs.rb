@@ -7,7 +7,7 @@ module Paasal
         end
 
         item_collection('logs', 'logs', Models::Log)
-        basic_links('endpoints/%{endpoint_id}', 'logs')
+        basic_links('endpoints/%{endpoint_id}/applications/%{application_id}', 'logs')
       end
     end
   end

@@ -15,10 +15,11 @@ module Paasal
           type: 'BasicReferences', desc: 'Resource links', is_array: true } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
-                                              ['applications', instance[:application_id], 'domains', instance[:id]]) },
+                                              ['applications', o[:env]['rack.routing_args'][:application_id],
+                                               'domains', instance[:id]]) },
             # link back to the application
             parent: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
-                                                ['applications', instance[:application_id]]) }
+                                                ['applications', o[:env]['rack.routing_args'][:application_id]]) }
           }
         end
       end
