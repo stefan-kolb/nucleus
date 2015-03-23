@@ -7,20 +7,12 @@ module Paasal
         @store_type = store_type
         @api_version = api_version
         @db = open_db
+        @restricted_index_key = "paasal.store.index.for.api.#{api_version}.and.type.#{store_type}"
         # make sure DB gets closed
         at_exit do
           log.debug "Closing DB for #{store_type} and #{api_version}"
           @db.close
         end
-      end
-
-      def open_db
-        # utilize the configured file store
-        path = "#{configatron.db.path}"
-        path << '/' unless configatron.db.path.end_with?(File::SEPARATOR)
-        path << @api_version
-        FileUtils.mkpath path
-        Daybreak::DB.new("#{path}/#{@store_type}")
       end
 
       def set(entity)
@@ -35,18 +27,25 @@ module Paasal
           end
         end
 
-        @db.lock do
-          @db.set!(entity.id, entity)
+        fail StandardError, "Cant modify restricted key '#{entity.id}'" if entity.id.to_s == @restricted_index_key
+
+        @lock.synchronize do
+          @db.store(entity.id, entity)
+          # update the index
+          add_key_to_index(entity.id)
         end
         # return the updated and persisted entity
         entity
       end
 
       def delete(entity_id)
-        @db.lock do
+        fail StandardError, "Cant modify restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
+        @lock.synchronize do
           if @db.key?(entity_id)
             # id was given, delete now
-            @db.delete!(entity_id)
+            @db.delete(entity_id)
+            # update the index
+            remove_key_from_index(entity_id)
           else
             fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
           end
@@ -55,41 +54,110 @@ module Paasal
 
       def get_collection(entity_ids)
         response = []
-        unless entity_ids.nil? && entity_ids.empty?
+        unless entity_ids.nil? || entity_ids.empty?
           entity_ids.each do |entity_id|
-            response << @db.get(entity_id)
+            fail StandardError, "Cant load restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
+            response << @db.load(entity_id)
           end
         end
         response
       end
 
       def get(entity_id)
-        @db.get(entity_id)
+        fail StandardError, "Cant load restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
+        @db.load(entity_id)
       end
 
       def all
         instances = []
-        @db.each do |_id, value|
-          instances << value
+        index.each do |key|
+          instances << @db.load(key)
         end
         instances
       end
 
       def keys
-        @db.keys
+        index.to_a
       end
 
       def key?(key)
+        fail StartupError, "Cant load restricted key '#{key}'" if key.to_s == @restricted_index_key
         @db.key? key
       end
 
       def clear
-        @db.lock do
-          @db.clear unless @db.empty?
+        @lock.synchronize do
+          @db.clear
         end
       end
 
+      def allowed_backends
+        allowed = {
+          Daybreak: { file: File.join(path, @store_type) },
+          LMDB: { dir: path, db: @store_type }
+        }
+        # Daybreak does not run on windows, see: https://github.com/propublica/daybreak/issues/27
+        allowed.delete :Daybreak if OS.windows?
+        # return remaining backends
+        allowed
+      end
+
       private
+
+      def path
+        File.join(configatron.db.path.chomp('/').chomp('\\'), @api_version)
+      end
+
+      def chosen_db_backend
+        return configatron.db.backend if configatron.db.key?(:backend)
+        return :LMDB if OS.windows?
+        :Daybreak
+      end
+
+      def open_db
+        db_backend = chosen_db_backend
+
+        unless allowed_backends.key?(db_backend)
+          fail StandardError,
+               "Invalid database backend '#{db_backend}'. Please choose one of: #{allowed_backends.keys}"
+        end
+
+        if configatron.db.key?(:backend_options)
+          backend_options = allowed_backends[db_backend].merge(configatron.db.backend_options)
+        else
+          backend_options = allowed_backends[db_backend]
+        end
+
+        # Create the path if we use directories or files
+        if backend_options.key?(:file)
+          FileUtils.mkpath path
+        elsif backend_options.key?(:dir)
+          FileUtils.mkpath backend_options[:dir]
+        end
+
+        store = Moneta.new(db_backend, backend_options)
+        # use combined key of api version and store type
+        @lock = Moneta::Mutex.new(store, "#{@api_version}.#{@store_type}")
+        store
+      end
+
+      def index
+        @db.fetch(@restricted_index_key, Set.new)
+      end
+
+      def add_key_to_index(key)
+        keys = index
+        # add key to index
+        keys.add(key)
+        @db.store(@restricted_index_key, keys)
+      end
+
+      def remove_key_from_index(key)
+        keys = index
+        # remove key from index
+        keys.delete(key)
+        @db.store(@restricted_index_key, keys)
+      end
 
       def update_timestamps(entity)
         now = Time.now.utc.iso8601

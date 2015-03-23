@@ -36,9 +36,11 @@ Gem::Specification.new do |spec|
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'
   spec.add_runtime_dependency 'kwalify', '~> 0.7'
+  spec.add_runtime_dependency 'lmdb', '~> 0.4'
   spec.add_runtime_dependency 'logger', '~> 1.2'
   spec.add_runtime_dependency 'mime-types'
   spec.add_runtime_dependency 'protobuf'
+  spec.add_runtime_dependency 'moneta', '~> 0.8'
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'rack-stream', '~> 0.0'
   spec.add_runtime_dependency 'request_store', '~> 1.1'

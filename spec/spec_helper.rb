@@ -54,7 +54,7 @@ require_relative '../scripts/load_config'
 # TODO: disable logging via proper config option
 configatron.logging.level = Logger::Severity::FATAL
 # force tmp database
-configatron.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.test.store"
+configatron.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.paasal.test.store")
 configatron.db.delete_on_shutdown = true
 configatron.db.override = true
 

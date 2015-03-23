@@ -7,6 +7,8 @@ require 'require_all'
 require 'logger'
 require 'kwalify'
 require 'daybreak'
+require 'lmdb'
+require 'moneta'
 require 'tmpdir'
 require 'find'
 require 'filesize'
@@ -39,6 +41,8 @@ require 'rubygems/package'
 
 # require url regex
 require 'regexp'
+# OS detection
+require 'OS'
 
 # models
 require_all 'app/models'
