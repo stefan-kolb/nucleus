@@ -16,20 +16,12 @@ begin
   # TODO: DEBUG CODE TO VISUALISE THE LOADED DB STATE
 
   configatron.api.versions.each do |api_version|
-    puts '', "API #{api_version}:"
-    vendor_dao = Paasal::DB::VendorDao.instance api_version
-    provider_dao = Paasal::DB::ProviderDao.instance api_version
-    endpoint_dao = Paasal::DB::EndpointDao.instance api_version
-
-    vendor_dao.keys.each do |key|
-      p vendor_dao.get key
-    end
-    provider_dao.keys.each do |key|
-      p provider_dao.get key
-    end
-    endpoint_dao.keys.each do |key|
-      p endpoint_dao.get key
-    end
+    puts '', "Bootstraping DAOs for API #{api_version}:"
+    # Bootstrap DAOs for each API version
+    Paasal::DB::VendorDao.instance api_version
+    Paasal::DB::ProviderDao.instance api_version
+    Paasal::DB::EndpointDao.instance api_version
+    Paasal::DB::AdapterDao.instance api_version
   end
 
 rescue Paasal::StartupError => e
