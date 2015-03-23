@@ -12,12 +12,12 @@ module Paasal
         }
 
         expose :key, documentation: {
-          type: String, desc: 'Variable key, e.g. \'contact_email\'',
+          type: String, desc: 'Variable key, e.g. \'RAILS_ENV\'',
           required_details: { request: { POST: true }, response: true }
         }
 
         expose :value, documentation: {
-          type: String, desc: 'Variable value, e.g. \'contact@mydomain.com\'',
+          type: String, desc: 'Variable value, e.g. \'development\'',
           required_details: { request: { POST: true }, response: true }
         }
 
