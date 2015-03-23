@@ -18,7 +18,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Usage](#usage)
   * [Use in your application](#use-in-your-application)
   * [Use the API](#use-the-api)
-    * [Start the server:](#start-the-server:)
+    * [Start the server](#start-the-server)
     * [API endpoints](#api-endpoints)
 * [Functionality](#functionality)
   * [Authentication](#authentication)
@@ -40,6 +40,11 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [API client(s)](#api-clients)
   * [Accept Header](#accept-header)
   * [Language specific clients](#language-specific-clients)
+* [Adapters](#adapters)
+  * [Heroku](#heroku)
+  * [Cloud Foundry v2](#cloud-foundry-v2)
+  * [Openshift v2](#openshift-v2)
+  * [cloudControl](#cloudControl)
 * [Tests](#tests)
   * [Unit Tests](#unit-tests)
   * [Integration Tests](#integration-tests)
@@ -62,6 +67,8 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 
 ### Use in your application
 
+#### Require paasal and mark as dependency
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -80,12 +87,36 @@ Finally require the gem in your application
 
 	require 'paasal'
 
+#### Communicate with an endpoint
+
+**TODO: simplify this approach. User does not have to know about app_domain. Find a way to utilize the config here.**
+
+First, we need to acquire an adapter instance. Choose between one of the following classes:
+`Paasal::Adapters::V1::CloudControl`,
+`Paasal::Adapters::V1::CloudFoundry2`,
+`Paasal::Adapters::V1::Heroku`,
+`Paasal::Adapters::V1::Openshift`
+
+Initialize the adapter with the parameters:
+
+    # endpoint_url --> the API endpoint that shall be used, e.g. api.eu-gb.bluemix.net
+    # endpoint_app_domain --> domain where all apps are available by default, e.g. {app_name}.herokuapps.com
+    # check_certificates --> Boolean, false causes to trust all SSL certificates and skip their validation
+    adapter = Paasal::Adapters::V1::CloudFoundry2.new(endpoint_url, endpoint_app_domain, check_certificates)
+
+Fire and forget, or: Invoke your actions
+
+    # get information about an application
+    adapter.application(application_id)
+
+Check the **documentation** for a complete list of the supported actions.
+Refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands.
 
 ### Use the API
 
 Besides including the abstraction layer in your application, PaaSal can also be started and serve the RESTful API:
 
-#### Start the server:
+#### Start the server
 
 A rack server can be started in multiple ways.
 The most convinient solution is to use the provided script:  
@@ -352,6 +383,22 @@ The only requirement is that the name must be unique amongst the endpoints of *a
     POST /api/providers/cloud-foundry/endpoints
     body: {"endpoint":{"name":"mynewcloudfoundryendpoint"}}
 
+#### Application logs
+
+TODO: move to the proper section in this README file
+
+##### Download a selected logfile of an application
+
+    curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/download" -H "Authorization: {auth_header}" -O -J
+
+##### Download all logfiles of an application
+
+    curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/download" -H "Authorization: {auth_header}" -O -J
+
+##### Tail a selected logfile of an application
+
+    curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/tail" -H "Authorization: {auth_header}"
+
 ### Native calls (experimental)
 
 You can also execute native calls against the endpoint's API by using PaaSal.
@@ -509,7 +556,31 @@ As a reward of providing swagger-compatible API docs, clients can be generated f
 
 For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
 
+## Adapters
 
+### Heroku
+
+### Cloud Foundry v2
+
+#### Issues
+**Logs**
+CF stopped to provide the `stdout` and `stderr` files in the `logs` directory.
+Currently we do not know of an approach to fetch recent log entries without registering an additional service on the application.
+
+Moreover, logs can only be retrieved as long as at least once instance of the CF application is running, hence the application state is `running`.
+If there are no logs that can be retrieved, the log list will be empty and the direct call of a log file will result in an 404 error.
+
+### Openshift v2
+
+### cloudControl
+
+#### Issues
+**Application update**
+An application can't be updated, the `name` and `runtimes` can't be changed once created.
+
+**Application lifecycle**
+Applications on cloudControl can't be explicitly started or stopped.
+They start automatically upon the successful deployment of a valid application and stop once the _deployment_ has been deleted.
 
 ## Tests
 
