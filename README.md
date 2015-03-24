@@ -512,8 +512,8 @@ Some aspects, for instance where the server shall save its storage files, can be
 #### Database backend
 
 The database backend can be specified in the `paasal.rb` configuration file.
-By default, it defaults to (Daybreak)[https://github.com/propublica/daybreak] on unix systems
-and (LMDB)[https://github.com/minad/lmdb] on Windows.
+It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems
+and [LMDB](https://github.com/minad/lmdb) on Windows.
 
 ## API clients
 
