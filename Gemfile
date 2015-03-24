@@ -25,10 +25,7 @@ group :test do
   gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'empty-array-param'
   gem 'rspec-wait'
   gem 'airborne', require: false
-  # gem 'codeclimate-test-reporter'
-  # testing codeclimate merged reports, see issue https://github.com/codeclimate/ruby-test-reporter/issues/24
-  # and pull request https://github.com/codeclimate/ruby-test-reporter/pull/80
-  gem 'codeclimate-test-reporter', github: 'grosser/ruby-test-reporter', branch: 'grosser/merge2'
+  gem 'codeclimate-test-reporter', require: nil
   gem 'factory_girl'
   gem 'faker'
   gem 'simplecov', require: false
