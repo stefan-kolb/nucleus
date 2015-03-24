@@ -42,7 +42,7 @@ require 'rubygems/package'
 # require url regex
 require 'regexp'
 # OS detection
-require 'OS'
+require 'os'
 
 # models
 require_all 'app/models'
