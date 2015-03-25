@@ -10,11 +10,19 @@ require 'rubocop/rake_task'
 
 RuboCop::RakeTask.new
 
-task default: [:rubocop, 'spec:suite:all']
+# first check code style, then execute the tests
+task default: [:rubocop, :spec]
 
 # map spec task to all test suites
 task :spec do
+  # first, run all tests
   Rake::Task['spec:suite:all'].invoke
+  # if on the CI system, push coverage report to codeclimate
+  if ENV['CODECLIMATE_REPO_TOKEN']
+    require 'simplecov'
+    require 'codeclimate-test-reporter'
+    CodeClimate::TestReporter::Formatter.new.format(SimpleCov.result)
+  end
 end
 
 task :doc_toc do

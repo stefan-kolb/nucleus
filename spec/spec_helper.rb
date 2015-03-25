@@ -29,8 +29,11 @@ require 'faker'
 require 'tmpdir'
 
 if ENV['CODECLIMATE_REPO_TOKEN']
+  require 'simplecov'
   require 'codeclimate-test-reporter'
-  CodeClimate::TestReporter.start
+  SimpleCov.add_filter 'vendor'
+  SimpleCov.formatters = []
+  SimpleCov.start CodeClimate::TestReporter.configuration.profile
 else
   require 'simplecov'
   SimpleCov.start do
