@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/info
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '331'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 25 Mar 2015 16:25:25 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 14226d07-df4b-4e74-7420-dd8c701e683e
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 5d351463-a094-44d5-4f66-5d442657b455::e1ef2414-b978-4c4f-940c-6fea2f9fe99b
+    body:
+      encoding: US-ASCII
+      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+        Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
+    http_version: 
+  recorded_at: Wed, 25 Mar 2015 16:25:25 GMT
+- request:
+    method: post
+    uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Cache-Control:
+      - no-cache, no-store, no-store
+      Connection:
+      - close
+      Content-Length:
+      - '1856'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Wed, 25 Mar 2015 16:25:25 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache, no-cache
+      Server:
+      - Apache-Coyote/1.1
+      X-Cf-Requestid:
+      - f664339a-7ec2-4110-7f2b-302830e8d278, 46bf2f9d-bc80-45cf-7c6b-b4458439b58c
+      X-Frame-Options:
+      - DENY
+    body:
+      encoding: US-ASCII
+      string: ! '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"e40d2994-7eab-4fee-9928-030919c34621"}'
+    http_version: 
+  recorded_at: Wed, 25 Mar 2015 16:25:25 GMT
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/buildpacks
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Basic:
+      - Y2Y6
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '2845'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 25 Mar 2015 16:25:25 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 2481b6f8-7f58-4bc7-577c-8d104159aa8f
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 0f86316e-4aea-4119-551f-fb7ed6b42076::d075d5cd-bd1b-47c3-8545-70e85fed2a3c
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"total_results\": 6,\n  \"total_pages\": 1,\n  \"prev_url\":
+        null,\n  \"next_url\": null,\n  \"resources\": [\n    {\n      \"metadata\":
+        {\n        \"guid\": \"111634ab-d511-4746-a252-b5fdb15bb51c\",\n        \"url\":
+        \"/v2/buildpacks/111634ab-d511-4746-a252-b5fdb15bb51c\",\n        \"created_at\":
+        \"2014-12-05T16:23:50+00:00\",\n        \"updated_at\": \"2014-12-05T16:23:50+00:00\"\n
+        \     },\n      \"entity\": {\n        \"name\": \"java_buildpack\",\n        \"position\":
+        1,\n        \"enabled\": true,\n        \"locked\": false,\n        \"filename\":
+        \"java-buildpack-v2.5.zip\"\n      }\n    },\n    {\n      \"metadata\": {\n
+        \       \"guid\": \"5da6e1e2-8134-41cc-9b20-96f40fd6259d\",\n        \"url\":
+        \"/v2/buildpacks/5da6e1e2-8134-41cc-9b20-96f40fd6259d\",\n        \"created_at\":
+        \"2014-12-05T16:23:50+00:00\",\n        \"updated_at\": \"2014-12-05T16:25:05+00:00\"\n
+        \     },\n      \"entity\": {\n        \"name\": \"ruby_buildpack\",\n        \"position\":
+        2,\n        \"enabled\": true,\n        \"locked\": false,\n        \"filename\":
+        \"ruby_buildpack-offline-v1.1.4.zip\"\n      }\n    },\n    {\n      \"metadata\":
+        {\n        \"guid\": \"1f429aed-bf05-43d2-9621-bc6ebc082b09\",\n        \"url\":
+        \"/v2/buildpacks/1f429aed-bf05-43d2-9621-bc6ebc082b09\",\n        \"created_at\":
+        \"2014-12-05T16:23:59+00:00\",\n        \"updated_at\": \"2014-12-05T16:24:02+00:00\"\n
+        \     },\n      \"entity\": {\n        \"name\": \"nodejs_buildpack\",\n        \"position\":
+        3,\n        \"enabled\": true,\n        \"locked\": false,\n        \"filename\":
+        \"nodejs_buildpack-offline-v1.0.4.zip\"\n      }\n    },\n    {\n      \"metadata\":
+        {\n        \"guid\": \"154affc8-7710-4a97-abae-e632f50bb23a\",\n        \"url\":
+        \"/v2/buildpacks/154affc8-7710-4a97-abae-e632f50bb23a\",\n        \"created_at\":
+        \"2014-12-05T16:24:03+00:00\",\n        \"updated_at\": \"2014-12-05T16:24:46+00:00\"\n
+        \     },\n      \"entity\": {\n        \"name\": \"go_buildpack\",\n        \"position\":
+        4,\n        \"enabled\": true,\n        \"locked\": false,\n        \"filename\":
+        \"go_buildpack-offline-v1.0.4.zip\"\n      }\n    },\n    {\n      \"metadata\":
+        {\n        \"guid\": \"102f02cd-d345-4c20-b5b7-28dfdcdc4fab\",\n        \"url\":
+        \"/v2/buildpacks/102f02cd-d345-4c20-b5b7-28dfdcdc4fab\",\n        \"created_at\":
+        \"2014-12-05T16:24:46+00:00\",\n        \"updated_at\": \"2014-12-05T16:25:09+00:00\"\n
+        \     },\n      \"entity\": {\n        \"name\": \"python_buildpack\",\n        \"position\":
+        5,\n        \"enabled\": true,\n        \"locked\": false,\n        \"filename\":
+        \"python_buildpack-offline-v1.0.5.zip\"\n      }\n    },\n    {\n      \"metadata\":
+        {\n        \"guid\": \"9238bbcb-fafc-4042-b4b9-e729867ff236\",\n        \"url\":
+        \"/v2/buildpacks/9238bbcb-fafc-4042-b4b9-e729867ff236\",\n        \"created_at\":
+        \"2014-12-05T16:25:06+00:00\",\n        \"updated_at\": \"2014-12-05T16:25:17+00:00\"\n
+        \     },\n      \"entity\": {\n        \"name\": \"php_buildpack\",\n        \"position\":
+        6,\n        \"enabled\": true,\n        \"locked\": false,\n        \"filename\":
+        \"php_buildpack-offline-v1.0.2.zip\"\n      }\n    }\n  ]\n}"
+    http_version: 
+  recorded_at: Wed, 25 Mar 2015 16:25:25 GMT
+recorded_with: VCR 2.9.3

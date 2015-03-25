@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.10.244.0.34.xip.io/v2/info
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Length:
+      - '331'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 25 Mar 2015 16:22:30 GMT
+      Server:
+      - nginx
+      X-Cf-Requestid:
+      - 61e3bc9b-e756-4311-7fda-3a98685b3f6e
+      X-Content-Type-Options:
+      - nosniff
+      X-Vcap-Request-Id:
+      - 5bd4b2af-07d6-4e94-64a9-467f2af9e6d0::ba930419-e54a-4cde-8a0e-2ef94f04feee
+    body:
+      encoding: US-ASCII
+      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+        Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
+    http_version: 
+  recorded_at: Wed, 25 Mar 2015 16:22:30 GMT
+- request:
+    method: post
+    uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=an_invalid_password&username=an_invalid_username
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.44.4
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 401
+      message: 
+    headers:
+      Cache-Control:
+      - no-store
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Mar 2015 16:22:30 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Apache-Coyote/1.1
+      Www-Authenticate:
+      - Bearer realm="oauth", error="unauthorized", error_description="Authentication
+        failed"
+      X-Cf-Requestid:
+      - 69b343a0-5bd1-4df2-7673-a345ce3fc2ee
+      Content-Length:
+      - '68'
+    body:
+      encoding: US-ASCII
+      string: ! '{"error":"unauthorized","error_description":"Authentication failed"}'
+    http_version: 
+  recorded_at: Wed, 25 Mar 2015 16:22:30 GMT
+recorded_with: VCR 2.9.3

@@ -25,7 +25,7 @@ http_interactions:
       Access-Control-Allow-Methods:
       - POST, GET, PUT, DELETE
       Access-Control-Allow-Origin:
-      - "*"
+      - ! '*'
       Age:
       - '0'
       Allow:
@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 19 Mar 2015 16:28:23 GMT
+      - Wed, 25 Mar 2015 16:22:35 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -45,9 +45,9 @@ http_interactions:
       x-host:
       - api.cloudcontrol.com
       x-url:
-      - "/token"
+      - /token
       X-Varnish:
-      - '2362451318'
+      - '1333838845'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -55,10 +55,10 @@ http_interactions:
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
-      string: '{"token": "__TOKEN__", "expires": "2015-03-19T16:43:23.438126"}'
+      encoding: US-ASCII
+      string: ! '{"token": "__TOKEN__", "expires": "2015-03-25T16:37:35.399043"}'
     http_version: 
-  recorded_at: Thu, 19 Mar 2015 16:28:23 GMT
+  recorded_at: Wed, 25 Mar 2015 16:22:35 GMT
 - request:
     method: get
     uri: https://api.cloudcontrol.com/addon
@@ -86,7 +86,7 @@ http_interactions:
       Access-Control-Allow-Methods:
       - POST, GET, PUT, DELETE
       Access-Control-Allow-Origin:
-      - "*"
+      - ! '*'
       Age:
       - '0'
       Allow:
@@ -96,7 +96,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 19 Mar 2015 16:28:23 GMT
+      - Wed, 25 Mar 2015 16:22:35 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -108,18 +108,18 @@ http_interactions:
       x-host:
       - api.cloudcontrol.com
       x-url:
-      - "/addon"
+      - /addon
       X-Varnish:
-      - '1302192207'
+      - '1333838905'
       X-varnish-cache:
       - MISS
       Content-Length:
-      - '1781'
+      - '1804'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '[{"name": "alias", "stage": "public", "options": [{"name": "alias.free",
+      string: ! '[{"name": "alias", "stage": "public", "options": [{"name": "alias.free",
         "thirty_days_price": "0.00", "price_is_per_box": false}, {"name": "alias.wildcard",
         "thirty_days_price": "3.90", "price_is_per_box": false}]}, {"name": "blitz",
         "stage": "public", "options": [{"name": "blitz.250", "thirty_days_price":
@@ -199,8 +199,8 @@ http_interactions:
         "89.90", "price_is_per_box": false}, {"name": "iron_worker.titanium", "thirty_days_price":
         "839.90", "price_is_per_box": false}]}, {"name": "loaderio", "stage": "public",
         "options": [{"name": "loaderio.tryit", "thirty_days_price": "0.00", "price_is_per_box":
-        false}, {"name": "loaderio.test", "thirty_days_price": "0.00", "price_is_per_box":
         false}, {"name": "loaderio.free", "thirty_days_price": "0.00", "price_is_per_box":
+        false}, {"name": "loaderio.test", "thirty_days_price": "0.00", "price_is_per_box":
         false}, {"name": "loaderio.concept", "thirty_days_price": "5.00", "price_is_per_box":
         false}, {"name": "loaderio.proto", "thirty_days_price": "10.00", "price_is_per_box":
         false}, {"name": "loaderio.dev", "thirty_days_price": "25.00", "price_is_per_box":
@@ -269,9 +269,12 @@ http_interactions:
         false}, {"name": "openredis.huge", "thirty_days_price": "400.00", "price_is_per_box":
         false}, {"name": "openredis.giant", "thirty_days_price": "550.00", "price_is_per_box":
         false}]}, {"name": "phrase", "stage": "public", "options": [{"name": "phrase.free",
-        "thirty_days_price": "0.00", "price_is_per_box": false}, {"name": "phrase.silver",
-        "thirty_days_price": "39.00", "price_is_per_box": false}, {"name": "phrase.gold",
-        "thirty_days_price": "79.00", "price_is_per_box": false}]}, {"name": "postgresqld",
+        "thirty_days_price": "0.00", "price_is_per_box": false}, {"name": "phrase.beginner",
+        "thirty_days_price": "19.00", "price_is_per_box": false}, {"name": "phrase.startup",
+        "thirty_days_price": "49.00", "price_is_per_box": false}, {"name": "phrase.professional",
+        "thirty_days_price": "99.00", "price_is_per_box": false}, {"name": "phrase.business",
+        "thirty_days_price": "199.00", "price_is_per_box": false}, {"name": "phrase.corporate",
+        "thirty_days_price": "399.00", "price_is_per_box": false}]}, {"name": "postgresqld",
         "stage": "public", "options": [{"name": "postgresqld.micro", "thirty_days_price":
         "59.90", "price_is_per_box": false}, {"name": "postgresqld.small", "thirty_days_price":
         "99.90", "price_is_per_box": false}, {"name": "postgresqld.medium", "thirty_days_price":
@@ -317,5 +320,5 @@ http_interactions:
         false}]}, {"name": "worker", "stage": "public", "options": [{"name": "worker.single",
         "thirty_days_price": "0.00", "price_is_per_box": false}]}]'
     http_version: 
-  recorded_at: Thu, 19 Mar 2015 16:28:23 GMT
+  recorded_at: Wed, 25 Mar 2015 16:22:36 GMT
 recorded_with: VCR 2.9.3

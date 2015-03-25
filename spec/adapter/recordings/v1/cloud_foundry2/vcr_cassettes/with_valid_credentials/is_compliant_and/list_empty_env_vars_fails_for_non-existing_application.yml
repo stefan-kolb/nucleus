@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 19 Mar 2015 16:33:20 GMT
+      - Wed, 25 Mar 2015 16:22:46 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 089f9048-cb4a-48eb-6260-e2413f1347f3
+      - 6b0e5a5a-4f2a-4758-76f0-67fabddb854f
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 0805122b-b26a-4eee-7509-1f779b5faebf::1cfd0149-d3f4-4155-8d04-2bc58a04a9e4
+      - 29560634-8cdb-4174-547d-762b9ebba1a8::6f5f565e-bc17-409c-982f-0ee644401ede
     body:
-      encoding: UTF-8
-      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+      encoding: US-ASCII
+      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Thu, 19 Mar 2015 16:33:20 GMT
+  recorded_at: Wed, 25 Mar 2015 16:22:46 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Thu, 19 Mar 2015 16:33:20 GMT
+      - Wed, 25 Mar 2015 16:22:46 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -73,15 +73,15 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       X-Cf-Requestid:
-      - a9305cb6-906e-44fb-5b3c-0fe847431a7c, 094e4e8a-5093-4091-5c2b-4e72a1a3ed38
+      - ecb08ad4-b609-4eef-6162-65cf878d5ad8, 1bb0ac17-edde-4642-692f-36ae9dad3b38
       X-Frame-Options:
       - DENY
     body:
-      encoding: UTF-8
-      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
-        cloud_controller.write password.write openid cloud_controller.read","jti":"3921e506-9d0c-4aba-8897-7b8e150030ea"}'
+      encoding: US-ASCII
+      string: ! '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"bec21c8c-89e2-4339-a1be-9a5653a5e20a"}'
     http_version: 
-  recorded_at: Thu, 19 Mar 2015 16:33:21 GMT
+  recorded_at: Wed, 25 Mar 2015 16:22:46 GMT
 - request:
     method: get
     uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Aapp_never_exists_0123456789
@@ -109,27 +109,19 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 19 Mar 2015 16:33:21 GMT
+      - Wed, 25 Mar 2015 16:22:47 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - c9840f8e-f8e9-411e-56f0-d550a56ad00b
+      - 4ec0f6cc-756c-4385-4e99-4a568036b296
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - d521571e-ffe9-4e7c-5851-3bc15ad24875::59852111-f04f-4f73-bb2a-934bc1d00029
+      - e2ca3983-dd20-41a5-77ae-79c4ce72922e::dbb5f22a-a356-47d3-943d-0013bb4e7e2f
     body:
-      encoding: UTF-8
-      string: |-
-        {
-          "total_results": 0,
-          "total_pages": 1,
-          "prev_url": null,
-          "next_url": null,
-          "resources": [
-
-          ]
-        }
+      encoding: US-ASCII
+      string: ! "{\n  \"total_results\": 0,\n  \"total_pages\": 1,\n  \"prev_url\":
+        null,\n  \"next_url\": null,\n  \"resources\": [\n\n  ]\n}"
     http_version: 
-  recorded_at: Thu, 19 Mar 2015 16:33:21 GMT
+  recorded_at: Wed, 25 Mar 2015 16:22:46 GMT
 recorded_with: VCR 2.9.3
