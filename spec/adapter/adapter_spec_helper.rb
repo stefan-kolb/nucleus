@@ -139,8 +139,7 @@ RSpec.configure do |config|
         "2d931510-d99f-494a-8c67-#{@counter.next!}"
       end
 
-      # fake random filename generation for tmpfiles
-      allow(Dir::Tmpname).to receive(:make_tmpname) do |prefix_suffix, _n|
+      tmpfile_name = lambda do |prefix_suffix|
         case prefix_suffix
         when String
           prefix = prefix_suffix
@@ -154,6 +153,16 @@ RSpec.configure do |config|
         # random part of equal length (!) so that the message length is always equal
         random_part = (0...16).map { (65 + rand(26)).chr }.join
         "#{prefix}-paasal-created-tempfile-#{random_part}#{suffix}"
+      end
+
+      # fake random filename generation for tmpfiles if using Ruby < 2.1
+      allow_any_instance_of(Dir::Tmpname).to receive(:make_tmpname) do |_instance, prefix_suffix, _n|
+        tmpfile_name.call(prefix_suffix)
+      end
+
+      # fake random filename generation for tmpfiles if using Ruby >= 2.1
+      allow(Dir::Tmpname).to receive(:make_tmpname) do |prefix_suffix, _n|
+        tmpfile_name.call(prefix_suffix)
       end
 
       # force a static boundary
