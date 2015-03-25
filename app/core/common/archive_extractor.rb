@@ -20,8 +20,8 @@ module Paasal
 
       begin
         send(compression_method, file, destination_path)
-      rescue Zlib::GzipFile::Error
-        raise Errors::ApplicationArchiveError, 'Failed to extract archive of the type tar.gz, application/gzip.'
+      rescue Zip::Error, Zlib::GzipFile::Error
+        raise Errors::ApplicationArchiveError, "Failed to extract #{compression_format} archive"
       end
     end
 
@@ -41,8 +41,9 @@ module Paasal
 
     def un_zip(file, destination_path)
       extracted = 0
-      Zip::InputStream.open(file) do |zio|
-        while (entry = zio.get_next_entry)
+      Zip::File.open(file) do |zip_file|
+        # Handle entries one by one
+        zip_file.each do |entry|
           next if @exclude_git && entry.name.start_with?('.git')
           dest = File.join(destination_path, entry.name)
           if entry.name_is_directory?
