@@ -26,7 +26,7 @@ module Paasal
             @hash.merge!(YAML.load(File.open(fname)))
           rescue Errno::ENOENT
             # Ignore if file was not found
-            p 'Failed to load endpoint credentials config'
+            p "No endpoint credentials configuration found at 'config/.credentials'"
           end
         end
 

@@ -18,7 +18,7 @@ module Paasal
               # convert all archives to .zip archives
               converted_file = ArchiveConverter.convert(file, file_compression_format, 'zip', true)
               unless converted_file.respond_to?(:path) && converted_file.respond_to?(:read)
-                tmpfile = Tempfile.new(["paasal-deploy-upload-#{app_guid}", '.zip'])
+                tmpfile = Tempfile.new(["paasal-cf-deploy-upload-#{app_guid}", '.zip'])
                 tmpfile.write converted_file.read
                 tmpfile.rewind
                 converted_file = tmpfile
@@ -31,14 +31,13 @@ module Paasal
               begin
                 RestClient::Request.execute(method: :put, url: url, payload: request_body,
                                             headers: headers, verify_ssl: @check_certificates)
-                # RestClient.put(url, request_body, headers)
               rescue RestClient::BadRequest => e
                 raise Errors::BadRequestError, e.http_body
               end
             ensure
               if tmpfile
                 tmpfile.close
-                tmpfile.unlink
+                tmpfile.unlink # deletes this temporary file
               end
             end
           end
@@ -59,8 +58,19 @@ module Paasal
               download_location.gsub!(/objectstorage.service.networklayer.com/, 'objectstorage.softlayer.net')
               data = Excon.get(download_location).body
             end
+
+            # write data to tmpfile so that it can be converted
+            downloaded_application_archive = Tempfile.new(["paasal-cf-deployment-download-#{app_guid}", '.zip'])
+            downloaded_application_archive.write StringIO.new(data).read
+            downloaded_application_archive.rewind
+
             # convert from current format (which is always a zip archive) to the destination format
-            ArchiveConverter.convert(StringIO.new(data), 'zip', compression_format, false)
+            ArchiveConverter.convert(downloaded_application_archive, 'zip', compression_format, false)
+          ensure
+            if downloaded_application_archive
+              downloaded_application_archive.close
+              downloaded_application_archive.unlink
+            end
           end
 
           def rebuild(application_name_or_id)

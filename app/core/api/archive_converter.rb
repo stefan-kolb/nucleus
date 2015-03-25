@@ -8,15 +8,13 @@ module Paasal
         return file if current_format == destination_format && sanitize == false
 
         begin
-          extractor = ArchiveExtractor.new
           extraction_dir = "#{Dir.tmpdir}/paasal.app.convert.cf.deploy.#{SecureRandom.uuid}"
-          extractor.extract(file, extraction_dir, current_format)
+          ArchiveExtractor.new.extract(file, extraction_dir, current_format)
 
           # sanitize if desired
           ApplicationRepoSanitizer.new.sanitize(extraction_dir) if sanitize
 
-          archiver = Archiver.new
-          return archiver.compress(extraction_dir, destination_format)
+          return Archiver.new.compress(extraction_dir, destination_format)
         ensure
           # now delete the tmp directory again
           FileUtils.rm_rf(extraction_dir) if extraction_dir

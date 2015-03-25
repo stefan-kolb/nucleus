@@ -113,7 +113,6 @@ module Paasal
     def write_io_recording(cassette, response)
       # rewind all IO objects
       response.rewind if response.respond_to?(:rewind)
-      response.rewind if response.respond_to?(:rewind)
 
       File.open(cassette, 'wb') do |file|
         # begin
