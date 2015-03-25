@@ -111,14 +111,15 @@ module Paasal
           get("/apps/#{heroku_application[:id]}/dynos").body
         end
 
-        def web_dynos(heroku_application)
-          dynos(heroku_application).find_all do |dyno|
+        def web_dynos(heroku_application, retrieved_dynos = nil)
+          all_dynos = retrieved_dynos ? retrieved_dynos : dynos(heroku_application)
+          all_dynos.find_all do |dyno|
             dyno[:type] == 'web'
           end.compact
         end
 
-        def latest_release(heroku_application)
-          dynos = web_dynos(heroku_application)
+        def latest_release(heroku_application, retrieved_dynos = nil)
+          dynos = web_dynos(heroku_application, retrieved_dynos)
           if dynos.nil? || dynos.empty?
             log.debug 'no dynos for build detection, fallback to latest release version'
             # this approach might be wrong if the app is rolled-back to a previous release
@@ -146,13 +147,15 @@ module Paasal
         end
 
         def to_paasal_app(heroku_application)
+          # load dynos only once
+          dynos = dynos(heroku_application)
           # add missing fields to the application representation
           heroku_application[:autoscaled] = false
-          heroku_application[:state] = application_state(heroku_application)
+          heroku_application[:state] = application_state(heroku_application, dynos)
           heroku_application[:instances] = application_instances(heroku_application)
           heroku_application[:active_runtime] = heroku_application.delete(:buildpack_provided_description)
           heroku_application[:runtimes] = installed_buildpacks(heroku_application)
-          heroku_application[:release_version] = latest_release(heroku_application)
+          heroku_application[:release_version] = latest_release(heroku_application, dynos)
           heroku_application
         end
       end

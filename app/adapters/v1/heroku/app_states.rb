@@ -3,12 +3,12 @@ module Paasal
     module V1
       class Heroku < BaseAdapter
         module AppStates
-          def application_state(app)
+          def application_state(app, retrieved_dynos = nil)
             # 1: created, both repo and slug are nil
             return API::Application::States::CREATED unless repo_or_slug_content?(app)
 
             # all subsequent states require dynos to be determined
-            dynos = dynos(app)
+            dynos = retrieved_dynos ? retrieved_dynos : dynos(app)
 
             # 2: deployed if no dynos assigned
             return API::Application::States::DEPLOYED if dynos.empty?
