@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 require 'digest/md5'
+# for serialization to replace the default marshaller
+require 'oj'
 
 module Paasal
   class MethodResponseRecorder
@@ -105,8 +107,8 @@ module Paasal
       fail StandardError, 'Invalid playback request. Could not find any cassette matching the '\
         "class and argument combination: #{cassette}" unless File.exist?(cassette)
 
-      response = Marshal.restore(File.read(cassette))
-      fail response if response.is_a? StandardError
+      response = Oj.load(File.read(cassette))
+      fail response if response.is_a? Exception
       response
     end
 
@@ -123,8 +125,7 @@ module Paasal
 
     def write_recording(cassette, response)
       File.open(cassette, 'w') do |file|
-        # begin
-        file.puts Marshal.dump(response)
+        file.puts Oj.dump(response)
       end
     end
 

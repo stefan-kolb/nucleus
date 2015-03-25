@@ -29,4 +29,5 @@ group :test do
   gem 'factory_girl'
   gem 'faker'
   gem 'simplecov', require: false
+  gem 'oj'
 end
