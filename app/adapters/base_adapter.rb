@@ -1,8 +1,9 @@
 module Paasal
   module Adapters
     class BaseAdapter
-      include Paasal::Adapters::HttpClient
-      include Paasal::Logging
+      include HttpClient
+      include HttpTailClient
+      include Logging
 
       # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
       CRLF = "\r\n"

@@ -47,17 +47,7 @@ module Paasal
             else
               request_body = request_body(log_id.to_sym).merge(tail: true)
               log = post("/apps/#{application_id}/log-sessions", body: request_body).body
-              http_connection = EventMachine::HttpRequest.new(log[:logplex_url])
-              http_client = http_connection.get
-              # close stream on error
-              http_client.on_error do
-                log.debug('CF log tail client error, close stream...')
-                stream.close
-              end
-              # tail and immediately push the results to the stream
-              http_client.stream { |chunk| stream.send_message(chunk) }
-              # return object that responds to :stop and cancels the tailing request
-              TailStopper.new(http_connection, :close)
+              tail_http_response(log[:logplex_url], stream)
             end
           end
 
