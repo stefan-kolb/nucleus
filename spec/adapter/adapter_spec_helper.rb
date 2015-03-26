@@ -34,6 +34,20 @@ def vcr_record_mode
   (ENV['VCR_RECORD_MODE'] || :none).to_sym
 end
 
+def skip_example?(current_test, to_skip)
+  return false if to_skip.nil? || to_skip.empty?
+  adapter_spec_class = "RSpec::ExampleGroups::#{current_test.described_class.to_s.gsub(/::/, '')}"
+  classes_to_skip = to_skip.collect do |test_name|
+    class_to_skip = adapter_spec_class
+    test_name.split(/\//).each do |subgroup|
+      class_to_skip = "#{class_to_skip}::#{subgroup.split(/[\s,_,:,\/]/).map(&:capitalize).join}"
+    end
+    class_to_skip
+  end
+  classes_to_skip.each { |clazz_to_skip| return true if current_test.class.to_s.start_with?(clazz_to_skip) }
+  false
+end
+
 def example_group_property(metadata, property)
   example_group_property = metadata.key?(:example_group) ? metadata[:example_group][property] : false
   parent_group_property = metadata.key?(:parent_example_group) ? metadata[:parent_example_group][property] : false

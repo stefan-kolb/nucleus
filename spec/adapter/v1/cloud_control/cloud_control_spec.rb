@@ -1,11 +1,17 @@
 require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::CloudControl do
-  before do
+  before :all do
+    # TODO: Currently skipping these example groups / tests for this adapter
+    @unsupported = ['with valid credentials/is compliant and/valid:applications:lifecycle/lifecycle operations']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
-    @adapter = load_adapter(@endpoint, @api_version)
     @application_region = 'default'
+  end
+  before do
+    skip('This feature is currently not supported by CloudControl - 501') if skip_example?(self, @unsupported)
+    # reload adapter for each test
+    @adapter = load_adapter(@endpoint, @api_version)
   end
 
   context 'with invalid credentials' do
