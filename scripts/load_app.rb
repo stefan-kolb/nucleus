@@ -40,10 +40,11 @@ require 'zip'
 require 'zlib'
 require 'rubygems/package'
 
-# require url regex
-require 'regexp'
 # OS detection
 require 'os'
+
+# require all patched classes
+require_all 'lib/ext'
 
 # models
 require_all 'app/models'
