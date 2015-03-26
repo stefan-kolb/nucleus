@@ -4,10 +4,12 @@ require 'scripts/initialize_core'
 require 'scripts/initialize_rack'
 require 'spec/spec_helper'
 require 'spec/support/shared_example_request_types'
-require 'spec/adapter/credentials_helper'
-require 'spec/adapter/method_response_recorder'
-require 'spec/adapter/adapter_helper'
-require 'spec/adapter/support/shared_example_adapters'
+require 'spec/adapter/helpers/credentials_helper'
+require 'spec/adapter/helpers/method_response_recorder'
+require 'spec/adapter/helpers/adapter_helper'
+
+require 'spec/adapter/support/shared_example_adapters_valid_auth'
+require 'spec/adapter/support/shared_example_adapters_invalid_auth'
 
 # define (override from integration) test suite for coverage report
 SimpleCov.command_name 'spec:suite:adapters'
