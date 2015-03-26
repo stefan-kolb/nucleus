@@ -91,42 +91,42 @@ module Paasal
           )
         end
 
-        def installed_buildpacks(heroku_application)
-          buildpacks = get("/apps/#{heroku_application[:id]}/buildpack-installations").body
+        def installed_buildpacks(application_id)
+          buildpacks = get("/apps/#{application_id}/buildpack-installations").body
           return [] if buildpacks.empty?
-          heroku_application[:additional_runtimes] = buildpacks.collect do |buildpack|
+          buildpacks.collect do |buildpack|
             buildpack[:buildpack][:url]
           end
         end
 
-        def application_instances(heroku_application)
-          formations = get("/apps/#{heroku_application[:id]}/formation").body
+        def application_instances(application_id)
+          formations = get("/apps/#{application_id}/formation").body
           web_formation = formations.find { |formation| formation[:type] == 'web' }
           return web_formation[:quantity] unless web_formation.nil?
           # if no web formation was detected, there is no instance available
           0
         end
 
-        def dynos(heroku_application)
-          get("/apps/#{heroku_application[:id]}/dynos").body
+        def dynos(application_id)
+          get("/apps/#{application_id}/dynos").body
         end
 
-        def web_dynos(heroku_application, retrieved_dynos = nil)
-          all_dynos = retrieved_dynos ? retrieved_dynos : dynos(heroku_application)
+        def web_dynos(application_id, retrieved_dynos = nil)
+          all_dynos = retrieved_dynos ? retrieved_dynos : dynos(application_id)
           all_dynos.find_all do |dyno|
             dyno[:type] == 'web'
           end.compact
         end
 
-        def latest_release(heroku_application, retrieved_dynos = nil)
-          dynos = web_dynos(heroku_application, retrieved_dynos)
+        def latest_release(application_id, retrieved_dynos = nil)
+          dynos = web_dynos(application_id, retrieved_dynos)
           if dynos.nil? || dynos.empty?
             log.debug 'no dynos for build detection, fallback to latest release version'
             # this approach might be wrong if the app is rolled-back to a previous release
             # However, if no dyno is active, this is the only option to identify the current release
             latest_version = 0
             latest_version_id = nil
-            get("/apps/#{heroku_application[:id]}/releases").body.each do |release|
+            get("/apps/#{application_id}/releases").body.each do |release|
               if release[:version] > latest_version
                 latest_version = release[:version]
                 latest_version_id = release[:id]
@@ -148,14 +148,14 @@ module Paasal
 
         def to_paasal_app(heroku_application)
           # load dynos only once
-          dynos = dynos(heroku_application)
+          dynos = dynos(heroku_application[:id])
           # add missing fields to the application representation
           heroku_application[:autoscaled] = false
           heroku_application[:state] = application_state(heroku_application, dynos)
-          heroku_application[:instances] = application_instances(heroku_application)
+          heroku_application[:instances] = application_instances(heroku_application[:id])
           heroku_application[:active_runtime] = heroku_application.delete(:buildpack_provided_description)
-          heroku_application[:runtimes] = installed_buildpacks(heroku_application)
-          heroku_application[:release_version] = latest_release(heroku_application, dynos)
+          heroku_application[:runtimes] = installed_buildpacks(heroku_application[:id])
+          heroku_application[:release_version] = latest_release(heroku_application[:id], dynos)
           heroku_application
         end
       end
