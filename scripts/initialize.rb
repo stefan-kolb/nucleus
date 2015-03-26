@@ -10,13 +10,8 @@ begin
   # load vendors and put them into the db stores
   Paasal::AdapterImporter.new.import
 
-  puts 'Initialization complete & configuration locked!'
-  puts '-----------------------------------------------'
-
-  # TODO: DEBUG CODE TO VISUALISE THE LOADED DB STATE
-
   configatron.api.versions.each do |api_version|
-    puts '', "Bootstraping DAOs for API #{api_version}:"
+    puts '', "Bootstraping DAOs for API #{api_version}"
     # Bootstrap DAOs for each API version
     Paasal::DB::VendorDao.instance api_version
     Paasal::DB::ProviderDao.instance api_version
@@ -24,6 +19,8 @@ begin
     Paasal::DB::AdapterDao.instance api_version
   end
 
+  puts 'Initialization complete & configuration locked!'
+  puts '-----------------------------------------------'
 rescue Paasal::StartupError => e
   log.error "Application startup failed (#{e.exit_code}), exit now"
   exit e.exit_code

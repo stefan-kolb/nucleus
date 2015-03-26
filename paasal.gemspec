@@ -25,12 +25,13 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'configatron', '~> 4.5'
   spec.add_runtime_dependency 'daybreak', '~> 0.3'
+  spec.add_runtime_dependency 'em-http-request', '~> 1.1'
   spec.add_runtime_dependency 'excon', '~> 0.44'
   spec.add_runtime_dependency 'faye-websocket', '~> 0.9'
   spec.add_runtime_dependency 'filesize', '~> 0.0'
   spec.add_runtime_dependency 'git', '~> 1.2'
   # TODO: adapt versions once all patches are included in the master branch
-  # spec.add_runtime_dependency 'grape', '~> 0.11', '>= 0.11'
+  # spec.add_runtime_dependency 'grape', '~> 0.11', '>= 0.11.1'
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
   # TODO: adapt versions once all patches are included in the master branch

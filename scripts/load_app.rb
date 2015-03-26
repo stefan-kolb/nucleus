@@ -29,6 +29,7 @@ require 'faye/websocket'
 require 'rack/stream'
 require 'protobuf'
 require 'eventmachine'
+require 'em-http'
 
 require 'request_store'
 require 'git'
