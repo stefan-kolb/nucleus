@@ -108,6 +108,12 @@ module Paasal
         error_code: 500_002,
         message: 'Endpoint crashed with server error'
       }
+
+      MISSING_IMPLEMENTATION = {
+        status: 501,
+        error_code: 501_000,
+        message: 'Not Implemented'
+      }
     end
   end
 end
