@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudControl < BaseAdapter
+      class CloudControl < Stub
         class Token < Paasal::Adapters::ExpiringToken
           def initialize(token, expires)
             @token = token

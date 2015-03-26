@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::Heroku::Application
         include Paasal::Adapters::V1::Heroku::AppStates

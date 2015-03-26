@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2 < BaseAdapter
+      class Openshift2 < Stub
         module Lifecycle
           def start(application_id)
             # TODO: implement me

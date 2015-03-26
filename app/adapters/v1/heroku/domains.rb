@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         module Domains
           # As of now, there is no update functionality on Heroku as on most other platforms (!)
 

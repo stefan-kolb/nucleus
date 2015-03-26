@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         module Logs
           def logs(application_name_or_id)
             # TODO: implement me

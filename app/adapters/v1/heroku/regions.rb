@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         module Regions
           def regions
             response = get('/regions').body

@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2 < BaseAdapter
+      class Openshift2 < Stub
         module Data
           def deploy(application_id, file, file_compression_format)
             # TODO: implement me

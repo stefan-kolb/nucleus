@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         module Vars
           def env_vars(application_id)
             all_vars = get("/apps/#{application_id}/config-vars").body

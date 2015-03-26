@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         module AppStates
           def application_state(app, retrieved_dynos = nil)
             # 1: created, both repo and slug are nil

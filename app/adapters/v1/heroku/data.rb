@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Heroku < BaseAdapter
+      class Heroku < Stub
         module Data
           def deploy(application_id, file, file_compression_format)
             app = get("/apps/#{application_id}").body

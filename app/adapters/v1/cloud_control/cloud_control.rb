@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudControl < BaseAdapter
+      class CloudControl < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudControl::Application
         include Paasal::Adapters::V1::CloudControl::Buildpacks

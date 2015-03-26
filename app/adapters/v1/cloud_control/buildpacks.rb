@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudControl < BaseAdapter
+      class CloudControl < Stub
         module Buildpacks
           include Paasal::Adapters::BuildpackTranslator
 

@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2 < BaseAdapter
+      class Openshift2 < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::Openshift2::Application
         include Paasal::Adapters::V1::Openshift2::Data

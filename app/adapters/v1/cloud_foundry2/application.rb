@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudFoundry2 < BaseAdapter
+      class CloudFoundry2 < Stub
         module Application
           def applications
             response = get('/v2/apps')
