@@ -27,16 +27,16 @@ module Paasal
       create_dao(Paasal::DB::AdapterDao)
     end
 
-    def load_endpoint(params = params)
-      load_entity(endpoint_dao, :endpoint_id, 'endpoint', params)
+    def load_endpoint(loading_params = params)
+      load_entity(endpoint_dao, :endpoint_id, 'endpoint', loading_params)
     end
 
-    def load_provider(params = params)
-      load_entity(provider_dao, :provider_id, 'provider', params)
+    def load_provider(loading_params = params)
+      load_entity(provider_dao, :provider_id, 'provider', loading_params)
     end
 
-    def load_vendor(params = params)
-      load_entity(vendor_dao, :vendor_id, 'vendor', params)
+    def load_vendor(loading_params = params)
+      load_entity(vendor_dao, :vendor_id, 'vendor', loading_params)
     end
 
     # Load an entity's instance from the store
@@ -46,11 +46,11 @@ module Paasal
     # @params [String] name entities name for error output
     # @params [Hash] params parameters required when called from auth block
     # @return [Paasal::AbstractModel] loaded entity's instance
-    def load_entity(dao, id, name, params = params)
-      unless dao.key? params[id]
-        to_error(Paasal::API::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{params[id]}'")
+    def load_entity(dao, id, name, loading_params = params)
+      unless dao.key? loading_params[id]
+        to_error(Paasal::API::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'")
       end
-      dao.get params[id]
+      dao.get loading_params[id]
     end
 
     # Create a DAO for with the given class, but only once per request.

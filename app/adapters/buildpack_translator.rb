@@ -32,7 +32,6 @@ module Paasal
         'null' => 'https://github.com/ryandotsmith/null-buildpack',
         'opa' => 'https://github.com/tsloughter/heroku-buildpack-opa',
         'perl' => 'https://github.com/miyagawa/heroku-buildpack-perl',
-        'perl' => 'https://github.com/lstoll/heroku-buildpack-perl',
         'phantomjs' => 'https://github.com/stomita/heroku-buildpack-phantomjs',
         'phing' => 'https://github.com/ryanbrainard/heroku-buildpack-phing',
         'r' => 'https://github.com/virtualstaticvoid/heroku-buildpack-r',
