@@ -237,21 +237,7 @@ module Paasal
               stream.close
             end
             # return listener to stop websocket
-            StopListener.new(ws, :close)
-          end
-
-          # StopListener can be used to cancel a timer, e.g. when the underlying connection was terminated.
-          class StopListener
-            def initialize(polling, method_to_stop)
-              @polling = polling
-              @method_to_stop = method_to_stop
-            end
-            # Stop polling
-            # @return [void]
-            def stop
-              log.debug('Stop tail updates, connection was closed')
-              @polling.method(@method_to_stop).call
-            end
+            TailStopper.new(ws, :close)
           end
 
           # Message class definition, matching the Protocol Buffer definition of the Cloud Foundry loggregator.

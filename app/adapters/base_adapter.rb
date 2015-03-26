@@ -4,6 +4,9 @@ module Paasal
       include Paasal::Adapters::HttpClient
       include Paasal::Logging
 
+      # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
+      CRLF = "\r\n"
+
       def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
         fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
         @endpoint_url = endpoint_url

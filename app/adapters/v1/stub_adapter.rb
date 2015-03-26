@@ -162,6 +162,7 @@ module Paasal
         end
 
         # TODO: add documentation
+        # @return [Paasal::Adapters::TailStopper] callback object to stop the ongoing tail process
         def tail(application_id, log_id, stream)
           fail Errors::AdapterMissingImplementationError, ERROR_MSG
         end
