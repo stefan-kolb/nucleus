@@ -5,14 +5,15 @@ require 'oj'
 
 module Paasal
   class MethodResponseRecorder
-    def initialize(data_dir)
+    def initialize(test, data_dir)
+      @test = test
       @data_dir = data_dir
     end
 
-    def setup(test, class_name, methods)
+    def setup(class_name, methods)
       methods.each do |method|
         # for class methods
-        test.allow_any_instance_of(class_name).to test.receive(method).and_wrap_original do |original_method, *args|
+        @test.allow_any_instance_of(class_name).to @test.receive(method).and_wrap_original do |original_method, *args|
           if VCR.current_cassette.recording?
             record(class_name, method, *args) { original_method.call(*args) }
           else
@@ -20,7 +21,7 @@ module Paasal
           end
         end
         # for module methods
-        test.allow(class_name).to test.receive(method).and_wrap_original do |original_method, *args|
+        @test.allow(class_name).to @test.receive(method).and_wrap_original do |original_method, *args|
           if VCR.current_cassette.recording?
             record(class_name, method, *args) { original_method.call(*args) }
           else
