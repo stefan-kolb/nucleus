@@ -14,6 +14,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 
 ## Table of Contents
 
+* [Ruby Interpreter Compatibility](#ruby-interpreter-compatibility)
 * [Supported Vendors](#supported-vendors)
 * [Usage](#usage)
   * [Use in your application](#use-in-your-application)
@@ -55,11 +56,28 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Schema validation](#schema-validation)
 * [Versioning](#versioning)
 * [Contributing](#contributing)
+  * [Add a new vendor](#add-a-new-vendor)
+  * [Add a vendor version](#add-a-vendor-version)
+* [License](#license)
+
+## Ruby Interpreter Compatibility
+
+PaaSal has been tested on the following ruby interpreters:
+
+- MRI 1.9.3
+- MRI 2.0.0
+- MRI 2.1.3
+- MRI 2.2.1
+
+The CI tests cover all above versions.
+Additionally, manual tests were executed on Windows and MAC OS X using MRI 2.1.3
+
+**It won't work on JRuby**
 
 ## Supported Vendors
 
-- ~~Heroku~~
-- ~~CloudFoundry (tested with Stackato and IBM Bluemix)~~
+- Heroku
+- CloudFoundry
 - ~~Openshift 2~~
 - ~~CloudControl~~
 
@@ -77,15 +95,21 @@ gem 'paasal'
 
 And then execute:
 
-    $ bundle
+```shell
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install paasal
+```shell
+$ gem install paasal
+```
     
 Finally require the gem in your application
 
-	require 'paasal'
+```ruby
+require 'paasal'
+```
 
 #### Communicate with an endpoint
 
@@ -99,15 +123,19 @@ First, we need to acquire an adapter instance. Choose between one of the followi
 
 Initialize the adapter with the parameters:
 
-    # endpoint_url --> the API endpoint that shall be used, e.g. api.eu-gb.bluemix.net
-    # endpoint_app_domain --> domain where all apps are available by default, e.g. {app_name}.herokuapps.com
-    # check_certificates --> Boolean, false causes to trust all SSL certificates and skip their validation
-    adapter = Paasal::Adapters::V1::CloudFoundry2.new(endpoint_url, endpoint_app_domain, check_certificates)
+```ruby
+# endpoint_url --> the API endpoint that shall be used, e.g. api.eu-gb.bluemix.net
+# endpoint_app_domain --> domain where all apps are available by default, e.g. {app_name}.herokuapps.com
+# check_certificates --> Boolean, false causes to trust all SSL certificates and skip their validation
+adapter = Paasal::Adapters::V1::CloudFoundry2.new(endpoint_url, endpoint_app_domain, check_certificates)
+```
 
 Fire and forget, or: Invoke your actions
 
-    # get information about an application
-    adapter.application(application_id)
+```ruby
+# get information about an application
+adapter.application(application_id)
+```
 
 Check the **documentation** for a complete list of the supported actions.
 Refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands.
@@ -121,11 +149,15 @@ Besides including the abstraction layer in your application, PaaSal can also be 
 A rack server can be started in multiple ways.
 The most convinient solution is to use the provided script:  
 
-	./bin/paasal start 
+```shell
+./bin/paasal start
+```
 
 Hower, you can also start the API using another rack compliant server, e.g. [thin](http://code.macournoyer.com/thin/) or rely on your default rack server:
 
-    rackup
+```
+rackup
+```
 
 #### API endpoints
 
@@ -143,7 +175,9 @@ After your started a server insatnce, you can access an interactive UI at the `/
 Authentication against the endpoint is managed by PaaSal.
 The credentials must be provided as `Basic authentication` header **within each single request**.
 
-    Authorization: Basic thebase64encodedcredentialsstring
+```
+Authorization: Basic thebase64encodedcredentialsstring
+```
 
 #### Special characters (umlauts, ....)
 
@@ -167,93 +201,97 @@ All changes made to these entities at runtime will be discarded, unless you enab
 You can use the API of PaaSal to show a list of all currently supported vendors.
 This request if publicly available and does not require any authentication.
 
-    GET /api/vendors/cloud-foundry/providers
-    -----
+```
+GET /api/vendors/cloud-foundry/providers
+```
+
+```json
+{
+  "size": 4,
+  "vendors": [
     {
-      "size": 4,
-      "vendors": [
-        {
-          "id": "cloudcontrol",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "cloudControl",
-          "key": "cloudcontrol",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/vendors/cloudcontrol"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api"
-            },
-            "providers": {
-              "href": "http://localhost:9292/api/vendors/cloudcontrol/providers"
-            }
-          }
-        },
-        {
-          "id": "cloud-foundry",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "Cloud Foundry",
-          "key": "cloud-foundry",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/vendors/cloud-foundry"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api"
-            },
-            "providers": {
-              "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
-            }
-          }
-        },
-        {
-          "id": "heroku",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "Heroku",
-          "key": "heroku",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/vendors/heroku"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api"
-            },
-            "providers": {
-              "href": "http://localhost:9292/api/vendors/heroku/providers"
-            }
-          }
-        },
-        {
-          "id": "openshift2",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "Openshift 2",
-          "key": "openshift-2",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/vendors/openshift2"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api"
-            },
-            "providers": {
-              "href": "http://localhost:9292/api/vendors/openshift2/providers"
-            }
-          }
-        }
-      ],
+      "id": "cloudcontrol",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "cloudControl",
+      "key": "cloudcontrol",
       "_links": {
         "self": {
-          "href": "http://localhost:9292/api/vendors"
+          "href": "http://localhost:9292/api/vendors/cloudcontrol"
         },
         "parent": {
           "href": "http://localhost:9292/api"
+        },
+        "providers": {
+          "href": "http://localhost:9292/api/vendors/cloudcontrol/providers"
+        }
+      }
+    },
+    {
+      "id": "cloud-foundry",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "Cloud Foundry",
+      "key": "cloud-foundry",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/vendors/cloud-foundry"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api"
+        },
+        "providers": {
+          "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+        }
+      }
+    },
+    {
+      "id": "heroku",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "Heroku",
+      "key": "heroku",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/vendors/heroku"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api"
+        },
+        "providers": {
+          "href": "http://localhost:9292/api/vendors/heroku/providers"
+        }
+      }
+    },
+    {
+      "id": "openshift2",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "Openshift 2",
+      "key": "openshift-2",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/vendors/openshift2"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api"
+        },
+        "providers": {
+          "href": "http://localhost:9292/api/vendors/openshift2/providers"
         }
       }
     }
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:9292/api/vendors"
+    },
+    "parent": {
+      "href": "http://localhost:9292/api"
+    }
+  }
+}
+```
 
 You can't create, delete or update a vendor at runtime because they represent the logic to communicate with their platform.
 
@@ -263,55 +301,59 @@ Providers can be managed *without authentication* and support `GET`, `POST`, `PA
 
 ##### List all providers that are registered for a vendor's platform:
 
-    GET /api/vendors/cloud-foundry/providers
-    -----
+```
+GET /api/vendors/cloud-foundry/providers
+```
+
+```json
+{
+  "size": 2,
+  "providers": [
     {
-      "size": 2,
-      "providers": [
-        {
-          "id": "cf-pivotal",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "Pivotal",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/providers/cf-pivotal"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api/vendors/cloud-foundry"
-            },
-            "endpoints": {
-              "href": "http://localhost:9292/api/providers/cf-pivotal/endpoints"
-            }
-          }
-        },
-        {
-          "id": "bluemix",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "IBM Bluemix",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/providers/bluemix"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api/vendors/cloud-foundry"
-            },
-            "endpoints": {
-              "href": "http://localhost:9292/api/providers/bluemix/endpoints"
-            }
-          }
-        }
-      ],
+      "id": "cf-pivotal",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "Pivotal",
       "_links": {
         "self": {
-          "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+          "href": "http://localhost:9292/api/providers/cf-pivotal"
         },
         "parent": {
           "href": "http://localhost:9292/api/vendors/cloud-foundry"
+        },
+        "endpoints": {
+          "href": "http://localhost:9292/api/providers/cf-pivotal/endpoints"
+        }
+      }
+    },
+    {
+      "id": "bluemix",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "IBM Bluemix",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/providers/bluemix"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api/vendors/cloud-foundry"
+        },
+        "endpoints": {
+          "href": "http://localhost:9292/api/providers/bluemix/endpoints"
         }
       }
     }
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+    },
+    "parent": {
+      "href": "http://localhost:9292/api/vendors/cloud-foundry"
+    }
+  }
+}
+```
 
 ##### Register new provider
 The only requirement is that the name must be unique amongst the providers of *all* vendors:
@@ -324,58 +366,61 @@ The only requirement is that the name must be unique amongst the providers of *a
 Endpoints can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
 
 ##### List all endpoints that are registered for a provider
+```
+GET /api/providers/bluemix/endpoints
+```
 
-    GET /api/providers/bluemix/endpoints
-    -----
+```json
+{
+  "size": 2,
+  "endpoints": [
     {
-      "size": 2,
-      "endpoints": [
-        {
-          "id": "bluemix-eu-gb",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "Europe - Great Britain",
-          "url": "https://api.eu-gb.bluemix.net",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/endpoints/bluemix-eu-gb"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api/providers/bluemix"
-            },
-            "applications": {
-              "href": "http://localhost:9292/api/endpoints/bluemix-eu-gb/applications"
-            }
-          }
-        },
-        {
-          "id": "bluemix-us-south",
-          "created_at": "2015-02-25T08:38:30Z",
-          "updated_at": "2015-02-25T08:38:30Z",
-          "name": "United States - South",
-          "url": "https://api.ng.bluemix.net",
-          "_links": {
-            "self": {
-              "href": "http://localhost:9292/api/endpoints/bluemix-us-south"
-            },
-            "parent": {
-              "href": "http://localhost:9292/api/providers/bluemix"
-            },
-            "applications": {
-              "href": "http://localhost:9292/api/endpoints/bluemix-us-south/applications"
-            }
-          }
-        }
-      ],
+      "id": "bluemix-eu-gb",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "Europe - Great Britain",
+      "url": "https://api.eu-gb.bluemix.net",
       "_links": {
         "self": {
-          "href": "http://localhost:9292/api/providers/bluemix/endpoints"
+          "href": "http://localhost:9292/api/endpoints/bluemix-eu-gb"
         },
         "parent": {
           "href": "http://localhost:9292/api/providers/bluemix"
+        },
+        "applications": {
+          "href": "http://localhost:9292/api/endpoints/bluemix-eu-gb/applications"
+        }
+      }
+    },
+    {
+      "id": "bluemix-us-south",
+      "created_at": "2015-02-25T08:38:30Z",
+      "updated_at": "2015-02-25T08:38:30Z",
+      "name": "United States - South",
+      "url": "https://api.ng.bluemix.net",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9292/api/endpoints/bluemix-us-south"
+        },
+        "parent": {
+          "href": "http://localhost:9292/api/providers/bluemix"
+        },
+        "applications": {
+          "href": "http://localhost:9292/api/endpoints/bluemix-us-south/applications"
         }
       }
     }
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:9292/api/providers/bluemix/endpoints"
+    },
+    "parent": {
+      "href": "http://localhost:9292/api/providers/bluemix"
+    }
+  }
+}
+```
 
 ##### Register new endpoint
 The only requirement is that the name must be unique amongst the endpoints of *all* providers:
@@ -389,15 +434,21 @@ TODO: move to the proper section in this README file
 
 ##### Download a selected logfile of an application
 
-    curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/download" -H "Authorization: {auth_header}" -O -J
+```shell
+curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/download" -H "Authorization: {auth_header}" -O -J
+```
 
 ##### Download all logfiles of an application
 
-    curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/download" -H "Authorization: {auth_header}" -O -J
+```shell
+curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/download" -H "Authorization: {auth_header}" -O -J
+```
 
 ##### Tail a selected logfile of an application
 
-    curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/tail" -H "Authorization: {auth_header}"
+```shell
+curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/tail" -H "Authorization: {auth_header}"
+```
 
 ### Native calls (experimental)
 
@@ -416,48 +467,56 @@ For instance Cloud Foundry requests would have to look like: `.../call/v2/app_us
 In this example we want to get the current user's account information.
 we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
 
-    GET /api/endpoints/heroku/call/account
-    -----
-    {
-      "allow_tracking": true,
-      "beta": false,
-      "email": "theusersemail@provider.domain",
-      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      "last_login": "2014-11-25T08:52:59Z",
-      "name": " ",
-      "two_factor_authentication": false,
-      "verified": false,
-      "created_at": "2014-11-18T09:37:21Z",
-      "updated_at": "2015-02-18T18:57:33Z",
-      "default_organization": null
-    }
+```
+GET /api/endpoints/heroku/call/account
+```
+
+```json
+{
+  "allow_tracking": true,
+  "beta": false,
+  "email": "theusersemail@provider.domain",
+  "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "last_login": "2014-11-25T08:52:59Z",
+  "name": " ",
+  "two_factor_authentication": false,
+  "verified": false,
+  "created_at": "2014-11-18T09:37:21Z",
+  "updated_at": "2015-02-18T18:57:33Z",
+  "default_organization": null
+}
+```
 
 ##### Execute a native API call against an endpoint's application
 In this example we try to list the builds of an Heroku application.
 Therefore we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
 
-    GET /api/endpoints/heroku/applications/the_application_name/call/builds
-    -----
-    [
-      {
-        "created_at": "2014-11-18T10:33:25+00:00",
-        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-        "slug": {
-          "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-        },
-        "source_blob": {
-          "url": null,
-          "version": null,
-          "version_description": null
-        },
-        "status": "succeeded",
-        "updated_at": "2014-11-18T10:43:34+00:00",
-        "user": {
-          "email": "theusersemail@provider.domain",
-          "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-        }
-      }
-    ]
+```
+GET /api/endpoints/heroku/applications/the_application_name/call/builds
+```
+
+```json
+[
+  {
+    "created_at": "2014-11-18T10:33:25+00:00",
+    "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "slug": {
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "source_blob": {
+      "url": null,
+      "version": null,
+      "version_description": null
+    },
+    "status": "succeeded",
+    "updated_at": "2014-11-18T10:43:34+00:00",
+    "user": {
+      "email": "theusersemail@provider.domain",
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    }
+  }
+]
+```
 
 ## Configuration
 
@@ -471,43 +530,47 @@ A vendor is reflected by an adapter implementation, but the providers and their 
 
 ###### Example adapter configuration, here: Openshift 2
 
-    --- 
-    name: "Openshift 2"
-    id: "openshift2"
-    providers:
-      - 
-        name: "Openshift Online"
-        id: "openshift-online"
-        endpoints:
-          - 
-            name: "Openshift Online"
-            id: "openshift-online"
-            url: "openshift.redhat.com/broker/rest"
-            
+```yaml
+  ---
+  name: "Openshift 2"
+  id: "openshift2"
+  providers:
+    -
+      name: "Openshift Online"
+      id: "openshift-online"
+      endpoints:
+        -
+          name: "Openshift Online"
+          id: "openshift-online"
+          url: "openshift.redhat.com/broker/rest"
+```
+
 ### Application configuration
 
 Some aspects, for instance where the server shall save its storage files, can be adjusted.
 
-    # [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
-    configatron.logging.level = Logger::Severity::WARN
+```ruby
+# [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
+configatron.logging.level = Logger::Severity::WARN
 
-    # [optional] Please specify the DB directory if you plan to persist your vendors, providers and their endpoints. Comment-out to use a temporary directory
-    # configatron.db.path = '/path/to/the/application/paasal/store/'
-    # [optional] If true, the DB will be deleted when the server is being closed.
-    # configatron.db.delete_on_shutdown = false
-    # [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values, which may partially override previously persisted entities. False keeps the changes that were applied during runtime.
-    # configatron.db.override = false
+# [optional] Please specify the DB directory if you plan to persist your vendors, providers and their endpoints. Comment-out to use a temporary directory
+# configatron.db.path = '/path/to/the/application/paasal/store/'
+# [optional] If true, the DB will be deleted when the server is being closed.
+# configatron.db.delete_on_shutdown = false
+# [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values, which may partially override previously persisted entities. False keeps the changes that were applied during runtime.
+# configatron.db.override = false
 
-	# You can change these values if you host the application and offer access to other users
-    configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'
-    configatron.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
-    configatron.api.contact = 'youremail@example.org'
-    # The name of the license.
-    configatron.api.license = ''
-    # The URL of the license.
-    configatron.api.license_url = ''
-    # The URL of the API terms and conditions.
-    configatron.api.terms_of_service_url = 'API still under development, no guarantees (!)'
+# You can change these values if you host the application and offer access to other users
+configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'
+configatron.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
+configatron.api.contact = 'youremail@example.org'
+# The name of the license.
+configatron.api.license = ''
+# The URL of the license.
+configatron.api.license_url = ''
+# The URL of the API terms and conditions.
+configatron.api.terms_of_service_url = 'API still under development, no guarantees (!)'
+```
 
 #### Database backend
 
@@ -545,13 +608,15 @@ The application uses the following subset of error codes:
 
 All errors are returned in a common schema:
 
-    {
-      "status": HTTP_STATUS_CODE,
-      "message": SIMPLE_ERROR_MESSAGE,
-      "dev_message": DEVELOPER_MESSAGE_WITH_TECHNICAL_DETAILS_TO_RESOLUTION,
-      "error_code": UNIQUE_ERROR_CODE,
-      "more_info": LINK_TO_DOCUMENTATION_DESCRIBING_THE_ERROR
-    }
+```json
+{
+  "status": HTTP_STATUS_CODE,
+  "message": SIMPLE_ERROR_MESSAGE,
+  "dev_message": DEVELOPER_MESSAGE_WITH_TECHNICAL_DETAILS_TO_RESOLUTION,
+  "error_code": UNIQUE_ERROR_CODE,
+  "more_info": LINK_TO_DOCUMENTATION_DESCRIBING_THE_ERROR
+}
+```
 
 ### Language specific clients
 
@@ -630,6 +695,7 @@ The file is ignored and shall _never_ be committed. It must use the following sy
 
 A complete .credentials file could then look like:
 
+```yaml
     heroku:
       id:       'my_heroku_user_id'
       user:     'my_heroku_username'
@@ -649,6 +715,7 @@ A complete .credentials file could then look like:
       user:     'my_os_email'
       password: 'my_os_usernames_password'
       id:       'my_os_user_id'
+```
 
 To record the interactions, you only have to call the Rake `record` task, eg. by calling: `bundle exec rake record`
 You must be allowed to create at least 3 additional applications with your account,
@@ -680,7 +747,7 @@ Therefore, PaaSal also allows to serve multiple versions of the API and provide 
 However, be aware that
 __each non-backward compatible change of the application must result in an increase of the major version.__
 
-The initial version is: `0.1.0`.
+Until the first release (v1), the initial version is: `0.1.0`.
 
 ## Contributing
 
@@ -690,6 +757,12 @@ Everyone is welcome to contribute via
 - Issues
 - Emails
 - Anything that comes into your mind ;-)
+
+### Add a new vendor
+TODO: add description
+
+### Add a vendor version
+TODO: add description
 
 ## shield.io badges (not working)
 
