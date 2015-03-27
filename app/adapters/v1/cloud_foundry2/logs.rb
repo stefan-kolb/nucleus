@@ -36,12 +36,14 @@ module Paasal
             available_log_files
           end
 
-          def log?(app_guid, log_id)
-            return true if log_stream? log_id
+          def log?(application_name_or_id, log_id)
+            app_guid = app_guid(application_name_or_id)
             # test file existence
             log_id = 'staging_task.log' if log_id.to_sym == API::Application::LogfileType::BUILD
+            # checks also if application is even valid
             response = get("/v2/apps/#{app_guid}/instances/0/files/logs/#{log_id}",
                            follow_redirects: false, expects: [200, 302, 400])
+            return true if log_stream? log_id
             return true if response == 200
             return false if response == 400
             # if 302, followup

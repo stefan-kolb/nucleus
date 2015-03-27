@@ -48,6 +48,15 @@ module Paasal
         auth_objects_cache.key? cache_key(username, password)
       end
 
+      # Get the currently cached authentication object.
+      # @param [String] username username for cache lookup
+      # @param [String] password password for cache lookup
+      # @return [Hash<String,String>, Paasal::OAuth2Client] cached authentication information
+      def cached(username, password)
+        return nil unless cache?(username, password)
+        auth_objects_cache[cache_key(username, password)]
+      end
+
       # Get the cached authentication object, being either the OAuth2Client or the Authorization header.
       # @return [Hash<String,String>, Paasal::OAuth2Client] cached authentication information
       def headers

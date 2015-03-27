@@ -153,15 +153,18 @@ module Paasal
               end
 
               after_open do
-                # execute the actual request and stream the logging message
-                tail_polling = with_authentication do
-                  adapter.tail(params[:application_id], params[:log_id], stream)
+                begin
+                  # execute the actual request and stream the logging message
+                  tail_polling = with_authentication { adapter.tail(params[:application_id], params[:log_id], stream) }
+                rescue StandardError => e
+                  stream.closed = true
+                  close
                 end
               end
 
               before_close do
                 log.debug 'Closing API stream, stop tail updates...'
-                tail_polling.stop
+                tail_polling.stop if tail_polling
               end
 
               status 200

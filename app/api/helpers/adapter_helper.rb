@@ -18,8 +18,9 @@ module Paasal
     def with_authentication
       begin
         response = yield
-      rescue Errors::OAuth2AuthenticationError => e
-        refresh_token e.o2auth_client
+      rescue Errors::OAuth2AuthenticationError
+        username, password = username_password
+        refresh_token RequestStore.store[:adapter].cached(username, password)
         response = yield
       rescue Errors::AuthenticationError
         log.debug 'Call failed, start repetition by removing outdated cache entry'
@@ -38,10 +39,10 @@ module Paasal
     #
     # @raise [Paasal::Errors::AuthenticationError] if refresh and authentication at the endpoint both fail
     # @return [void]
-    def refresh_token(o2auth_client)
+    def refresh_token(oauth2_client)
       # With OAuth2 we first try to renew our token before invalidating the cache
       log.debug 'Call failed with OAuth2, start refreshing auth token'
-      o2auth_client.refresh unless o2auth_client.nil?
+      oauth2_client.refresh unless oauth2_client.nil?
       log.debug '... the OAuth2 token refresh succeeded'
     rescue Errors::OAuth2AuthenticationError
       # If authentication fails again, invalidate the refresh_token and start clean again
@@ -59,13 +60,19 @@ module Paasal
     def re_authenticate
       log.debug('Invokded re-authentication')
       RequestStore.store[:adapter].uncache RequestStore.store[:cache_key]
-      # resolve username & password for authentication request
-      auth_keys = %w(HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION)
-      authorization_key = auth_keys.detect { |k| @env.key?(k) }
-      username, password = @env[authorization_key].split(' ', 2).last.unpack('m*').first.split(/:/, 2)
+      username, password = username_password
       # raises 401 if the authentication did not only expire, but became completely invalid
       adapter = RequestStore.store[:adapter]
       adapter.cache(username, password, adapter.authenticate(username, password))
+    end
+
+    # Extract the username and password from the current HTTP request.
+    # @return [Array<String>] username at response[0], password at response[1]
+    def username_password
+      # resolve username & password for authentication request
+      auth_keys = %w(HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION)
+      authorization_key = auth_keys.detect { |k| @env.key?(k) }
+      @env[authorization_key].split(' ', 2).last.unpack('m*').first.split(/:/, 2)
     end
   end
 end

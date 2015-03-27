@@ -44,7 +44,7 @@ module Paasal
     # @return[Paasal::O2AuthClient] current OAuth2Client instance
     def refresh
       if @refresh_token.nil?
-        fail Errors::OAuth2AuthenticationError.new("Can't refresh token before initial authentication", self)
+        fail Errors::OAuth2AuthenticationError, "Can't refresh token before initial authentication"
       end
       log.debug("Attempt to refresh the access_token with our refresh_token: '#{@refresh_token}'")
       response = post(query: { grant_type: 'refresh_token', refresh_token: @refresh_token })
@@ -74,7 +74,7 @@ module Paasal
         log.error("OAuth2 for '#{@auth_url}' failed with status 403 (access denied), indicating an adapter issue")
         raise Errors::UnknownAdapterCallError, 'Access to resource denied, probably the adapter must be updated'
       when 400, 401
-        raise Errors::OAuth2AuthenticationError.new(body(e.response)[:error_description], self)
+        raise Errors::OAuth2AuthenticationError, body(e.response)[:error_description]
       end
       # re-raise all unhandled exception, indicating adapter issues
       raise Errors::UnknownAdapterCallError, 'OAuth2 call failed unexpectedly, probably the adapter must be updated'
