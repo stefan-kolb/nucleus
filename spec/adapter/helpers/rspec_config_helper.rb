@@ -86,6 +86,9 @@ RSpec.configure do |config|
       recorder.setup(Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
       recorder.setup(Paasal::Adapters::ArchiveConverter, [:convert])
       record_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'websocket_cassettes')
+
+      # enable faye websocket recording
+      Paasal::FayeWebsocketRecorder.new(self, File.expand_path(record_path)).setup
     end
   end
 

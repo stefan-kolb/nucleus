@@ -79,9 +79,9 @@ shared_examples 'valid:applications:logs:tail' do
       # EM.run do
         # TODO: use streaming capable client
         tail = get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request/tail", request_headers
-        p tail
-        p body
-        p headers
+        p "Tail: #{tail}"
+        p "Body: #{body}"
+        p "Headers: #{headers}"
 
         # use excon so that the external request is recorded
         @live_app = Excon.get(@app[:web_url])

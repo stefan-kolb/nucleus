@@ -2,7 +2,7 @@ require 'rack'
 
 module Paasal
   module Rack
-    def self.app
+    def self.app(test = false)
       ::Rack::Builder.new do
         #########################
         ### Setup API Loggers ###
@@ -18,6 +18,12 @@ module Paasal
         #########################
         ### Setup Rack Server ###
         #########################
+
+        if test
+          require 'spec/adapter/helpers/mock_stream_server'
+          use MockStreamServer
+        end
+        use ::Rack::Stream
 
         # X-Request-ID
         use Paasal::Rack::RequestId
@@ -36,9 +42,12 @@ module Paasal
         # we do not want robots to scan our API
         use ::Rack::Static, urls: { '/robots.txt' => 'robots.txt' }, root: 'public'
 
+
+
         # request streaming, especially for tailing log files
         # TODO: only use in tests, otherwise rack-test breaks due to missing EM reactor (no thin server) :(
-        use ::Rack::Stream unless $PROGRAM_NAME.end_with?('rspec')
+        # use ::Rack::Stream unless $PROGRAM_NAME.end_with?('rspec')
+
 
         run ::Rack::URLMap.new(
           # serve the dynamic API

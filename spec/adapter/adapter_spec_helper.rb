@@ -1,11 +1,17 @@
 require 'airborne'
 require 'rspec/wait'
+
+# load the app packages
 require 'scripts/initialize_core'
 require 'scripts/initialize_rack'
+
+# patch rspec so that all tests run in an EM reactor, as provided by the used Thin server
+require 'spec/adapter/helpers/rspec_eventmachine_patch'
+
 require 'spec/spec_helper'
-require 'spec/support/shared_example_request_types'
 require 'spec/adapter/helpers/credentials_helper'
 require 'spec/adapter/helpers/method_response_recorder'
+require 'spec/adapter/helpers/faye_websocket_recorder'
 require 'spec/adapter/helpers/adapter_helper'
 require 'spec/adapter/helpers/rspec_config_helper'
 require 'spec/adapter/helpers/vcr_config_helper'
@@ -13,12 +19,15 @@ require 'spec/adapter/helpers/vcr_config_helper'
 # require the actual adapter test files that contain the shared_examples
 require 'spec/adapter/support/shared_example_adapters_valid_auth'
 require 'spec/adapter/support/shared_example_adapters_invalid_auth'
+require 'spec/support/shared_example_request_types'
 
 # define (override from integration) test suite for coverage report
 SimpleCov.command_name 'spec:suite:adapters'
 
+# TODO: implement multi-version support for tests
+# Setup the rack application, use API v1
 Airborne.configure do |config|
-  config.rack_app = Paasal::Rack.app
+  config.rack_app = Paasal::Rack.app(true)
   config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
 end
 

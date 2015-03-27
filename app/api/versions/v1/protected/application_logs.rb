@@ -136,6 +136,8 @@ module Paasal
               failure [[200, 'Returning chunked log file contents']].concat ErrorResponses.standard_responses
             end
             get '/tail' do
+              begin
+
               # we need to check file existence before, otherwise we would have returned status 200 already
               log_exists = with_authentication { adapter.log?(params[:application_id], params[:log_id]) }
               unless log_exists
@@ -171,6 +173,10 @@ module Paasal
               header 'Content-Type', 'text/html'
               # TODO: will be included in response, can this be avoided or is this standard conform?
               ''
+              rescue StandardError => e
+                p e
+                e.backtrace.each { |line| p line }
+              end
             end
           end
         end # end of resource
