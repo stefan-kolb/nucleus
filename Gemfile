@@ -22,7 +22,9 @@ end
 
 group :test do
   # includes required fix for empty arrays as param value, see issue #122 and pull request #125
-  gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'empty-array-param'
+  # gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'empty-array-param'
+  # includes the fix for pull #125 and merging of chunk parts
+  gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'paasal'
   gem 'rspec-wait'
   gem 'airborne', require: false
   gem 'codeclimate-test-reporter', require: nil

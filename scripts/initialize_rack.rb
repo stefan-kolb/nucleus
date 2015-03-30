@@ -20,6 +20,7 @@ module Paasal
         #########################
 
         if test
+          # use this middleware only within tests. It simulates the behavior of EM capable servers within rspec tests
           require 'spec/adapter/helpers/mock_stream_server'
           use MockStreamServer
         end
@@ -41,13 +42,6 @@ module Paasal
         use ::Rack::Static, urls: { '/docs' => 'redirect.html' }, root: 'public/swagger-ui'
         # we do not want robots to scan our API
         use ::Rack::Static, urls: { '/robots.txt' => 'robots.txt' }, root: 'public'
-
-
-
-        # request streaming, especially for tailing log files
-        # TODO: only use in tests, otherwise rack-test breaks due to missing EM reactor (no thin server) :(
-        # use ::Rack::Stream unless $PROGRAM_NAME.end_with?('rspec')
-
 
         run ::Rack::URLMap.new(
           # serve the dynamic API

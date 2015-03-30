@@ -64,38 +64,49 @@ shared_examples 'valid:logs:get' do
   end
 end
 
-
 shared_examples 'valid:applications:logs:tail' do
-  describe 'tail request log', :as_cassette do
+  describe 'tail request log', :as_cassette, :mock_websocket_on_replay do
+    # all tests must be merged into one test, otherwise
     before do
-      @app = get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated", request_headers)
-      @recent = get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request", request_headers)
-    end
-    it '' do
       # TODO: at the time of writing this test, we assume that each platform provides a request log.
       # If this should not be the case, replace the build log with the first element in a queried log list
 
+      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated", request_headers)
+      @app = json_body.dup
+      # should not be empty due to previous web_url access
+      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request", request_headers)
+      @recent = body.dup
 
-      # EM.run do
-        # TODO: use streaming capable client
-        tail = get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request/tail", request_headers
-        p "Tail: #{tail}"
-        p "Body: #{body}"
-        p "Headers: #{headers}"
+      # invoke URL request after x seconds, so that the tailing actually receives new messages
+      EM.add_timer(5) do
+        live_app = Excon.get(@app[:web_url])
+        expect(live_app.status).to eql(200)
+      end
 
-        # use excon so that the external request is recorded
-        @live_app = Excon.get(@app[:web_url])
-
-        # EM.stop
-      # end
-
-      # TODO: assertions
-
+      # TODO: use stream capable client to get rid of auto-close via the timeout in env['async.callback.auto.timeout']
+      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request/tail", request_headers)
     end
 
-    # include_examples 'a valid GET request'
+    include_examples 'a valid GET request'
 
-    # TODO: response format text/plain or text/html ?!
-    # TODO: new request entries appear
+    it 'is a chunked response message' do
+      expect(headers.keys).to include('Transfer-Encoding')
+      expect(headers['Transfer-Encoding']).to eql('chunked')
+    end
+
+    it 'is encoded as text/plain response message' do
+      expect(headers['Content-Type']).to eql('text/plain')
+    end
+
+    it 'receives new request log entries' do
+      log_entries = body.split("\n")
+      recent_entries = @recent.split("\n")
+      new_entries = recent_entries - log_entries
+
+      # make sure new request logs appeared in the tailing response
+      expect(log_entries.length).to be > recent_entries.length
+      expect(new_entries.length).to be > 0
+      expect(new_entries.length).to be == log_entries.length - recent_entries.length
+    end
   end
 end

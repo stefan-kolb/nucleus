@@ -45,6 +45,8 @@ module Paasal
         f.resume [callback.status, callback.headers, callback.body]
       end
       env['async.callback'] = callback
+      # within the tests, automatically close the tailing action after X seconds to resume with the expectations
+      env['async.callback.auto.timeout'] = 15
       @app.call(env)
       Fiber.yield # wait until deferred body is succeeded
     end

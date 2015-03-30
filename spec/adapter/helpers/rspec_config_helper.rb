@@ -32,6 +32,7 @@ RSpec.configure do |config|
     example = test.respond_to?(:metadata) ? test : test.example
     group_cassette = example_group_property(example.metadata, :as_cassette)
     group_mock_fs = example_group_property(example.metadata, :mock_fs_on_replay)
+    group_mock_websocket = example_group_property(example.metadata, :mock_websocket_on_replay)
     cassette_name = group_cassette ? vcr_cassette_name_for[group_cassette] : vcr_cassette_name_for[example.metadata]
 
     # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
@@ -80,15 +81,17 @@ RSpec.configure do |config|
         'PaaSal771096PaaSal'
       end
 
-      record_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'method_cassettes')
-      recorder = Paasal::MethodResponseRecorder.new(self, File.expand_path(record_path))
+      method_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'method_cassettes')
+      recorder = Paasal::MethodResponseRecorder.new(self, File.expand_path(method_path))
       recorder.setup(Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
       recorder.setup(Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
       recorder.setup(Paasal::Adapters::ArchiveConverter, [:convert])
-      record_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'websocket_cassettes')
+    end
 
+    if group_mock_websocket
       # enable faye websocket recording
-      Paasal::FayeWebsocketRecorder.new(self, File.expand_path(record_path)).setup
+      ws_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'websocket_cassettes')
+      Paasal::FayeWebsocketRecorder.new(self, File.expand_path(ws_path)).enable
     end
   end
 

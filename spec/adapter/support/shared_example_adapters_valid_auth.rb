@@ -71,10 +71,11 @@ shared_examples 'compliant adapter with valid credentials' do
     # include_examples 'valid:applications:data:rebuild'
     #
 
+    # access the application at its URL
+    include_examples 'valid:applications:web'
+
     include_examples 'valid:applications:logs:tail'
 
-    # # access the application at its URL
-    # include_examples 'valid:applications:web'
     #
     # # scaling operations
     # include_examples 'valid:applications:scale:400'
