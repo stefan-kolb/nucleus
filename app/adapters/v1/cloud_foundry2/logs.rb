@@ -59,7 +59,7 @@ module Paasal
 
           def tail(application_name_or_id, log_id, stream)
             app_guid = app_guid(application_name_or_id)
-            return tail_stream(app_guid, stream) if log_stream?(log_id)
+            return tail_stream(app_guid, log_id, stream) if log_stream?(log_id)
             tail_file(app_guid, log_id, stream)
           end
 
@@ -67,26 +67,8 @@ module Paasal
             app_guid = app_guid(application_name_or_id)
             # first check if this log is a file or must be fetched from the loggregator
             if log_stream?(log_id)
-              # fetch recent data from loggregator
-              case log_id.to_sym
-              when API::Application::LogfileType::API
-                filter = ['API']
-              when API::Application::LogfileType::APPLICATION
-                filter = ['APP']
-              when API::Application::LogfileType::REQUEST
-                filter = ['RTR']
-              when API::Application::LogfileType::SYSTEM
-                filter = %w(STG LGR DEA)
-              when :all
-                # no filter, show all
-                filter = nil
-              else
-                # invalid log requests --> 404
-                fail Errors::AdapterResourceNotFoundError,
-                     "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
-              end
-              # returning an array of log entries
-              recent_decoded = recent_log_messages(app_guid, filter)
+              # fetch recent data from loggregator and return an array of log entries
+              recent_decoded = recent_log_messages(app_guid, loggregator_filter(log_id))
               recent_decoded.collect { |log_msg| construct_log_entry(log_msg) }
             else
               # handle special staging log
@@ -96,6 +78,27 @@ module Paasal
           end
 
           private
+
+          def loggregator_filter(log_id)
+            case log_id.to_sym
+            when API::Application::LogfileType::API
+              filter = ['API']
+            when API::Application::LogfileType::APPLICATION
+              filter = ['APP']
+            when API::Application::LogfileType::REQUEST
+              filter = ['RTR']
+            when API::Application::LogfileType::SYSTEM
+              filter = %w(STG LGR DEA)
+            when :all
+              # no filter, show all
+              filter = nil
+            else
+              # invalid log requests --> 404
+              fail Errors::AdapterResourceNotFoundError,
+                   "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
+            end
+            filter
+          end
 
           def construct_log_entry(decoded_message)
             # 2015-03-22T15:28:55.83+0100 [RTR/0]      OUT message...
@@ -154,7 +157,6 @@ module Paasal
             end.compact
             # decode log messages
             decoded_messages = parts.collect do |proto_message|
-              p Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(proto_message)
               Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(proto_message)
             end.compact
             return decoded_messages unless filter
@@ -213,9 +215,11 @@ module Paasal
             end
           end
 
-          def tail_stream(app_guid, stream)
+          def tail_stream(app_guid, log_id, stream)
+            filter = loggregator_filter(log_id)
+
             # push current state
-            recent_log_messages(app_guid).each { |log_entry| stream.send_message(construct_log_entry(log_entry)) }
+            recent_log_messages(app_guid, filter).each { |entry| stream.send_message(construct_log_entry(entry)) }
 
             # Now register websocket to receive the latest updates
             ws = Faye::WebSocket::Client.new("wss://#{loggregator_endpoint}:443/tail/?app=#{app_guid}",
@@ -225,8 +229,8 @@ module Paasal
               log.debug "CF loggregator message received: #{event}"
               begin
                 msg = Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(event.data.pack('C*'))
-                # notify stream to print new log line
-                stream.send_message(construct_log_entry(msg))
+                # notify stream to print new log line if msg type matches the applied filter
+                stream.send_message(construct_log_entry(msg)) if filter.include?(msg.source_name)
               rescue StandardError => e
                 log.error "Cloud Foundry log message de-serialization failed: #{e}"
               end
