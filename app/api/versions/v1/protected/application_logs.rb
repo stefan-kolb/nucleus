@@ -51,7 +51,7 @@ module Paasal
                 log.debug "Including #{logfile[:id]} in archive download"
                 log_entries = with_authentication { adapter.log_entries(params[:application_id], logfile[:id]) }
                 next unless log_entries && log_entries.length > 0
-                data = StringIO.new(log_entries.join("\r\n"))
+                data = StringIO.new(log_entries.join("\n"))
                 filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.#{logfile[:id]}.log"
                 file_path = File.join(tmp_dir, filename)
                 # write log entries to a file
@@ -66,7 +66,7 @@ module Paasal
               end
 
               # when all log files were written to disk, pack them and return the data
-              Paasal::Archiver.new.compress(tmp_dir, params[:archive_format]).read
+              Paasal::Archiver.new.compress(tmp_dir, params[:archive_format]).set_encoding('ASCII-8BIT').read
             ensure
               # make sure tmp directory is deleted again
               FileUtils.rm_rf(tmp_dir)
@@ -91,7 +91,7 @@ module Paasal
               status 200
               header 'Content-Type', 'text/plain'
               env['api.format'] = :txt
-              log_entries.join("\r\n")
+              log_entries.join("\n")
             end
 
             desc 'Download a log file' do
@@ -106,25 +106,29 @@ module Paasal
             get '/download' do
               # returns an array of log entries
               log_entries = with_authentication { adapter.log_entries(params[:application_id], params[:log_id]) }
-              data = StringIO.new(log_entries.join("\r\n"))
+              data = StringIO.new(log_entries.join("\n"))
               filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.log."\
                 "#{params[:log_id]}.#{params[:file_format]}"
+
               env['api.format'] = :binary
               # header 'Content-Disposition', "attachment; filename*=UTF-8''#{URI.escape(filename)}"
               header 'Content-Disposition', "attachment; filename=#{URI.escape(filename)}"
 
               if params[:file_format].to_s == 'log'
                 content_type 'text/plain'
-                data.read
+                return data.read
               else
+                tmp_dir = File.join(Dir.tmpdir, "#{params[:endpoint_id]}.app.#{params[:application_id]}.download."\
+                  "log.#{params[:log_id]}.#{SecureRandom.uuid}")
+                raw_filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.log.#{params[:log_id]}.log"
                 content_type MIME::Types.of(filename).first.content_type
-                file_path = "#{Dir.tmpdir}/#{filename}"
                 begin
                   # write file to disk
-                  File.open(file_path, 'wb') { |f| f.print data.read }
+                  FileUtils.mkdir_p(tmp_dir)
+                  File.open(File.join(tmp_dir, raw_filename), 'wb') { |f| f.print data.read }
                   archiver = Paasal::Archiver.new
                   # pack and return the data
-                  archiver.compress(file_path, params[:file_format]).read
+                  return archiver.compress(tmp_dir, params[:file_format]).set_encoding('ASCII-8BIT').read
                 ensure
                   # make sure tmp directory is deleted again
                   FileUtils.rm_rf(file_path)
@@ -136,8 +140,6 @@ module Paasal
               failure [[200, 'Returning chunked log file contents']].concat ErrorResponses.standard_responses
             end
             get '/tail' do
-              begin
-
               # we need to check file existence before, otherwise we would have returned status 200 already
               log_exists = with_authentication { adapter.log?(params[:application_id], params[:log_id]) }
               unless log_exists
@@ -158,6 +160,14 @@ module Paasal
                 begin
                   # execute the actual request and stream the logging message
                   tail_polling = with_authentication { adapter.tail(params[:application_id], params[:log_id], stream) }
+
+                  # this should at the moment only apply to tests, closing the tailing action when X seconds have passed
+                  if env['async.callback.auto.timeout']
+                    EM.add_timer(env['async.callback.auto.timeout'].to_i) do
+                      stream.closed = true
+                      close
+                    end
+                  end
                 rescue StandardError => e
                   stream.closed = true
                   close
@@ -170,13 +180,9 @@ module Paasal
               end
 
               status 200
-              header 'Content-Type', 'text/html'
+              header 'Content-Type', 'text/plain'
               # TODO: will be included in response, can this be avoided or is this standard conform?
               ''
-              rescue StandardError => e
-                p e
-                e.backtrace.each { |line| p line }
-              end
             end
           end
         end # end of resource

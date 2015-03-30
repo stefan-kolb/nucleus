@@ -3,6 +3,8 @@ module Paasal
     # The TailStopper can be used to cancel a timer or an ongoing HTTP request,
     # e.g. when the underlying connection was terminated.
     class TailStopper
+      include Paasal::Logging
+
       def initialize(polling, method_to_stop)
         @polling = polling
         @method_to_stop = method_to_stop

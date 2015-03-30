@@ -1,5 +1,7 @@
 module Paasal
   class RackStreamCallback
+    include Paasal::Logging
+
     attr_accessor :closed
 
     def initialize(stream)

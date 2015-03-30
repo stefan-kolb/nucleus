@@ -71,7 +71,7 @@ module Paasal
             env['api.format'] = :binary
             # header 'Content-Disposition', "attachment; filename*=UTF-8''#{URI.escape(filename)}"
             header 'Content-Disposition', "attachment; filename=#{URI.escape(filename)}"
-            data.read
+            data.set_encoding('ASCII-8BIT').read
           end
         end # end of resource
       end
