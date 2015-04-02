@@ -90,8 +90,9 @@ RSpec.configure do |config|
 
     if group_mock_websocket
       # enable faye websocket recording
-      ws_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'websocket_cassettes')
-      Paasal::FayeWebsocketRecorder.new(self, File.expand_path(ws_path)).enable
+      records_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata])
+      Paasal::FayeWebsocketRecorder.new(self, File.expand_path(File.join(records_path, 'websocket_cassettes'))).enable
+      Paasal::EmHttpStreamRecorder.new(self, File.expand_path(File.join(records_path, 'http_stream_cassettes'))).enable
     end
   end
 
