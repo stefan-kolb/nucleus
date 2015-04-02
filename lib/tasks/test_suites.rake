@@ -17,7 +17,7 @@ namespace :spec do
       end
     end
     desc 'Run all spec suites'
-    task all: :environment do
+    task :all do
       failed = []
       SPEC_SUITES.each do |suite|
         p "Running spec suite #{suite[:id]} ..."
