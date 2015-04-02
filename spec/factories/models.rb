@@ -3,6 +3,12 @@ FactoryGirl.define do
     SecureRandom.uuid
   end
 
+  factory :adapter, class: Paasal::AdapterIndexEntry do
+    url { Faker::Internet.url }
+    id nil
+    adapter_clazz nil
+  end
+
   factory :endpoint, class: Paasal::Endpoint do
     id { generate(:uuid) }
     name { Faker::Internet.slug }

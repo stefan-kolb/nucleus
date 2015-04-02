@@ -29,6 +29,9 @@ module Paasal
         # X-Request-ID
         use Paasal::Rack::RequestId
 
+        # Clear request caches
+        use RequestStore::Middleware
+
         # Apply request logger, which includes the X-Request-ID
         use ::Rack::AccessLogger, logger
 
