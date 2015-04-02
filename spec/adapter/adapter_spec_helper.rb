@@ -72,7 +72,7 @@ end
 # used to calculate the MD5 sums of all files in a deployed application archive
 def deployed_files_md5(deployed_archive, deployed_archive_format)
   # extract deployed archive and sanitize to allow a fair comparison
-  dir_deployed = "#{Dir.tmpdir}/paasal.test.#{SecureRandom.uuid}_deployed"
+  dir_deployed = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_deployed")
   Paasal::ArchiveExtractor.new.extract(deployed_archive, dir_deployed, deployed_archive_format)
   Paasal::ApplicationRepoSanitizer.new.sanitize(dir_deployed)
 
@@ -89,15 +89,15 @@ ensure
 end
 
 # used to calculate the MD5 sums of all files in a received application download response
-def response_files_md5(response, downlaod_archive_format)
-  response_file = "#{Dir.tmpdir}/paasal.test.#{SecureRandom.uuid}_response"
+def response_files_md5(response, downlaod_archive_format, sanitize = true)
+  response_file = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_response.#{downlaod_archive_format}")
   # write response to disk
   File.open(response_file, 'wb') { |file| file.write response }
 
   # extract downloaded response and sanitize to allow a fair comparison
-  dir_download = "#{Dir.tmpdir}/paasal.test.#{SecureRandom.uuid}_downlaod"
+  dir_download = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_downlaod")
   Paasal::ArchiveExtractor.new.extract(response_file, dir_download, downlaod_archive_format)
-  Paasal::ApplicationRepoSanitizer.new.sanitize(dir_download)
+  Paasal::ApplicationRepoSanitizer.new.sanitize(dir_download) if sanitize
 
   # generate MD5 hashes of downloaded files
   downlaod_md5 = {}
