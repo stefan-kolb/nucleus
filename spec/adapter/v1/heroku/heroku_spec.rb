@@ -1,6 +1,15 @@
 require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::Heroku do
+  before :all do
+    VCR.configure do |c|
+      c.ignore_request do |request|
+        user_agent = request.headers['User-Agent'] ? request.headers['User-Agent'].to_a.first : ''
+        # ignore requests to the logging system that are NOT made by Excon (e.g. made by em-http-request)
+        request.uri.start_with?('https://logplex.heroku.com/sessions/') && !user_agent.include?('excon')
+      end
+    end
+  end
   before do
     @endpoint = 'heroku'
     @api_version = 'v1'
