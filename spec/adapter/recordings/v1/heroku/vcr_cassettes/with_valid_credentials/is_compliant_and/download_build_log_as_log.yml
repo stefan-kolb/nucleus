@@ -1,0 +1,1064 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=__heroku:user__&password=__heroku:password__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:05 GMT
+      Request-Id:
+      - 00bb7587-a672-4d6a-8615-07c353f05743
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.151148499'
+      Content-Length:
+      - '378'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"api_key":"__API_KEY__","beta":null,"confirmed":true,"confirmed_at":"2014/11/18
+        01:37:21 -0800","created_at":"2014/11/18 01:37:21 -0800","id":"__USER_ID__@users.heroku.com","email":"__heroku:user__","last_login":"2014/11/25
+        00:52:59 -0800","name":" ","updated_at":"2015/04/02 06:39:42 -0700","verified":false,"verified_at":null}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:05 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:05 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2195'
+      Request-Id:
+      - c92d2b75-c325-4b47-aa3c-d0c04674a619
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.047180777'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:05 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/builds
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - created_at, id, updated_at
+      Content-Encoding:
+      - ''
+      Content-Range:
+      - created_at 2015-04-02T13:37:50.458978+00:00..2015-04-02T13:37:50.458978+00:00
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2194'
+      Request-Id:
+      - b58c3a98-a00d-453a-9008-b7fc5379be15
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.217645979'
+      Content-Length:
+      - '283'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        [
+          {
+            "created_at": "2015-04-02T13:37:50+00:00",
+            "id": "644c81cb-d0ac-482d-a302-b845232cf664",
+            "slug": {
+              "id": "28ae8aec-8824-4cd7-a2c5-589628c11ebf"
+            },
+            "source_blob": {
+              "url": null,
+              "version": null,
+              "version_description": null
+            },
+            "status": "succeeded",
+            "updated_at": "2015-04-02T13:38:29+00:00",
+            "user": {
+              "email": "__heroku:user__",
+              "id": "__heroku:id__"
+            }
+          }
+        ]
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:06 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/builds/644c81cb-d0ac-482d-a302-b845232cf664/result
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:07 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2192'
+      Request-Id:
+      - 2f89829e-cc85-4932-a352-568863196e6f
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.230984254'
+      Content-Length:
+      - '1239'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "build": {
+            "id": "644c81cb-d0ac-482d-a302-b845232cf664",
+            "status": "succeeded"
+          },
+          "exit_code": null,
+          "lines": [
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Fetching custom git buildpack... done\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Node.js app detected\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Reading application state\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       package.json...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       build directory...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       cache directory...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       environment variables...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Node engine:         >=0.8.x\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Npm engine:          unspecified\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Start mechanism:     Procfile\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       node_modules source: package.json\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       node_modules cached: false\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       NPM_CONFIG_PRODUCTION=true\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       NODE_MODULES_CACHE=true\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Installing binaries\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Resolving node version >=0.8.x via semver.io...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Downloading and installing node 0.12.0...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Using default npm version: 2.5.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Building dependencies\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Installing node modules\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       underscore@1.4.4 node_modules/underscore\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ejs@0.8.8 node_modules/ejs\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       jasmine-node@1.0.28 node_modules/jasmine-node\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? walkdir@0.0.7\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? coffee-script@1.9.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? jasmine-reporters@2.0.5 (mkdirp@0.3.5)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? requirejs@2.1.17\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       express@3.0.6 node_modules/express\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? methods@0.0.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? fresh@0.1.0\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? range-parser@0.0.4\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? cookie-signature@0.0.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? buffer-crc32@0.1.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? cookie@0.0.5\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? commander@0.6.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? mkdirp@0.3.3\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? debug@2.1.3 (ms@0.7.0)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? send@0.1.0 (mime@1.2.6)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? connect@2.7.2 (pause@0.0.1, bytes@0.1.0, formidable@1.0.11, qs@0.5.1)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Checking startup method\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Found Procfile\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Finalizing build\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Creating runtime environment\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Exporting binary paths\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Cleaning npm artifacts\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Cleaning previous cache\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Caching results for future builds\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Build succeeded!\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       word-finder@0.0.4-28 /tmp/build_1ffb94800078fa0014142541e34348e8\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? ejs@0.8.8\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? express@3.0.6\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? jasmine-node@1.0.28\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? underscore@1.4.4\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       WARNING: Avoid semver ranges starting with '>' in engines.node\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       https://devcenter.heroku.com/articles/nodejs-support#specifying-a-node-js-version\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Discovering process types\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Procfile declares types -> web\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Compressing... done, 11.8MB\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Launching... done, v6\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       https://paasal-test-app-all-updated.herokuapp.com/ deployed to Heroku\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:07 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:08 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2190'
+      Request-Id:
+      - daac91d0-7332-4e3f-acc2-a6c58c69d4e6
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.031094632'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:08 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/builds
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - created_at, id, updated_at
+      Content-Encoding:
+      - ''
+      Content-Range:
+      - created_at 2015-04-02T13:37:50.458978+00:00..2015-04-02T13:37:50.458978+00:00
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:09 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2189'
+      Request-Id:
+      - e781e697-0a43-46f3-aecd-b05d30677eb1
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.21135727'
+      Content-Length:
+      - '283'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        [
+          {
+            "created_at": "2015-04-02T13:37:50+00:00",
+            "id": "644c81cb-d0ac-482d-a302-b845232cf664",
+            "slug": {
+              "id": "28ae8aec-8824-4cd7-a2c5-589628c11ebf"
+            },
+            "source_blob": {
+              "url": null,
+              "version": null,
+              "version_description": null
+            },
+            "status": "succeeded",
+            "updated_at": "2015-04-02T13:38:29+00:00",
+            "user": {
+              "email": "__heroku:user__",
+              "id": "__heroku:id__"
+            }
+          }
+        ]
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:09 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/builds/644c81cb-d0ac-482d-a302-b845232cf664/result
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:09 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2187'
+      Request-Id:
+      - eb2a844a-f17e-4e5e-bcb4-370fce44b90f
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.209889961'
+      Content-Length:
+      - '1239'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "build": {
+            "id": "644c81cb-d0ac-482d-a302-b845232cf664",
+            "status": "succeeded"
+          },
+          "exit_code": null,
+          "lines": [
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Fetching custom git buildpack... done\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Node.js app detected\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Reading application state\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       package.json...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       build directory...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       cache directory...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       environment variables...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Node engine:         >=0.8.x\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Npm engine:          unspecified\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Start mechanism:     Procfile\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       node_modules source: package.json\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       node_modules cached: false\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       NPM_CONFIG_PRODUCTION=true\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       NODE_MODULES_CACHE=true\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Installing binaries\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Resolving node version >=0.8.x via semver.io...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Downloading and installing node 0.12.0...\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Using default npm version: 2.5.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Building dependencies\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Installing node modules\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       underscore@1.4.4 node_modules/underscore\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ejs@0.8.8 node_modules/ejs\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       jasmine-node@1.0.28 node_modules/jasmine-node\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? walkdir@0.0.7\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? coffee-script@1.9.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? jasmine-reporters@2.0.5 (mkdirp@0.3.5)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? requirejs@2.1.17\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       express@3.0.6 node_modules/express\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? methods@0.0.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? fresh@0.1.0\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? range-parser@0.0.4\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? cookie-signature@0.0.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? buffer-crc32@0.1.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? cookie@0.0.5\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? commander@0.6.1\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? mkdirp@0.3.3\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? debug@2.1.3 (ms@0.7.0)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? send@0.1.0 (mime@1.2.6)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? connect@2.7.2 (pause@0.0.1, bytes@0.1.0, formidable@1.0.11, qs@0.5.1)\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Checking startup method\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Found Procfile\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Finalizing build\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Creating runtime environment\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Exporting binary paths\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Cleaning npm artifacts\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Cleaning previous cache\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Caching results for future builds\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Build succeeded!\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       word-finder@0.0.4-28 /tmp/build_1ffb94800078fa0014142541e34348e8\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? ejs@0.8.8\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? express@3.0.6\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? jasmine-node@1.0.28\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       ????????? underscore@1.4.4\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       WARNING: Avoid semver ranges starting with '>' in engines.node\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       https://devcenter.heroku.com/articles/nodejs-support#specifying-a-node-js-version\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       \n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Discovering process types\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       Procfile declares types -> web\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Compressing... done, 11.8MB\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "-----> Launching... done, v6\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "       https://paasal-test-app-all-updated.herokuapp.com/ deployed to Heroku\n"
+            },
+            {
+              "stream": "STDOUT",
+              "line": "\n"
+            }
+          ]
+        }
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:09 GMT
+recorded_with: VCR 2.9.3

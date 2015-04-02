@@ -1,0 +1,618 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=__heroku:user__&password=__heroku:password__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:44:56 GMT
+      Request-Id:
+      - 8fc6c4d1-bcbc-4e34-88c2-169a4546747a
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.127877436'
+      Content-Length:
+      - '378'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"api_key":"__API_KEY__","beta":null,"confirmed":true,"confirmed_at":"2014/11/18
+        01:37:21 -0800","created_at":"2014/11/18 01:37:21 -0800","id":"__USER_ID__@users.heroku.com","email":"__heroku:user__","last_login":"2014/11/25
+        00:52:59 -0800","name":" ","updated_at":"2015/04/02 06:39:42 -0700","verified":false,"verified_at":null}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:44:56 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:44:56 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2146'
+      Request-Id:
+      - 601aad1d-ec71-44d3-8702-d859f3a23929
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.023284086'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:44:56 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/d6f1e01d-e744-4d61-9efc-7f37fbbd58e7/dynos
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:44:57 GMT
+      ETag:
+      - '"fc7d8d4ee4350713383821916a09a23e"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:39:58 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2145'
+      Request-Id:
+      - 49610590-448b-4c49-9c4f-44e5cf7887ee
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.145872188'
+      Content-Length:
+      - '225'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"attach_url":null,"command":"node server.js","created_at":"2015-04-02T13:39:58Z","id":"193337b2-cde1-44fd-8350-b2fd7df4c8fe","name":"web.1","release":{"id":"0b29b606-fa4c-4ace-b035-28ef38b22202","version":6},"size":"1X","state":"up","type":"web","updated_at":"2015-04-02T13:39:58Z"}]'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:44:57 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/d6f1e01d-e744-4d61-9efc-7f37fbbd58e7/formation
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:44:58 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2144'
+      Request-Id:
+      - 48dea585-169c-45cf-ae6b-dafd9bdc0086
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.048428728'
+      Content-Length:
+      - '165'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"command":"node server.js","created_at":"2015-04-02T13:38:29Z","id":"54b18199-8e5d-4f46-a1df-8ab8885cb086","type":"web","quantity":1,"size":"1X","updated_at":"2015-04-02T13:39:54Z"}]'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:44:58 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/d6f1e01d-e744-4d61-9efc-7f37fbbd58e7/buildpack-installations
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - id, ordinal
+      Content-Encoding:
+      - ''
+      Content-Range:
+      - ordinal 0..0
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:44:58 GMT
+      ETag:
+      - '"87d7b85882f94ae872184eafce30ccd8"'
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2143'
+      Request-Id:
+      - 1cfb0a31-24c0-4d85-b573-e9f77083f81d
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.043402374'
+      Content-Length:
+      - '100'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"buildpack":{"url":"https://github.com/heroku/heroku-buildpack-nodejs"},"ordinal":0}]'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:44:59 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:44:59 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2142'
+      Request-Id:
+      - 4f5278bf-d879-421e-9125-b31edb1001fa
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.046156541'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:44:59 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","dyno":"router","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:45:00 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2141'
+      Request-Id:
+      - 2764d19a-d1c0-4579-910f-b80dc90a9743
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.054670256'
+      Content-Length:
+      - '185'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:45Z","id":"e636fc42-5532-4042-b054-823650daa5f2","logplex_url":"https://logplex.heroku.com/sessions/fcc06c35-9290-4c07-878c-0143bbb1d1ab?srv=1427982225","updated_at":"2015-04-02T13:43:45Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:45:00 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/fcc06c35-9290-4c07-878c-0143bbb1d1ab?srv=1427982225
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:45:01 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:42:42.836904+00:00 heroku[router]: at=info method=GET path="/" host=paasal-test-app-all-updated.herokuapp.com request_id=3053416f-f8e8-44c3-9a0e-3d1d75e67055 fwd="95.208.81.73" dyno=web.1 connect=2ms service=30ms status=200 bytes=3570
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:45:01 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:45:01 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2160'
+      Request-Id:
+      - 9c68d74c-f1ce-419c-ae98-9045a51038d9
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.034108978'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:45:01 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","dyno":"router","tail":true}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:45:02 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2159'
+      Request-Id:
+      - 87eafdbf-8a6e-4738-8ab4-d74099250841
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.091122744'
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:45:02Z","id":"c3ee1804-5c9e-4741-902d-72bbea74cc83","logplex_url":"https://logplex.heroku.com/sessions/c6fa4b47-56b6-452c-b250-f2e3d75b2809?srv=1427982302","updated_at":"2015-04-02T13:45:02Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:45:02 GMT
+- request:
+    method: get
+    uri: https://paasal-test-app-all-updated.herokuapp.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Cowboy
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - Express
+      Content-Type:
+      - text/html; charset=utf-8
+      Content-Length:
+      - '3391'
+      Etag:
+      - '"300543841"'
+      Date:
+      - Thu, 02 Apr 2015 13:45:04 GMT
+      Via:
+      - 1.1 vegur
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Word Finder</title>\n
+        \   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n
+        \   <script src=\"/public/jquery-1.8.0.js\"></script>\n    <script src=\"/socket.io/socket.io.js\"></script>\n
+        \   <script src=\"/public/hollywood.js\"></script>\n    <link rel=\"stylesheet\"
+        href=\"/public/bootstrap.css\" />\n    <script src=\"/public/bootstrap.js\"></script>\n
+        \   <link rel=\"stylesheet\" href=\"/public/app.css\" />\n  </head>\n  <body>\n
+        \   <div class=\"navbar navbar-inverse navbar-fixed-top\">\n      <div class=\"container\">\n
+        \       <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle\"
+        data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n            <span
+        class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n
+        \           <span class=\"icon-bar\"></span>\n          </button>\n          <a
+        class=\"navbar-brand\" href=\"/\">Word Finder</a>\n        </div>\n        <div
+        class=\"collapse navbar-collapse\">\n          <ul class=\"nav navbar-nav\">\n
+        \         </ul>\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n\n
+        \   <div class=\"container\">\n      <div id=\"dashboard\">\n        <div
+        class=\"row\">\n          <h3>Word Finder</h3>\n\n          <p>\n          I
+        took every english word (over 200k words) and built a little app that will
+        help you find words that contain specific characters.\n          </p>\n          <hr/>\n
+        \       </div>\n\n\n        <div class=\"row\">\n            <p>Enter a word,
+        use _ and ? as needed (see instructions below)</p>\n          <form method=\"post\"
+        action=\"search\">\n            \n              <input type=\"text\"\n                     class=\"col-md-12\"\n
+        \                    name=\"pattern\"\n                     placeholder=\"enter
+        pattern and press\" />\n           \n          </form>\n        </div>\n        <hr/>\n\n\n\n\n
+        \         <div class=\"row\">\n            <h3>The underscore</h3>\n\n            <p>\n
+        \           Type a word into the text box with the following pattern:\n            </p>\n\n
+        \           <pre>\nhe__o\n            </pre>\n\n            <p>\n            And
+        you'll get words such as:\n            </p>\n\n            <pre>\nhello\nhelio\n
+        \           </pre>\n          </div>\n\n          <div class=\"row\">\n            <h3>The
+        question mark</h3>\n\n            <p>\n            This character is great
+        for games like What's the Phrase (a knock off of Wheel of Fortune)\n            </p>\n\n
+        \           <p>\n            Type a word into the text box with the following
+        pattern:\n            </p>\n\n            <pre>\nst???\n            </pre>\n\n
+        \           <p>\n            and you'll get words such as:\n            </p>\n\n
+        \           <pre>\nstack\nstade\nstaff\nstage\nstagy\n            </pre>\n\n
+        \           <p>\n            but you wont get words like\n            </p>\n\n
+        \           <pre>\nstart\n            </pre>\n\n            <p>\n            because
+        the `t` would already be visible (in What's the Phrase), and you would have
+        typed:\n            </p>\n\n            <pre>\nst??t\n            </pre>\n\n
+        \         </div>\n          <div class=\"row\">\n            <h3>I know regex</h3>\n\n
+        \           <p>\n                The behaviors above will be overriden if
+        you prefix and suffix your phrase with <code>/</code>, example:\n            </p>\n\n
+        \           <pre>/boo/</pre>\n\n            <p>\n                Will give
+        you all words that contain <code>boo</code>.\n            </p>\n          </div>\n
+        \       </div>\n      </div>\n    </body>\n</html>\n\n"
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:45:04 GMT
+recorded_with: VCR 2.9.3

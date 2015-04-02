@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Accept-Encoding:
       - gzip
   response:
@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:24:59 GMT
+      - Thu, 02 Apr 2015 12:33:58 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 095bd847-f6af-4eb2-5f11-39445a8bc005
+      - 74adc3e0-d6b5-4207-7043-f06e3eb739c4
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 4d998b41-1b1e-4fdb-7221-544ea95ef536::a845c8e1-a350-4f69-9f62-c040f8324373
+      - ad745bb4-efc2-490d-763e-4037bafaf594::fd742927-55a5-40b2-ad20-f798d4394c75
     body:
-      encoding: US-ASCII
-      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+      encoding: UTF-8
+      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:58 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:50 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
@@ -44,7 +44,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Content-Type:
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Wed, 25 Mar 2015 16:24:58 GMT
+      - Thu, 02 Apr 2015 12:33:58 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -73,15 +73,15 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       X-Cf-Requestid:
-      - 5df542d3-f5db-4581-4120-0a0b2cdf8c01, f1aaaddc-e118-4eb3-532b-35ff32f22648
+      - 8c305fa7-69bc-49dd-7dfb-0ad215cf47cf, de306eea-458b-43ec-6420-7549f66ca89a
       X-Frame-Options:
       - DENY
     body:
-      encoding: US-ASCII
-      string: ! '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
-        cloud_controller.write password.write openid cloud_controller.read","jti":"26f5f0a4-f976-4d52-b575-f8dfb7469d60"}'
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"6a009475-df35-4034-8a46-21a3f756f1d0"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:59 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:50 GMT
 - request:
     method: get
     uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Apaasal-test-app-min-updated
@@ -90,7 +90,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -105,55 +105,80 @@ http_interactions:
       message: 
     headers:
       Content-Length:
-      - '1713'
+      - '1712'
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:24:59 GMT
+      - Thu, 02 Apr 2015 12:33:59 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 954c89bc-3e29-4171-55c0-b16972c61b70
+      - 11ec6ac6-411e-4075-67a9-618b30fd70c4
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 80db2540-2356-4e10-50ce-f9eb226a9e8e::dc7d9ce5-93c3-48b6-b72c-9cd78df72847
+      - fef06da2-bdc3-488e-46a6-756aaff18a47::b5b6afb0-3f4c-4861-bef4-96f41c5fbe08
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"total_results\": 1,\n  \"total_pages\": 1,\n  \"prev_url\":
-        null,\n  \"next_url\": null,\n  \"resources\": [\n    {\n      \"metadata\":
-        {\n        \"guid\": \"f377c6ab-239f-4290-a478-10e97fc601b7\",\n        \"url\":
-        \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7\",\n        \"created_at\":
-        \"2015-03-25T16:22:36+00:00\",\n        \"updated_at\": \"2015-03-25T16:24:55+00:00\"\n
-        \     },\n      \"entity\": {\n        \"name\": \"paasal-test-app-min-updated\",\n
-        \       \"production\": false,\n        \"space_guid\": \"d3483f4f-6706-4fe1-ad90-1bd45d50e940\",\n
-        \       \"stack_guid\": \"b4d24013-b385-4db1-a171-b4e151a87c46\",\n        \"buildpack\":
-        \"nodejs_buildpack\",\n        \"detected_buildpack\": null,\n        \"environment_json\":
-        {\n          \"our_test_var_key\": \"our_test_var_value\"\n        },\n        \"memory\":
-        256,\n        \"instances\": 1,\n        \"disk_quota\": 1024,\n        \"state\":
-        \"STARTED\",\n        \"version\": \"fa0a9ee4-cf51-4ea2-ac81-480429adcb6c\",\n
-        \       \"command\": null,\n        \"console\": false,\n        \"debug\":
-        null,\n        \"staging_task_id\": \"5b5c6f45b49a4c0f8082936b7922ed1d\",\n
-        \       \"package_state\": \"PENDING\",\n        \"health_check_timeout\":
-        null,\n        \"staging_failed_reason\": null,\n        \"docker_image\":
-        null,\n        \"package_updated_at\": \"2015-03-25T16:23:10+00:00\",\n        \"detected_start_command\":
-        \"node server.js\",\n        \"space_url\": \"/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940\",\n
-        \       \"stack_url\": \"/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46\",\n
-        \       \"events_url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/events\",\n
-        \       \"service_bindings_url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/service_bindings\",\n
-        \       \"routes_url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/routes\"\n
-        \     }\n    }\n  ]\n}"
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "3397450b-e73a-48cb-a94d-4e7cc4341763",
+                "url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763",
+                "created_at": "2015-04-02T12:32:49+00:00",
+                "updated_at": "2015-04-02T12:33:57+00:00"
+              },
+              "entity": {
+                "name": "paasal-test-app-min-updated",
+                "production": false,
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+                "buildpack": "nodejs_buildpack",
+                "detected_buildpack": null,
+                "environment_json": {
+                  "our_test_var_key": "our_test_var_value"
+                },
+                "memory": 256,
+                "instances": 1,
+                "disk_quota": 1024,
+                "state": "STARTED",
+                "version": "55e50be6-0beb-4c10-8498-5ed1c20b2b61",
+                "command": null,
+                "console": false,
+                "debug": null,
+                "staging_task_id": "1f0189ef90fd4312b1b5c01bdfd6108a",
+                "package_state": "STAGED",
+                "health_check_timeout": null,
+                "staging_failed_reason": null,
+                "docker_image": null,
+                "package_updated_at": "2015-04-02T12:33:18+00:00",
+                "detected_start_command": "node server.js",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+                "events_url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/events",
+                "service_bindings_url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/service_bindings",
+                "routes_url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/routes"
+              }
+            }
+          ]
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:59 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:50 GMT
 - request:
     method: get
-    uri: https://api.10.244.0.34.xip.io/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -168,51 +193,72 @@ http_interactions:
       message: 
     headers:
       Content-Length:
-      - '1450'
+      - '1449'
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:24:59 GMT
+      - Thu, 02 Apr 2015 12:33:59 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 0ee91c86-c387-48b0-42e8-717213e1699c
+      - 6a90c623-b4f6-4463-593e-3061bcb369ee
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - b567d9fa-ba75-4355-5f37-5061bd90a6d1::48e39ea3-c9be-4196-b1d8-aa1f46455c3e
+      - 31af75f9-baf9-4099-6b85-2160afae5d7b::4fb4b987-0a6b-4d8b-bc85-8061d3e89dee
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"metadata\": {\n    \"guid\": \"f377c6ab-239f-4290-a478-10e97fc601b7\",\n
-        \   \"url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7\",\n    \"created_at\":
-        \"2015-03-25T16:22:36+00:00\",\n    \"updated_at\": \"2015-03-25T16:24:55+00:00\"\n
-        \ },\n  \"entity\": {\n    \"name\": \"paasal-test-app-min-updated\",\n    \"production\":
-        false,\n    \"space_guid\": \"d3483f4f-6706-4fe1-ad90-1bd45d50e940\",\n    \"stack_guid\":
-        \"b4d24013-b385-4db1-a171-b4e151a87c46\",\n    \"buildpack\": \"nodejs_buildpack\",\n
-        \   \"detected_buildpack\": null,\n    \"environment_json\": {\n      \"our_test_var_key\":
-        \"our_test_var_value\"\n    },\n    \"memory\": 256,\n    \"instances\": 1,\n
-        \   \"disk_quota\": 1024,\n    \"state\": \"STARTED\",\n    \"version\": \"fa0a9ee4-cf51-4ea2-ac81-480429adcb6c\",\n
-        \   \"command\": null,\n    \"console\": false,\n    \"debug\": null,\n    \"staging_task_id\":
-        \"5b5c6f45b49a4c0f8082936b7922ed1d\",\n    \"package_state\": \"PENDING\",\n
-        \   \"health_check_timeout\": null,\n    \"staging_failed_reason\": null,\n
-        \   \"docker_image\": null,\n    \"package_updated_at\": \"2015-03-25T16:23:10+00:00\",\n
-        \   \"detected_start_command\": \"node server.js\",\n    \"space_url\": \"/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940\",\n
-        \   \"stack_url\": \"/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46\",\n
-        \   \"events_url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/events\",\n
-        \   \"service_bindings_url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/service_bindings\",\n
-        \   \"routes_url\": \"/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/routes\"\n
-        \ }\n}"
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "3397450b-e73a-48cb-a94d-4e7cc4341763",
+            "url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763",
+            "created_at": "2015-04-02T12:32:49+00:00",
+            "updated_at": "2015-04-02T12:33:57+00:00"
+          },
+          "entity": {
+            "name": "paasal-test-app-min-updated",
+            "production": false,
+            "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
+            "buildpack": "nodejs_buildpack",
+            "detected_buildpack": null,
+            "environment_json": {
+              "our_test_var_key": "our_test_var_value"
+            },
+            "memory": 256,
+            "instances": 1,
+            "disk_quota": 1024,
+            "state": "STARTED",
+            "version": "55e50be6-0beb-4c10-8498-5ed1c20b2b61",
+            "command": null,
+            "console": false,
+            "debug": null,
+            "staging_task_id": "1f0189ef90fd4312b1b5c01bdfd6108a",
+            "package_state": "STAGED",
+            "health_check_timeout": null,
+            "staging_failed_reason": null,
+            "docker_image": null,
+            "package_updated_at": "2015-04-02T12:33:18+00:00",
+            "detected_start_command": "node server.js",
+            "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+            "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
+            "events_url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/events",
+            "service_bindings_url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/service_bindings",
+            "routes_url": "/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/routes"
+          }
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:59 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:50 GMT
 - request:
     method: get
-    uri: https://api.10.244.0.34.xip.io/v2/apps/f377c6ab-239f-4290-a478-10e97fc601b7/routes
+    uri: https://api.10.244.0.34.xip.io/v2/apps/3397450b-e73a-48cb-a94d-4e7cc4341763/routes
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -231,30 +277,44 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:24:59 GMT
+      - Thu, 02 Apr 2015 12:33:59 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 022078c7-9eea-4ac5-5ac7-86bcee29f4a1
+      - bb637f07-582e-45fb-61d4-eb74e9268240
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - d2449f86-07e8-4bc2-587e-574b4a0ae14a::8b036074-0aa8-4fa8-b1f5-d11de853ce57
+      - 1025de86-f4a5-4e10-56f8-c86fff3dad17::3b11200a-26a6-4b97-8b86-7d27d7f3dbd8
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"total_results\": 1,\n  \"total_pages\": 1,\n  \"prev_url\":
-        null,\n  \"next_url\": null,\n  \"resources\": [\n    {\n      \"metadata\":
-        {\n        \"guid\": \"eb85a060-81dc-48b4-9ff4-6f3638963464\",\n        \"url\":
-        \"/v2/routes/eb85a060-81dc-48b4-9ff4-6f3638963464\",\n        \"created_at\":
-        \"2015-03-25T16:22:36+00:00\",\n        \"updated_at\": null\n      },\n      \"entity\":
-        {\n        \"host\": \"f377c6ab-239f-4290-a478-10e97fc601b7\",\n        \"domain_guid\":
-        \"0a7ac015-b059-47d3-b1a2-873a6e370f36\",\n        \"space_guid\": \"d3483f4f-6706-4fe1-ad90-1bd45d50e940\",\n
-        \       \"domain_url\": \"/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36\",\n
-        \       \"space_url\": \"/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940\",\n
-        \       \"apps_url\": \"/v2/routes/eb85a060-81dc-48b4-9ff4-6f3638963464/apps\"\n
-        \     }\n    }\n  ]\n}"
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 1,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+            {
+              "metadata": {
+                "guid": "19808d13-e553-4a36-b050-e8d554848350",
+                "url": "/v2/routes/19808d13-e553-4a36-b050-e8d554848350",
+                "created_at": "2015-04-02T12:32:50+00:00",
+                "updated_at": null
+              },
+              "entity": {
+                "host": "3397450b-e73a-48cb-a94d-4e7cc4341763",
+                "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
+                "apps_url": "/v2/routes/19808d13-e553-4a36-b050-e8d554848350/apps"
+              }
+            }
+          ]
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:59 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:50 GMT
 - request:
     method: get
     uri: https://api.10.244.0.34.xip.io/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36
@@ -263,7 +323,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -282,34 +342,222 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:24:59 GMT
+      - Thu, 02 Apr 2015 12:33:59 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 73a715a2-5152-4c30-5a96-5f0f3130f476
+      - c782f708-0dfc-4151-5117-59af676e7359
       X-Cf-Warnings:
       - Endpoint+deprecated
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 15dab141-5927-4f85-5311-9b01ce271719::83d9122d-3dac-4235-b9b7-3653b43567b9
+      - 05e2914a-6f5b-426e-7ab9-cc9baa0a7302::b85484ff-2c96-43d5-819e-1860a71c0e40
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"metadata\": {\n    \"guid\": \"0a7ac015-b059-47d3-b1a2-873a6e370f36\",\n
-        \   \"url\": \"/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36\",\n    \"created_at\":
-        \"2014-12-05T16:23:46+00:00\",\n    \"updated_at\": \"2015-03-19T07:07:29+00:00\"\n
-        \ },\n  \"entity\": {\n    \"name\": \"10.244.0.34.xip.io\"\n  }\n}"
+      encoding: UTF-8
+      string: |-
+        {
+          "metadata": {
+            "guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
+            "created_at": "2014-12-05T16:23:46+00:00",
+            "updated_at": "2015-03-19T07:07:29+00:00"
+          },
+          "entity": {
+            "name": "10.244.0.34.xip.io"
+          }
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:59 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:50 GMT
 - request:
     method: get
-    uri: http://f377c6ab-239f-4290-a478-10e97fc601b7.10.244.0.34.xip.io/
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Cf-Requestid:
+      - 1ae5a499-1dfb-48e8-6d0c-ea41e91531e1
+      X-Cf-Routererror:
+      - unknown_route
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Content-Length:
+      - '110'
+    body:
+      encoding: UTF-8
+      string: |
+        404 Not Found: Requested route ('3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io:80') does not exist.
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Cf-Requestid:
+      - 6845a4f6-25a8-488d-6391-785d8cdc1964
+      X-Cf-Routererror:
+      - unknown_route
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Content-Length:
+      - '110'
+    body:
+      encoding: UTF-8
+      string: |
+        404 Not Found: Requested route ('3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io:80') does not exist.
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Cf-Requestid:
+      - c38a76ab-054f-4eb7-5b9d-747afd5028da
+      X-Cf-Routererror:
+      - unknown_route
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Content-Length:
+      - '110'
+    body:
+      encoding: UTF-8
+      string: |
+        404 Not Found: Requested route ('3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io:80') does not exist.
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Cf-Requestid:
+      - 35c768f3-ad2d-4a94-62c8-0e9be5ffa21b
+      X-Cf-Routererror:
+      - unknown_route
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Content-Length:
+      - '110'
+    body:
+      encoding: UTF-8
+      string: |
+        404 Not Found: Requested route ('3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io:80') does not exist.
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Cf-Requestid:
+      - 6296c71f-2628-4a52-55ea-35d50f9d8a0b
+      X-Cf-Routererror:
+      - unknown_route
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Content-Length:
+      - '110'
+    body:
+      encoding: UTF-8
+      string: |
+        404 Not Found: Requested route ('3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io:80') does not exist.
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Cf-Requestid:
+      - 0fe897cd-440f-4dfc-4d8f-1adc971e61c7
+      X-Cf-Routererror:
+      - unknown_route
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Content-Length:
+      - '110'
+    body:
+      encoding: UTF-8
+      string: |
+        404 Not Found: Requested route ('3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io:80') does not exist.
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
   response:
     status:
       code: 200
@@ -322,16 +570,16 @@ http_interactions:
       Content-Type:
       - text/html; charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:25:00 GMT
+      - Thu, 02 Apr 2015 12:33:59 GMT
       Etag:
-      - ! '"300543841"'
+      - '"300543841"'
       X-Cf-Requestid:
-      - 58d5296d-0e9e-442e-5538-fbceb00aec3f
+      - c60bc005-73fe-436a-6d16-ed24aee5bcb5
       X-Powered-By:
       - Express
     body:
-      encoding: US-ASCII
-      string: ! "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Word Finder</title>\n
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Word Finder</title>\n
         \   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n
         \   <script src=\"/public/jquery-1.8.0.js\"></script>\n    <script src=\"/socket.io/socket.io.js\"></script>\n
         \   <script src=\"/public/hollywood.js\"></script>\n    <link rel=\"stylesheet\"
@@ -376,5 +624,81 @@ http_interactions:
         you all words that contain <code>boo</code>.\n            </p>\n          </div>\n
         \       </div>\n      </div>\n    </body>\n</html>\n\n"
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:24:59 GMT
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
+- request:
+    method: get
+    uri: http://3397450b-e73a-48cb-a94d-4e7cc4341763.10.244.0.34.xip.io/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '3391'
+      Content-Type:
+      - text/html; charset=utf-8
+      Date:
+      - Thu, 02 Apr 2015 12:33:59 GMT
+      Etag:
+      - '"300543841"'
+      X-Cf-Requestid:
+      - 3ad79bb1-ad67-416b-7dd7-2dede208091e
+      X-Powered-By:
+      - Express
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Word Finder</title>\n
+        \   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n
+        \   <script src=\"/public/jquery-1.8.0.js\"></script>\n    <script src=\"/socket.io/socket.io.js\"></script>\n
+        \   <script src=\"/public/hollywood.js\"></script>\n    <link rel=\"stylesheet\"
+        href=\"/public/bootstrap.css\" />\n    <script src=\"/public/bootstrap.js\"></script>\n
+        \   <link rel=\"stylesheet\" href=\"/public/app.css\" />\n  </head>\n  <body>\n
+        \   <div class=\"navbar navbar-inverse navbar-fixed-top\">\n      <div class=\"container\">\n
+        \       <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle\"
+        data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n            <span
+        class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n
+        \           <span class=\"icon-bar\"></span>\n          </button>\n          <a
+        class=\"navbar-brand\" href=\"/\">Word Finder</a>\n        </div>\n        <div
+        class=\"collapse navbar-collapse\">\n          <ul class=\"nav navbar-nav\">\n
+        \         </ul>\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n\n
+        \   <div class=\"container\">\n      <div id=\"dashboard\">\n        <div
+        class=\"row\">\n          <h3>Word Finder</h3>\n\n          <p>\n          I
+        took every english word (over 200k words) and built a little app that will
+        help you find words that contain specific characters.\n          </p>\n          <hr/>\n
+        \       </div>\n\n\n        <div class=\"row\">\n            <p>Enter a word,
+        use _ and ? as needed (see instructions below)</p>\n          <form method=\"post\"
+        action=\"search\">\n            \n              <input type=\"text\"\n                     class=\"col-md-12\"\n
+        \                    name=\"pattern\"\n                     placeholder=\"enter
+        pattern and press\" />\n           \n          </form>\n        </div>\n        <hr/>\n\n\n\n\n
+        \         <div class=\"row\">\n            <h3>The underscore</h3>\n\n            <p>\n
+        \           Type a word into the text box with the following pattern:\n            </p>\n\n
+        \           <pre>\nhe__o\n            </pre>\n\n            <p>\n            And
+        you'll get words such as:\n            </p>\n\n            <pre>\nhello\nhelio\n
+        \           </pre>\n          </div>\n\n          <div class=\"row\">\n            <h3>The
+        question mark</h3>\n\n            <p>\n            This character is great
+        for games like What's the Phrase (a knock off of Wheel of Fortune)\n            </p>\n\n
+        \           <p>\n            Type a word into the text box with the following
+        pattern:\n            </p>\n\n            <pre>\nst???\n            </pre>\n\n
+        \           <p>\n            and you'll get words such as:\n            </p>\n\n
+        \           <pre>\nstack\nstade\nstaff\nstage\nstagy\n            </pre>\n\n
+        \           <p>\n            but you wont get words like\n            </p>\n\n
+        \           <pre>\nstart\n            </pre>\n\n            <p>\n            because
+        the `t` would already be visible (in What's the Phrase), and you would have
+        typed:\n            </p>\n\n            <pre>\nst??t\n            </pre>\n\n
+        \         </div>\n          <div class=\"row\">\n            <h3>I know regex</h3>\n\n
+        \           <p>\n                The behaviors above will be overriden if
+        you prefix and suffix your phrase with <code>/</code>, example:\n            </p>\n\n
+        \           <pre>/boo/</pre>\n\n            <p>\n                Will give
+        you all words that contain <code>boo</code>.\n            </p>\n          </div>\n
+        \       </div>\n      </div>\n    </body>\n</html>\n\n"
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 12:41:51 GMT
 recorded_with: VCR 2.9.3

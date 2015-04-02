@@ -1,0 +1,1344 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.heroku.com/login?username=__heroku:user__&password=__heroku:password__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:38 GMT
+      Request-Id:
+      - 114226e7-f17b-4bbb-86f8-9b0cf49ea9cf
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.135789859'
+      Content-Length:
+      - '378'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"allow_tracking":true,"api_key":"__API_KEY__","beta":null,"confirmed":true,"confirmed_at":"2014/11/18
+        01:37:21 -0800","created_at":"2014/11/18 01:37:21 -0800","id":"__USER_ID__@users.heroku.com","email":"__heroku:user__","last_login":"2014/11/25
+        00:52:59 -0800","name":" ","updated_at":"2015/04/02 06:39:42 -0700","verified":false,"verified_at":null}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:38 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:39 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2163'
+      Request-Id:
+      - b7e6e4ff-29e5-4f23-b616-735dd33e5e8b
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.030456306'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:39 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:40 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2162'
+      Request-Id:
+      - 06612aba-9c7e-4493-a963-20528d0276b0
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.045020326'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:40 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","dyno":"api","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:41 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2161'
+      Request-Id:
+      - 84e2b678-3241-46f0-83bb-390efe6e3ba5
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.102687039'
+      Content-Length:
+      - '183'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:40Z","id":"c22dd924-f54a-418b-9fe5-cb73745f0d54","logplex_url":"https://logplex.heroku.com/sessions/d5b55f00-3d2a-4fa9-a763-f59de66a49e0?srv=1427982220","updated_at":"2015-04-02T13:43:40Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:41 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/d5b55f00-3d2a-4fa9-a763-f59de66a49e0?srv=1427982220
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:41 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:40:07.544869+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:18.383750+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:29.324761+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:47.201117+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:40.452031+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:59.950090+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:41:06.433434+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:41 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:42 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2160'
+      Request-Id:
+      - 3ccddb50-56f1-448b-b92b-37a662306355
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.02401173'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:42 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"app","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:43 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2159'
+      Request-Id:
+      - eab9d0b8-a4f6-4613-b2c3-6a7b027f3580
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.130658537'
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:43Z","id":"00bab5ab-60d4-4031-9da9-21c9794969cd","logplex_url":"https://logplex.heroku.com/sessions/d6af1a34-cba3-46e1-b8da-0330c70a7e03?srv=1427982223","updated_at":"2015-04-02T13:43:43Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:43 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/d6af1a34-cba3-46e1-b8da-0330c70a7e03?srv=1427982223
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:44 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:39:58.484774+00:00 app[web.1]: Listening on port: 47415
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:44 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:44 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2158'
+      Request-Id:
+      - 32021908-5a9e-47a1-9160-aea33603408a
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.025493425'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:44 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","dyno":"router","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:45 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2157'
+      Request-Id:
+      - 8013ffc0-7670-48db-b2c7-8a0e545ed30b
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.098176308'
+      Content-Length:
+      - '187'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:45Z","id":"d1e98055-71ff-4fe9-b54f-8810b99ce4c1","logplex_url":"https://logplex.heroku.com/sessions/fcc06c35-9290-4c07-878c-0143bbb1d1ab?srv=1427982225","updated_at":"2015-04-02T13:43:45Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:45 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/fcc06c35-9290-4c07-878c-0143bbb1d1ab?srv=1427982225
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:46 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:42:42.836904+00:00 heroku[router]: at=info method=GET path="/" host=paasal-test-app-all-updated.herokuapp.com request_id=3053416f-f8e8-44c3-9a0e-3d1d75e67055 fwd="95.208.81.73" dyno=web.1 connect=2ms service=30ms status=200 bytes=3570
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:46 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:47 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2156'
+      Request-Id:
+      - 26d639ec-a1c6-4542-9c8e-a1b41743284d
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.030508789'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:47 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:48 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2155'
+      Request-Id:
+      - 2d43514f-809c-4387-a3ef-941b73e39fb7
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.12800967'
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:48Z","id":"0278ff3e-b871-4a15-862f-b16a7ba6dec2","logplex_url":"https://logplex.heroku.com/sessions/02312a93-633c-44da-a6b9-f4eae2264069?srv=1427982228","updated_at":"2015-04-02T13:43:48Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:48 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/02312a93-633c-44da-a6b9-f4eae2264069?srv=1427982228
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:49 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:39:58.543410+00:00 heroku[web.1]: State changed from starting to up
+        2015-04-02T13:39:56.928320+00:00 heroku[web.1]: Starting process with command `node server.js`
+        2015-04-02T13:40:07.544869+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:18.383750+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:29.324761+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:47.201117+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:40.452031+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:59.950090+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:41:06.433434+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:42:42.836904+00:00 heroku[router]: at=info method=GET path="/" host=paasal-test-app-all-updated.herokuapp.com request_id=3053416f-f8e8-44c3-9a0e-3d1d75e67055 fwd="95.208.81.73" dyno=web.1 connect=2ms service=30ms status=200 bytes=3570
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:49 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:50 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2154'
+      Request-Id:
+      - ddbb5324-5258-46f9-b28b-bc514f3325e7
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.029341011'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:50 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:50 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2153'
+      Request-Id:
+      - a66b1e3f-9a3a-4d70-a98d-e2190d758fec
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.024925602'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:50 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","dyno":"api","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:51 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2152'
+      Request-Id:
+      - 6c733641-26e1-430f-ba12-e569edea83f4
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.041519329'
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:40Z","id":"664ff85b-9627-4709-a195-717a617aa13a","logplex_url":"https://logplex.heroku.com/sessions/d5b55f00-3d2a-4fa9-a763-f59de66a49e0?srv=1427982220","updated_at":"2015-04-02T13:43:40Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:51 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/d5b55f00-3d2a-4fa9-a763-f59de66a49e0?srv=1427982220
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:52 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:40:07.544869+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:18.383750+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:29.324761+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:47.201117+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:40.452031+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:59.950090+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:41:06.433434+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:52 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:52 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2151'
+      Request-Id:
+      - 60fdf6c4-79b6-4433-8ae7-495172385ad7
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.0295656'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:52 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"app","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:53 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2150'
+      Request-Id:
+      - 8854cbc9-c049-4d8f-85ab-20a6789b3796
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.035512325'
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:43Z","id":"e64f166a-4c69-4eec-9cde-073760193fa6","logplex_url":"https://logplex.heroku.com/sessions/d6af1a34-cba3-46e1-b8da-0330c70a7e03?srv=1427982223","updated_at":"2015-04-02T13:43:43Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:53 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/d6af1a34-cba3-46e1-b8da-0330c70a7e03?srv=1427982223
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:54 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:39:58.484774+00:00 app[web.1]: Listening on port: 47415
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:54 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:55 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2149'
+      Request-Id:
+      - a607ed2e-999c-4b1f-a154-19438c89508a
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.027470447'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:55 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","dyno":"router","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:55 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2148'
+      Request-Id:
+      - 01adba66-2938-40b5-99f0-803040b66433
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.03773043'
+      Content-Length:
+      - '187'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:45Z","id":"cb685527-df82-4700-bc7e-e61e8a8b2287","logplex_url":"https://logplex.heroku.com/sessions/fcc06c35-9290-4c07-878c-0143bbb1d1ab?srv=1427982225","updated_at":"2015-04-02T13:43:45Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:55 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/fcc06c35-9290-4c07-878c-0143bbb1d1ab?srv=1427982225
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:56 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:42:42.836904+00:00 heroku[router]: at=info method=GET path="/" host=paasal-test-app-all-updated.herokuapp.com request_id=3053416f-f8e8-44c3-9a0e-3d1d75e67055 fwd="95.208.81.73" dyno=web.1 connect=2ms service=30ms status=200 bytes=3570
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:56 GMT
+- request:
+    method: get
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:57 GMT
+      ETag:
+      - '"d791b6b47e65d2caf8043a8d8d98cc56"'
+      Last-Modified:
+      - Thu, 02 Apr 2015 13:41:06 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2147'
+      Request-Id:
+      - d3f93454-4b29-4ac4-aae3-20bec8c9c6d2
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 200 OK
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.05002798'
+      Content-Length:
+      - '414'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"archived_at":null,"buildpack_provided_description":"Node.js","build_stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"created_at":"2015-04-02T13:34:48Z","id":"d6f1e01d-e744-4d61-9efc-7f37fbbd58e7","git_url":"git@heroku.com:paasal-test-app-all-updated.git","maintenance":false,"name":"paasal-test-app-all-updated","owner":{"email":"__heroku:user__","id":"__heroku:id__"},"region":{"id":"59accabd-516d-4f0e-83e6-6e3757701145","name":"us"},"released_at":"2015-04-02T13:38:29Z","repo_size":2703627,"slug_size":12374023,"stack":{"id":"f9f9cbd7-2970-41ef-8db5-3df7123b041f","name":"cedar-14"},"updated_at":"2015-04-02T13:41:06Z","web_url":"https://paasal-test-app-all-updated.herokuapp.com/"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:57 GMT
+- request:
+    method: post
+    uri: https://api.heroku.com/apps/paasal-test-app-all-updated/log-sessions
+    body:
+      encoding: UTF-8
+      string: '{"source":"heroku","tail":false}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept:
+      - application/vnd.heroku+json; version=3
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 13:43:58 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      RateLimit-Remaining:
+      - '2146'
+      Request-Id:
+      - 601d5ba7-c354-466d-b450-dec02ac46dc4
+      Server:
+      - nginx/1.4.6 (Ubuntu)
+      Status:
+      - 201 Created
+      Vary:
+      - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.08291613'
+      Content-Length:
+      - '186'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"created_at":"2015-04-02T13:43:48Z","id":"5a928aef-52b1-4d0c-a409-8ec319f72e93","logplex_url":"https://logplex.heroku.com/sessions/02312a93-633c-44da-a6b9-f4eae2264069?srv=1427982228","updated_at":"2015-04-02T13:43:48Z"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:58 GMT
+- request:
+    method: get
+    uri: https://logplex.heroku.com/sessions/02312a93-633c-44da-a6b9-f4eae2264069?srv=1427982228
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - MochiWeb/1.0 (Any of you quaids got a smint?)
+      Date:
+      - Thu, 02 Apr 2015 13:43:58 GMT
+      Content-Type:
+      - text/html
+      connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        2015-04-02T13:39:58.543410+00:00 heroku[web.1]: State changed from starting to up
+        2015-04-02T13:39:56.928320+00:00 heroku[web.1]: Starting process with command `node server.js`
+        2015-04-02T13:40:07.544869+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:18.383750+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:29.324761+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:47.201117+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:40:40.452031+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:40:59.950090+00:00 heroku[api]: Set maintenance mode on by __heroku:user__
+        2015-04-02T13:41:06.433434+00:00 heroku[api]: Set maintenance mode off by __heroku:user__
+        2015-04-02T13:42:42.836904+00:00 heroku[router]: at=info method=GET path="/" host=paasal-test-app-all-updated.herokuapp.com request_id=3053416f-f8e8-44c3-9a0e-3d1d75e67055 fwd="95.208.81.73" dyno=web.1 connect=2ms service=30ms status=200 bytes=3570
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 13:43:58 GMT
+recorded_with: VCR 2.9.3

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Accept-Encoding:
       - gzip
   response:
@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:22:54 GMT
+      - Thu, 02 Apr 2015 12:33:03 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 62dc6678-623a-4079-5be8-f559cca1bab5
+      - a0f52f02-3106-48eb-7387-abcf48460870
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 7456afc2-5035-4d93-56c7-a7915630fd77::541d0f3f-6221-48a5-b924-2c5f6fe4e052
+      - 1e875cb3-bf32-45c5-50a0-4285f454a20f::8cbcbb51-86a4-451b-964f-f5fb9ae03b23
     body:
-      encoding: US-ASCII
-      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+      encoding: UTF-8
+      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:53 GMT
+  recorded_at: Thu, 02 Apr 2015 12:40:54 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
@@ -44,7 +44,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Content-Type:
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Wed, 25 Mar 2015 16:22:53 GMT
+      - Thu, 02 Apr 2015 12:33:02 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -73,15 +73,15 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       X-Cf-Requestid:
-      - 3d7a934b-9dad-40be-6a24-8f95ac8425fe, ad5c9642-8af5-4e23-577c-bb5acf791664
+      - 471fa93f-d156-4e04-7b76-bd7c36036f60, bf5baf8f-f0fc-4174-4332-0d41db4eb67b
       X-Frame-Options:
       - DENY
     body:
-      encoding: US-ASCII
-      string: ! '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
-        cloud_controller.write password.write openid cloud_controller.read","jti":"abb93e9e-2153-4cc2-84bf-480c5899c389"}'
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"e1494c2f-bd50-40d0-a77d-8b93b25fef58"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:54 GMT
+  recorded_at: Thu, 02 Apr 2015 12:40:55 GMT
 - request:
     method: get
     uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Aapp_never_exists_0123456789
@@ -90,7 +90,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -109,19 +109,27 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:22:54 GMT
+      - Thu, 02 Apr 2015 12:33:03 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 196d1487-af5e-4d0a-4201-f0534c41897f
+      - a84a16e6-23a9-4bdc-7d0d-707989937c3b
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - b39331de-1062-4e8f-5452-a78f7b282653::1db90703-fe35-4be1-9fc9-ab7e55678fd2
+      - 87bdae67-361d-4017-5043-78b1f16cc7ba::72ebfdb9-9bee-40f3-8cd0-beb0c667a545
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"total_results\": 0,\n  \"total_pages\": 1,\n  \"prev_url\":
-        null,\n  \"next_url\": null,\n  \"resources\": [\n\n  ]\n}"
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 0,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+
+          ]
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:54 GMT
+  recorded_at: Thu, 02 Apr 2015 12:40:55 GMT
 recorded_with: VCR 2.9.3

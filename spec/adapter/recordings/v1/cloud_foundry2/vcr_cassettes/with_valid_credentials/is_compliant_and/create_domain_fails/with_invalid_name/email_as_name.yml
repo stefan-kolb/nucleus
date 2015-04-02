@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Accept-Encoding:
       - gzip
   response:
@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:22:55 GMT
+      - Thu, 02 Apr 2015 12:33:04 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 7224412c-a6b6-4378-5cb1-45a16e180009
+      - f27e2110-5cfa-4e7f-5ea0-61c4cc8c2dab
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 908e0da1-45c2-48a1-7cc2-6dfcff214003::0f9269b8-7fc3-436e-a7b5-c0069c90a7d7
+      - f9ec62f7-3795-4a5a-561d-6eb5291eb091::2a63f58c-d2a1-4bd7-88a5-06e981ae706c
     body:
-      encoding: US-ASCII
-      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+      encoding: UTF-8
+      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:55 GMT
+  recorded_at: Thu, 02 Apr 2015 12:40:56 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
@@ -44,7 +44,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Content-Type:
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Wed, 25 Mar 2015 16:22:55 GMT
+      - Thu, 02 Apr 2015 12:33:03 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -73,13 +73,13 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       X-Cf-Requestid:
-      - 12fc4496-d07c-4be5-6df7-55031b090088, 60364f99-b1e1-47e4-5627-6947e1a24274
+      - 139cc869-0356-4a45-69eb-93be87d70fcb, ea213959-2b5e-4ac0-5ed1-f016c16df130
       X-Frame-Options:
       - DENY
     body:
-      encoding: US-ASCII
-      string: ! '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
-        cloud_controller.write password.write openid cloud_controller.read","jti":"fdca07c2-631a-48b1-8f5a-c2dab372ad14"}'
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"f337db6b-aa2b-42dc-90a0-c4a4c2757159"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:55 GMT
+  recorded_at: Thu, 02 Apr 2015 12:40:56 GMT
 recorded_with: VCR 2.9.3

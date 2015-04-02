@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Accept-Encoding:
       - gzip
   response:
@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:25:20 GMT
+      - Thu, 02 Apr 2015 12:35:15 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 149ab6e9-efb3-4858-65af-88c37f4b278d
+      - 6364423d-c17b-4805-51b5-99b01864585e
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - d1ba98c6-c96b-4a44-7b37-0d3c74b9b484::43c1b884-9878-4b72-94ac-6586c872557f
+      - f9222ec3-2a5b-4b9e-54cb-3f9d0cf7bffd::d3d2666a-82ec-4f2a-a113-a4e0bbe30c68
     body:
-      encoding: US-ASCII
-      string: ! '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
+      encoding: UTF-8
+      string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:25:20 GMT
+  recorded_at: Thu, 02 Apr 2015 12:43:06 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
@@ -44,7 +44,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Content-Type:
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Wed, 25 Mar 2015 16:25:20 GMT
+      - Thu, 02 Apr 2015 12:35:14 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -73,15 +73,15 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       X-Cf-Requestid:
-      - a44cb4f9-dd1d-496a-6aa0-f7d20bd05761, 02aefb76-af41-46af-5e66-44ce7141f964
+      - 5e5fe6c0-26d7-4dee-5254-22b472f34b49, 5bc51d2a-bd72-4645-48d5-ee4f12e2b45e
       X-Frame-Options:
       - DENY
     body:
-      encoding: US-ASCII
-      string: ! '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
-        cloud_controller.write password.write openid cloud_controller.read","jti":"a1822374-d79c-4a97-a949-52b04b40422c"}'
+      encoding: UTF-8
+      string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
+        cloud_controller.write password.write openid cloud_controller.read","jti":"64fa4644-e377-4720-9499-1952b568298b"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:25:20 GMT
+  recorded_at: Thu, 02 Apr 2015 12:43:06 GMT
 - request:
     method: delete
     uri: https://api.10.244.0.34.xip.io/v2/apps/app_never_exists_0123456789
@@ -90,7 +90,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -109,21 +109,25 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:25:21 GMT
+      - Thu, 02 Apr 2015 12:35:15 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 40eb8049-2639-418b-49dd-6f9f8e7171ac
+      - 17a91254-270d-4072-7b07-c03188c0d4ef
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 5d28c9ce-d911-46af-5f08-36e7dfaca8c1::c1bb9e95-a6ac-4fe0-8792-906e1dc37ee5
+      - eb581db5-67fc-46c0-4a56-f127b7182c2a::4008c58f-bc64-4e9e-ae2a-6997a49c82cc
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"code\": 100004,\n  \"description\": \"The app name could not
-        be found: app_never_exists_0123456789\",\n  \"error_code\": \"CF-AppNotFound\"\n}\n"
+      encoding: UTF-8
+      string: |
+        {
+          "code": 100004,
+          "description": "The app name could not be found: app_never_exists_0123456789",
+          "error_code": "CF-AppNotFound"
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:25:21 GMT
+  recorded_at: Thu, 02 Apr 2015 12:43:06 GMT
 - request:
     method: get
     uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Aapp_never_exists_0123456789
@@ -132,7 +136,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Basic:
@@ -151,19 +155,27 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Wed, 25 Mar 2015 16:25:21 GMT
+      - Thu, 02 Apr 2015 12:35:15 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 4ee38408-90af-4671-5da3-18764d72e663
+      - 5b195e5f-9533-4f50-727c-0beae1463c26
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 18b7279a-2c22-4bf7-7253-b204ca079108::80a4a9ce-6db7-4b4f-bbff-a5a56935dfc4
+      - 948be5c3-38ed-46f4-6465-4a66a2d2a99d::e7345533-009c-48c2-83e5-c2c13b8e52e6
     body:
-      encoding: US-ASCII
-      string: ! "{\n  \"total_results\": 0,\n  \"total_pages\": 1,\n  \"prev_url\":
-        null,\n  \"next_url\": null,\n  \"resources\": [\n\n  ]\n}"
+      encoding: UTF-8
+      string: |-
+        {
+          "total_results": 0,
+          "total_pages": 1,
+          "prev_url": null,
+          "next_url": null,
+          "resources": [
+
+          ]
+        }
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:25:21 GMT
+  recorded_at: Thu, 02 Apr 2015 12:43:06 GMT
 recorded_with: VCR 2.9.3
