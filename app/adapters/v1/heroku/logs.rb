@@ -3,28 +3,18 @@ module Paasal
     module V1
       class Heroku < Stub
         module Logs
-          def available_log_types
-            log_types = {}
-            log_types[API::Application::LogfileType::API] = { source: 'heroku', dyno: 'api' }
-            log_types[API::Application::LogfileType::APPLICATION] = { source: 'app' }
-            log_types[API::Application::LogfileType::REQUEST] = { source: 'heroku', dyno: 'router' }
-            # TODO: filter only for web and worker dynos (must be merged manually :/)
-            log_types[API::Application::LogfileType::SYSTEM] = { source: 'heroku' }
-            log_types
-          end
-
-          def request_body(log_id)
-            return {} if log_id == :all
-            available_log_types[log_id]
-          end
+          # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
+          CRLF = "\r\n"
 
           def logs(application_id)
-            # fails with 404 if application is not available
-            get("/apps/#{application_id}")
+            # fails with 404 if application is not available and serves for timestampts
+            app = get("/apps/#{application_id}").body
 
             available_log_files = []
             available_log_types.keys.each do |type|
-              available_log_files.push(id: type, name: type, type: type)
+              # TODO: right now, we always assume the log has recently been updated
+              available_log_files.push(id: type, name: type, type: type,
+                                       created_at: app[:created_at], updated_at: Time.now.utc.iso8601)
             end
             available_log_files
           end
@@ -38,6 +28,24 @@ module Paasal
             available_log_types.key? log_id.to_sym
           end
 
+          def log_entries(application_id, log_id)
+            unless log?(application_id, log_id)
+              fail Errors::AdapterResourceNotFoundError,
+                   "Invalid log file '#{log_id}', not available for application '#{application_id}'"
+            end
+
+            return build_log_entries(application_id) if log_id.to_sym == API::Application::LogfileType::BUILD
+
+            request_body = request_body(log_id.to_sym).merge(tail: false)
+            log = post("/apps/#{application_id}/log-sessions", body: request_body).body
+            logfile = get(log[:logplex_url], headers: {}).body
+            # process to entries
+            entries = []
+            # skip empty logs, which are detected as Hash by the http client
+            logfile.split(CRLF).each { |logfile_line| entries.push logfile_line } unless logfile == {}
+            entries
+          end
+
           def tail(application_id, log_id, stream)
             # Currently no tailing for build log possible
             if log_id == API::Application::LogfileType::BUILD
@@ -49,6 +57,23 @@ module Paasal
               log = post("/apps/#{application_id}/log-sessions", body: request_body).body
               tail_http_response(log[:logplex_url], stream)
             end
+          end
+
+          private
+
+          def available_log_types
+            log_types = {}
+            log_types[API::Application::LogfileType::API] = { source: 'heroku', dyno: 'api' }
+            log_types[API::Application::LogfileType::APPLICATION] = { source: 'app' }
+            log_types[API::Application::LogfileType::REQUEST] = { source: 'heroku', dyno: 'router' }
+            # TODO: filter only for web and worker dynos (must be merged manually :/)
+            log_types[API::Application::LogfileType::SYSTEM] = { source: 'heroku' }
+            log_types
+          end
+
+          def request_body(log_id)
+            return {} if log_id == :all
+            available_log_types[log_id]
           end
 
           def build_log_entries(application_id)
@@ -69,20 +94,6 @@ module Paasal
               next if line_entry[:line].strip.empty?
               # push and remove all trailing newline characters
               entries.push line_entry[:line].chomp('')
-            end
-            entries
-          end
-
-          def log_entries(application_id, log_id)
-            return build_log_entries(application_id) if log_id.to_sym == API::Application::LogfileType::BUILD
-
-            request_body = request_body(log_id.to_sym).merge(tail: false)
-            log = post("/apps/#{application_id}/log-sessions", body: request_body).body
-            logfile = get(log[:logplex_url], headers: {}).body
-            # process to entries
-            entries = []
-            logfile.split(CRLF).each do |logfile_line|
-              entries.push logfile_line
             end
             entries
           end

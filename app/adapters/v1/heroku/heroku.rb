@@ -20,7 +20,8 @@ module Paasal
 
         def authenticate(username, password)
           log.debug "Authenticate @ #{@endpoint_url}"
-          response = Excon.post("#{@endpoint_url}/login?username=#{username}&password=#{password}")
+          response = Excon.new("#{@endpoint_url}/login?username=#{username}&password=#{password}",
+                               ssl_verify_peer: @check_certificates).post
 
           # Heroku returns 404 for invalid credentials
           fail Errors::AuthenticationError, 'Heroku says the credentials are invalid' if response.status == 404
