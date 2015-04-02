@@ -3,7 +3,6 @@ module Paasal
     module V1
       class ApplicationLogs < Grape::API
         helpers Paasal::SharedParamsHelper
-        helpers Paasal::StreamingHelper
 
         # TODO: find a way to describe the actual response formats with grape-swagger
 
@@ -131,58 +130,9 @@ module Paasal
                   return archiver.compress(tmp_dir, params[:file_format]).set_encoding('ASCII-8BIT').read
                 ensure
                   # make sure tmp directory is deleted again
-                  FileUtils.rm_rf(file_path)
+                  FileUtils.rm_rf(tmp_dir)
                 end
               end
-            end
-
-            desc 'Tail a log file and receive updates with the chunked response' do
-              failure [[200, 'Returning chunked log file contents']].concat ErrorResponses.standard_responses
-            end
-            get '/tail' do
-              # we need to check file existence before, otherwise we would have returned status 200 already
-              log_exists = with_authentication { adapter.log?(params[:application_id], params[:log_id]) }
-              unless log_exists
-                fail Errors::AdapterResourceNotFoundError,
-                     "Invalid log file '#{params[:log_id]}', not available for application '#{params[:application_id]}'"
-              end
-
-              tail_polling = nil
-              stream = RackStreamCallback.new(self)
-              after_connection_error do
-                # tidy resource when the connection was terminated with an error
-                log.debug('Connection error reported by rack-stream')
-                stream.closed = true
-                close
-              end
-
-              after_open do
-                begin
-                  # execute the actual request and stream the logging message
-                  tail_polling = with_authentication { adapter.tail(params[:application_id], params[:log_id], stream) }
-
-                  # this should at the moment only apply to tests, closing the tailing action when X seconds have passed
-                  if env['async.callback.auto.timeout']
-                    EM.add_timer(env['async.callback.auto.timeout'].to_i) do
-                      stream.closed = true
-                      close
-                    end
-                  end
-                rescue StandardError => e
-                  stream.closed = true
-                  close
-                end
-              end
-
-              before_close do
-                log.debug 'Closing API stream, stop tail updates...'
-                tail_polling.stop if tail_polling
-              end
-
-              status 200
-              header 'Content-Type', 'text/plain'
-              # TODO: will be included in response, can this be avoided or is this standard conform?
-              ''
             end
           end
         end # end of resource

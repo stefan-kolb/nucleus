@@ -60,6 +60,7 @@ module Paasal
         mount Paasal::API::V1::ApplicationLifecycle
         # application - logging operations
         mount Paasal::API::V1::ApplicationLogs
+        mount Paasal::API::V1::ApplicationLogsTail
         # application - scaling operations
         mount Paasal::API::V1::ApplicationScaling
       end
