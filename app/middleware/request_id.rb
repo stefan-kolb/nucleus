@@ -13,12 +13,14 @@ module Paasal
 
       def call(env)
         # TODO: handle cascade, id already assigned to the thread
-        # TODO: save per request !?
         # fetch the ID
         Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID'] || SecureRandom.uuid
+        # make sure there is a request id assigned
+        env['HTTP_X_REQUEST_ID'] = Thread.current[:paasal_request_id]
         # execute call
         status, headers, body = @app.call(env)
         # assign ID to response headers
+        headers = headers.deep_dup if headers.frozen?
         headers['X-Request-ID'] ||= Thread.current[:paasal_request_id]
         [status, headers, body]
       end
