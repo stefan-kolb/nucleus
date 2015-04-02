@@ -235,8 +235,7 @@ shared_examples 'valid:applications:data:deploy' do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/data/deploy",
                { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.zip',
-                                                    'application/zip') },
-               request_headers
+                                                    'application/zip') }, request_headers
         end
         include_examples 'contains the request ID'
         it 'has status 204' do
@@ -255,8 +254,7 @@ shared_examples 'valid:applications:data:deploy' do
         before do
           post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/data/deploy",
                { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.tar.gz',
-                                                    'application/gzip') },
-               request_headers
+                                                    'application/gzip') }, request_headers
         end
         include_examples 'contains the request ID'
         it 'has status 204' do
@@ -395,8 +393,10 @@ shared_examples 'valid:app:wordfinder' do
   it 'request has status 200' do
     @live_app.status = 200
   end
-  it 'is the wordfinder application' do
+  it 'is the wordfinder application title' do
     expect(@live_app.body).to include('<title>Word Finder</title>')
+  end
+  it 'is the wordfinder application body' do
     expect(@live_app.body).to include('I took every english word (over 200k words) and built a little app '\
           'that will help you find words that contain specific characters')
   end
@@ -416,6 +416,8 @@ shared_examples 'valid:applications:web' do
     describe 'for app with min properties', :as_cassette do
       before do
         app = get("/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated", request_headers)
+        # CF Hack, sometimes this app requires more time before the route is ready
+        wait(5.seconds).for { Excon.get(app[:web_url]).body }.not_to include('404 Not Found: Requested route')
         # use excon so that the external request is recorded
         @live_app = Excon.get(app[:web_url])
       end
