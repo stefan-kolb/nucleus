@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2 < Stub
+      class OpenshiftV2 < Stub
         module Application
           def applications
             response = get('/applications')

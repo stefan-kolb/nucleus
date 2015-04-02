@@ -1,17 +1,17 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2 < Stub
-        module Data
-          def deploy(application_id, file, file_compression_format)
+      class OpenshiftV2 < Stub
+        module Lifecycle
+          def start(application_id)
             # TODO: implement me
           end
 
-          def download(application_id, compression_format)
+          def stop(application_id)
             # TODO: implement me
           end
 
-          def rebuild(application_id)
+          def restart(application_id)
             # TODO: implement me
           end
         end

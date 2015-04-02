@@ -119,7 +119,7 @@ First, we need to acquire an adapter instance. Choose between one of the followi
 `Paasal::Adapters::V1::CloudControl`,
 `Paasal::Adapters::V1::CloudFoundry2`,
 `Paasal::Adapters::V1::Heroku`,
-`Paasal::Adapters::V1::Openshift`
+`Paasal::Adapters::V1::OpenshiftV2`
 
 Initialize the adapter with the parameters:
 
@@ -264,20 +264,20 @@ GET /api/vendors/cloud-foundry/providers
       }
     },
     {
-      "id": "openshift2",
+      "id": "openshift_v2",
       "created_at": "2015-02-25T08:38:30Z",
       "updated_at": "2015-02-25T08:38:30Z",
       "name": "Openshift 2",
       "key": "openshift-2",
       "_links": {
         "self": {
-          "href": "http://localhost:9292/api/vendors/openshift2"
+          "href": "http://localhost:9292/api/vendors/openshift_v2"
         },
         "parent": {
           "href": "http://localhost:9292/api"
         },
         "providers": {
-          "href": "http://localhost:9292/api/vendors/openshift2/providers"
+          "href": "http://localhost:9292/api/vendors/openshift_v2/providers"
         }
       }
     }
@@ -533,7 +533,7 @@ A vendor is reflected by an adapter implementation, but the providers and their 
 ```yaml
   ---
   name: "Openshift 2"
-  id: "openshift2"
+  id: "openshift_v2"
   providers:
     -
       name: "Openshift Online"

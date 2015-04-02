@@ -1,21 +1,21 @@
 module Paasal
   module Adapters
     module V1
-      class Openshift2 < Stub
-        module Domains
-          def domains(application_id)
+      class OpenshiftV2 < Stub
+        module Logs
+          def logs(application_name_or_id)
             # TODO: implement me
           end
 
-          def domain(application_id, entity_id)
+          def log?(application_name_or_id, log_id)
             # TODO: implement me
           end
 
-          def create_domain(application_id, entity_hash)
+          def tail(application_name_or_id, log_id, stream)
             # TODO: implement me
           end
 
-          def delete_domain(application_id, entity_id)
+          def log_entries(application_name_or_id, log_id)
             # TODO: implement me
           end
         end
