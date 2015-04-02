@@ -11,8 +11,6 @@ module Paasal
           required_details: { request: { POST: true, PATCH: false }, response: true },
           allow_blank: false }
 
-        expose :key, documentation: { type: String, desc: 'Vendor key, e.g. \'cloud-foundry\'' }
-
         expose :providers, documentation: {
           type: 'Provider',
           is_array: true,
