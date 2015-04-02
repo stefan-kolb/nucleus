@@ -10,16 +10,24 @@ describe Paasal::AdapterHelper do
   before do
     helper.instance_variable_set :@env, 'HTTP_AUTHORIZATION' =>
                                           'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '')
-    RequestStore.store[:adapter] = adapter
-    RequestStore.store[:cache_key] = 'a unique cache key!'
+
+    cache_key = 'a unique cache key!'
+    cache_dao = double(Paasal::DB::CacheDao)
+    allow_any_instance_of(Paasal::AdapterHelper).to receive(:request_cache) { cache_dao }
+    allow(cache_dao).to receive(:get) do |key|
+      key.end_with?('adapter') ? adapter : cache_key
+    end
+    RequestStore.store[:cache_key] = cache_key
     allow(adapter).to receive(:uncache)
     allow(adapter).to receive(:cache)
+    allow(adapter).to receive(:cache_key)
   end
 
   describe '#with_authentication' do
     context 'using OAuth2 authentication' do
       context 'when cache is outdated' do
         before do
+          allow(adapter).to receive(:cached) { oauth2_client }
           counted = 0
           expect   = 1
           allow(calculator).to receive(:calc) do

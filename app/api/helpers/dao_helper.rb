@@ -27,6 +27,12 @@ module Paasal
       create_dao(Paasal::DB::AdapterDao)
     end
 
+    # Get a {Paasal::DB::CacheDao} instance
+    # @return [Paasal::DB::CacheDao] DAO instance
+    def request_cache
+      create_dao(Paasal::DB::CacheDao)
+    end
+
     def load_endpoint(loading_params = params)
       load_entity(endpoint_dao, :endpoint_id, 'endpoint', loading_params)
     end

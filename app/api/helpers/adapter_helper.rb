@@ -6,7 +6,7 @@ module Paasal
     # Get the adapter that is assigned to the current request (via endpoint)
     # @return [Paasal::Adapters::BaseAdapter] adapter for the currently used endpoint and its vendor
     def adapter
-      RequestStore.store[:adapter]
+      request_cache.get("#{@env['HTTP_X_REQUEST_ID']}.adapter")
     end
 
     # Executes a block, which should be an adapter call, using the authentication information.
@@ -20,7 +20,7 @@ module Paasal
         response = yield
       rescue Errors::OAuth2AuthenticationError
         username, password = username_password
-        refresh_token RequestStore.store[:adapter].cached(username, password)
+        refresh_token adapter.cached(adapter.cache_key(username, password))
         response = yield
       rescue Errors::AuthenticationError
         log.debug 'Call failed, start repetition by removing outdated cache entry'
@@ -59,11 +59,11 @@ module Paasal
     # @return [void]
     def re_authenticate
       log.debug('Invokded re-authentication')
-      RequestStore.store[:adapter].uncache RequestStore.store[:cache_key]
+      adapter.uncache(request_cache.get("#{@env['HTTP_X_REQUEST_ID']}.cache_key"))
       username, password = username_password
+      cache_key = adapter.cache_key(username, password)
       # raises 401 if the authentication did not only expire, but became completely invalid
-      adapter = RequestStore.store[:adapter]
-      adapter.cache(username, password, adapter.authenticate(username, password))
+      adapter.cache(cache_key, adapter.authenticate(username, password))
     end
 
     # Extract the username and password from the current HTTP request.

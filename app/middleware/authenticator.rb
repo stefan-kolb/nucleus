@@ -16,7 +16,7 @@ module Paasal
 
       begin
         # should be either valid or throws an exception
-        if valid?(auth)
+        if valid?(auth, env)
           env['REMOTE_USER'] = auth.username
           return @app.call(env)
         end
@@ -52,9 +52,9 @@ module Paasal
       format('Basic realm="%s"', @realm)
     end
 
-    def valid?(auth)
+    def valid?(auth, env)
       route_args = auth.instance_variable_get(:@env)['rack.routing_args']
-      @authenticator.call(*auth.credentials << route_args)
+      @authenticator.call(*auth.credentials << route_args << env)
     end
   end
 end

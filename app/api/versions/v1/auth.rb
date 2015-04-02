@@ -6,7 +6,7 @@ module Paasal
 
         # defines the authentication for all subsequently mounted routes
         http_basic(realm: 'PaaSal API Authorization @ %{endpoint_id}',
-                   realm_replace: [:endpoint_id]) do |username, password, params|
+                   realm_replace: [:endpoint_id]) do |username, password, params, env|
           if username.nil? || username.empty? || password.nil? || password.empty?
             # never allow empty username and / or password
             false
@@ -15,18 +15,23 @@ module Paasal
             endpoint = load_endpoint(params)
             # resolve the required adapter
             index_entry = adapter_dao.get params[:endpoint_id]
-            # save info for the current request, no need to retrieve multiple times
-            RequestStore.store[:endpoint] = endpoint
             # use the already secured (https) URL of the index_entry
-            RequestStore.store[:adapter] = index_entry.adapter_clazz.new(index_entry.url,
-                                                                         endpoint.app_domain, !endpoint.trust)
+            adapter = index_entry.adapter_clazz.new(index_entry.url, endpoint.app_domain, !endpoint.trust)
 
-            unless RequestStore.store[:adapter].cache?(username, password)
+            # save info for the current request, no need to retrieve multiple times
+            request_cache.set("#{env['HTTP_X_REQUEST_ID']}.adapter", adapter)
+            request_cache.set("#{env['HTTP_X_REQUEST_ID']}.endpoint", endpoint)
+
+            cache_key = adapter.cache_key(username, password)
+            # THREAD HACK to work with deferred tasks (log tailing), cache auth key
+            request_cache.set("#{env['HTTP_X_REQUEST_ID']}.auth.cache.key", cache_key)
+
+            unless adapter.cache?(cache_key)
               # no auth object available, perform authentication first
               # throws an error if the authentication failed
-              auth_object = RequestStore.store[:adapter].authenticate(username, password)
+              auth_object = adapter.authenticate(username, password)
               # cache the auth object so it does not have to be retrieved per request
-              RequestStore.store[:adapter].cache(username, password, auth_object)
+              adapter.cache(cache_key, auth_object)
             end
             # auth passed
             true

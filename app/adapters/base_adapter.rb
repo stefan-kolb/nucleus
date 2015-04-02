@@ -5,9 +5,6 @@ module Paasal
       include HttpTailClient
       include Logging
 
-      # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
-      CRLF = "\r\n"
-
       def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
         fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
         @endpoint_url = endpoint_url
@@ -25,12 +22,10 @@ module Paasal
       thread_config_accessor :auth_objects_cache, default: {}
 
       # Cache the auth information.
-      # @param [String] username username for cache key
-      # @param [String] password password for cache key
+      # @param [String] key cache key
       # @param [Hash<String,String>, Paasal::OAuth2Client] auth_object auth information to be cached
       # @return [void]
-      def cache(username, password, auth_object)
-        key = cache_key(username, password)
+      def cache(key, auth_object)
         auth_objects_cache[key] = auth_object
       end
 
@@ -40,21 +35,19 @@ module Paasal
         auth_objects_cache.delete key
       end
 
-      # Are there cached information for the current user?
-      # @param [String] username username for cache lookup
-      # @param [String] password password for cache lookup
+      # Are there cached information for this key?
+      # @param [String] key cache key
       # @return [true, false] true if has cached auth info, else false
-      def cache?(username, password)
-        auth_objects_cache.key? cache_key(username, password)
+      def cache?(key)
+        auth_objects_cache.key? key
       end
 
       # Get the currently cached authentication object.
-      # @param [String] username username for cache lookup
-      # @param [String] password password for cache lookup
+      # @param [String] key cache key
       # @return [Hash<String,String>, Paasal::OAuth2Client] cached authentication information
-      def cached(username, password)
-        return nil unless cache?(username, password)
-        auth_objects_cache[cache_key(username, password)]
+      def cached(key)
+        return nil unless cache?(key)
+        auth_objects_cache[key]
       end
 
       # Get the cached authentication object, being either the OAuth2Client or the Authorization header.
@@ -83,8 +76,6 @@ module Paasal
           fail AdapterRequestError, 'Unsupported adapter call method. Allowed are: GET, POST, PATCH, PUT, DELETE'
         end
       end
-
-      private
 
       def cache_key(username, password)
         # calculate the cache only once per request

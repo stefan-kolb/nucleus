@@ -17,6 +17,7 @@ begin
     Paasal::DB::ProviderDao.instance api_version
     Paasal::DB::EndpointDao.instance api_version
     Paasal::DB::AdapterDao.instance api_version
+    Paasal::DB::CacheDao.instance api_version
   end
 
   puts 'Initialization complete & configuration locked!'

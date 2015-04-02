@@ -17,6 +17,11 @@ module Paasal
       default_error_formatter :json
       format :json
 
+      before do
+        # env is not injected in every method, we assure to have always access by making it available as instance var
+        @env = env
+      end
+
       # rescue ALL errors and comply to the error schema
       rescue_from :all do |e|
         # log the stacktrace only in debug mode
