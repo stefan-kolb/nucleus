@@ -44,7 +44,7 @@ module Paasal
         end
 
         # send response via Rack, since Grape does not support error! or entities via :with in the rescue block
-        rack_response API::Models::Error.new(entity).to_json, entity[:status], entity[:headers]
+        ::Rack::Response.new([API::Models::Error.new(entity).to_json], entity[:status], entity[:headers]).finish
       end
 
       # ATTENTION (!) BE AWARE THAT THE APIs MUST ALWAYS
