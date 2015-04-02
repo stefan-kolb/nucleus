@@ -28,7 +28,7 @@ SimpleCov.command_name 'spec:suite:adapters'
 # TODO: implement multi-version support for tests
 # Setup the rack application, use API v1
 Airborne.configure do |config|
-  config.rack_app = Paasal::Rack.app(true)
+  config.rack_app = Paasal::Rack.app
   config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
 end
 

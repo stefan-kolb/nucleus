@@ -28,6 +28,9 @@ require 'factory_girl'
 require 'faker'
 require 'tmpdir'
 
+# we need this to detect whether to apply test middleware (tailing hack)
+ENV['RACK_ENV'] = 'test'
+
 if ENV['CODECLIMATE_REPO_TOKEN']
   require 'simplecov'
   require 'codeclimate-test-reporter'

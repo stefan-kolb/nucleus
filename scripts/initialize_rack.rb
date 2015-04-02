@@ -2,7 +2,7 @@ require 'rack'
 
 module Paasal
   module Rack
-    def self.app(test = false)
+    def self.app
       ::Rack::Builder.new do
         #########################
         ### Setup API Loggers ###
@@ -18,13 +18,6 @@ module Paasal
         #########################
         ### Setup Rack Server ###
         #########################
-
-        if test
-          # use this middleware only within tests. It simulates the behavior of EM capable servers within rspec tests
-          require 'spec/adapter/helpers/mock_stream_server'
-          use MockStreamServer
-        end
-        use ::Rack::Stream
 
         # X-Request-ID
         use Paasal::Rack::RequestId
