@@ -10,12 +10,11 @@ module Paasal
 
     def initialize(hash = nil)
       return if hash.nil?
-      hash = HashWithIndifferentAccess.new hash
-      @name = hash[:name]
-      @url = hash[:url]
-      @app_domain = hash[:app_domain]
-      @id = hash[:id]
-      @trust = hash.key? :trust ? hash[:trust] : false
+      @name = hash['name']
+      @url = hash['url']
+      @app_domain = hash['app_domain']
+      @id = hash['id']
+      @trust = hash.key?('trust') ? hash['trust'] : false
     end
 
     def representation

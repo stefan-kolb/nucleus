@@ -8,13 +8,12 @@ module Paasal
 
     def initialize(hash = nil)
       return if hash.nil?
-      hash = HashWithIndifferentAccess.new hash
-      @name = hash[:name]
-      @id = hash[:id]
+      @name = hash['name']
+      @id = hash['id']
       @endpoints = []
 
-      return unless hash.key?(:endpoints)
-      @endpoints = hash[:endpoints].map! { |e| e.is_a?(Paasal::Endpoint) ? e : Paasal::Endpoint.new(e) }
+      return unless hash.key?('endpoints')
+      @endpoints = hash['endpoints'].map! { |e| e.is_a?(Paasal::Endpoint) ? e : Paasal::Endpoint.new(e) }
     end
 
     def representation
