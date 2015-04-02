@@ -1,4 +1,4 @@
-import 'lib/tasks/test_suites.rake'
+import 'spec/test_suites.rake'
 
 require 'rake'
 require 'rubygems'
