@@ -14,6 +14,8 @@ module Paasal
   # This {EmHttpStreamRecorder class} is designed to only work with {VCR} and the {EventMachine::HttpClient},
   # which originates from the 'em-http-request' gem.
   class EmHttpStreamRecorder
+    CONN = EventMachine::HttpConnection
+    STUB = EventMachine::HttpStubConnection
     # Create a new instance of the recorder.
     # @param [Object] test rspec test instance, provides access to `allow` and `receive` methods
     # @param [String] data_dir parent directory where to save or load the http stream messages
@@ -52,14 +54,13 @@ module Paasal
       FileUtils.rm_r(dir) if File.exist? dir
       FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
 
-      @test.allow_any_instance_of(EventMachine::HttpStubConnection).to(
-        @test.receive(:receive_data).and_wrap_original do |om, *args|
-          chunk = args[0]
-          # record the chunk
-          record_chunk(cassette_path(param_hash, chunk_number), chunk)
-          # continue actual call
-          om.call(*args)
-        end)
+      @test.allow_any_instance_of(STUB).to @test.receive(:receive_data).and_wrap_original do |om, *args|
+        chunk = args[0]
+        # record the chunk
+        record_chunk(cassette_path(param_hash, chunk_number), chunk)
+        # continue actual call
+        om.call(*args)
+      end
 
       # create the http connection that listens to messages
       yield
@@ -81,7 +82,7 @@ module Paasal
     def setup_http_connection_mock
       # fake successful http connection
       @test.allow(EventMachine).to @test.receive(:bind_connect) do |*args, &block|
-        @connection = EventMachine::HttpStubConnection.new("paasal.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
+        @connection = STUB.new("paasal.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
         # ignore timeouts that are being applied
         @test.allow(@connection).to @test.receive(:pending_connect_timeout=) {}
         @test.allow(@connection).to @test.receive(:comm_inactivity_timeout=) {}
@@ -92,19 +93,18 @@ module Paasal
     end
 
     def setup_chunk_replay_mock(replay_cassettes_dir)
-      @test.allow_any_instance_of(EventMachine::HttpConnection).to(
-        @test.receive(:activate_connection).and_wrap_original do |om, *args|
-          om.call(*args)
-          # once connected, start pushing chunks
-          chunk_cassettes = Queue.new
-          Find.find(replay_cassettes_dir) { |f| chunk_cassettes.push(f) if File.file?(f) }
-          dispatch_chunk = lambda do
-            @connection.receive_data(replay_chunk(chunk_cassettes.pop))
-            # send a new message each 200ms
-            EM.add_timer(0.2) { dispatch_chunk.call } if chunk_cassettes.length > 0
-          end
-          EM.add_timer(0.5) { dispatch_chunk.call }
-        end)
+      @test.allow_any_instance_of(CONN).to @test.receive(:activate_connection).and_wrap_original do |om, *args|
+        om.call(*args)
+        # once connected, start pushing chunks
+        chunk_cassettes = Queue.new
+        Find.find(replay_cassettes_dir) { |f| chunk_cassettes.push(f) if File.file?(f) }
+        dispatch_chunk = lambda do
+          @connection.receive_data(replay_chunk(chunk_cassettes.pop))
+          # send a new message each 200ms
+          EM.add_timer(0.2) { dispatch_chunk.call } if chunk_cassettes.length > 0
+        end
+        EM.add_timer(1) { dispatch_chunk.call }
+      end
     end
 
     def replay_chunk(cassette)
