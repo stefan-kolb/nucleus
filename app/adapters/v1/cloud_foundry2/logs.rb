@@ -5,35 +5,44 @@ module Paasal
         module Logs
           LOGGREGATOR_TYPES = [API::Application::LogfileType::API, API::Application::LogfileType::APPLICATION,
                                API::Application::LogfileType::REQUEST, API::Application::LogfileType::SYSTEM]
+          # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
           CRLF = "\r\n"
           WSP  = "\s"
 
           def logs(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
-            available_log_files = []
+            # retrieve app for timestamps only :/
+            app_created = get("/v2/apps/#{app_guid}").body[:metadata][:created_at]
+            logs = []
 
-            log_files_list = download_file(app_guid, 'logs', true)
-            if log_files_list
+            begin
+              log_files_list = download_file(app_guid, 'logs')
               # parse raw response to array
               log_files_list.split(CRLF).each do |logfile_line|
-                log_filename = logfile_line.rpartition(' ').first.strip
-                if log_filename == 'staging_task.log'
+                filename = logfile_line.rpartition(' ').first.strip
+                if filename == 'staging_task.log'
+                  filename = 'build'
                   log_type = API::Application::LogfileType::BUILD
                 else
                   log_type = API::Application::LogfileType::OTHER
                 end
-                available_log_files.push(id: log_filename, name: log_filename, type: log_type)
+                # TODO: right now, we always assume the log has recently been updated
+                logs.push(id: filename, name: filename, type: log_type, created_at: app_created,
+                          updated_at: Time.now.utc.iso8601)
               end
+            rescue Errors::ApiError
+              log.debug('no logs directory found for cf application')
             end
 
             # add the default logtypes, available according to:
             # http://docs.cloudfoundry.org/devguide/deploy-apps/streaming-logs.html#format
             LOGGREGATOR_TYPES.each do |type|
-              available_log_files.push(id: type, name: type, type: type)
+              logs.push(id: type, name: type, type: type, created_at: app_created, updated_at: Time.now.utc.iso8601)
             end
-            # TODO: 'all' is probably not perfect, since the build wont be included
-            available_log_files.push(id: 'all', name: 'all', type: API::Application::LogfileType::OTHER)
-            available_log_files
+            # TODO: 'all' is probably not perfect, since the build log wont be included
+            logs.push(id: 'all', name: 'all', type: API::Application::LogfileType::OTHER, created_at: app_created,
+                      updated_at: Time.now.utc.iso8601)
+            logs
           end
 
           def log?(application_name_or_id, log_id)
@@ -43,18 +52,17 @@ module Paasal
             # checks also if application is even valid
             response = get("/v2/apps/#{app_guid}/instances/0/files/logs/#{log_id}",
                            follow_redirects: false, expects: [200, 302, 400])
-            return true if log_stream? log_id
-            return true if response == 200
+            return true if response == 200 || log_stream?(log_id)
             return false if response == 400
-            # if 302, followup
-            begin
-              # download log file
-              download_file(app_guid, "logs/#{log_id}")
-              # no error, file exists
-              true
-            rescue Errors::UnknownAdapterCallError, Excon::Errors::NotFound, Excon::Errors::BadRequest
-              false
-            end
+            # if 302 (only remaining option), followup...
+
+            # download log file
+            download_file(app_guid, "logs/#{log_id}")
+            # no error, file exists
+            true
+          rescue Errors::AdapterResourceNotFoundError, Errors::UnknownAdapterCallError,
+                 Excon::Errors::NotFound, Excon::Errors::BadRequest
+            false
           end
 
           def tail(application_name_or_id, log_id, stream)
@@ -70,14 +78,26 @@ module Paasal
               # fetch recent data from loggregator and return an array of log entries
               recent_decoded = recent_log_messages(app_guid, loggregator_filter(log_id))
               recent_decoded.collect { |log_msg| construct_log_entry(log_msg) }
-            else
+            elsif log_id.to_sym == API::Application::LogfileType::BUILD
               # handle special staging log
-              log_id = 'staging_task.log' if log_id.to_sym == API::Application::LogfileType::BUILD
+              build_log_entries(app_guid)
+            else
               download_logfile_entries(app_guid, log_id)
             end
           end
 
           private
+
+          def build_log_entries(app_guid)
+            log_id = 'staging_task.log'
+            download_logfile_entries(app_guid, log_id)
+          rescue Errors::AdapterResourceNotFoundError => e
+            # if there was no build yet, return no entries instead of the 404 error
+            p 'rescue build_log_entries error'
+            p e
+            e.backtrace.each { |line| p line }
+            []
+          end
 
           def loggregator_filter(log_id)
             case log_id.to_sym
@@ -109,23 +129,23 @@ module Paasal
 
           def download_logfile_entries(app_guid, log_id, headers_to_use = nil)
             # download log file
-            logfile_contents = download_file(app_guid, "logs/#{log_id}", false, headers_to_use)
+            logfile_contents = download_file(app_guid, "logs/#{log_id}", headers_to_use)
             # split file into entries by line breaks and return an array of log entries
-            logfile_contents.split(CRLF)
-          rescue Excon::Errors::NotFound
-            raise Errors::AdapterResourceNotFoundError,
-                  "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
+            logfile_contents.split("\n")
           end
 
-          def download_file(app_guid, file_path, do_not_fail = false, headers_to_use = nil)
-            expected_statuses = [200, 302]
-            expected_statuses.push(400) if do_not_fail
+          def download_file(app_guid, file_path, headers_to_use = nil)
+            expected_statuses = [200, 302, 400, 404]
+            # Hack, do not create fresh headers (which would fail) when in a deferred action
             headers_to_use = headers unless headers_to_use
+
             # log list consists of 2 parts, loggregator and files
             log_files = get("/v2/apps/#{app_guid}/instances/0/files/#{file_path}",
                             follow_redirects: false, expects: expected_statuses, headers: headers_to_use)
-            p log_files
-            return nil if log_files.status == 400
+            if log_files.status == 400 || log_files.status == 404
+              fail Errors::AdapterResourceNotFoundError,
+                   "Invalid log file: '#{file_path}' not available for application '#{app_guid}'"
+            end
             return log_files.body if log_files.status == 200
 
             # status must be 302, follow to the Location
@@ -136,7 +156,13 @@ module Paasal
 
             connection_params = { ssl_verify_peer: @check_certificates }
             connection = Excon.new(download_location, connection_params)
-            connection.request(method: :get, expects: expected_statuses).body
+            downloaded_logfile_response = connection.request(method: :get, expects: expected_statuses)
+
+            if downloaded_logfile_response.status == 404
+              fail Errors::AdapterResourceNotFoundError,
+                   "Invalid log file: '#{file_path}' not available for application '#{app_guid}'"
+            end
+            downloaded_logfile_response.body
           end
 
           def recent_log_messages(app_guid, filter = nil)
@@ -230,7 +256,7 @@ module Paasal
               begin
                 msg = Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(event.data.pack('C*'))
                 # notify stream to print new log line if msg type matches the applied filter
-                stream.send_message(construct_log_entry(msg)) if filter.include?(msg.source_name)
+                stream.send_message(construct_log_entry(msg)) if filter.nil? || filter.include?(msg.source_name)
               rescue StandardError => e
                 log.error "Cloud Foundry log message de-serialization failed: #{e}"
               end
