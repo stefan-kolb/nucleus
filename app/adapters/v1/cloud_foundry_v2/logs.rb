@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudFoundry2 < Stub
+      class CloudFoundryV2 < Stub
         module Logs
           LOGGREGATOR_TYPES = [API::Application::LogfileType::API, API::Application::LogfileType::APPLICATION,
                                API::Application::LogfileType::REQUEST, API::Application::LogfileType::SYSTEM]
@@ -180,7 +180,7 @@ module Paasal
             end.compact
             # decode log messages
             decoded_messages = parts.collect do |proto_message|
-              Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(proto_message)
+              Message.decode(proto_message)
             end.compact
             return decoded_messages unless filter
             # return filtered messages
@@ -251,7 +251,7 @@ module Paasal
             ws.on :message do |event|
               log.debug "CF loggregator message received: #{event}"
               begin
-                msg = Paasal::Adapters::V1::CloudFoundry2::Logs::Message.decode(event.data.pack('C*'))
+                msg = Message.decode(event.data.pack('C*'))
                 # notify stream to print new log line if msg type matches the applied filter
                 stream.send_message(construct_log_entry(msg)) if filter.nil? || filter.include?(msg.source_name)
               rescue StandardError => e

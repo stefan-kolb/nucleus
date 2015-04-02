@@ -10,7 +10,7 @@ describe Paasal::API::V1::Auth do
   let!(:endpoint_a) { create(:endpoint, provider: provider_a.id) }
   let!(:endpoint_b) { create(:endpoint, provider: provider_b.id) }
   let!(:adapter_a) { create(:adapter, id: endpoint_a.id, adapter_clazz: Paasal::Adapters::V1::Heroku) }
-  let!(:adapter_b) { create(:adapter, id: endpoint_b.id, adapter_clazz: Paasal::Adapters::V1::CloudFoundry2) }
+  let!(:adapter_b) { create(:adapter, id: endpoint_b.id, adapter_clazz: Paasal::Adapters::V1::CloudFoundryV2) }
 
   # tests case when 'use RequestStore::Middleware' was not applied
   context 'With alternating endpoint requests' do
@@ -18,7 +18,7 @@ describe Paasal::API::V1::Auth do
       allow_any_instance_of(Paasal::Adapters::V1::Heroku).to receive(:authenticate) do
         { 'Authorization' => 'bearer 1234567890' }
       end
-      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundry2).to receive(:authenticate) do
+      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundryV2).to receive(:authenticate) do
         oauth = double(Paasal::OAuth2Client)
         allow(oauth).to receive(:refresh) { oauth }
         oauth
@@ -26,7 +26,7 @@ describe Paasal::API::V1::Auth do
 
       allow_any_instance_of(Paasal::Adapters::V1::Heroku).to receive(:applications) { [] }
       call_count = 0
-      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundry2).to receive(:applications) do
+      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundryV2).to receive(:applications) do
         call_count += 1
         fail Paasal::Errors::OAuth2AuthenticationError, 'Fail 1st attempt' if call_count == 1
         []

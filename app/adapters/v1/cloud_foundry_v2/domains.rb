@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudFoundry2 < Stub
+      class CloudFoundryV2 < Stub
         module Domains
           def domains(domain_id)
             app_guid = app_guid(domain_id)

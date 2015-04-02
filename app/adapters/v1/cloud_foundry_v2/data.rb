@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     module V1
-      class CloudFoundry2 < Stub
+      class CloudFoundryV2 < Stub
         module Data
           def deploy(application_name_or_id, file, file_compression_format)
             # could be made async, too

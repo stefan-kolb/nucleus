@@ -117,7 +117,7 @@ require 'paasal'
 
 First, we need to acquire an adapter instance. Choose between one of the following classes:
 `Paasal::Adapters::V1::CloudControl`,
-`Paasal::Adapters::V1::CloudFoundry2`,
+`Paasal::Adapters::V1::CloudFoundryV2`,
 `Paasal::Adapters::V1::Heroku`,
 `Paasal::Adapters::V1::OpenshiftV2`
 
@@ -127,7 +127,7 @@ Initialize the adapter with the parameters:
 # endpoint_url --> the API endpoint that shall be used, e.g. api.eu-gb.bluemix.net
 # endpoint_app_domain --> domain where all apps are available by default, e.g. {app_name}.herokuapps.com
 # check_certificates --> Boolean, false causes to trust all SSL certificates and skip their validation
-adapter = Paasal::Adapters::V1::CloudFoundry2.new(endpoint_url, endpoint_app_domain, check_certificates)
+adapter = Paasal::Adapters::V1::CloudFoundryV2.new(endpoint_url, endpoint_app_domain, check_certificates)
 ```
 
 Fire and forget, or: Invoke your actions
@@ -202,7 +202,7 @@ You can use the API of PaaSal to show a list of all currently supported vendors.
 This request if publicly available and does not require any authentication.
 
 ```
-GET /api/vendors/cloud-foundry/providers
+GET /api/vendors
 ```
 
 ```json
@@ -228,20 +228,20 @@ GET /api/vendors/cloud-foundry/providers
       }
     },
     {
-      "id": "cloud-foundry",
+      "id": "cloud_foundry_v2",
       "created_at": "2015-02-25T08:38:30Z",
       "updated_at": "2015-02-25T08:38:30Z",
-      "name": "Cloud Foundry",
-      "key": "cloud-foundry",
+      "name": "Cloud Foundry V2",
+      "key": "cloud_foundry_v2",
       "_links": {
         "self": {
-          "href": "http://localhost:9292/api/vendors/cloud-foundry"
+          "href": "http://localhost:9292/api/vendors/cloud_foundry_v2"
         },
         "parent": {
           "href": "http://localhost:9292/api"
         },
         "providers": {
-          "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+          "href": "http://localhost:9292/api/vendors/cloud_foundry_v2/providers"
         }
       }
     },
@@ -302,7 +302,7 @@ Providers can be managed *without authentication* and support `GET`, `POST`, `PA
 ##### List all providers that are registered for a vendor's platform:
 
 ```
-GET /api/vendors/cloud-foundry/providers
+GET /api/vendors/cloud_foundry_v2/providers
 ```
 
 ```json
@@ -319,7 +319,7 @@ GET /api/vendors/cloud-foundry/providers
           "href": "http://localhost:9292/api/providers/cf-pivotal"
         },
         "parent": {
-          "href": "http://localhost:9292/api/vendors/cloud-foundry"
+          "href": "http://localhost:9292/api/vendors/cloud_foundry_v2"
         },
         "endpoints": {
           "href": "http://localhost:9292/api/providers/cf-pivotal/endpoints"
@@ -336,7 +336,7 @@ GET /api/vendors/cloud-foundry/providers
           "href": "http://localhost:9292/api/providers/bluemix"
         },
         "parent": {
-          "href": "http://localhost:9292/api/vendors/cloud-foundry"
+          "href": "http://localhost:9292/api/vendors/cloud_foundry_v2"
         },
         "endpoints": {
           "href": "http://localhost:9292/api/providers/bluemix/endpoints"
@@ -346,10 +346,10 @@ GET /api/vendors/cloud-foundry/providers
   ],
   "_links": {
     "self": {
-      "href": "http://localhost:9292/api/vendors/cloud-foundry/providers"
+      "href": "http://localhost:9292/api/vendors/cloud_foundry_v2/providers"
     },
     "parent": {
-      "href": "http://localhost:9292/api/vendors/cloud-foundry"
+      "href": "http://localhost:9292/api/vendors/cloud_foundry_v2"
     }
   }
 }
@@ -358,7 +358,7 @@ GET /api/vendors/cloud-foundry/providers
 ##### Register new provider
 The only requirement is that the name must be unique amongst the providers of *all* vendors:
 
-    POST /api/vendors/cloud-foundry/providers
+    POST /api/vendors/cloud_foundry_v2/providers
     body: {"provider":{"name":"mynewcloudfoundryprovider"}}
 
 #### Endpoints
@@ -425,7 +425,7 @@ GET /api/providers/bluemix/endpoints
 ##### Register new endpoint
 The only requirement is that the name must be unique amongst the endpoints of *all* providers:
 
-    POST /api/providers/cloud-foundry/endpoints
+    POST /api/providers/cloud_foundry_v2/endpoints
     body: {"endpoint":{"name":"mynewcloudfoundryendpoint"}}
 
 #### Application logs
