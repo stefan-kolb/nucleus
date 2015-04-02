@@ -91,11 +91,8 @@ module Paasal
           def build_log_entries(app_guid)
             log_id = 'staging_task.log'
             download_logfile_entries(app_guid, log_id)
-          rescue Errors::AdapterResourceNotFoundError => e
+          rescue Errors::AdapterResourceNotFoundError
             # if there was no build yet, return no entries instead of the 404 error
-            p 'rescue build_log_entries error'
-            p e
-            e.backtrace.each { |line| p line }
             []
           end
 
