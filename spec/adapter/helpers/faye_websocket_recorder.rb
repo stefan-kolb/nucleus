@@ -80,7 +80,12 @@ module Paasal
     def setup_websocket_connection_mock(replay_cassettes_dir)
       # fake successful http connection
       @test.allow(EventMachine).to @test.receive(:bind_connect) do |*args, &block|
-        CONN.const_set(:EM_CONNECTION_CLASS, Class.new(EventMachine::Connection) { include CONN })
+        if defined?(CONN::EM_CONNECTION_CLASS)
+          CONN::EM_CONNECTION_CLASS
+        else
+          CONN.const_set(:EM_CONNECTION_CLASS, Class.new(EventMachine::Connection) { include CONN })
+        end
+
         @connection = CONN::EM_CONNECTION_CLASS.new("paasal.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
         # ignore timeouts that are being applied
         @test.allow(@connection).to @test.receive(:pending_connect_timeout=) {}
