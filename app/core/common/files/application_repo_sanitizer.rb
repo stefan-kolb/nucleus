@@ -28,6 +28,8 @@ module Paasal
     #
     # @param [String] reposity_dir path to the git repository that is going to be sanitized
     def sanitize(reposity_dir)
+      # no sanitizing for files
+      return unless File.directory?(reposity_dir)
       repo_entries = sanitized_dir_entries(reposity_dir)
       return unless repo_entries.length == 1
 

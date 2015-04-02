@@ -14,7 +14,11 @@ module Paasal
       # @return [void]
       def stop
         log.debug('Stop tail updates, connection was closed')
-        @polling.method(@method_to_stop).call
+        begin
+          @polling.method(@method_to_stop).call
+        rescue
+          log.debug('Ignore error while closing connection')
+        end
       end
     end
   end

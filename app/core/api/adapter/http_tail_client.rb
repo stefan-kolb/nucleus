@@ -6,10 +6,11 @@ module Paasal
       #
       # @param [String] url url to call
       # @param [Paasal::API::RackStreamCallback] api_stream stream to which new chunks will be forwarded
-      # @param [Symbol] method HTTP method to use
-      def tail_http_response(url, api_stream, method = :get)
-        http_connection = EventMachine::HttpRequest.new(url)
-        http_client = http_connection.send(method)
+      # @param [Symbol] http_method HTTP method to use
+      def tail_http_response(url, api_stream, http_method = :get)
+        http_connection = EventMachine::HttpRequest.new(url, inactivity_timeout: 0)
+        http_client = http_connection.send(http_method, keepalive: true)
+
         # close stream on error
         http_client.on_error do
           log.debug('HttpTailClient detected an error, close stream...')
