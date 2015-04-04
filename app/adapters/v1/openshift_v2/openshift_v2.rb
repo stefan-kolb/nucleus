@@ -85,7 +85,7 @@ module Paasal
           app[:region] = parse_region_name(gear_groups[0][:gears][0][:region])
           # TODO: verify
           deployments = get("/application/#{app[:id]}/deployments").body
-          app[:release_version] = deployments[0][:sha1]
+          app[:release_version] = deployments[:data][0][:sha1]
           app
         end
       end
