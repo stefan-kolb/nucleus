@@ -47,10 +47,10 @@ module Paasal
 
     # Load an entity's instance from the store
     #
-    # @params [Paasal::Store] dao the DAO to use for loading
-    # @params [Symbol] id symbol where the entities id can be found in the params
-    # @params [String] name entities name for error output
-    # @params [Hash] params parameters required when called from auth block
+    # @param [Paasal::Store] dao the DAO to use for loading
+    # @param [Symbol] id symbol where the entities id can be found in the params
+    # @param [String] name entities name for error output
+    # @param [Hash] params parameters required when called from auth block
     # @return [Paasal::AbstractModel] loaded entity's instance
     def load_entity(dao, id, name, loading_params = params)
       unless dao.key? loading_params[id]

@@ -2,6 +2,7 @@ module Paasal
   module Adapters
     module V1
       class CloudFoundryV2 < Stub
+        # Application domain / route functionality to support the Cloud Foundry API.<br>
         module Domains
           def domains(domain_id)
             app_guid = app_guid(domain_id)

@@ -1,6 +1,11 @@
 module Paasal
   module Adapters
+    # The {BuildpackTranslator} provides convenience methods for the user to handle the installation
+    # of application runtimes. Common runtime names can be applied and are automatically translated to a
+    # platform native runtime name / url (if applicable).
     module BuildpackTranslator
+      # List of common buildpacks that are available GitHub.
+      # However, they are not guaranteed to work with every platform that utilized buildpacks.
       PUBLIC_BUILDPACKS = {
         'c' => 'https://github.com/atris/heroku-buildpack-c',
         'common_lisp' => 'https://github.com/mtravers/heroku-buildpack-cl',
@@ -43,6 +48,9 @@ module Paasal
         'testing' => 'https://github.com/ryanbrainard/heroku-buildpack-testrunner'
       }
 
+      # Search the list of known buildpacks, both vendor specific and public, to match the desires runtime name.
+      # @param [String] name of the runtime to look out for
+      # @return [Boolean] returns true if a vendor specific or public buildpack was found for the runtime
       def find_runtime(name)
         if respond_to? :vendor_specific_runtimes
           runtime = vendor_specific_runtimes[name.downcase.underscore]
@@ -53,6 +61,9 @@ module Paasal
         PUBLIC_BUILDPACKS[name.downcase.underscore]
       end
 
+      # Checks if the name of the runtime is matching a vendor specific runtime / buildpack.
+      # @param [String] name of the runtime for which to check if it matches a vendor specific runtime
+      # @return [Boolean] returns true if the name matches a vendor specific runtime, false otherwise
       def native_runtime?(name)
         if respond_to? :vendor_specific_runtimes
           # case A: name is a key

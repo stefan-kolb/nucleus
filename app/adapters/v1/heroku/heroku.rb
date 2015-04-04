@@ -1,6 +1,9 @@
 module Paasal
   module Adapters
     module V1
+      # The {Heroku} adapter is designed to support the Heroku platform API.<br>
+      # <br>
+      # The PaaSal API is fully supported, there are no known issues.
       class Heroku < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::Heroku::Application

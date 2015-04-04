@@ -1,6 +1,12 @@
 module Paasal
   module Adapters
     module V1
+      # The {CloudFoundryV2} adapter is designed to support the Cloud Foundry API and uses only commands
+      # of the API version 2.<br>
+      # <br>
+      # Besides native Cloud Foundry installations, this adapter shall also work with forks, such as Stackato 3.4.2.<br>
+      # <br>
+      # The PaaSal API is fully supported, there are no known issues.
       class CloudFoundryV2 < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudFoundryV2::Authentication

@@ -1,5 +1,13 @@
 module Paasal
+  # The {Adapters} module combines all application logic to communicate with the different vendor platforms
+  # and created the unified API.
   module Adapters
+    # The {BaseAdapter} is an abstract class that shall be extended by all actual Adapters.
+    # It provides methods to common functionality:<br>
+    # * authentication (+cache)
+    # * http client with general error handling
+    # * native platform API calls
+    # @abstract
     class BaseAdapter
       include HttpClient
       include HttpTailClient
@@ -52,7 +60,11 @@ module Paasal
         auth_object.auth_header
       end
 
-      # TODO: documentation
+      # Execute an API call, targeted directly against the vendors API.
+      # @param [Symbol] method http method to use, one of: [:GET, :POST, :DELETE, :PUT, :PATCH]
+      # @param [String] path url path to append to the endpoint's URL
+      # @param [Hash] params body params to use for PATCH, :PUT and :POST requests
+      # @return [Object] the actual response body of the vendor platform
       def endpoint_call(method, path, params)
         case method
         when :GET
@@ -70,6 +82,11 @@ module Paasal
         end
       end
 
+      # Create the cache key for the username / password combination and save it in the {RequestStore} to make it
+      # available throughout the current request.
+      # @param [String] username the username for the authentication
+      # @param [String] password the password for the authentication
+      # @return [String] calculated hash key for the input values
       def cache_key(username, password)
         # calculate the cache only once per request
         return RequestStore.store[:cache_key] if RequestStore.exist?(:cache_key)
@@ -78,6 +95,7 @@ module Paasal
         key
       end
 
+      # TODO: wrapping could be used when the adapters are used as ruby gem, not in the RESTful API
       # def self.method_added(name)
       #   return if @__last_methods_added && @__last_methods_added.include?(name)
       #   with_wrapper = :"#{name}_with_before_each_method_call"

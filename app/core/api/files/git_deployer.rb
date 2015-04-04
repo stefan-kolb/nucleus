@@ -20,7 +20,7 @@ module Paasal
       # Force a build using the latest git commit.
       # To enforce the new build, a file 'paasal-rebuild-trigger'
       # gets created or updated in the repository and the changes will be pushed.
-      # @response [void]
+      # @return [void]
       def trigger_build
         push_repository_changes do |repo_dir|
           # add a custom file that always changes the data and triggers a new build
@@ -36,7 +36,7 @@ module Paasal
       #
       # @param [File] file archive file whose contents shall be deployed to the repository
       # @param [String] file_compression_format compression format of the application archive, e.g. 'zip' or 'tar.gz'
-      # @response [void]
+      # @return [void]
       def deploy(file, file_compression_format)
         extractor = Paasal::ArchiveExtractor.new
         fail Errors::AdapterRequestError,
@@ -60,6 +60,9 @@ module Paasal
         nil
       end
 
+      # Download the contents of a git repository in the requested format.
+      # @param [String] format compression to be used for the download e.g. 'zip' or 'tar.gz'
+      # @return [StringIO] data requested to be downloaded
       def download(format, exclude_git = true)
         with_repository do |repo_dir|
           # TODO: maybe we can do this directly via SSH and prevent the disk writes?
@@ -98,7 +101,7 @@ module Paasal
       # Push all contents of the repository to the default remote 'origin'.
       # The repository will also be pushed if none of the files did change and no new commit was made.
       # @param [Git::Lib] repository repository whose contents are to be pushed
-      # @response [void]
+      # @return [void]
       def push(repository)
         # add all files to the repository
         repository.add(all: true)

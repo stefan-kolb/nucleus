@@ -2,7 +2,7 @@ module Paasal
   module API
     module Models
       # The AbstractEntity is designed as super-class for all entities that shall be exposed via the API.
-      # For exposing the data we use {Grape::Entity the Grape::Entity class}.
+      # For exposing the data we use the Grape::Entity class.
       # To simplify the link creation, the class provides the {#create_link create_link method}.
       class AbstractEntity < Grape::Entity
         # Create a link to a resource representation.

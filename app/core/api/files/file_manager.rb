@@ -16,7 +16,7 @@ module Paasal
         io
       end
 
-      # Save the data from within the {Data} object to the file.
+      # Save the data from within the {::Data} object to the file.
       # By default, this replaces already existing files.
       # If force is set to false, the method call will fail if there already is a file at the destination.
       # If force is false, but expected_file_md5_hex is specified, the file will be replaced as long as

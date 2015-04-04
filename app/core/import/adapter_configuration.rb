@@ -3,7 +3,7 @@ module Paasal
     extend Paasal::Logging
 
     # Get all adapter configuration files that are included in the application.
-    # The config files must be located at the `config/adapters` directory.
+    # The config files must be located at the +config/adapters+ directory.
     #
     # @return [Array<File>] all adapter configuration files
     def self.configuration_files
@@ -32,7 +32,7 @@ module Paasal
 
     # Get the path to the adapter's class file by translation from the adapter configuration's name.
     # If the adapter configuration is called 'abc-vendor.yml', then the adapter's source file must
-    # be found below 'app/adapters/#{api_version}/' with the name 'abc-vendor_adapter.rb'.
+    # be found below +app/adapters/#{api_version}/+ with the name +abc-vendor_adapter.rb+.
     #
     # @param [String] adapter_config adapter configuration that indicates the adapter's name
     # @param [String] api_version API version to load the adapter for

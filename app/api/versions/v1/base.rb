@@ -1,6 +1,9 @@
 module Paasal
   module API
+    # API {V1} is the first API version of PaaSal to be released.
+    # Please have a look at the README file or the {Paasal::Adapters::V1::Stub} adapter for a detailed list of features.
     module V1
+      # The {Base} class of API version 1 includes all routes, endpoints and the swagger documentation to be build.
       class Base < Grape::API
         # specify the version for all mounted endpoints
         version 'v1', using: :header, vendor: 'paasal', format: :json

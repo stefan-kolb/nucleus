@@ -55,6 +55,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
       * [Sensitive data](#sensitive-data)
 * [Schema validation](#schema-validation)
 * [Versioning](#versioning)
+* [Project structure](#project-structure)
 * [Contributing](#contributing)
   * [Add a new vendor](#add-a-new-vendor)
   * [Add a vendor version](#add-a-vendor-version)
@@ -748,6 +749,15 @@ However, be aware that
 __each non-backward compatible change of the application must result in an increase of the major version.__
 
 Until the first release (v1), the initial version is: `0.1.0`.
+
+## Project structure
+
+```
+app #
+app/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
+app/api # Everything that is directly related to the RESTfulGrape API: entities, embedded helpers and the actual API version's definitions
+app/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
+```
 
 ## Contributing
 
