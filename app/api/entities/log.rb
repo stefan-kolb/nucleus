@@ -20,11 +20,11 @@ module Paasal
 
         expose :type, documentation: {
           type: String, desc: 'Logfile type',
-          values: Paasal::API::Application::LogfileType.all,
+          values: Application::LogfileType.all,
           required_details: { request: false, response: true }
         }
 
-        expose :_links, using: Paasal::API::Models::BasicReferences, documentation: {
+        expose :_links, using: BasicReferences, documentation: {
           type: 'BasicReferences', desc: 'Resource links', is_array: true } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],

@@ -57,7 +57,7 @@ module Paasal
         # read-only
         expose :state, documentation: {
           type: String, desc: 'The application\'s state',
-          values: Paasal::API::Application::States.all,
+          values: Paasal::API::Models::Application::States.all,
           required_details: { request: false, response: true }
         }
 

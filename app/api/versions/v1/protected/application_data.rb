@@ -60,8 +60,8 @@ module Paasal
           params do
             optional :archive_format, desc: 'Compression format to use for the returned application archive, '\
                      'one of: \'zip\', \'tar.gz\'. Defaults to \'zip\'.',
-                     values: Paasal::API::CompressionFormats.all,
-                     default: Paasal::API::CompressionFormats::ZIP
+                     values: Paasal::API::Parameters::CompressionFormats.all,
+                     default: Paasal::API::Parameters::CompressionFormats::ZIP
           end
           get '/download' do
             compression_format = params[:archive_format]

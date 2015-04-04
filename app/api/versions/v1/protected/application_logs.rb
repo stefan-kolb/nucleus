@@ -26,8 +26,8 @@ module Paasal
           params do
             optional :archive_format, desc: 'Compression format to use for the returned application archive, '\
                      'one of: \'zip\', \'tar.gz\'. Defaults to \'zip\'.',
-                     values: Paasal::API::CompressionFormats.all,
-                     default: Paasal::API::CompressionFormats::ZIP
+                     values: Paasal::API::Parameters::CompressionFormats.all,
+                     default: Paasal::API::Parameters::CompressionFormats::ZIP
           end
           get '/download' do
             # returns an array of log entries
@@ -99,8 +99,8 @@ module Paasal
             params do
               optional :file_format, desc: 'File format to use for the returned logfile, '\
                 'one of: \'log\', \'zip\', \'tar.gz\'. Defaults to \'txt\'.',
-                       values: Paasal::API::LogDownloadFormats.all,
-                       default: Paasal::API::LogDownloadFormats::LOG
+                       values: Paasal::API::Parameters::LogDownloadFormats.all,
+                       default: Paasal::API::Parameters::LogDownloadFormats::LOG
             end
             get '/download' do
               # returns an array of log entries

@@ -88,11 +88,11 @@ module Paasal
           # stopped	deployments	array length > 0 AND for each: state == not deplyoed	A	3
           # suspended	deployments	for each: state == idle	A	4
           #
-          # return API::Application::States::CREATED if deployment[:version] == -1
-          # return API::Application::States::DEPLOYED
-          # return API::Application::States::RUNNING
-          # return API::Application::States::STOPPED
-          # return API::Application::States::IDLE
+          # return API::Models::Application::States::CREATED if deployment[:version] == -1
+          # return API::Models::Application::States::DEPLOYED
+          # return API::Models::Application::States::RUNNING
+          # return API::Models::Application::States::STOPPED
+          # return API::Models::Application::States::IDLE
 
           'TO BE DETERMINED'
           # arriving here the above states do not catch all states of the cloudControl app, which should not happen ;-)

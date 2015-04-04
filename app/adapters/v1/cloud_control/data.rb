@@ -19,7 +19,7 @@ module Paasal
 
           def download(application_id, compression_format)
             # TODO: get deployment state
-            if application_state(app) == API::Application::States::CREATED
+            if application_state(app) == API::Models::Application::States::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
 
@@ -31,7 +31,7 @@ module Paasal
           def rebuild(application_id)
             # TODO: get deployment state
             app = get("/apps/#{application_id}").body
-            if application_state(app) == API::Application::States::CREATED
+            if application_state(app) == API::Models::Application::States::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
             end
 

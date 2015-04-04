@@ -52,15 +52,16 @@ require_all 'app/models'
 # core
 require_all 'app/core'
 
-# adapters
-require_all 'app/adapters'
-
 # rack middleware
 require_all 'app/middleware'
 
 # api
+require 'app/api/error_responses'
 require_all 'app/api/entities'
 require_all 'app/api/helpers'
+
+# adapters
+require_all 'app/adapters'
 
 # This is a workaround to properly load all swagger-documentation:
 # Load each api version, but start with the protected controllers
