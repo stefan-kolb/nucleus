@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Thu, 02 Apr 2015 12:32:45 GMT
+      - Sat, 04 Apr 2015 12:51:32 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 199034fb-a5d2-416c-65c8-33601dea7074
+      - d6e4893c-71e9-451a-4d48-c85ac7a9588e
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - ec97c323-413f-4527-6469-80831af8917e::b4a964d8-e33f-4cea-85c1-cf8bb928f53b
+      - 32ceee07-6093-4dbd-432c-5ba5c4b5a975::e89cf213-5999-4bc6-b826-fc13e870c971
     body:
       encoding: UTF-8
       string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 12:40:37 GMT
+  recorded_at: Sat, 04 Apr 2015 12:51:32 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=an_invalid_password&username=an_invalid_username
@@ -63,7 +63,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2015 12:32:45 GMT
+      - Sat, 04 Apr 2015 12:51:32 GMT
       Pragma:
       - no-cache
       Server:
@@ -72,12 +72,12 @@ http_interactions:
       - Bearer realm="oauth", error="unauthorized", error_description="Authentication
         failed"
       X-Cf-Requestid:
-      - 917276e6-872f-4a3d-4b0f-b365cf5b28fb
+      - 38861dd5-524d-47c3-67ea-5643a616895a
       Content-Length:
       - '68'
     body:
       encoding: UTF-8
       string: '{"error":"unauthorized","error_description":"Authentication failed"}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 12:40:37 GMT
+  recorded_at: Sat, 04 Apr 2015 12:51:32 GMT
 recorded_with: VCR 2.9.3

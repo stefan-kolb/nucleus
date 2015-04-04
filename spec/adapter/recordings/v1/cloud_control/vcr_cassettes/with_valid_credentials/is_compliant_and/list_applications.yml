@@ -1,0 +1,292 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - POST, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 17:04:43 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/token"
+      X-Varnish:
+      - '1124364916'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '84'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"token": "__TOKEN__", "expires": "2015-04-02T17:19:43.180151"}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 17:04:43 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 17:04:43 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app"
+      X-Varnish:
+      - '1036792770'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '551'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"name": "dummyapplication11426762425", "buildpack_url": null, "repository":
+        "ssh://dummyapplication11426762425@cloudcontrolled.com/repository.git", "type":
+        {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__", "first_name":
+        "", "last_name": "", "email": "__cloudcontrol:user__", "is_active": true,
+        "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-03-19T10:53:46", "date_modified": "2015-03-19T10:53:46", "deployments":
+        [{"name": "dummyapplication11426762425/paasal", "dep_id": "dep33barw4d"}]},
+        {"name": "pawapp1424349681", "buildpack_url": null, "repository": "ssh://pawapp1424349681@cloudcontrolled.com/repository.git",
+        "type": {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__",
+        "first_name": "", "last_name": "", "email": "__cloudcontrol:user__", "is_active":
+        true, "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-02-19T12:41:21", "date_modified": "2015-02-19T12:41:21", "deployments":
+        [{"name": "pawapp1424349681/default", "dep_id": "depwn8yxdv2"}]}, {"name":
+        "pawapp1426070269", "buildpack_url": null, "repository": "ssh://pawapp1426070269@cloudcontrolled.com/repository.git",
+        "type": {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__",
+        "first_name": "", "last_name": "", "email": "__cloudcontrol:user__", "is_active":
+        true, "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-03-11T10:37:50", "date_modified": "2015-03-11T10:37:50", "deployments":
+        [{"name": "pawapp1426070269/default", "dep_id": "depa3amnu8t"}]}, {"name":
+        "pawapp1426699907", "buildpack_url": "https://github.com/cloudControl/buildpack-play",
+        "repository": "ssh://pawapp1426699907@cloudcontrolled.com/repository.git",
+        "type": {"name": "custom"}, "owner": {"username": "__cloudcontrol:username__",
+        "first_name": "", "last_name": "", "email": "__cloudcontrol:user__", "is_active":
+        true, "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-03-18T17:31:48", "date_modified": "2015-03-18T17:31:48", "deployments":
+        [{"name": "pawapp1426699907/paasal", "dep_id": "depy8phk3sx"}]}, {"name":
+        "testapp123456789", "buildpack_url": null, "repository": "ssh://testapp123456789@cloudcontrolled.com/repository.git",
+        "type": {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__",
+        "first_name": "", "last_name": "", "email": "__cloudcontrol:user__", "is_active":
+        true, "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-02-15T15:25:46", "date_modified": "2015-02-15T15:25:46", "deployments":
+        [{"name": "testapp123456789/default", "dep_id": "depd5szy9ht"}]}]'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 17:04:43 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/dummyapplication11426762425/deployment/paasal
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 17:04:44 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/dummyapplication11426762425/deployment/paasal"
+      X-Varnish:
+      - '1056406893'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '361'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "dummyapplication11426762425/paasal", "stack": {"name": "pinky"},
+        "dep_id": "dep33barw4d", "branch": "ssh://dummyapplication11426762425@cloudcontrolled.com/repository.git",
+        "users": [], "static_files": "(removed)", "billing_account": null, "version":
+        "-1", "state": "not deployed", "date_created": "2015-03-19T10:53:47", "date_modified":
+        "2015-03-19T10:53:47", "is_default": false, "default_subdomain": "paasal-dummyapplication11426762425.cloudcontrolled.com",
+        "min_boxes": 1, "max_boxes": 1, "billed_boxes": {"costs": 0.0, "boxes": 0.0,
+        "until": 1427932800, "free_boxes": 24.0}, "billed_addons": [{"costs": 0.0,
+        "addon": "alias.free", "until": 1427932800, "hours": 24.0}]}'
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 17:04:44 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/pawapp1424349681/deployment/paasal
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 410
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2015 17:04:44 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/pawapp1424349681/deployment/paasal"
+      X-Varnish:
+      - '2370156555'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '4'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: Gone
+    http_version: 
+  recorded_at: Thu, 02 Apr 2015 17:04:44 GMT
+recorded_with: VCR 2.9.3

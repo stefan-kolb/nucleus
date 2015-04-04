@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Accept-Encoding:
@@ -25,7 +25,7 @@ http_interactions:
       Access-Control-Allow-Methods:
       - POST, GET, PUT, DELETE
       Access-Control-Allow-Origin:
-      - ! '*'
+      - "*"
       Age:
       - '0'
       Allow:
@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 25 Mar 2015 16:22:38 GMT
+      - Thu, 02 Apr 2015 17:10:22 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -45,9 +45,9 @@ http_interactions:
       x-host:
       - api.cloudcontrol.com
       x-url:
-      - /token
+      - "/token"
       X-Varnish:
-      - '2393431149'
+      - '1036806927'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -55,10 +55,10 @@ http_interactions:
       Connection:
       - keep-alive
     body:
-      encoding: US-ASCII
-      string: ! '{"token": "__TOKEN__", "expires": "2015-03-25T16:37:38.077609"}'
+      encoding: UTF-8
+      string: '{"token": "__TOKEN__", "expires": "2015-04-02T17:25:22.832432"}'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:38 GMT
+  recorded_at: Thu, 02 Apr 2015 17:10:23 GMT
 - request:
     method: get
     uri: https://api.cloudcontrol.com/addon
@@ -67,7 +67,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - excon/0.44.4
+      - excon/0.45.1
       Authorization:
       - __AUTHORIZATION__
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       Access-Control-Allow-Methods:
       - POST, GET, PUT, DELETE
       Access-Control-Allow-Origin:
-      - ! '*'
+      - "*"
       Age:
       - '0'
       Allow:
@@ -96,7 +96,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 25 Mar 2015 16:22:38 GMT
+      - Thu, 02 Apr 2015 17:10:23 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -108,9 +108,9 @@ http_interactions:
       x-host:
       - api.cloudcontrol.com
       x-url:
-      - /addon
+      - "/addon"
       X-Varnish:
-      - '1333839116'
+      - '1124380009'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -119,7 +119,7 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: ! '[{"name": "alias", "stage": "public", "options": [{"name": "alias.free",
+      string: '[{"name": "alias", "stage": "public", "options": [{"name": "alias.free",
         "thirty_days_price": "0.00", "price_is_per_box": false}, {"name": "alias.wildcard",
         "thirty_days_price": "3.90", "price_is_per_box": false}]}, {"name": "blitz",
         "stage": "public", "options": [{"name": "blitz.250", "thirty_days_price":
@@ -320,5 +320,5 @@ http_interactions:
         false}]}, {"name": "worker", "stage": "public", "options": [{"name": "worker.single",
         "thirty_days_price": "0.00", "price_is_per_box": false}]}]'
     http_version: 
-  recorded_at: Wed, 25 Mar 2015 16:22:38 GMT
+  recorded_at: Thu, 02 Apr 2015 17:10:23 GMT
 recorded_with: VCR 2.9.3
