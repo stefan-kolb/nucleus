@@ -48,20 +48,11 @@ module Paasal
             default_params = { repository_type: 'git' }
             application = default_params.merge(application)
 
-            # TODO: throws 415, unsupported media type
             create_app_response = post('/app', body: application).body
 
             # create the default deployment, name will automatically become 'default'
             created_deployment = post("/app/#{create_app_response[:name]}/deployment", body: { name: 'paasal' }).body
             to_paasal_app(create_app_response, created_deployment)
-          end
-
-          def update_application(_application_id, _application)
-            # TODO: how shall we resolve that cc does not allow app modifications?
-            # a) we don't, keep error
-            # b) create new app and migrate other settings
-            fail Errors::PlatformSpecificSemanticError.new('cloudControl does not allow to update applications.',
-                                                           422_500_2)
           end
 
           def delete_application(application_id)
