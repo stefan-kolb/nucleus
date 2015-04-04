@@ -53,26 +53,5 @@ module Paasal
           .except(:id, :applications, :created_at, :updated_at, :_links)
       end
     end
-
-    params :create_application do
-      # require the keys of the application in the json object 'application'
-      requires :application, type: Hash do
-        # name is required, but we must use :all to get the presence validator. Name is selected via :using
-        requires :all, using: Paasal::API::Models::Application.documentation.slice(:name)
-        requires :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
-        # everything else is optional
-        optional :all, using: Paasal::API::Models::Application.documentation
-          .except(:id, :web_url, :runtimes, :name, :instances, :active_runtime, :state,
-                  :created_at, :updated_at, :_links)
-      end
-    end
-
-    params :update_application do
-      # require the keys of the application in the json object 'application'
-      requires :application, type: Hash do
-        optional :all, using: Paasal::API::Models::Application.documentation.slice(:name)
-        optional :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
-      end
-    end
   end
 end

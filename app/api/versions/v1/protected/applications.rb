@@ -48,7 +48,14 @@ module Paasal
           end
           params do
             use :endpoint_id
-            use :create_application
+            # require the keys of the application in the json object 'application'
+            requires :application, type: Hash do
+              # name is required, but we must use :all to get the presence validator. Name is selected via :using
+              requires :all, using: Paasal::API::Models::Application.documentation.slice(:name)
+              requires :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
+              # everything else is optional
+              optional :all, using: Paasal::API::Models::Application.documentation.slice(:region, :autoscaled)
+            end
           end
           post '/' do
             application_params = declared(params, include_missing: false)[:application]
@@ -66,7 +73,11 @@ module Paasal
           end
           params do
             use :application_context
-            use :update_application
+            # require the keys of the application in the json object 'application'
+            requires :application, type: Hash do
+              optional :all, using: Paasal::API::Models::Application.documentation.slice(:name)
+              optional :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
+            end
           end
           patch '/:application_id' do
             application_params = declared(params, include_missing: false)[:application]
