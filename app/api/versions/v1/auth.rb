@@ -28,8 +28,9 @@ module Paasal
 
             unless adapter.cache?(cache_key)
               # no auth object available, perform authentication first
+              auth_object = adapter.auth_client
               # throws an error if the authentication failed
-              auth_object = adapter.authenticate(username, password)
+              auth_object.authenticate(username, password)
               # cache the auth object so it does not have to be retrieved per request
               adapter.cache(cache_key, auth_object)
             end

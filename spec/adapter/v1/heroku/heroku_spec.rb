@@ -19,7 +19,6 @@ describe Paasal::Adapters::V1::Heroku do
 
   context 'with invalid credentials' do
     let!(:request_headers) { credentials(@endpoint, false) }
-    include_examples 'invalid:#authenticate'
     include_examples 'compliant adapter with invalid credentials'
   end
 
@@ -30,7 +29,6 @@ describe Paasal::Adapters::V1::Heroku do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-    include_examples 'valid:#authenticate'
     include_examples 'compliant adapter with valid credentials'
 
     describe 'native adapter call' do

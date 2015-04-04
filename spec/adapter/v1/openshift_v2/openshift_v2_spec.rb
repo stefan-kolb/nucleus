@@ -10,7 +10,6 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
 
   context 'with invalid credentials' do
     let!(:request_headers) { credentials(@endpoint, false) }
-    include_examples 'invalid:#authenticate'
     include_examples 'compliant adapter with invalid credentials'
   end
 
@@ -21,7 +20,6 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-    include_examples 'valid:#authenticate'
 
     # TODO: implement adapter so that tests pass
     # include_examples 'compliant adapter with valid credentials'

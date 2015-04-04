@@ -3,6 +3,7 @@ module Paasal
     class RootAPI < Grape::API
       # include all shared helpers
       helpers Paasal::AdapterHelper
+      helpers Paasal::AuthHelper
       helpers Paasal::DaoHelper
       helpers Paasal::ErrorHelper
       helpers Paasal::FormProcessingHelper

@@ -17,10 +17,9 @@ methods:
     # arguments: region_id
     # response: Region
   -
-    name: "authenticate"
-    arguments: 2
-    # arguments: username, password
-    # response: authentication header || authentication object, e.g. OAuth2
+    name: "auth_client"
+    arguments: 0
+    # response: subclass of Paasal::Adapters::AuthClient
   -
     name: "applications"
     arguments: 0

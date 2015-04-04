@@ -1,18 +1,18 @@
 require 'spec/unit/unit_spec_helper'
 
-describe Paasal::OAuth2Client do
+describe Paasal::Adapters::OAuth2AuthClient do
   describe 'initialization' do
     it 'applies all values correctly' do
       url = 'theurl'
       check_certs = false
-      client = Paasal::OAuth2Client.new url, check_certs
+      client = Paasal::Adapters::OAuth2AuthClient.new url, check_certs
       expect(client.instance_variable_get :@auth_url).to be url
-      expect(client.instance_variable_get :@check_certificates).to be check_certs
+      expect(client.verify_ssl).to be check_certs
     end
   end
 
   describe 'functionality:' do
-    subject(:client) { Paasal::OAuth2Client.new 'http://localhost', true }
+    subject(:client) { Paasal::Adapters::OAuth2AuthClient.new 'http://localhost', true }
     let!(:invalid_username) { 'invalid_username' }
     let!(:invalid_password) { 'invalid_password' }
     let!(:valid_username) { 'valid_username' }
@@ -38,26 +38,27 @@ describe Paasal::OAuth2Client do
         context 'with invalid credentials' do
           it 'raises an error when authentication failed' do
             expect { client.authenticate(invalid_username, invalid_password) }.to raise_error
-            Paasal::Errors::OAuth2AuthenticationError
+            Paasal::Errors::AuthenticationError
           end
         end
 
         context 'with valid credentials' do
           it 'returns the self instance' do
-            expect(client.authenticate(valid_username, valid_password)).to be_a Paasal::OAuth2Client
+            expect(client.authenticate(valid_username, valid_password))
+              .to be_a Paasal::Adapters::OAuth2AuthClient
           end
         end
       end
       describe '#refresh' do
         it 'can not be invoked' do
           expect { client.refresh }.to raise_error
-          Paasal::Errors::OAuth2AuthenticationError
+          Paasal::Errors::AuthenticationError
         end
       end
       describe '#auth_header' do
         it 'can not be invoked' do
           expect { client.auth_header }.to raise_error
-          Paasal::Errors::OAuth2AuthenticationError
+          Paasal::Errors::AuthenticationError
         end
       end
     end
@@ -68,12 +69,12 @@ describe Paasal::OAuth2Client do
         context 'with invalid credentials' do
           before { Excon.stub({}, body: {}, status: 400) }
           it 'returns instance without making new auth request' do
-            expect(client.authenticate(valid_username, valid_password)).to be_a Paasal::OAuth2Client
+            expect(client.authenticate(valid_username, valid_password)).to be_a Paasal::Adapters::OAuth2AuthClient
           end
         end
         context 'with valid credentials' do
           it 'returns instance without making new auth request' do
-            expect(client.authenticate(valid_username, valid_password)).to be_a Paasal::OAuth2Client
+            expect(client.authenticate(valid_username, valid_password)).to be_a Paasal::Adapters::OAuth2AuthClient
           end
         end
       end
@@ -97,7 +98,7 @@ describe Paasal::OAuth2Client do
       describe '#refresh' do
         before { client.refresh }
         it 'returns the self instance' do
-          expect(client.refresh).to be_a Paasal::OAuth2Client
+          expect(client.refresh).to be_a Paasal::Adapters::OAuth2AuthClient
         end
         it 'makes an updated authorization header available' do
           expect(client.auth_header).to have_key('Authorization')

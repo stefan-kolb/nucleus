@@ -15,20 +15,33 @@ describe Paasal::API::V1::Auth do
   # tests case when 'use RequestStore::Middleware' was not applied
   context 'With alternating endpoint requests' do
     before do
-      allow_any_instance_of(Paasal::Adapters::V1::Heroku).to receive(:authenticate) do
-        { 'Authorization' => 'bearer 1234567890' }
+      allow_any_instance_of(Paasal::Adapters::V1::Heroku).to receive(:auth_client) do
+        token_auth = double(Paasal::Adapters::TokenAuthClient)
+        allow(token_auth).to receive(:authenticate) { token_auth }
+        allow(token_auth).to receive(:auth_header) { { 'Authorization' => 'bearer 1234567890' } }
+        token_auth
       end
-      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundryV2).to receive(:authenticate) do
-        oauth = double(Paasal::OAuth2Client)
+      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundryV2).to receive(:auth_client) do
+        oauth = double(Paasal::Adapters::OAuth2AuthClient)
+        allow(oauth).to receive(:authenticate) { oauth }
+        allow(oauth).to receive(:auth_header) { { 'Authorization' => 'bearer 0987654321' } }
         allow(oauth).to receive(:refresh) { oauth }
         oauth
       end
 
-      allow_any_instance_of(Paasal::Adapters::V1::Heroku).to receive(:applications) { [] }
+      allow_any_instance_of(Paasal::Adapters::V1::Heroku).to receive(:applications).and_wrap_original do |m, _|
+        unless m.receiver.send(:headers)['Authorization'] == 'bearer 1234567890'
+          fail Paasal::Errors::AuthenticationError, 'Bad authentication credentials'
+        end
+        []
+      end
       call_count = 0
-      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundryV2).to receive(:applications) do
+      allow_any_instance_of(Paasal::Adapters::V1::CloudFoundryV2).to receive(:applications).and_wrap_original do |m, _|
+        unless m.receiver.send(:headers)['Authorization'] == 'bearer 0987654321'
+          fail Paasal::Errors::AuthenticationError, 'Bad authentication credentials'
+        end
         call_count += 1
-        fail Paasal::Errors::OAuth2AuthenticationError, 'Fail 1st attempt' if call_count == 1
+        fail Paasal::Errors::AuthenticationError, 'Fail 1st attempt' if call_count == 1
         []
       end
     end

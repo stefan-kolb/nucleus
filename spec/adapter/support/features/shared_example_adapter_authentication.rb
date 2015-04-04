@@ -1,49 +1,17 @@
-shared_examples 'invalid:#authenticate' do
-  describe '#authenticate' do
-    it 'does throw unauthorized exception' do
-      expect { @adapter.authenticate('invalid_username', 'invalid_password') }.to(
-        raise_error Paasal::Errors::AuthenticationError)
-    end
-  end
-end
-
-shared_examples 'valid:#authenticate' do
-  describe '#authenticate', :as_cassette do
+shared_examples 'valid:auth_client' do
+  describe '#auth_client', :as_cassette do
     before do
-      username, password = username_password(@endpoint)
-      @auth_header = @adapter.authenticate(username, password)
-    end
-
-    it 'does not return nil' do
-      expect(@auth_header).to_not be_nil
-    end
-    it 'does return an hash' do
-      expect(@auth_header).to be_a Hash
-    end
-    it 'does return an auth header' do
-      expect(@auth_header.keys[0]).to eql 'Authorization'
-    end
-  end
-end
-
-shared_examples 'valid: OAuth2 #authenticate' do
-  describe '#authenticate', :as_cassette do
-    before do
-      username, password = username_password(@endpoint)
-      @auth_client = @adapter.authenticate(username, password)
+      @auth_client = @adapter.auth_client
     end
 
     it 'does not return nil' do
       expect(@auth_client).to_not be_nil
     end
-    it 'does return an O2Auth instance' do
-      expect(@auth_client).to be_a Paasal::OAuth2Client
+    it 'does return an AuthClient instance' do
+      expect(@auth_client).to be_a Paasal::Adapters::AuthClient
     end
-    it 'has access to an auth header' do
-      expect(@auth_client.auth_header).to be_a Hash
-    end
-    it 'is authenticated' do
-      expect(@auth_client.auth_header.keys[0]).to eql 'Authorization'
+    it 'is not immediately authenticated' do
+      expect { @auth_client.auth_header }.to raise_error(Paasal::Errors::AuthenticationError)
     end
   end
 end

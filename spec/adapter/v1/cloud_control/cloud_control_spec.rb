@@ -16,7 +16,6 @@ describe Paasal::Adapters::V1::CloudControl do
 
   context 'with invalid credentials' do
     let!(:request_headers) { credentials(@endpoint, false) }
-    include_examples 'invalid:#authenticate'
     include_examples 'compliant adapter with invalid credentials'
   end
 
@@ -27,27 +26,6 @@ describe Paasal::Adapters::V1::CloudControl do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-
-    describe '#authenticate' do
-      before do
-        username, password = username_password(@endpoint)
-        @cc_token = @adapter.authenticate(username, password)
-      end
-      it 'does not return nil' do
-        expect(@cc_token).to_not be_nil
-      end
-      it 'does return a CloudControlToken instance' do
-        expect(@cc_token).to be_a Paasal::Adapters::V1::CloudControl::Token
-      end
-      it 'has access to an auth header' do
-        expect(@cc_token.auth_header).to be_a Hash
-      end
-      it 'is authenticated' do
-        expect(@cc_token.auth_header.keys[0]).to eql 'Authorization'
-      end
-    end
-
-    # TODO: implement adapter so that tests pass
     # include_examples 'compliant adapter with valid credentials'
 
     describe 'native adapter call' do

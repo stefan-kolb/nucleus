@@ -10,6 +10,9 @@ require 'spec/adapter/support/features/shared_example_adapter_regions'
 
 shared_examples 'compliant adapter with valid credentials' do
   describe 'is compliant and' do
+    # builds an AuthClient
+    include_examples 'valid:auth_client'
+
     # region list and get
     include_examples 'valid:regions:list'
     include_examples 'valid:regions:get'

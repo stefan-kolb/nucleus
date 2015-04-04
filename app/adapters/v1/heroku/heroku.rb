@@ -18,18 +18,20 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
-        def authenticate(username, password)
+        def auth_client
           log.debug "Authenticate @ #{@endpoint_url}"
-          response = Excon.new("#{@endpoint_url}/login?username=#{username}&password=#{password}",
-                               ssl_verify_peer: @check_certificates).post
-
-          # Heroku returns 404 for invalid credentials
-          fail Errors::AuthenticationError, 'Heroku says the credentials are invalid' if response.status == 404
-
-          response_parsed = JSON.parse(response.body)
-          api_token = response_parsed['api_key']
-          # finally return the header key and value
-          { 'Authorization' => "Bearer #{api_token}" }
+          TokenAuthClient.new @check_certificates do |verify_ssl, username, password|
+            response = Excon.new("#{@endpoint_url}/login?username=#{username}&password=#{password}",
+                                 ssl_verify_peer: verify_ssl).post
+            # Heroku returns 404 for invalid credentials, then we do not return an API token
+            if response.status == 404
+              nil
+            else
+              # extract the token
+              response_parsed = JSON.parse(response.body)
+              response_parsed['api_key']
+            end
+          end
         end
 
         def handle_error(error_response)

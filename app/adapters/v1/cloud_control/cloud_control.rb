@@ -16,13 +16,20 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
-        def authenticate(username, password)
-          log.debug "Authenticate @ #{@endpoint_url}/token"
-          auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
-          response = post('/token', headers: auth_headers)
-          # parse date
-          expires = Date.parse(response.body[:expires])
-          Token.new(response.body[:token], expires)
+        def auth_client
+          Token.new @check_certificates do |_verify_ssl, username, password|
+            auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
+            begin
+              # ssl verification is implemented by the HttpClient itself
+              response = post('/token', headers: auth_headers)
+              # parse to retrieve the token and expiration date
+              expires = Date.parse(response.body[:expires])
+              [response.body[:token], expires]
+            rescue Errors::ApiError
+              # ignore the error, return nil for failed authentication
+              nil
+            end
+          end
         end
 
         def default_deployment(application_id)

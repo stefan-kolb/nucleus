@@ -14,18 +14,14 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
-        def authenticate(username, password)
-          # access the user information to prove authentication is granted
-          response = Excon.get("#{@endpoint_url}/user",
-                               headers: { 'Accept' => 'application/json; version=1.7',
-                                          'Authorization' => 'Basic ' +
-                                              ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') })
-
-          # Openshift returns 401 for invalid credentials
-          fail Errors::AuthenticationError, 'Openshift says the credentials are invalid' if response.status == 401
-
-          # once authenticated, return the header
-          { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
+        def auth_client
+          HttpBasicAuthClient.new @check_certificates do |verify_ssl, headers|
+            # auth verification block
+            headers['Accept'] = 'application/json; version=1.7'
+            result = Excon.new("#{@endpoint_url}/user", ssl_verify_peer: verify_ssl).get(headers: headers)
+            # Openshift returns 401 for invalid credentials --> auth failed, return false
+            result.status != 401
+          end
         end
 
         def regions

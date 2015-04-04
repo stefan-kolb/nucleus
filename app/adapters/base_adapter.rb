@@ -12,18 +12,12 @@ module Paasal
         @check_certificates = check_certificates
       end
 
-      # Get a OAuth2 client for this URL.
-      # @return [Paasal::OAuth2Client] OAuth2Client instance to handle the authentication
-      def oauth2(auth_url)
-        Paasal::OAuth2Client.new(auth_url, @check_certificates)
-      end
-
       # thread-based cache for the api authorization headers
       thread_config_accessor :auth_objects_cache, default: {}
 
       # Cache the auth information.
       # @param [String] key cache key
-      # @param [Hash<String,String>, Paasal::OAuth2Client] auth_object auth information to be cached
+      # @param [Paasal::Adapters::AuthClient] auth_object authentication client to be cached
       # @return [void]
       def cache(key, auth_object)
         auth_objects_cache[key] = auth_object
@@ -44,18 +38,17 @@ module Paasal
 
       # Get the currently cached authentication object.
       # @param [String] key cache key
-      # @return [Hash<String,String>, Paasal::OAuth2Client] cached authentication information
+      # @return [Hash<String,String>, Paasal::Adapters::AuthClient] cached authentication client
       def cached(key)
         return nil unless cache?(key)
         auth_objects_cache[key]
       end
 
-      # Get the cached authentication object, being either the OAuth2Client or the Authorization header.
-      # @return [Hash<String,String>, Paasal::OAuth2Client] cached authentication information
+      # Get the cached authentication object and retrieve the presumably valid authentication header.
+      # @return [Hash<String,String>] hash including a valid authentication header
       def headers
         auth_object = auth_objects_cache[RequestStore.store[:cache_key]]
-        return auth_object if auth_object.is_a? Hash
-        # oauth client, generates the header for us
+        # AuthClient, generates the header for us
         auth_object.auth_header
       end
 

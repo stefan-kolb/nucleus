@@ -3,6 +3,7 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         include Paasal::Logging
+        include Paasal::Adapters::V1::CloudFoundryV2::Authentication
         include Paasal::Adapters::V1::CloudFoundryV2::Buildpacks
         include Paasal::Adapters::V1::CloudFoundryV2::Application
         include Paasal::Adapters::V1::CloudFoundryV2::Domains
@@ -17,15 +18,6 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
-        def authenticate(username, password)
-          auth_endpoint = endpoint_info[:authorization_endpoint]
-          log.debug "Authenticate @ #{auth_endpoint}/oauth/token"
-          oauth2_client = oauth2("#{auth_endpoint}/oauth/token")
-          # build the client and authenticate for the first time
-          oauth2_client.authenticate(username, password)
-          oauth2_client
-        end
-
         def handle_error(error)
           cf_error = error.body.is_a?(Hash) ? error.body[:code] : nil
           case error.status
@@ -37,7 +29,7 @@ module Paasal
             if [1001].include? cf_error
               fail Errors::AdapterRequestError, "#{error.body[:description]} (#{cf_error} - #{error.body[:error_code]})"
             elsif [10_002].include?(cf_error) || error.status == 401
-              fail Errors::OAuth2AuthenticationError, 'Endpoint authentication failed with OAuth2 token'
+              fail Errors::AuthenticationError, 'Endpoint authentication failed with OAuth2 token'
             end
           end
           log.debug 'Unhandled CF error'
