@@ -10,12 +10,15 @@ module Paasal
       class CloudFoundryV2 < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudFoundryV2::Authentication
+        include Paasal::Adapters::V1::CloudFoundryV2::AppStates
         include Paasal::Adapters::V1::CloudFoundryV2::Buildpacks
         include Paasal::Adapters::V1::CloudFoundryV2::Application
         include Paasal::Adapters::V1::CloudFoundryV2::Domains
         include Paasal::Adapters::V1::CloudFoundryV2::Data
         include Paasal::Adapters::V1::CloudFoundryV2::Lifecycle
         include Paasal::Adapters::V1::CloudFoundryV2::Logs
+        include Paasal::Adapters::V1::CloudFoundryV2::Regions
+        include Paasal::Adapters::V1::CloudFoundryV2::Scaling
         include Paasal::Adapters::V1::CloudFoundryV2::Vars
 
         # all cloud foundry specific semantic errors shall have an error code of 422_5XXX
@@ -49,21 +52,6 @@ module Paasal
           elsif cf_error == 170_002
             fail Errors::PlatformSpecificSemanticError, 'Application is still building'
           end
-        end
-
-        def scale(application_name_or_id, instances)
-          # update the number of instances on the application
-          update_application(application_name_or_id, instances: instances)
-        end
-
-        def regions
-          [default_region]
-        end
-
-        def region(region_name)
-          fail Errors::AdapterResourceNotFoundError,
-               "Region '#{region_name}' does not exist at the endpoint" unless region_name.casecmp('default') == 0
-          default_region
         end
 
         private
@@ -111,15 +99,6 @@ module Paasal
           get("/v2/users/#{user_info[:user_id]}").body
         end
 
-        def default_region
-          {
-            id: 'default',
-            description: 'Default region, Cloud Foundry does not support multi regions yet.',
-            created_at: Time.at(0).to_datetime,
-            updated_at: Time.at(0).to_datetime
-          }
-        end
-
         def user_space_guid
           users_spaces = get('/v2/spaces').body[:resources]
           # only once space accessible
@@ -146,22 +125,6 @@ module Paasal
           return true if response.status == 200 || response.status == 302
           return false if response.status == 404
           # if the response is neither one of the codes, the call fails anyway...
-        end
-
-        def application_state(app_resource)
-          if app_resource[:entity][:state] == 'STARTED'
-            # 1: crashed
-            return API::Application::States::CRASHED if app_resource[:entity][:package_state] == 'FAILED'
-            # 1: started
-            return API::Application::States::RUNNING if app_resource[:entity][:package_state] == 'STAGED'
-          end
-
-          # 4: stopped if there is a detected buildpack
-          return API::Application::States::STOPPED unless app_resource[:entity][:staging_task_id].nil?
-          # 3: deployed if stopped but no data can be downloaded
-          return API::Application::States::DEPLOYED if deployed?(app_resource[:metadata][:guid])
-          # 2: created if stopped and no buildpack detected
-          API::Application::States::CREATED
         end
 
         # TODO: handle duplicate name
