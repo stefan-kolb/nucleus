@@ -19,20 +19,17 @@ module Paasal
         ### Setup Rack Server ###
         #########################
 
-        # X-Request-ID
-        use Paasal::Rack::RequestId
-
         # Clear request caches
         use RequestStore::Middleware
 
+        # X-Request-ID
+        use Paasal::Middleware::RequestId
+
         # Apply request logger, which includes the X-Request-ID
-        use ::Rack::AccessLogger, logger
+        use Paasal::Middleware::AccessLogger, logger
 
         # log error stacktraces to a dedicated file
-        use Paasal::Rack::ErrorRequestLogger, ::File.join('log/error.log')
-
-        # include to deal with environments that do NOT support the DELETE, PATCH, PUT methods
-        # use Rack::MethodOverride
+        use Paasal::Middleware::ErrorRequestLogger, ::File.join('log/error.log')
 
         # redirect to the documentation, but do NOT call the index directly
         use ::Rack::Static, urls: { '/docs' => 'redirect.html' }, root: 'public/swagger-ui'

@@ -8,7 +8,7 @@ end
 configatron.api.versions = Paasal::ApiDetector.api_versions
 
 # Add authorization strategy to grape and replace default http_basic
-Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Authenticator, ->(options) { [options[:realm]] })
+Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAuth, ->(options) { [options[:realm]] })
 
 # Lock the configuration, so it can't be manipulated
 configatron.lock!

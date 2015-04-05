@@ -1,10 +1,11 @@
 module Paasal
-  module Rack
-    # The {Paasal::ErrorRequestLogger} is assigned to redirect the
+  module Middleware
+    # The {Paasal::Middleware::ErrorRequestLogger} is assigned to redirect the
     # default 'rack.errors' output not only to the console, but also to a log file.
     # This file then includes all error stacktraces.
     #
     # @author Cedric Roeck (cedric.roeck@gmail.com)
+    # @since 0.1.0
     class ErrorRequestLogger
       def initialize(app, file)
         @app = app
