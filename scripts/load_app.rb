@@ -56,7 +56,7 @@ require_all 'app/core'
 require_all 'app/middleware'
 
 # api
-require 'app/api/error_responses'
+require 'api/error_responses'
 require_all 'app/api/entities'
 require_all 'app/api/helpers'
 
