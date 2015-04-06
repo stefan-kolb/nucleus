@@ -2,7 +2,9 @@ module Paasal
   module Adapters
     module V1
       class CloudControl < Stub
+        # cloud control data management operations
         module Data
+          # @see Stub#deploy
           def deploy(application_id, file, compression_format)
             deployment = default_deployment(application_id)
             account = get('/user').body[0]
@@ -17,6 +19,7 @@ module Paasal
             # TODO: how to stop the application?
           end
 
+          # @see Stub#download
           def download(application_id, compression_format)
             # TODO: get deployment state
             if application_state(app) == API::Models::Application::States::CREATED
@@ -28,6 +31,7 @@ module Paasal
             GitDeployer.new(repo_name, app[:git_url], nil, 'paasal').download(compression_format, true)
           end
 
+          # @see Stub#rebuild
           def rebuild(application_id)
             # TODO: get deployment state
             app = get("/apps/#{application_id}").body

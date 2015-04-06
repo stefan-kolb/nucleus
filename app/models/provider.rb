@@ -1,4 +1,7 @@
 module Paasal
+  #
+  # @author Cedric Roeck (cedric.roeck@gmail.com)
+  # @since 0.1.0
   class Provider < Paasal::AbstractModel
     include Kwalify::Util::HashLike
 

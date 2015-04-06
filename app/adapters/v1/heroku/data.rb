@@ -3,6 +3,7 @@ module Paasal
     module V1
       class Heroku < Stub
         module Data
+          # @see Stub#deploy
           def deploy(application_id, file, file_compression_format)
             app = get("/apps/#{application_id}").body
             account = get('/account').body
@@ -16,6 +17,7 @@ module Paasal
             scale_web(application_id, 0)
           end
 
+          # @see Stub#download
           def download(application_id, compression_format)
             # Only possible with git, not with HTTP builds
             app = get("/apps/#{application_id}").body
@@ -27,6 +29,7 @@ module Paasal
             GitDeployer.new(repo_name, app[:git_url], nil).download(compression_format, true)
           end
 
+          # @see Stub#rebuild
           def rebuild(application_id)
             app = get("/apps/#{application_id}").body
             if application_state(app) == API::Models::Application::States::CREATED

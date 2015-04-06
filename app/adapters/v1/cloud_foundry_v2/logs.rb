@@ -11,6 +11,7 @@ module Paasal
           CRLF = "\r\n"
           WSP  = "\s"
 
+          # @see Stub#logs
           def logs(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # retrieve app for timestamps only :/
@@ -47,6 +48,7 @@ module Paasal
             logs
           end
 
+          # @see Stub#log?
           def log?(application_name_or_id, log_id)
             app_guid = app_guid(application_name_or_id)
             # test file existence
@@ -67,12 +69,14 @@ module Paasal
             false
           end
 
+          # @see Stub#tail
           def tail(application_name_or_id, log_id, stream)
             app_guid = app_guid(application_name_or_id)
             return tail_stream(app_guid, log_id, stream) if log_stream?(log_id)
             tail_file(app_guid, log_id, stream)
           end
 
+          # @see Stub#log_entries
           def log_entries(application_name_or_id, log_id)
             app_guid = app_guid(application_name_or_id)
             # first check if this log is a file or must be fetched from the loggregator

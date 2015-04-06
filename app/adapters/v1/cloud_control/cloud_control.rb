@@ -16,6 +16,7 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
+        # @see Stub#auth_client
         def auth_client
           Token.new @check_certificates do |_verify_ssl, username, password|
             auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
@@ -32,14 +33,12 @@ module Paasal
           end
         end
 
-        def default_deployment(application_id)
-          get("/app/#{application_id}/deployment/paasal").body
-        end
-
+        # @see Stub#regions
         def regions
           [default_region]
         end
 
+        # @see Stub#region
         def region(region_name)
           fail Errors::AdapterResourceNotFoundError,
                "Region '#{region_name}' does not exist at the endpoint" unless region_name.casecmp('default') == 0
@@ -65,11 +64,14 @@ module Paasal
           end
         end
 
+        # @see Stub#scale
         def scale(application_id, instances)
           # update the number of instances on the application's deployment
           scale_response = put("/app/#{application_id}/deployment/paasal", body: { min_boxes: instances }).body
           to_paasal_app(get("/app/#{application_id}").body, scale_response)
         end
+
+        private
 
         def application_state(application, deployment)
           # TODO: implement me
@@ -100,7 +102,9 @@ module Paasal
           #   'Please verify the cloudControl adapter'
         end
 
-        private
+        def default_deployment(application_id)
+          get("/app/#{application_id}/deployment/paasal").body
+        end
 
         def headers
           super.merge('Content-Type' => 'application/json')

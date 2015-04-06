@@ -4,6 +4,7 @@ module Paasal
       # The {Heroku} adapter is designed to support the Heroku platform API.<br>
       # <br>
       # The PaaSal API is fully supported, there are no known issues.
+      # @see https://devcenter.heroku.com/articles/platform-api-reference Heroku Platform API
       class Heroku < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::Heroku::Application
@@ -21,6 +22,7 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
+        # @see Stub#auth_client
         def auth_client
           log.debug "Authenticate @ #{@endpoint_url}"
           TokenAuthClient.new @check_certificates do |verify_ssl, username, password|

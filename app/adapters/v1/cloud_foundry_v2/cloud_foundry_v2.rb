@@ -7,6 +7,7 @@ module Paasal
       # Besides native Cloud Foundry installations, this adapter shall also work with forks, such as Stackato 3.4.2.<br>
       # <br>
       # The PaaSal API is fully supported, there are no known issues.
+      # @see http://apidocs.cloudfoundry.org The latest Cloud Foundry API documentation
       class CloudFoundryV2 < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudFoundryV2::Authentication

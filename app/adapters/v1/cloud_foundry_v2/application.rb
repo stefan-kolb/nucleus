@@ -3,6 +3,7 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         module Application
+          # @see Stub#applications
           def applications
             response = get('/v2/apps')
             apps = []
@@ -12,12 +13,14 @@ module Paasal
             apps
           end
 
+          # @see Stub#application
           def application(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             get_response = get("/v2/apps/#{app_guid}")
             to_paasal_app(get_response.body)
           end
 
+          # @see Stub#create_application
           def create_application(application)
             if application.key? :region
               unless application[:region].casecmp('default') == 0
@@ -47,6 +50,7 @@ module Paasal
             application(response[:metadata][:guid])
           end
 
+          # @see Stub#update_application
           def update_application(application_name_or_id, application_form)
             app_guid = app_guid(application_name_or_id)
             apply_buildpack(application_form)
@@ -55,6 +59,7 @@ module Paasal
             to_paasal_app(update_response.body)
           end
 
+          # @see Stub#delete_application
           def delete_application(application_name_or_id)
             delete_response = delete("/v2/apps/#{application_name_or_id}", expects: [204, 404])
             return unless delete_response.status == 404

@@ -7,6 +7,7 @@ module Paasal
           # A) via maintenance - workers are still active
           # B) via formation - loose scaling information
 
+          # @see Stub#start
           def start(application_id)
             log.debug "Start @ #{@endpoint_url}"
 
@@ -23,6 +24,7 @@ module Paasal
             update_application(application_id, maintenance: false)
           end
 
+          # @see Stub#stop
           def stop(application_id)
             log.debug "Stop @ #{@endpoint_url}"
 
@@ -36,6 +38,7 @@ module Paasal
             update_application(application_id, maintenance: true)
           end
 
+          # @see Stub#restart
           def restart(application_id)
             log.debug "Restart @ #{@endpoint_url}"
             stop(application_id)

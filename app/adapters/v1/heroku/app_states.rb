@@ -2,7 +2,10 @@ module Paasal
   module Adapters
     module V1
       class Heroku < Stub
+        # AppStates for Heroku, or the logic to determine the current application state
         module AppStates
+          private
+
           def application_state(app, retrieved_dynos = nil)
             # 1: created, both repo and slug are nil
             return API::Models::Application::States::CREATED unless repo_or_slug_content?(app)
@@ -26,8 +29,6 @@ module Paasal
             log.debug("Faild to determine state for: #{app}, #{dynos}")
             fail Errors::UnknownAdapterCallError, 'Could not determine app state. Please verify the Heroku adapter'
           end
-
-          private
 
           def repo_or_slug_content?(app)
             return true if !app[:repo_size].nil? && app[:repo_size].to_i > 0

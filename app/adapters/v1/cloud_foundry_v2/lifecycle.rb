@@ -3,6 +3,7 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         module Lifecycle
+          # @see Stub#start
           def start(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
@@ -15,6 +16,7 @@ module Paasal
             to_paasal_app(start_response.body)
           end
 
+          # @see Stub#stop
           def stop(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
@@ -27,6 +29,7 @@ module Paasal
             to_paasal_app(stop_response.body)
           end
 
+          # @see Stub#restart
           def restart(application_name_or_id)
             stop(application_name_or_id)
             start(application_name_or_id)

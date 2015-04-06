@@ -3,6 +3,7 @@ module Paasal
     module V1
       class Heroku < Stub
         module Scaler
+          # @see Stub#scale
           def scale(application_id, instances)
             scale_web(application_id, instances)
             # return the updated application object

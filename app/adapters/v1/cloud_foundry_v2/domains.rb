@@ -4,6 +4,7 @@ module Paasal
       class CloudFoundryV2 < Stub
         # Application domain / route functionality to support the Cloud Foundry API.<br>
         module Domains
+          # @see Stub#domains
           def domains(domain_id)
             app_guid = app_guid(domain_id)
             assigned_routes = get("/v2/apps/#{app_guid}/routes").body
@@ -15,6 +16,7 @@ module Paasal
             domains
           end
 
+          # @see Stub#domain
           def domain(application_name_or_id, domain_id)
             app_guid = app_guid(application_name_or_id)
             assigned_routes = get("/v2/apps/#{app_guid}/routes").body
@@ -23,6 +25,7 @@ module Paasal
             end
           end
 
+          # @see Stub#create_domain
           def create_domain(application_name_or_id, domain)
             domains(application_name_or_id).each do |existing_domain|
               if existing_domain[:name] == domain[:name]
@@ -40,6 +43,7 @@ module Paasal
             route_to_paasal_domain(create_cf_domain(app_guid, domain_name, domain_host))
           end
 
+          # @see Stub#delete_domain
           def delete_domain(application_name_or_id, route_id)
             app_guid = app_guid(application_name_or_id)
             # remove route from the app

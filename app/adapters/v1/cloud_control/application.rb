@@ -2,7 +2,9 @@ module Paasal
   module Adapters
     module V1
       class CloudControl < Stub
+        # cloud control, CRUD operations for the application object
         module Application
+          # @see Stub#applications
           def applications
             response = get('/app')
             apps = []
@@ -12,27 +14,13 @@ module Paasal
             apps
           end
 
+          # @see Stub#application
           def application(application_id)
             response = get("/app/#{application_id}").body
             to_paasal_app(response, default_deployment(response[:name]))
           end
 
-          def apply_buildpack(application)
-            runtimes = application.delete(:runtimes)
-            return unless runtimes
-            if runtimes.length > 1
-              fail Errors::PlatformSpecificSemanticError.new('cloudControl only allows 1 runtime per application',
-                                                             422_600_1)
-            end
-            buildpack = find_runtime(runtimes[0])
-            if native_runtime?(buildpack)
-              application[:type] = buildpack
-            else
-              application[:type] = 'custom'
-              application[:buildpack_url] = buildpack
-            end
-          end
-
+          # @see Stub#create_application
           def create_application(application)
             if application.key? :region
               unless application[:region].casecmp('default') == 0
@@ -55,6 +43,7 @@ module Paasal
             to_paasal_app(create_app_response, created_deployment)
           end
 
+          # @see Stub#delete_application
           def delete_application(application_id)
             # delete all deployments first
             deployments = get("/app/#{application_id}/deployment").body
@@ -63,6 +52,24 @@ module Paasal
               delete("/app/#{application_id}/deployment/#{deployment_name}")
             end
             delete("/app/#{application_id}")
+          end
+
+          private
+
+          def apply_buildpack(application)
+            runtimes = application.delete(:runtimes)
+            return unless runtimes
+            if runtimes.length > 1
+              fail Errors::PlatformSpecificSemanticError.new('cloudControl only allows 1 runtime per application',
+                                                             422_600_1)
+            end
+            buildpack = find_runtime(runtimes[0])
+            if native_runtime?(buildpack)
+              application[:type] = buildpack
+            else
+              application[:type] = 'custom'
+              application[:buildpack_url] = buildpack
+            end
           end
         end
       end

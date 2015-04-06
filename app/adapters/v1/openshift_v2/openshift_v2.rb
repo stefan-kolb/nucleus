@@ -1,6 +1,8 @@
 module Paasal
   module Adapters
     module V1
+      # @see https://access.redhat.com/documentation/en-US/OpenShift/2.0/html/REST_API_Guide The Openshift V2
+      #   API documentation
       class OpenshiftV2 < Stub
         include Paasal::Logging
         include Paasal::Adapters::V1::OpenshiftV2::Application
@@ -14,6 +16,7 @@ module Paasal
           super(endpoint_url, endpoint_app_domain, check_certificates)
         end
 
+        # @see Stub#auth_client
         def auth_client
           HttpBasicAuthClient.new @check_certificates do |verify_ssl, headers|
             # auth verification block
@@ -24,6 +27,7 @@ module Paasal
           end
         end
 
+        # @see Stub#regions
         def regions
           response = get('/regions').body[:data]
           response.each { |region| to_paasal_region(region) }
@@ -32,6 +36,7 @@ module Paasal
           response
         end
 
+        # @see Stub#region
         def region(region_name)
           region = native_region(region_name)
           fail Errors::AdapterResourceNotFoundError,
@@ -39,6 +44,7 @@ module Paasal
           region
         end
 
+        # @see Stub#scale
         def scale(application_id, instances)
           # TODO: implement me
         end

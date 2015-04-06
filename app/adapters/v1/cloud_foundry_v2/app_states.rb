@@ -2,7 +2,10 @@ module Paasal
   module Adapters
     module V1
       class CloudFoundryV2 < Stub
+        # AppStates for Cloud Foundry V2, or the logic to determine the current application state
         module AppStates
+          private
+
           def application_state(app_resource)
             if app_resource[:entity][:state] == 'STARTED'
               # 1: crashed

@@ -5,6 +5,7 @@ module Paasal
         module Buildpacks
           include Paasal::Adapters::BuildpackTranslator
 
+          # @see BuildpackTranslator#vendor_specific_runtimes
           def vendor_specific_runtimes
             {
               'ruby' => 'ruby_buildpack',

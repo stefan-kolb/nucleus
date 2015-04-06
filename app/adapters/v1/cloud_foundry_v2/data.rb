@@ -3,6 +3,7 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         module Data
+          # @see Stub#deploy
           def deploy(application_name_or_id, file, file_compression_format)
             # could be made async, too
             # resources: [] says that no previous data shall be reused, see also:
@@ -42,6 +43,7 @@ module Paasal
             end
           end
 
+          # @see Stub#download
           def download(application_name_or_id, compression_format)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
@@ -73,6 +75,7 @@ module Paasal
             end
           end
 
+          # @see Stub#rebuild
           def rebuild(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment

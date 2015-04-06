@@ -73,7 +73,7 @@ PaaSal has been tested on the following ruby interpreters:
 The CI tests cover all above versions.
 Additionally, manual tests were executed on Windows and MAC OS X using MRI 2.1.3
 
-**It won't work on JRuby**
+**PaaSal currently won't work on JRuby**
 
 ## Supported Vendors
 
@@ -767,6 +767,9 @@ Everyone is welcome to contribute via
 - Issues
 - Emails
 - Anything that comes into your mind ;-)
+
+Please make sure that all contributions pass the `bundle exec rake` command,
+which tests for code style violations and executes all tests.
 
 ### Add a new vendor
 TODO: add description

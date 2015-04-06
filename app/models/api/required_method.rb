@@ -1,8 +1,12 @@
 module Paasal
   module API
-    # This class represents a method that is required by an API version.
+    # This class represents a method that is required by an API version.<br>
+    # The method name and the required arguments were listed and imported from the +requirements.yaml+ file.
+    # An adapter of the API version the {RequiredMethod} belongs to, must implement this method with the
+    # identical arity to be accepted as PaaSal compliant adapter.
     #
     # @author Cedric Roeck (cedric.roeck@gmail.com)
+    # @since 0.1.0
     class RequiredMethod
       include Kwalify::Util::HashLike
 

@@ -3,6 +3,7 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         module Vars
+          # @see Stub#env_vars
           def env_vars(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             app_vars = get("/v2/apps/#{app_guid}/env").body[:environment_json]
@@ -13,6 +14,7 @@ module Paasal
             formatted_vars
           end
 
+          # @see Stub#env_var
           def env_var(application_name_or_id, env_var_key)
             app_guid = app_guid(application_name_or_id)
             all_vars = get("/v2/apps/#{app_guid}/env").body[:environment_json]
@@ -21,6 +23,7 @@ module Paasal
             { id: env_var_key, key: env_var_key, value: all_vars[env_var_key.to_sym] }
           end
 
+          # @see Stub#create_env_var
           def create_env_var(application_name_or_id, env_var)
             app_guid = app_guid(application_name_or_id)
             fail Errors::SemanticAdapterRequestError,
@@ -28,6 +31,7 @@ module Paasal
             set_var(app_guid, env_var[:key].to_sym, env_var[:value])
           end
 
+          # @see Stub#update_env_var
           def update_env_var(application_name_or_id, env_var_key, env_var)
             app_guid = app_guid(application_name_or_id)
             fail Errors::AdapterResourceNotFoundError,
@@ -35,6 +39,7 @@ module Paasal
             set_var(app_guid, env_var_key.to_sym, env_var[:value])
           end
 
+          # @see Stub#delete_env_var
           def delete_env_var(application_name_or_id, env_var_key)
             app_guid = app_guid(application_name_or_id)
             fail Errors::AdapterResourceNotFoundError,

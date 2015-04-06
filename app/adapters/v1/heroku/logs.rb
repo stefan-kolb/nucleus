@@ -6,6 +6,7 @@ module Paasal
           # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
           CRLF = "\r\n"
 
+          # @see Stub#logs
           def logs(application_id)
             # fails with 404 if application is not available and serves for timestampts
             app = get("/apps/#{application_id}").body
@@ -19,6 +20,7 @@ module Paasal
             available_log_files
           end
 
+          # @see Stub#log?
           def log?(application_id, log_id)
             # fails with 404 if application is not available
             get("/apps/#{application_id}")
@@ -28,6 +30,7 @@ module Paasal
             available_log_types.key? log_id.to_sym
           end
 
+          # @see Stub#log_entries
           def log_entries(application_id, log_id)
             unless log?(application_id, log_id)
               fail Errors::AdapterResourceNotFoundError,
@@ -46,6 +49,7 @@ module Paasal
             entries
           end
 
+          # @see Stub#tail
           def tail(application_id, log_id, stream)
             # Currently no tailing for build log possible
             if log_id == API::Models::Application::LogfileType::BUILD

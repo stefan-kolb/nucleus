@@ -3,6 +3,7 @@ module Paasal
     module V1
       class Heroku < Stub
         module Application
+          # @see Stub#applications
           def applications
             response = get('/apps')
             apps = []
@@ -12,16 +13,19 @@ module Paasal
             apps
           end
 
+          # @see Stub#application
           def application(application_id)
             response = get("/apps/#{application_id}")
             to_paasal_app response.body
           end
 
+          # @see Stub#delete_application
           def delete_application(application_id)
             # returns the application, but we do not want any output
             delete("/apps/#{application_id}")
           end
 
+          # @see Stub#create_application
           def create_application(application)
             # updates the application with a valid region identity
             retrieve_region(application)
@@ -53,6 +57,7 @@ module Paasal
           end
 
           # TODO: make update transactional in case sub-task (app, buildpacks) fails
+          # @see Stub#update_application
           def update_application(application_id, application)
             # start updating the buildpacks
             if application.key? :runtimes

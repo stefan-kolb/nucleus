@@ -3,10 +3,12 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         module Regions
+          # @see Stub#regions
           def regions
             [default_region]
           end
 
+          # @see Stub#region
           def region(region_name)
             unless region_name.casecmp('default') == 0
               fail Errors::AdapterResourceNotFoundError, "Region '#{region_name}' does not exist at the endpoint"
