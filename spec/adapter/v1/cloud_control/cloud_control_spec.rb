@@ -6,7 +6,12 @@ describe Paasal::Adapters::V1::CloudControl do
     @unsupported = ['with valid credentials/is compliant and/valid:applications:lifecycle/lifecycle operations']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
-    @application_region = 'default'
+    @app_min = { original_name: 'paasal-test-app-min-properties',
+                         updated_name: 'paasal-test-app-min-updated',
+                         region: 'default' }
+    @app_all = { original_name: 'paasal-test-app-all-properties',
+                         updated_name: 'paasal-test-app-all-updated',
+                         region: 'default' }
   end
   before do
     skip('This feature is currently not supported by CloudControl - 501') if skip_example?(self, @unsupported)

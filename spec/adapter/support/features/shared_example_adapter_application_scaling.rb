@@ -2,7 +2,7 @@ shared_examples 'valid:applications:scale:400' do
   describe 'scale fails' do
     describe 'with missing instances property', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/actions/scale",
+        post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
              {}, request_headers
       end
       include_examples 'a bad request'
@@ -12,7 +12,7 @@ shared_examples 'valid:applications:scale:400' do
     end
     describe 'with 0 instances value', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/actions/scale",
+        post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
              { instances: 0 }, request_headers
       end
       include_examples 'a bad request'
@@ -22,7 +22,7 @@ shared_examples 'valid:applications:scale:400' do
     end
     describe 'with negative instances value', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/actions/scale",
+        post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
              { instances: -1 }, request_headers
       end
       include_examples 'a bad request'
@@ -32,7 +32,7 @@ shared_examples 'valid:applications:scale:400' do
     end
     describe 'with invalid instances property type', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/actions/scale",
+        post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
              { instances: 'abc' }, request_headers
       end
       include_examples 'a bad request'
@@ -46,7 +46,7 @@ end
 shared_examples 'valid:applications:scale' do
   describe 'scale-out and add an application instance', :as_cassette do
     before do
-      post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/actions/scale",
+      post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
            { instances: 2 }, request_headers
     end
     include_examples 'a valid POST request'
@@ -57,7 +57,7 @@ shared_examples 'valid:applications:scale' do
 
   describe 'scale-in and remove an application instance', :as_cassette do
     before do
-      post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/actions/scale",
+      post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
            { instances: 1 }, request_headers
     end
     include_examples 'a valid POST request'

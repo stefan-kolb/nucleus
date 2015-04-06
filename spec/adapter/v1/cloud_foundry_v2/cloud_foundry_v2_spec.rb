@@ -1,12 +1,19 @@
 require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::CloudFoundryV2 do
-  before do
+  before :all do
     @endpoint = 'cf-bosh-local'
     @api_version = 'v1'
-    @adapter = load_adapter(@endpoint, @api_version)
-    @application_region = 'default'
+    @app_min = { original_name: 'paasal-test-app-min-properties',
+                 updated_name: 'paasal-test-app-min-updated',
+                 region: 'default' }
+    @app_all = { original_name: 'paasal-test-app-all-properties',
+                 updated_name: 'paasal-test-app-all-updated',
+                 region: 'default' }
     @application_params = { memory: 256.to_i }
+  end
+  before do
+    @adapter = load_adapter(@endpoint, @api_version)
   end
 
   context 'with invalid credentials' do

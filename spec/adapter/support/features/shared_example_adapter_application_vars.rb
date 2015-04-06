@@ -14,7 +14,7 @@ end
 
 shared_examples 'valid:vars:list:empty' do
   describe 'list empty env_vars', :as_cassette do
-    before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars", request_headers }
+    before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers }
     include_examples 'a valid GET request'
     include_examples 'env_var list schema'
     it 'does not contain any env vars' do
@@ -30,7 +30,7 @@ end
 
 shared_examples 'valid:vars:list' do
   describe 'list env_vars', :as_cassette do
-    before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars", request_headers }
+    before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers }
     include_examples 'a valid GET request'
     include_examples 'env_var list schema'
     it 'does contain some env vars' do
@@ -48,7 +48,7 @@ shared_examples 'valid:vars:create:400' do
   describe 'create env_var fails' do
     describe 'with missing key property', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
              { variable: { value: 'our_test_var_value' } }, request_headers
       end
       include_examples 'a bad request'
@@ -58,7 +58,7 @@ shared_examples 'valid:vars:create:400' do
     end
     describe 'with missing value property', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
              { variable: { key: 'our_test_var_key' } }, request_headers
       end
       include_examples 'a bad request'
@@ -73,7 +73,7 @@ end
 shared_examples 'valid:vars:create' do
   describe 'create env_var using app with all properties', :as_cassette do
     before do
-      post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars",
+      post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
            { variable: { key: 'our_test_var_key', value: 'our_test_var_value' } }, request_headers
     end
     include_examples 'a valid POST request'
@@ -89,7 +89,7 @@ shared_examples 'valid:vars:create' do
   describe 'create 2nd env_var using app with all properties' do
     describe 'succeeds', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
              { variable: { key: 'our_test_var_key2', value: 'our_test_var_value2' } }, request_headers
       end
       include_examples 'a valid POST request'
@@ -103,7 +103,7 @@ shared_examples 'valid:vars:create' do
     end
     describe 'did not alter other vars', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars", request_headers
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers
       end
       include_examples 'a valid GET request'
       include_examples 'env_var list schema'
@@ -120,7 +120,7 @@ shared_examples 'valid:vars:create' do
 
   describe 'create env_var using app with min properties', :as_cassette do
     before do
-      post "/endpoints/#{@endpoint}/applications/paasal-test-app-min-updated/vars",
+      post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/vars",
            { variable: { key: 'our_test_var_key', value: 'our_test_var_value' } }, request_headers
     end
     include_examples 'a valid POST request'
@@ -138,7 +138,7 @@ shared_examples 'valid:vars:create:422' do
   describe 'create env_var fails' do
     describe 'if the key is already used', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
              { variable: { key: 'our_test_var_key', value: 'our_test_var_value_duplicate' } }, request_headers
       end
       include_examples 'a semantically invalid request'
@@ -152,7 +152,7 @@ end
 shared_examples 'valid:vars:update:400' do
   describe 'update env_var fails with missing value property', :as_cassette do
     before do
-      patch "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars/our_test_var_key",
+      patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key",
             { variable: {} }, request_headers
     end
     include_examples 'a bad request'
@@ -166,7 +166,7 @@ shared_examples 'valid:vars:update' do
   describe 'update env_var' do
     describe 'succeeds', :as_cassette do
       before do
-        patch "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars/our_test_var_key",
+        patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key",
               { variable: { value: 'our_updated_test_var_value' } }, request_headers
       end
       include_examples 'a valid PATCH request'
@@ -180,7 +180,7 @@ shared_examples 'valid:vars:update' do
     end
     describe 'did not alter other vars', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars", request_headers
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers
       end
       include_examples 'a valid GET request'
       include_examples 'env_var list schema'
@@ -199,7 +199,7 @@ end
 shared_examples 'valid:vars:update:404' do
   describe 'update env_var fails with non-existing key', :as_cassette do
     before do
-      patch "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars/non_existing_key",
+      patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/non_existing_key",
             { variable: { value: 'our_test_var_value_updated' } }, request_headers
     end
     include_examples 'an unknown requested resource'
@@ -219,7 +219,7 @@ end
 shared_examples 'valid:vars:get' do
   describe 'get env_var', :as_cassette do
     before do
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars/our_test_var_key", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key", request_headers
     end
     include_examples 'a valid GET request'
     include_examples 'env_var entity schema'
@@ -236,13 +236,13 @@ shared_examples 'valid:vars:delete' do
   describe 'delete env_var' do
     describe 'succeeds', :as_cassette do
       before do
-        delete "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars/our_test_var_key", request_headers
+        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key", request_headers
       end
       include_examples 'a valid DELETE request'
     end
     describe 'did not alter other vars', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars", request_headers
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers
       end
       include_examples 'a valid GET request'
       include_examples 'env_var list schema'
@@ -260,7 +260,7 @@ shared_examples 'valid:vars:delete' do
   describe 'delete env_var fails for' do
     describe 'non-existing key', :as_cassette do
       before do
-        delete "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/vars/unknown_key", request_headers
+        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/unknown_key", request_headers
       end
       include_examples 'an unknown requested resource'
     end

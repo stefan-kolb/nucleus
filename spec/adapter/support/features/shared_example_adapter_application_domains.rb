@@ -14,7 +14,7 @@ end
 
 shared_examples 'valid:domains:list:empty' do
   describe 'list empty domains', :as_cassette do
-    before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains", request_headers }
+    before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers }
     include_examples 'a valid GET request'
     include_examples 'domain list schema'
     it 'does not contain any domain' do
@@ -30,7 +30,7 @@ end
 
 shared_examples 'valid:domains:list' do
   describe 'list domains', :as_cassette do
-    before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains", request_headers }
+    before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers }
     include_examples 'a valid GET request'
     include_examples 'domain list schema'
     it 'does contain 2 domains' do
@@ -50,28 +50,28 @@ shared_examples 'valid:domains:create' do
     describe 'with invalid name' do
       describe 'name without TLD', :as_cassette do
         before do
-          post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
                { domain: { name: 'abcdefghijkl' } }, request_headers
         end
         include_examples 'a semantically invalid request'
       end
       describe 'email as name', :as_cassette do
         before do
-          post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
                { domain: { name: 'abcdef@adomainthatishopefullynotusedontheplatform1.de' } }, request_headers
         end
         include_examples 'a semantically invalid request'
       end
       describe 'malformed name with multiple dots', :as_cassette do
         before do
-          post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
                { domain: { name: '...abc.adomainthatishopefullynotusedontheplatform2.de' } }, request_headers
         end
         include_examples 'a semantically invalid request'
       end
       describe 'malformed name with trailing dot', :as_cassette do
         before do
-          post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
                { domain: { name: '...abc.adomainthatishopefullynotusedontheplatform3.de.' } }, request_headers
         end
         include_examples 'a semantically invalid request'
@@ -79,7 +79,7 @@ shared_examples 'valid:domains:create' do
     end
     describe 'with missing name', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
              { domain: {} }, request_headers
       end
       include_examples 'a bad request'
@@ -89,7 +89,7 @@ shared_examples 'valid:domains:create' do
   describe 'create domain' do
     describe 'with hostname in the name', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
              { domain: { name: "#{@endpoint}.adomainthatishopefullynotusedontheplatform.de" } }, request_headers
       end
       include_examples 'a valid POST request'
@@ -104,7 +104,7 @@ shared_examples 'valid:domains:create' do
 
     describe 'without hostname in the name', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
              { domain: { name: 'adomainthatishopefullynotusedontheplatform.de' } }, request_headers
       end
       include_examples 'a valid POST request'
@@ -123,7 +123,7 @@ shared_examples 'valid:domains:create:422' do
   describe 'create domain fails' do
     describe 'if the name is already used', :as_cassette do
       before do
-        post "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains",
+        post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
              { domain: { name: "#{@endpoint}.adomainthatishopefullynotusedontheplatform.de" } }, request_headers
       end
       include_examples 'a semantically invalid request'
@@ -147,11 +147,11 @@ shared_examples 'valid:domains:get' do
   describe 'get domain with hostname', :as_cassette do
     before do
       # fetch the ID of the domain. CF does not allow access by name
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers)
       domain_id = json_body[:domains].find do |d|
         d[:name] == "#{@endpoint}.adomainthatishopefullynotusedontheplatform.de"
       end[:id]
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains/#{domain_id}", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", request_headers
     end
     include_examples 'a valid GET request'
     include_examples 'domain entity schema'
@@ -166,9 +166,9 @@ shared_examples 'valid:domains:get' do
   describe 'get domain without hostname', :as_cassette do
     before do
       # fetch the ID of the domain. CF does not allow access by name
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers)
       domain_id = json_body[:domains].find { |d| d[:name] == 'adomainthatishopefullynotusedontheplatform.de' }[:id]
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains/#{domain_id}", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", request_headers
     end
     include_examples 'a valid GET request'
     include_examples 'domain entity schema'
@@ -185,11 +185,11 @@ shared_examples 'valid:domains:delete' do
   describe 'delete domain succeeds for previously created entity with hostname', :as_cassette do
     before do
       # fetch the ID of the domain. CF does not allow access by name
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers)
       domain_id = json_body[:domains].find do |d|
         d[:name] == "#{@endpoint}.adomainthatishopefullynotusedontheplatform.de"
       end[:id]
-      delete "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains/#{domain_id}", request_headers
+      delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", request_headers
     end
     include_examples 'a valid DELETE request'
   end
@@ -197,9 +197,9 @@ shared_examples 'valid:domains:delete' do
   describe 'delete domain succeeds for previously created entity without hostname', :as_cassette do
     before do
       # fetch the ID of the domain. CF does not allow access by name
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers)
       domain_id = json_body[:domains].find { |d| d[:name] == 'adomainthatishopefullynotusedontheplatform.de' }[:id]
-      delete "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains/#{domain_id}", request_headers
+      delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", request_headers
     end
     include_examples 'a valid DELETE request'
   end
@@ -207,7 +207,7 @@ shared_examples 'valid:domains:delete' do
   describe 'delete domain fails for' do
     describe 'non-existing domain id', :as_cassette do
       before do
-        delete "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/domains/unknown_domain",
+        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/unknown_domain",
                request_headers
       end
       include_examples 'an unknown requested resource'

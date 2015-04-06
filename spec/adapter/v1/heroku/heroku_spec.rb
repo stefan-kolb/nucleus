@@ -2,6 +2,15 @@ require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::Heroku do
   before :all do
+    @endpoint = 'heroku'
+    @api_version = 'v1'
+    @app_min = { original_name: 'paasal-test-app-min-properties',
+                 updated_name: 'paasal-test-app-min-updated',
+                 region: 'US' }
+    @app_all = { original_name: 'paasal-test-app-all-properties',
+                 updated_name: 'paasal-test-app-all-updated',
+                 region: 'US' }
+
     VCR.configure do |c|
       c.ignore_request do |request|
         user_agent = request.headers['User-Agent'] ? request.headers['User-Agent'].to_a.first : ''
@@ -11,10 +20,7 @@ describe Paasal::Adapters::V1::Heroku do
     end
   end
   before do
-    @endpoint = 'heroku'
-    @api_version = 'v1'
     @adapter = load_adapter(@endpoint, @api_version)
-    @application_region = 'US'
   end
 
   context 'with invalid credentials' do

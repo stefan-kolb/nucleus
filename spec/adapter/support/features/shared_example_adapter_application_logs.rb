@@ -13,7 +13,7 @@ end
 
 shared_examples 'valid:logs:list' do
   describe 'list logs', :as_cassette do
-    before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs", request_headers }
+    before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers }
     include_examples 'a valid GET request'
     include_examples 'log list schema'
     it 'does contain at least one logfile' do
@@ -37,9 +37,9 @@ shared_examples 'valid:logs:download' do
     before do
       # TODO: at the time of writing this test, we assume that each platform provides a build log.
       # If this should not be the case, replace the build log with the first element in a queried log list
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build", request_headers
       @show_response = response
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build/download?file_format=log",
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build/download?file_format=log",
           request_headers
       @download_response = response
     end
@@ -61,9 +61,9 @@ shared_examples 'valid:logs:download' do
     before do
       # TODO: at the time of writing this test, we assume that each platform provides a build log.
       # If this should not be the case, replace the build log with the first element in a queried log list
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build", request_headers
       @show_response = response
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build/download?file_format=zip",
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build/download?file_format=zip",
           request_headers
       @download_response = response
     end
@@ -91,9 +91,9 @@ shared_examples 'valid:logs:download' do
     before do
       # TODO: at the time of writing this test, we assume that each platform provides a build log.
       # If this should not be the case, replace the build log with the first element in a queried log list
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build", request_headers
       @show_response = response
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build/download?file_format=tar.gz",
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build/download?file_format=tar.gz",
           request_headers
       @download_response = response
     end
@@ -134,7 +134,7 @@ shared_examples 'valid:logs:download' do
 
     describe 'with invalid file_format .rar', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build/download?file_format=rar",
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build/download?file_format=rar",
             request_headers
       end
       include_examples 'a bad request'
@@ -147,17 +147,17 @@ shared_examples 'valid:logs:download:all' do
 
   describe 'download all logs as .zip', :as_cassette do
     before do
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers
       @log_list_response = response
 
       @shown_responses = {}
       # now grab each log as show response
       json_body[:logs].each do |log|
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/#{log[:id]}", request_headers
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log[:id]}", request_headers
         @shown_responses[log[:id]] = response
       end
 
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/download?archive_format=zip",
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/download?archive_format=zip",
           request_headers
       @download_response = response
     end
@@ -198,17 +198,17 @@ shared_examples 'valid:logs:download:all' do
 
   describe 'download all logs as .tar.gz', :as_cassette do
     before do
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers
       @log_list_response = response
 
       @shown_responses = {}
       # now grab each log as show response
       json_body[:logs].each do |log|
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/#{log[:id]}", request_headers
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log[:id]}", request_headers
         @shown_responses[log[:id]] = response
       end
 
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/download?archive_format=tar.gz",
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/download?archive_format=tar.gz",
           request_headers
       @download_response = response
     end
@@ -247,14 +247,14 @@ shared_examples 'valid:logs:download:all' do
   describe 'download all logs fails' do
     describe 'with invalid archive_format .rar', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/download?archive_format=rar",
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/download?archive_format=rar",
             request_headers
       end
       include_examples 'a bad request'
     end
     describe 'with invalid archive_format .log', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/download?archive_format=rar",
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/download?archive_format=rar",
             request_headers
       end
       include_examples 'a bad request'
@@ -272,7 +272,7 @@ shared_examples 'valid:logs:get:empty' do
     before do
       # TODO: at the time of writing this test, we assume that each platform provides a build log.
       # If this should not be the case, replace the build log with the first element in a queried log list
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build", request_headers
     end
     include_examples 'a valid GET request'
     include_examples 'a valid log encoding'
@@ -288,7 +288,7 @@ shared_examples 'valid:logs:get' do
     before do
       # TODO: at the time of writing this test, we assume that each platform provides a build log.
       # If this should not be the case, replace the build log with the first element in a queried log list
-      get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/build", request_headers
+      get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/build", request_headers
     end
     include_examples 'a valid GET request'
     include_examples 'a valid log encoding'
@@ -301,7 +301,7 @@ shared_examples 'valid:logs:get' do
 
   describe 'get a log fails' do
     describe 'with non-existent log_id', :as_cassette do
-      before { get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/unknown_id", request_headers }
+      before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/unknown_id", request_headers }
       include_examples 'an unknown requested resource'
     end
 
@@ -319,10 +319,10 @@ shared_examples 'valid:applications:logs:tail' do
       # TODO: at the time of writing this test, we assume that each platform provides a request log.
       # If this should not be the case, replace the build log with the first element in a queried log list
 
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
       @app = json_body.dup
       # should not be empty due to previous web_url access
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request", request_headers)
       @recent = body.dup
 
       # invoke URL request after x seconds, so that the tailing actually receives new messages
@@ -332,7 +332,7 @@ shared_examples 'valid:applications:logs:tail' do
       end
 
       # TODO: use stream capable client to get rid of auto-close via the timeout in env['async.callback.auto.timeout']
-      get("/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/request/tail", request_headers)
+      get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request/tail", request_headers)
     end
 
     include_examples 'a valid GET request'
@@ -358,7 +358,7 @@ shared_examples 'valid:applications:logs:tail' do
   describe 'tail a log fails' do
     describe 'with non-existent log_id', :as_cassette do
       before do
-        get "/endpoints/#{@endpoint}/applications/paasal-test-app-all-updated/logs/unknown_id/tail", request_headers
+        get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/unknown_id/tail", request_headers
       end
       include_examples 'an unknown requested resource'
     end

@@ -24,7 +24,7 @@ end
 
 shared_examples 'valid:regions:get' do
   describe 'get region', :as_cassette do
-    before { get("/endpoints/#{@endpoint}/regions/#{@application_region}", request_headers) }
+    before { get("/endpoints/#{@endpoint}/regions/#{@app_all[:region]}", request_headers) }
     include_examples 'region entity schema'
     include_examples 'a valid GET request'
   end

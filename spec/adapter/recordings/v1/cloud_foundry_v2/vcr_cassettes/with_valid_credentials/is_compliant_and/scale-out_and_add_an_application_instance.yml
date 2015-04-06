@@ -21,21 +21,21 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Sat, 04 Apr 2015 12:53:39 GMT
+      - Mon, 06 Apr 2015 20:12:41 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - d702fb0a-615b-463c-40fc-3366329b53af
+      - 0b0b66e6-9eba-4cfb-7d5d-bb09a6a8e4c2
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 5334ae0a-55df-481a-7a39-dc462d15ad6e::3a7e06aa-4b6a-47bd-8b88-804060f54258
+      - 1524a469-db4e-438c-72bf-8b50a9db3714::3fbeb90a-c373-4301-9613-2e9988494069
     body:
       encoding: UTF-8
       string: '{"name":"vcap","build":"2222","support":"http://support.cloudfoundry.com","version":2,"description":"Cloud
         Foundry sponsored by Pivotal","authorization_endpoint":"http://login.10.244.0.34.xip.io","token_endpoint":"https://uaa.10.244.0.34.xip.io","api_version":"2.18.0","logging_endpoint":"wss://loggregator.10.244.0.34.xip.io:443"}'
     http_version: 
-  recorded_at: Sat, 04 Apr 2015 12:53:39 GMT
+  recorded_at: Mon, 06 Apr 2015 20:12:41 GMT
 - request:
     method: post
     uri: http://login.10.244.0.34.xip.io/oauth/token?grant_type=password&password=__cf-bosh-local:user__&username=__cf-bosh-local:user__
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=UTF-8
       Date:
-      - Sat, 04 Apr 2015 12:53:39 GMT
+      - Mon, 06 Apr 2015 20:12:41 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -73,18 +73,18 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       X-Cf-Requestid:
-      - b29bd824-3c70-4182-550d-3c3fc49d4209, c17c9448-3a94-4979-5acf-f0b0564d1ba3
+      - bdec8e31-26aa-4b88-40b7-b8337a6ed78c, b2cf6151-e326-44ce-658d-f7cd8dcf5d0a
       X-Frame-Options:
       - DENY
     body:
       encoding: UTF-8
       string: '{"access_token":"__ACCESS_TOKEN__","token_type":"bearer","refresh_token":"__REFRESH_TOKEN__","expires_in":599,"scope":"scim.userids
-        cloud_controller.write password.write openid cloud_controller.read","jti":"e0d85115-1695-4a4d-afa9-2d05d4ef844d"}'
+        cloud_controller.write password.write openid cloud_controller.read","jti":"cbdc3485-7133-4bb5-85fb-01402b3e04e7"}'
     http_version: 
-  recorded_at: Sat, 04 Apr 2015 12:53:39 GMT
+  recorded_at: Mon, 06 Apr 2015 20:12:41 GMT
 - request:
     method: get
-    uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Apaasal-test-app-all-updated
+    uri: https://api.10.244.0.34.xip.io/v2/apps?q=name%3Apaasal-test-app-min-updated
     body:
       encoding: US-ASCII
       string: ''
@@ -105,19 +105,19 @@ http_interactions:
       message: 
     headers:
       Content-Length:
-      - '1774'
+      - '1712'
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Sat, 04 Apr 2015 12:53:40 GMT
+      - Mon, 06 Apr 2015 20:12:41 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - d8131e6c-c7a8-4dc7-6df8-38c8bf6e6c2f
+      - 80b7364a-0bed-467e-5e43-ce1b5cedd1d8
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 96f7492d-ba2e-4cb6-7748-da8d729adf47::dd54ea59-992a-4b80-8b3e-26f8e8921a4c
+      - dd5d686f-e4b0-41a1-5bd4-da2415e6be79::de13be69-7f36-414a-9d38-6b75854a4431
     body:
       encoding: UTF-8
       string: |-
@@ -129,51 +129,50 @@ http_interactions:
           "resources": [
             {
               "metadata": {
-                "guid": "b81d8252-71f0-474c-a005-632338336c01",
-                "url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01",
-                "created_at": "2015-04-04T12:51:35+00:00",
-                "updated_at": "2015-04-04T12:52:17+00:00"
+                "guid": "51ff2e84-e992-48ea-9e28-b85b13e2f46b",
+                "url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b",
+                "created_at": "2015-04-06T20:10:26+00:00",
+                "updated_at": "2015-04-06T20:11:31+00:00"
               },
               "entity": {
-                "name": "paasal-test-app-all-updated",
+                "name": "paasal-test-app-min-updated",
                 "production": false,
                 "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
                 "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
                 "buildpack": "nodejs_buildpack",
                 "detected_buildpack": null,
                 "environment_json": {
-                  "our_test_var_key": "our_updated_test_var_value",
-                  "our_test_var_key2": "our_test_var_value2"
+                  "our_test_var_key": "our_test_var_value"
                 },
                 "memory": 256,
                 "instances": 1,
                 "disk_quota": 1024,
                 "state": "STARTED",
-                "version": "60122cd0-86b0-4d56-9c09-0cc6c86aa798",
+                "version": "215f4333-c960-489f-af66-684afecb8af9",
                 "command": null,
                 "console": false,
                 "debug": null,
-                "staging_task_id": "7fe53ab07760457688d010a0b5521060",
+                "staging_task_id": "58e56a2778bb46c4801ba889c914feb0",
                 "package_state": "STAGED",
                 "health_check_timeout": null,
                 "staging_failed_reason": null,
                 "docker_image": null,
-                "package_updated_at": "2015-04-04T12:51:58+00:00",
+                "package_updated_at": "2015-04-06T20:10:52+00:00",
                 "detected_start_command": "node server.js",
                 "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
                 "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
-                "events_url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01/events",
-                "service_bindings_url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01/service_bindings",
-                "routes_url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01/routes"
+                "events_url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/events",
+                "service_bindings_url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/service_bindings",
+                "routes_url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/routes"
               }
             }
           ]
         }
     http_version: 
-  recorded_at: Sat, 04 Apr 2015 12:53:39 GMT
+  recorded_at: Mon, 06 Apr 2015 20:12:41 GMT
 - request:
     method: put
-    uri: https://api.10.244.0.34.xip.io/v2/apps/b81d8252-71f0-474c-a005-632338336c01
+    uri: https://api.10.244.0.34.xip.io/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b
     body:
       encoding: UTF-8
       string: '{"instances":2}'
@@ -194,67 +193,66 @@ http_interactions:
       message: 
     headers:
       Content-Length:
-      - '1507'
+      - '1449'
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Sat, 04 Apr 2015 12:53:40 GMT
+      - Mon, 06 Apr 2015 20:12:41 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - bfcf6d7c-4419-4cc6-6f32-0426fe4ebba5
+      - 54eee776-4281-4612-576e-35850ac06a5d
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - bba7b9bf-a1ce-4181-6cba-dbc92a164d88::0cf696c7-bdf2-4a43-8e73-8e3d3516fdf8
+      - 26c357f2-ac25-4a25-7586-c8e60b06ad44::860b224b-b10c-445e-813b-c7fa51638126
     body:
       encoding: UTF-8
       string: |-
         {
           "metadata": {
-            "guid": "b81d8252-71f0-474c-a005-632338336c01",
-            "url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01",
-            "created_at": "2015-04-04T12:51:35+00:00",
-            "updated_at": "2015-04-04T12:53:40+00:00"
+            "guid": "51ff2e84-e992-48ea-9e28-b85b13e2f46b",
+            "url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b",
+            "created_at": "2015-04-06T20:10:26+00:00",
+            "updated_at": "2015-04-06T20:12:41+00:00"
           },
           "entity": {
-            "name": "paasal-test-app-all-updated",
+            "name": "paasal-test-app-min-updated",
             "production": false,
             "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
             "stack_guid": "b4d24013-b385-4db1-a171-b4e151a87c46",
             "buildpack": "nodejs_buildpack",
             "detected_buildpack": null,
             "environment_json": {
-              "our_test_var_key": "our_updated_test_var_value",
-              "our_test_var_key2": "our_test_var_value2"
+              "our_test_var_key": "our_test_var_value"
             },
             "memory": 256,
             "instances": 2,
             "disk_quota": 1024,
             "state": "STARTED",
-            "version": "60122cd0-86b0-4d56-9c09-0cc6c86aa798",
+            "version": "215f4333-c960-489f-af66-684afecb8af9",
             "command": null,
             "console": false,
             "debug": null,
-            "staging_task_id": "7fe53ab07760457688d010a0b5521060",
+            "staging_task_id": "58e56a2778bb46c4801ba889c914feb0",
             "package_state": "STAGED",
             "health_check_timeout": null,
             "staging_failed_reason": null,
             "docker_image": null,
-            "package_updated_at": "2015-04-04T12:51:58+00:00",
+            "package_updated_at": "2015-04-06T20:10:52+00:00",
             "detected_start_command": "node server.js",
             "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
             "stack_url": "/v2/stacks/b4d24013-b385-4db1-a171-b4e151a87c46",
-            "events_url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01/events",
-            "service_bindings_url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01/service_bindings",
-            "routes_url": "/v2/apps/b81d8252-71f0-474c-a005-632338336c01/routes"
+            "events_url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/events",
+            "service_bindings_url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/service_bindings",
+            "routes_url": "/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/routes"
           }
         }
     http_version: 
-  recorded_at: Sat, 04 Apr 2015 12:53:39 GMT
+  recorded_at: Mon, 06 Apr 2015 20:12:41 GMT
 - request:
     method: get
-    uri: https://api.10.244.0.34.xip.io/v2/apps/b81d8252-71f0-474c-a005-632338336c01/routes
+    uri: https://api.10.244.0.34.xip.io/v2/apps/51ff2e84-e992-48ea-9e28-b85b13e2f46b/routes
     body:
       encoding: US-ASCII
       string: ''
@@ -275,80 +273,48 @@ http_interactions:
       message: 
     headers:
       Content-Length:
-      - '2056'
+      - '775'
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Sat, 04 Apr 2015 12:53:40 GMT
+      - Mon, 06 Apr 2015 20:12:41 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - a124583e-1251-4b8a-6ba2-a736d1680078
+      - e3803858-5a69-4b90-7425-1166fe2f38a8
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 62feef6a-0ac7-47f1-726b-34985a7c97b0::c86c807a-f9ab-4a6a-9533-b94d54757d0f
+      - 9cdcd263-5699-465f-5e19-656cd6fa11be::33b4a1b1-ba7d-4717-bc5e-81f87b73d462
     body:
       encoding: UTF-8
       string: |-
         {
-          "total_results": 3,
+          "total_results": 1,
           "total_pages": 1,
           "prev_url": null,
           "next_url": null,
           "resources": [
             {
               "metadata": {
-                "guid": "17e45bd4-5255-47b8-94a8-c7d7fc247c5d",
-                "url": "/v2/routes/17e45bd4-5255-47b8-94a8-c7d7fc247c5d",
-                "created_at": "2015-04-04T12:51:35+00:00",
+                "guid": "1446e061-04e1-42d7-a196-68101af48030",
+                "url": "/v2/routes/1446e061-04e1-42d7-a196-68101af48030",
+                "created_at": "2015-04-06T20:10:27+00:00",
                 "updated_at": null
               },
               "entity": {
-                "host": "b81d8252-71f0-474c-a005-632338336c01",
+                "host": "51ff2e84-e992-48ea-9e28-b85b13e2f46b",
                 "domain_guid": "0a7ac015-b059-47d3-b1a2-873a6e370f36",
                 "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
                 "domain_url": "/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36",
                 "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
-                "apps_url": "/v2/routes/17e45bd4-5255-47b8-94a8-c7d7fc247c5d/apps"
-              }
-            },
-            {
-              "metadata": {
-                "guid": "df3c1312-cb7e-4714-8c7a-926af45b82b3",
-                "url": "/v2/routes/df3c1312-cb7e-4714-8c7a-926af45b82b3",
-                "created_at": "2015-04-04T12:51:51+00:00",
-                "updated_at": null
-              },
-              "entity": {
-                "host": "cf-bosh-local",
-                "domain_guid": "a055ee95-7d64-4352-9e5e-7eea55ecf706",
-                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
-                "domain_url": "/v2/domains/a055ee95-7d64-4352-9e5e-7eea55ecf706",
-                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
-                "apps_url": "/v2/routes/df3c1312-cb7e-4714-8c7a-926af45b82b3/apps"
-              }
-            },
-            {
-              "metadata": {
-                "guid": "2d342497-319a-44e5-810c-3e73b192e749",
-                "url": "/v2/routes/2d342497-319a-44e5-810c-3e73b192e749",
-                "created_at": "2015-04-04T12:51:51+00:00",
-                "updated_at": null
-              },
-              "entity": {
-                "host": "",
-                "domain_guid": "a055ee95-7d64-4352-9e5e-7eea55ecf706",
-                "space_guid": "d3483f4f-6706-4fe1-ad90-1bd45d50e940",
-                "domain_url": "/v2/domains/a055ee95-7d64-4352-9e5e-7eea55ecf706",
-                "space_url": "/v2/spaces/d3483f4f-6706-4fe1-ad90-1bd45d50e940",
-                "apps_url": "/v2/routes/2d342497-319a-44e5-810c-3e73b192e749/apps"
+                "apps_url": "/v2/routes/1446e061-04e1-42d7-a196-68101af48030/apps"
               }
             }
           ]
         }
     http_version: 
-  recorded_at: Sat, 04 Apr 2015 12:53:39 GMT
+  recorded_at: Mon, 06 Apr 2015 20:12:41 GMT
 - request:
     method: get
     uri: https://api.10.244.0.34.xip.io/v2/domains/0a7ac015-b059-47d3-b1a2-873a6e370f36
@@ -376,17 +342,17 @@ http_interactions:
       Content-Type:
       - application/json;charset=utf-8
       Date:
-      - Sat, 04 Apr 2015 12:53:40 GMT
+      - Mon, 06 Apr 2015 20:12:41 GMT
       Server:
       - nginx
       X-Cf-Requestid:
-      - 38fadcdd-a314-4359-5452-8df0322d07f9
+      - 5462a3a6-ed86-4ed6-7b14-f2d9a00030b1
       X-Cf-Warnings:
       - Endpoint+deprecated
       X-Content-Type-Options:
       - nosniff
       X-Vcap-Request-Id:
-      - 8fafa4f0-6b58-4184-4e63-c82fa790dbfb::d2e5a0cd-107c-4a8d-b7c5-4791469a682d
+      - f23c255b-e781-4796-48b7-aecf6d73d4a1::65df9531-5e48-4dab-9151-d0daf9b2c19a
     body:
       encoding: UTF-8
       string: |-
@@ -402,5 +368,5 @@ http_interactions:
           }
         }
     http_version: 
-  recorded_at: Sat, 04 Apr 2015 12:53:39 GMT
+  recorded_at: Mon, 06 Apr 2015 20:12:41 GMT
 recorded_with: VCR 2.9.3
