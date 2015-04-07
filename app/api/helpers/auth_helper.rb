@@ -45,17 +45,16 @@ module Paasal
 
     # Re-authenticate the user with the help of the current adapter.
     # The method shall only be invoked when there are cached authentication information that appear to be outdated.
-    # It invalidates the cache for the current user and calls the authentication.
+    # It calls the authentication for the current user to override the cached authentication headers.
     #
     # @raise [Paasal::Errors::AuthenticationError] if authentication at the endpoint fails
     # @return [void]
     def re_authenticate
       log.debug('Invokded re-authentication')
-      adapter.uncache(request_cache.get("#{@env['HTTP_X_REQUEST_ID']}.cache_key"))
       username, password = username_password
-      cache_key = adapter.cache_key(username, password)
+      auth_client = adapter.cached(adapter.cache_key(username, password))
       # raises 401 if the authentication did not only expire, but became completely invalid
-      adapter.cache(cache_key, adapter.authenticate(username, password))
+      auth_client.authenticate(username, password)
     end
 
     # Extract the username and password from the current HTTP request.

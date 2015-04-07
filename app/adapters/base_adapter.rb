@@ -31,12 +31,6 @@ module Paasal
         auth_objects_cache[key] = auth_object
       end
 
-      # Evict the cache for this cache key.
-      # @param [String] key cache to evict
-      def uncache(key)
-        auth_objects_cache.delete key
-      end
-
       # Are there cached information for this key?
       # @param [String] key cache key
       # @return [true, false] true if has cached auth info, else false
