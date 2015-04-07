@@ -55,6 +55,8 @@ module Paasal
 
             if message.include?('cannot use this name')
               fail Errors::PlatformSpecificSemanticError, message
+            elsif message.include?('must be unique')
+              fail Errors::SemanticAdapterRequestError, message
             end
             fail Errors::AdapterRequestError, message
           elsif error_response.status == 410

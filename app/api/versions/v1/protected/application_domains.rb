@@ -42,22 +42,14 @@ module Paasal
           params do
             use :domain_id
           end
-          resource '/:domain_id' do
+          # regex to allow dots in the domain as path element
+          resource '/:domain_id', requirements: { domain_id: /.*/ } do
             desc 'Show a domain' do
               success Models::Domain
               failure [[200, 'Domain retrieved',
                         Models::Domains]].concat ErrorResponses.standard_responses
             end
             get '/' do
-              # TODO: dump or enable code snippet
-              # # Rack automatically takes the final dot and extracts it to the :.format param
-              # # if we did get a format, which is not one of our supported file formats,
-              # # we need to append it to the domain.
-              # if params.key?(:format) && !ApplicationDomains.content_types.key?(params[:format])
-              #   domain_id = "#{params[:domain_id]}.#{params[:format]}"
-              # else
-              #   domain_id = params[:domain_id]
-              # end
               domain = with_authentication { adapter.domain(params[:application_id], params[:domain_id]) }
               present domain, with: Models::Domain
             end
