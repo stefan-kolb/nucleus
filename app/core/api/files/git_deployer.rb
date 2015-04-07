@@ -79,7 +79,16 @@ module Paasal
         begin
           repository = Git.clone(@repo_url, @repo_name, path: tmp_dir)
           # checkout custom branch
-          repository.checkout(@repo_branch, new_branch: true) unless @repo_branch == 'master'
+          unless @repo_branch == 'master'
+            begin
+              repository.checkout(repository.branch(@repo_branch))
+            rescue StandardError => e
+              # catch errors, might occur if no commit has been made and we try to switch the branch
+              repository.checkout(@repo_branch, new_branch: true)
+            end
+          end
+
+          # now execute the actual actions on the repository
           yield repo_dir, repository
         ensure
           # now delete the tmp directory again
@@ -113,6 +122,9 @@ module Paasal
           # usually indicates that no files could be committed, repository is up to date
           log.debug("Git commit failed: #{e}")
         end
+
+        # repack to enhance compression
+        repository.repack
 
         # force push, so that the push is executed even when all files remain unchanged
         repository.push('origin', @repo_branch, force: true)
