@@ -30,8 +30,8 @@ module Paasal
       end
 
       def auth_header
-        fail Paasal::Errors::AuthenticationError, 'Cached authentication token expired' if expired?
         fail Errors::AuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
+        fail Paasal::Errors::AuthenticationError, 'Cached authentication token expired' if expired?
         { 'Authorization' => "Bearer #{api_token}" }
       end
 
