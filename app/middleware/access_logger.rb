@@ -44,7 +44,7 @@ module Paasal
         content_length = get_content_length(header)
 
         format(FORMAT, env['HTTP_X_FORWARDED_FOR'] || env['REMOTE_ADDR'] || '-',
-               request_id,
+               request_id(env),
                env['REMOTE_USER'] || '-',
                ended_at.strftime('%d/%b/%Y:%H:%M:%S %z'),
                env[::Rack::REQUEST_METHOD],
@@ -62,14 +62,15 @@ module Paasal
         content_length.to_s == '0' ? '-' : content_length
       end
 
-      def request_id
-        if Thread.current[:paasal_request_id].nil?
-          # if there is no request id, then fill up the space
-          request_id = '*' * 36
+      def request_id(env)
+        if Thread.current[:paasal_request_id]
+          Thread.current[:paasal_request_id]
+        elsif env.key?('HTTP_X_REQUEST_ID')
+          env['HTTP_X_REQUEST_ID']
         else
-          request_id = Thread.current[:paasal_request_id]
+          # if there is no request id, then fill up the space
+          '*' * 36
         end
-        request_id
       end
     end
   end
