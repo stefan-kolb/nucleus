@@ -50,12 +50,19 @@ module Paasal
           # TODO: test if this is valid for all messages
           message = error_response.body.match(/{(.*?)}/)
           message = message[1] if message
+
+          # cloud control responds almost every time with 400...
           if error_response.status == 400
             fail Errors::AdapterResourceNotFoundError, 'Resource not found' if message.nil?
 
-            if message.include?('cannot use this name')
+            if message.include?('Billing account required')
+              fail Errors::PlatformSpecificSemanticError.new(message, API::ErrorMessages::PLATFORM_QUOTA_ERROR)
+            elsif message.include?('cannot use this name') ||
+                  message.include?('may only contain') ||
+                  message.include?('this field has no more than')
+              # all these errors are limited to cloud control, e.g. the allowed name characters and max name length
               fail Errors::PlatformSpecificSemanticError, message
-            elsif message.include?('must be unique')
+            elsif message.include?('must be unique') || message.include?('already exists')
               fail Errors::SemanticAdapterRequestError, message
             end
             fail Errors::AdapterRequestError, message
@@ -63,7 +70,7 @@ module Paasal
             fail Errors::AdapterResourceNotFoundError, 'Resource not found'
           else
             # TODO: implement me
-            log.warn 'Still unhandled---'
+            log.warn 'Still unhandled status code in cloud control :/'
           end
         end
 
