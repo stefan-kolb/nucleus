@@ -20,7 +20,7 @@ begin
     Paasal::DB::CacheDao.instance api_version
   end
 
-  puts 'Initialization complete & configuration locked!'
+  puts 'Initialization complete'
   puts '-----------------------------------------------'
 rescue Paasal::StartupError => e
   log.error "Application startup failed (#{e.exit_code}), exit now"

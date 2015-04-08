@@ -40,8 +40,10 @@ module Paasal
       vendor_dao = Paasal::DB::VendorDao.instance api_version
 
       save_providers(vendor, api_version, adapter_clazz) unless vendor.providers.nil?
-      # (7), finally save the vendor after all nested entities got their IDs
+      # (7), finally save the vendor after all nested entities got their IDs if not yet included or shall be overriden
       vendor.providers = vendor.providers.collect(&:id)
+
+      return unless !vendor_dao.key?(vendor.id) || configatron.db.key?(:override) && configatron.db.override
       vendor_dao.set vendor
     end
 
@@ -57,7 +59,9 @@ module Paasal
         # (5), assign the vendor's ID to the provider
         provider.endpoints = provider.endpoints.collect(&:id)
         provider.vendor = vendor.id
-        # (6), save the provider after the endpoint
+
+        # (6), save the provider after the endpoint if not yet included or shall be overriden
+        return unless !provider_dao.key?(provider.id) || configatron.db.key?(:override) && configatron.db.override
         provider_dao.set provider
       end
     end
@@ -72,11 +76,15 @@ module Paasal
         endpoint.provider = provider.id
         # (2b), secure the endpoints URL by using only the https scheme
         endpoint.url = secure_url(endpoint.url)
-        # (3), save the endpoint
-        endpoint_dao.set endpoint
-        # (4) save in the adapter index entry for fast resolving
+        # (3), save the endpoint if not yet included or shall be overriden
+        if !endpoint_dao.key?(endpoint.id) || configatron.db.key?(:override) && configatron.db.override
+          endpoint_dao.set endpoint
+        end
+
+        # (4) save in the adapter index entry for fast resolving if not yet included or shall be overriden
         index_entry = AdapterIndexEntry.new('id' => endpoint.id, 'url' => endpoint.url,
                                             'adapter_clazz' => adapter_clazz)
+        return unless !adapter_dao.key?(index_entry.id) || configatron.db.key?(:override) && configatron.db.override
         adapter_dao.set index_entry
       end
     end

@@ -9,11 +9,10 @@ module Paasal
         #########################
 
         # Prepare logging directory
-        root = ::File.dirname(__FILE__)
-        log_dir = ::File.join(root, 'log')
-        FileUtils.mkdir_p(log_dir) unless File.directory?(log_dir)
+        log_dir = configatron.logging.path
+        FileUtils.mkdir_p(log_dir)
         # Setup request logging for the past 7 days
-        logger = Logger.new(::File.join(root, 'log', 'requests.log'), 'daily', 7)
+        logger = Logger.new(::File.join(log_dir, 'requests.log'), 'daily', 7)
 
         #########################
         ### Setup Rack Server ###

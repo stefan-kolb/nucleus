@@ -22,8 +22,8 @@ module Paasal
 
       def configure_logger_for(classname)
         # prepare logging dir
-        log_dir = ::File.join('log')
-        log_file = ::File.join(log_dir, 'paasal.log')
+        log_dir = configatron.logging.path
+        log_file = File.join(log_dir, 'paasal.log')
         # prepare path and create missing directories
         FileUtils.mkdir_p(log_dir) unless File.directory?(log_dir)
         # create the loggers

@@ -14,7 +14,7 @@ module Paasal
 
       def call(env)
         # create the error logger
-        error_logger = ::File.new(@file, 'a+')
+        error_logger = File.new(@file, 'a+')
         error_logger.sync = true
         # assign dispatcher to be used for printing errors
         dispatcher = ErrorRequestDispatcher.new([error_logger, env['rack.errors']])

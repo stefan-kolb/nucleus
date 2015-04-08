@@ -1,22 +1,28 @@
 # [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
+# Defaults to: Logger::Severity::WARN
 configatron.logging.level = Logger::Severity::DEBUG
 
-# [optional] Database backend to use.
-# Defaults to :Daybreak on Unix, :LMDB on windows systems.
-# TODO: add further backends and specify the mandatory options in the store.rb
-# Choose one of: [:Daybreak, :LMDB]
+# [optional] Logging directory
+# Defaults to: File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
+# configatron.logging.path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
+
+# [optional] Database backend to use. Choose one of: [:Daybreak, :LMDB]
+# Defaults to: :Daybreak on Unix, :LMDB on windows systems.
 # configatron.db.backend = :Daybreak
 
 # [optional] Options to start the backend.
-# Defaults to {}
 # See http://www.rubydoc.info/gems/moneta/Moneta/Adapters for valid options on the chosen adapter.
+# Defaults to: {}
 # configatron.db.backend_options = {}
 
 # [optional] Please specify the DB directory if you plan to use a file storage.
-# Defaults to a temporary directory.
+# Defaults to: a temporary directory.
 configatron.db.path = '/Users/cmr/Documents/workspace-rubymine/paasal/store/'
+
 # [optional] If true, the DB will be deleted when the server is being closed.
+# Defaults to: false
 configatron.db.delete_on_shutdown = true
+
 # [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values,
 # which may partially override previously persisted entities.
 # False keeps the changes that were applied during runtime.
