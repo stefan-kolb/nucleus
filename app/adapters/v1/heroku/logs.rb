@@ -8,7 +8,7 @@ module Paasal
 
           # @see Stub#logs
           def logs(application_id)
-            # fails with 404 if application is not available and serves for timestampts
+            # fails with 404 if application is not available and serves for timestamps
             app = get("/apps/#{application_id}").body
 
             available_log_files = []

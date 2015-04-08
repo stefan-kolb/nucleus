@@ -24,7 +24,7 @@ module Paasal
           def create_application(application)
             if application.key? :region
               unless application[:region].casecmp('default') == 0
-                fail Errors::PlatformSpecificSemanticError,
+                fail Errors::SemanticAdapterRequestError,
                      "Region '#{application[:region]}' does not exist at the endpoint. "\
                      'Please check which regions are actually available on this endpoint.'
               end
