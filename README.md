@@ -59,6 +59,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Contributing](#contributing)
   * [Add a new vendor](#add-a-new-vendor)
   * [Add a vendor version](#add-a-vendor-version)
+* [Further documentation](#further-documentation)
 * [License](#license)
 
 ## Ruby Interpreter Compatibility
@@ -593,19 +594,23 @@ The vendor thereby must be set to `paasal` and the version must be available.
 Otherwise an error with the HTTP status `406` is returned.
 A sample `Accept` header would be:
 
-    Accept = application/vnd.paasal-v1
+```
+Accept = application/vnd.paasal-v1
+```
 
 ##### Error codes
 
 The application uses the following subset of error codes:
 
-    400: Bad Request
-    401: Unauthorized
-    403: Forbidden
-    404: Resource not found
-    406: API vendor or version not found
-    422: Unprocessable Entity due to invalid parameters
-    500: Internal processing error
+```
+400: Bad Request
+401: Unauthorized
+403: Forbidden
+404: Resource not found
+406: API vendor or version not found
+422: Unprocessable Entity due to invalid parameters
+500: Internal processing error
+```
 
 All errors are returned in a common schema:
 
@@ -631,6 +636,10 @@ For detailed information, please have a look at the [swagger-codegen project](ht
 
 ### Heroku
 
+#### Issues
+
+*No known issues*
+
 ### Cloud Foundry v2
 
 #### Issues
@@ -643,6 +652,10 @@ If there are no logs that can be retrieved, the log list will be empty and the d
 
 ### Openshift v2
 
+#### Issues
+
+*NOT YET IMPLEMENTED*
+
 ### cloudControl
 
 #### Issues
@@ -653,6 +666,10 @@ An application can't be updated, the `name` and `runtimes` can't be changed once
 Applications on cloudControl can't be explicitly started or stopped.
 They start automatically upon the successful deployment of a valid application and stop once the _deployment_ has been deleted.
 
+**Logs**
+Log messages, for instance the request entries, do not appear instantly in the log.
+It may take some seconds or even minutes for them to show up.
+
 ## Tests
 
 The tests are divided into 3 categories, _unit_, _integration_ and _adapter_ tests.
@@ -660,19 +677,25 @@ You can either call all tests or each suite seperately.
 
 **Invoke:**
 
-    bundle exec rake spec
+```
+bundle exec rake spec
+```
 
 ### Unit Tests
 
 **Invoke:**
 
-    bundle exec rake spec:suite:unit
+```
+bundle exec rake spec:suite:unit
+```
 
 ### Integration Tests
 
 **Invoke:**
 
-    bundle exec rake spec:suite:integration
+```
+bundle exec rake spec:suite:integration
+```
 
 ### Adapter Tests
 
@@ -681,7 +704,9 @@ When code changes result in different requests, the interactions have to be re-r
 
 **Invoke:**
 
-    bundle exec rake spec:suite:adapters
+```
+bundle exec rake spec:suite:adapters
+```
 
 ##### Recording
 
@@ -690,43 +715,48 @@ The credentials must be specified in the `config/.credentials` file.
 
 The file is ignored and shall _never_ be committed. It must use the following syntax:
 
-    heroku:
-      user:     'my_heroku_username'
-      password: 'my_heroku_usernames_password'
+```
+heroku:
+  user:     'my_heroku_username'
+  password: 'my_heroku_usernames_password'
+```
 
 A complete .credentials file could then look like:
 
 ```yaml
-    heroku:
-      id:       'my_heroku_user_id'
-      user:     'my_heroku_username'
-      password: 'my_heroku_usernames_password'
+heroku:
+  id:       'my_heroku_user_id'
+  user:     'my_heroku_username'
+  password: 'my_heroku_usernames_password'
 
-    bluemix-eu-gb:
-      user:     'my_bluemix_username'
-      password: 'my_bluemix_usernames_password'
-      username: 'my_bluemix_username_with_encoded_umlauts'
+bluemix-eu-gb:
+  user:     'my_bluemix_username'
+  password: 'my_bluemix_usernames_password'
+  username: 'my_bluemix_username_with_encoded_umlauts'
 
-    cloudcontrol:
-      user:     'my_cc_email'
-      password: 'my_cc_usernames_password'
-      username: 'my_cc_username'
+cloudcontrol:
+  user:     'my_cc_email'
+  password: 'my_cc_usernames_password'
+  username: 'my_cc_username'
 
-    openshift-online:
-      user:     'my_os_email'
-      password: 'my_os_usernames_password'
-      id:       'my_os_user_id'
+openshift-online:
+  user:     'my_os_email'
+  password: 'my_os_usernames_password'
+  id:       'my_os_user_id'
 ```
 
-To record the interactions, you only have to call the Rake `record` task, eg. by calling: `bundle exec rake record`
-You must be allowed to create at least 3 additional applications with your account,
-otherwise the quota restrictions will invalidate the test results.
+To record the interactions, you only have to call the Rake `record` task, eg. by calling:
 
-**
-WARNING:  
-The recording task deletes all applications that exist on the platform endpoints.
-Please make sure to use a test account for the recording or make sure all applications can be deleted (!)
-**
+```
+bundle exec rake record`
+```
+
+**Notes:**
+* You must be allowed to create at least 3 additional applications with your account, otherwise the quota restrictions will invalidate the test results.
+* A complete recording of a single vendor can currently take up to 10 minutes.
+If you only require certain functionality to be tested, make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
+* cloudControl requires you to change the application names if the previous recording was made within the last 2 days, otherwise if fails because the name is still locked.
+Change the name in the `spec/adapter/v1/cloud_control_spec.rb`.
 
 ###### Missing or invalid VCR recording
 If the recorded cassette is invalid due to a recent change, the test that use this cassette are going to fail.
@@ -753,10 +783,19 @@ Until the first release (v1), the initial version is: `0.1.0`.
 ## Project structure
 
 ```
-app #
+app # The PaaSal application
 app/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
 app/api # Everything that is directly related to the RESTfulGrape API: entities, embedded helpers and the actual API version's definitions
 app/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
+app/middleware # Rack middleware layers for authentication, request ids and logging
+app/models # The object classes that are to be maintained in the database: Vendor, Provider, Endpoint, ...
+bin # Binary startup files
+config # Configuration files for PaaSal and its adapters
+lib # Monkey patched classed, extensions and the gem definition files
+public # public directory for rack, hosts the swagger-ui files for the live API documentation
+schemas # Kwalify schemas, used to parse the configuration and load new vendors at startup
+scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
+spec # All rspec test suites
 ```
 
 ## Contributing
@@ -771,11 +810,9 @@ Everyone is welcome to contribute via
 Please make sure that all contributions pass the `bundle exec rake` command,
 which tests for code style violations and executes all tests.
 
-### Add a new vendor
-TODO: add description
+## Further documentation
 
-### Add a vendor version
-TODO: add description
+[Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
 
 ## shield.io badges (not working)
 
