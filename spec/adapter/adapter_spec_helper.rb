@@ -45,17 +45,10 @@ def username_password(endpoint_id)
   Paasal::Spec::Config.credentials.username_password endpoint_id
 end
 
-def skip_example?(current_test, to_skip)
+def skip_example?(described_class, current_test, to_skip)
   return false if to_skip.nil? || to_skip.empty?
-  adapter_spec_class = "RSpec::ExampleGroups::#{current_test.described_class.to_s.gsub(/::/, '')}"
-  classes_to_skip = to_skip.collect do |test_name|
-    class_to_skip = adapter_spec_class
-    test_name.split(/\//).each do |subgroup|
-      class_to_skip = "#{class_to_skip}::#{subgroup.split(/[\s,_,:,\/]/).map(&:capitalize).join}"
-    end
-    class_to_skip
-  end
-  classes_to_skip.each { |clazz_to_skip| return true if current_test.class.to_s.start_with?(clazz_to_skip) }
+  classes_to_skip = to_skip.collect { |test_name| "#{described_class} #{test_name}" }
+  classes_to_skip.each { |clazz_to_skip| return true if current_test.start_with?(clazz_to_skip) }
   false
 end
 

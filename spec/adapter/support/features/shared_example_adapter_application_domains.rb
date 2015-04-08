@@ -97,9 +97,6 @@ shared_examples 'valid:domains:create' do
       it 'has valid name property' do
         expect(json_body[:name]).to eql("#{@endpoint}.adomainthatishopefullynotusedontheplatform.de")
       end
-      it 'id property does not include dots' do
-        expect(json_body[:id]).not_to include('.')
-      end
     end
 
     describe 'without hostname in the name', :as_cassette do
@@ -111,9 +108,6 @@ shared_examples 'valid:domains:create' do
       include_examples 'domain entity schema'
       it 'has valid name property' do
         expect(json_body[:name]).to eql('adomainthatishopefullynotusedontheplatform.de')
-      end
-      it 'id property does not include dots' do
-        expect(json_body[:id]).not_to include('.')
       end
     end
   end
@@ -158,9 +152,6 @@ shared_examples 'valid:domains:get' do
     it 'has valid name property' do
       expect(json_body[:name]).to eql("#{@endpoint}.adomainthatishopefullynotusedontheplatform.de")
     end
-    it 'id property does not include dots' do
-      expect(json_body[:id]).not_to include('.')
-    end
   end
 
   describe 'get domain without hostname', :as_cassette do
@@ -174,9 +165,6 @@ shared_examples 'valid:domains:get' do
     include_examples 'domain entity schema'
     it 'has valid name property' do
       expect(json_body[:name]).to eql('adomainthatishopefullynotusedontheplatform.de')
-    end
-    it 'id property does not include dots' do
-      expect(json_body[:id]).not_to include('.')
     end
   end
 end

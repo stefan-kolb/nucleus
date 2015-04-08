@@ -1,5 +1,5 @@
 shared_examples 'valid:applications:lifecycle' do
-  describe 'lifecycle operations' do
+  describe 'lifecycle operation' do
     [:@app_all, :@app_min].each do |app_name|
       describe "start succeeds for #{app_name} if currently stopped", :as_cassette do
         before do
@@ -74,8 +74,8 @@ shared_examples 'valid:applications:lifecycle' do
 end
 
 shared_examples 'valid:applications:lifecycle:422' do
-  describe 'lifecycle operations' do
-    describe 'fail when there is no deployment' do
+  describe 'lifecycle operations before deployment' do
+    describe 'fail because there is no deployment' do
       describe 'start' do
         describe 'fails', :as_cassette do
           before do

@@ -38,7 +38,7 @@ shared_examples 'valid:applications:create' do
       describe 'runtimes property', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications",
-               { application: { name: 'paasal_test_create_with_missing_runtimes' } }, request_headers
+               { application: { name: 'paasaltestcreatewithmissingruntimes' } }, request_headers
         end
         include_examples 'a bad request'
       end
@@ -47,7 +47,7 @@ shared_examples 'valid:applications:create' do
       describe 'region', :as_cassette do
         before do
           application = {
-            application: { name: 'paasal_test_create_with_invalid_region', runtimes: [], region: 'anyinvalidregion' }
+            application: { name: 'paasaltestcreateinvalidregion', runtimes: [], region: 'anyinvalidregion' }
           }
           post "/endpoints/#{@endpoint}/applications", application, request_headers
         end
@@ -60,7 +60,7 @@ shared_examples 'valid:applications:create' do
         describe 'by bad URL and unknown name', :as_cassette do
           before do
             application = {
-              application: { name: 'paasal_test_create_with_invalid_runtime_name', runtimes: ['youdontknowmert'] }
+              application: { name: 'paasaltestcreatebadruntimename', runtimes: ['youdontknowmert'] }
             }
             post "/endpoints/#{@endpoint}/applications", application, request_headers
           end
@@ -74,11 +74,11 @@ shared_examples 'valid:applications:create' do
   end
 
   describe 'create application' do
-    describe 'of type ruby with all properties', :as_cassette do
+    describe 'of type nodejs with all properties', :as_cassette do
       before do
         application = {
           application: {
-            name: @app_all[:original_name], runtimes: ['ruby'],
+            name: @app_all[:original_name], runtimes: ['nodejs'],
             region: @app_all[:region], autoscaled: false
           }
         }
@@ -90,9 +90,9 @@ shared_examples 'valid:applications:create' do
       include_examples 'application state: created'
     end
 
-    describe 'of type java with minimal properties', :as_cassette do
+    describe 'of type nodejs with minimal properties', :as_cassette do
       before do
-        application = { application: { name: @app_min[:original_name], runtimes: ['java'] } }
+        application = { application: { name: @app_min[:original_name], runtimes: ['nodejs'] } }
         application[:application][:vendor_specific] = @application_params if @application_params
         post "/endpoints/#{@endpoint}/applications", application, request_headers
       end
@@ -132,46 +132,70 @@ shared_examples 'valid:applications:list' do
 end
 
 shared_examples 'valid:applications:update' do
-  describe 'update succeeds when' do
-    describe 'changing only the name', :as_cassette do
-      before do
-        application = { application: { name: @app_all[:updated_name] } }
-        patch "/endpoints/#{@endpoint}/applications/#{@app_all[:original_name]}", application, request_headers
+  describe 'application update' do
+    describe 'succeeds when' do
+      describe 'changing only the name', :as_cassette do
+        before do
+          application = { application: { name: @app_all[:updated_name] } }
+          patch "/endpoints/#{@endpoint}/applications/#{@app_all[:original_name]}", application, request_headers
+        end
+        include_examples 'a valid PATCH request'
+        it 'name change reflected in response' do
+          expect(json_body[:name]).to eql @app_all[:updated_name]
+        end
       end
-      include_examples 'a valid PATCH request'
-      it 'name change reflected in response' do
-        expect(json_body[:name]).to eql @app_all[:updated_name]
-      end
-    end
 
-    describe 'changing only the runtimes', :as_cassette do
-      before do
-        application = { application: { runtimes: ['nodejs'] } }
-        patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", application, request_headers
+      describe 'changing only the runtimes', :as_cassette do
+        before do
+          application = { application: { runtimes: ['ruby'] } }
+          patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", application, request_headers
+        end
+        include_examples 'a valid PATCH request'
+        it 'name unchanged in response' do
+          expect(json_body[:name]).to eql @app_all[:updated_name]
+        end
       end
-      include_examples 'a valid PATCH request'
-      it 'name unchanged in response' do
-        expect(json_body[:name]).to eql @app_all[:updated_name]
-      end
-    end
 
-    describe 'changing name and runtimes', :as_cassette do
+      describe 'changing name and runtimes', :as_cassette do
+        before do
+          application = { application: { name: @app_min[:updated_name], runtimes: ['java'] } }
+          patch "/endpoints/#{@endpoint}/applications/#{@app_min[:original_name]}", application, request_headers
+        end
+        include_examples 'a valid PATCH request'
+        it 'name change reflected in response' do
+          expect(json_body[:name]).to eql @app_min[:updated_name]
+        end
+      end
+
+      describe 'reverting runtime change for app with min properties', :as_cassette do
+        before do
+          application = { application: { runtimes: ['nodejs'] } }
+          patch "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", application, request_headers
+        end
+        include_examples 'a valid PATCH request'
+        it 'name unchanged in response' do
+          expect(json_body[:name]).to eql @app_min[:updated_name]
+        end
+      end
+
+      describe 'reverting runtime change for app with all properties', :as_cassette do
+        before do
+          application = { application: { runtimes: ['nodejs'] } }
+          patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", application, request_headers
+        end
+        include_examples 'a valid PATCH request'
+        it 'name unchanged in response' do
+          expect(json_body[:name]).to eql @app_all[:updated_name]
+        end
+      end
+    end
+    describe 'fails for non-existing application', :as_cassette do
       before do
-        application = { application: { name: @app_min[:updated_name], runtimes: ['nodejs'] } }
-        patch "/endpoints/#{@endpoint}/applications/#{@app_min[:original_name]}", application, request_headers
+        application = { application: { name: 'renamednonexistingapp', runtimes: ['ruby'] } }
+        patch "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", application, request_headers
       end
-      include_examples 'a valid PATCH request'
-      it 'name change reflected in response' do
-        expect(json_body[:name]).to eql @app_min[:updated_name]
-      end
+      include_examples 'an unknown requested resource'
     end
-  end
-  describe 'update fails for non-existing application', :as_cassette do
-    before do
-      application = { application: { name: 'renamed_non_existing_app', runtimes: ['ruby'] } }
-      patch "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", application, request_headers
-    end
-    include_examples 'an unknown requested resource'
   end
 end
 
@@ -190,7 +214,7 @@ shared_examples 'valid:applications:data:download:422' do
 end
 
 shared_examples 'valid:applications:data:deploy' do
-  describe 'deployment of application' do
+  describe 'deployment' do
     describe 'fails for' do
       describe 'unsupported archive compression of type .tbz2', :as_cassette do
         before do
@@ -231,8 +255,8 @@ shared_examples 'valid:applications:data:deploy' do
       end
     end
 
-    describe 'succeeds with', :mock_fs_on_replay do
-      describe 'valid .zip application archive', :as_cassette do
+    describe 'succeeds', :mock_fs_on_replay do
+      describe 'with valid .zip application archive', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/deploy",
                { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.zip',
@@ -243,7 +267,7 @@ shared_examples 'valid:applications:data:deploy' do
           expect_status 204
         end
       end
-      describe 'subsequent GET application with all properties shows that', :as_cassette do
+      describe 'and subsequent GET application with all properties shows that', :as_cassette do
         it 'state changes to deployed within timeout period' do
           wait(10.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:state]
@@ -251,7 +275,7 @@ shared_examples 'valid:applications:data:deploy' do
         end
       end
 
-      describe 'valid .tar.gz application archive', :as_cassette do
+      describe 'with valid .tar.gz application archive', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/data/deploy",
                { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.tar.gz',
@@ -262,7 +286,7 @@ shared_examples 'valid:applications:data:deploy' do
           expect_status 204
         end
       end
-      describe 'subsequent GET application with min properties shows that', :as_cassette do
+      describe 'and subsequent GET application with min properties shows that', :as_cassette do
         it 'state changes to deployed within timeout period' do
           wait(10.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)[:state]

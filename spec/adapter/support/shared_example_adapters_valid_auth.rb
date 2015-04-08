@@ -78,7 +78,7 @@ shared_examples 'compliant adapter with valid credentials' do
     include_examples 'valid:logs:get'
     include_examples 'valid:logs:download'
     include_examples 'valid:logs:download:all'
-    include_examples 'valid:applications:logs:tail'
+    include_examples 'valid:logs:tail'
 
     # scaling operations
     include_examples 'valid:applications:scale:400'

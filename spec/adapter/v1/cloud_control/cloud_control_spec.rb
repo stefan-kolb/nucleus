@@ -2,19 +2,34 @@ require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::CloudControl do
   before :all do
-    # TODO: Currently skipping these example groups / tests for this adapter
-    @unsupported = ['with valid credentials/is compliant and/valid:applications:lifecycle/lifecycle operations']
+    # skip these example groups / tests for this adapter, both,
+    # application update and lifecycle actions are not supported
+    @unsupported = ['with valid credentials is compliant and application update',
+                    'with valid credentials is compliant and lifecycle operation',
+                    'with valid credentials is compliant and deployment succeeds and subsequent',
+                    # TODO: currently there are some delays, requests take up to 5min to appear in the log
+                    'with valid credentials is compliant and log download succeeds for type request as .log binary',
+                    # TODO: currently there are some delays, requests take up to 5min to appear in the log
+                    'with valid credentials is compliant and log get of type request does contain at least one',
+                    # TODO: currently there are some delays, requests take up to 5min to appear in the log
+                    'with valid credentials is compliant and log tail request receives new request log entries',
+                    # scale-out should work, but the test would require a valid billing address
+                    'with valid credentials is compliant and scale-out']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
-    @app_min = { original_name: 'paasal-test-app-min-properties',
-                         updated_name: 'paasal-test-app-min-updated',
+    # we must use these stupid names given that cloud control prohibits special characters and (!)
+    # deleted application names are locked for about 48 hours :(
+    @app_min = { original_name: 'paasaltestappminproperties13',
+                         updated_name: 'paasaltestappminproperties13',
                          region: 'default' }
-    @app_all = { original_name: 'paasal-test-app-all-properties',
-                         updated_name: 'paasal-test-app-all-updated',
+    @app_all = { original_name: 'paasaltestappallproperties13',
+                         updated_name: 'paasaltestappallproperties13',
                          region: 'default' }
   end
-  before do
-    skip('This feature is currently not supported by CloudControl - 501') if skip_example?(self, @unsupported)
+  before do |example|
+    if skip_example?(described_class, example.metadata[:full_description], @unsupported)
+      skip('This feature is currently not supported by cloudControl - 501')
+    end
     # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)
   end
@@ -31,7 +46,7 @@ describe Paasal::Adapters::V1::CloudControl do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-    # include_examples 'compliant adapter with valid credentials'
+    include_examples 'compliant adapter with valid credentials'
 
     describe 'native adapter call' do
       describe 'against endpoint' do

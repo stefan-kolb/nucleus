@@ -2,6 +2,9 @@ require 'spec/adapter/adapter_spec_helper'
 
 describe Paasal::Adapters::V1::Heroku do
   before :all do
+    # skip these example groups / tests for this adapter
+    # scale-out should work, but the test would require a valid billing address
+    @unsupported = ['with valid credentials is compliant and scale-out']
     @endpoint = 'heroku'
     @api_version = 'v1'
     @app_min = { original_name: 'paasal-test-app-min-properties',
@@ -19,7 +22,11 @@ describe Paasal::Adapters::V1::Heroku do
       end
     end
   end
-  before do
+  before do |example|
+    if skip_example?(described_class, example.metadata[:full_description], @unsupported)
+      skip('This feature is currently not supported by Heroku - 501')
+    end
+    # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)
   end
 
