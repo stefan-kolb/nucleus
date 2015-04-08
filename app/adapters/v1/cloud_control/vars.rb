@@ -23,6 +23,9 @@ module Paasal
 
           # @see Stub#create_env_var
           def create_env_var(application_id, env_var)
+            cc_vars = cc_vars(application_id)
+            fail Errors::SemanticAdapterRequestError,
+                 "Env. var key '#{env_var[:key]}' already taken" if env_var?(application_id, env_var[:key], cc_vars)
             set_var(application_id, env_var[:key], env_var[:value])
           end
 
