@@ -63,8 +63,7 @@ module Paasal
                     # this should at the moment only apply to tests, closing the tailing action when X seconds passed
                     if env['async.callback.auto.timeout']
                       # shorten test duration if we are not recording
-                      timeout = VCR.current_cassette.recording? ? env['async.callback.auto.timeout'].to_i : 7
-                      EM.add_timer(timeout) do
+                      EM.add_timer(env['async.callback.auto.timeout']) do
                         stream.closed = true
                         close
                       end
