@@ -43,6 +43,8 @@ module Paasal
                 tail_polling = nil
                 stream = RackStreamCallback.new(self)
                 after_connection_error do
+                  # save request id to deferred thread for logging associations
+                  Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
                   # tidy resource when the connection was terminated with an error
                   log.debug('Connection error reported by rack-stream')
                   stream.closed = true
@@ -50,6 +52,8 @@ module Paasal
                 end
 
                 after_open do
+                  # save request id to deferred thread for logging associations
+                  Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
                   begin
                     # execute the actual request and stream the logging message
                     tail_polling = with_authentication do
@@ -72,6 +76,8 @@ module Paasal
                 end
 
                 before_close do
+                  # save request id to deferred thread for logging associations
+                  Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
                   log.debug 'Closing API stream, stop tail updates...'
                   tail_polling.stop if tail_polling
                 end
