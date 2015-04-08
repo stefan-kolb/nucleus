@@ -2,8 +2,7 @@ module Paasal
   module Adapters
     module V1
       class CloudControl < Stub
-        PAASAL_DEPLOYMENT ||= 'paasal'
-
+        # all cloud foundry specific semantic errors shall have an error code of 422_6XXX
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudControl::Application
         include Paasal::Adapters::V1::CloudControl::Buildpacks
@@ -11,7 +10,13 @@ module Paasal
         include Paasal::Adapters::V1::CloudControl::Data
         include Paasal::Adapters::V1::CloudControl::Logs
         include Paasal::Adapters::V1::CloudControl::Vars
-        # all cloud foundry specific semantic errors shall have an error code of 422_6XXX
+
+        # The default deployment name of cloud control applications that is used by PaaSal
+        PAASAL_DEPLOYMENT = 'paasal'
+        # Error messages of semantic errors that are platform specific
+        CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS = ['cannot use this name', 'may only contain', 'this field has no more than']
+        # Error messages of common semantic errors
+        CC_SEMANTIC_ERROR_MSGS = ['must be unique', 'already exists']
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
@@ -53,25 +58,27 @@ module Paasal
 
           # cloud control responds almost every time with 400...
           if error_response.status == 400
-            fail Errors::AdapterResourceNotFoundError, 'Resource not found' if message.nil?
-
-            if message.include?('Billing account required')
-              fail Errors::PlatformSpecificSemanticError.new(message, API::ErrorMessages::PLATFORM_QUOTA_ERROR)
-            elsif message.include?('cannot use this name') ||
-                  message.include?('may only contain') ||
-                  message.include?('this field has no more than')
-              # all these errors are limited to cloud control, e.g. the allowed name characters and max name length
-              fail Errors::PlatformSpecificSemanticError, message
-            elsif message.include?('must be unique') || message.include?('already exists')
-              fail Errors::SemanticAdapterRequestError, message
-            end
-            fail Errors::AdapterRequestError, message
+            handle_400(message)
           elsif error_response.status == 410
             fail Errors::AdapterResourceNotFoundError, 'Resource not found'
           else
             # TODO: implement me
             log.warn 'Still unhandled status code in cloud control :/'
           end
+        end
+
+        def handle_400(message)
+          fail Errors::AdapterResourceNotFoundError, 'Resource not found' if message.nil?
+
+          if message.include?('Billing account required')
+            fail Errors::PlatformSpecificSemanticError.new(message, API::ErrorMessages::PLATFORM_QUOTA_ERROR)
+          elsif CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS.any? { |msg| message.include? msg }
+            # all these errors are limited to cloud control, e.g. the allowed name characters and max name length
+            fail Errors::PlatformSpecificSemanticError, message
+          elsif CC_SEMANTIC_ERROR_MSGS.any? { |msg| message.include? msg }
+            fail Errors::SemanticAdapterRequestError, message
+          end
+          fail Errors::AdapterRequestError, message
         end
 
         # @see Stub#scale
@@ -97,7 +104,7 @@ module Paasal
           # * running, if a data deployment was pushed
           return API::Models::Application::States::CREATED if deployment[:version] == '-1'
           # return API::Models::Application::States::DEPLOYED
-          return API::Models::Application::States::RUNNING
+          API::Models::Application::States::RUNNING
           # return API::Models::Application::States::STOPPED
           # return API::Models::Application::States::IDLE
 

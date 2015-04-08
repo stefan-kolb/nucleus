@@ -11,7 +11,7 @@ module Paasal
             request: { id: 'request', name: 'access', type: API::Models::Application::LogfileType::REQUEST },
             application: { id: 'application', name: 'error', type: API::Models::Application::LogfileType::APPLICATION },
             api: { id: 'api', name: 'deploy', type: API::Models::Application::LogfileType::API },
-            system: { id: 'system', name: 'worker', type: API::Models::Application::LogfileType::SYSTEM },
+            system: { id: 'system', name: 'worker', type: API::Models::Application::LogfileType::SYSTEM }
           }
 
           # @see Stub#logs

@@ -82,7 +82,7 @@ module Paasal
           unless @repo_branch == 'master'
             begin
               repository.checkout(repository.branch(@repo_branch))
-            rescue StandardError => e
+            rescue StandardError
               # catch errors, might occur if no commit has been made and we try to switch the branch
               repository.checkout(@repo_branch, new_branch: true)
             end

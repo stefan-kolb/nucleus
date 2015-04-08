@@ -4,7 +4,6 @@ module Paasal
       class CloudControl < Stub
         # cloud control data management operations
         module Data
-
           # BEWARE:<br>
           # cloud control violates the PaaSal application lifecycle. After the deployment, the application
           # is immediately running and can't be stopped!
