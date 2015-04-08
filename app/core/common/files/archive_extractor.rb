@@ -75,7 +75,7 @@ module Paasal
           end
 
           # Process default entry types (dir, file, symlink)
-          full_name = entry.full_name.sub(/(\.\/)?/, '')
+          full_name = entry.full_name.sub(%r{(\.\/)?}, '')
           dest ||= File.join(destination_path, full_name)
           next if tar_git_entry? full_name
           if entry.directory?

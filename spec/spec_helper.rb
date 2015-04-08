@@ -1,7 +1,7 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), '..')
 
 # figure out where we are being loaded from
-if $LOADED_FEATURES.grep(/spec\/spec_helper\.rb/).any?
+if $LOADED_FEATURES.grep(%r{spec\/spec_helper\.rb}).any?
   begin
     fail 'foo'
   rescue => e

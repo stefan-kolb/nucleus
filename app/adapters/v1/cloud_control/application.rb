@@ -57,7 +57,7 @@ module Paasal
             # delete all deployments first
             deployments = get("/app/#{application_id}/deployment").body
             deployments.each do |deployment|
-              deployment_name = /(\w+)\/(\w+)/.match(deployment[:name])[2]
+              deployment_name = %r{(\w+)\/(\w+)}.match(deployment[:name])[2]
               delete("/app/#{application_id}/deployment/#{deployment_name}")
             end
             delete("/app/#{application_id}")

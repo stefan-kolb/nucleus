@@ -26,7 +26,7 @@ module Paasal
           next if @exclude_git && file.start_with?("#{path}/.git")
 
           mode = File.stat(file).mode
-          relative_file = file.sub(/^#{Regexp.escape path}\/?/, '')
+          relative_file = file.sub(%r{^#{Regexp.escape path}\/?}, '')
 
           if File.directory?(file)
             tar.mkdir relative_file, mode
@@ -62,7 +62,7 @@ module Paasal
           # do not process directories && do not include the Git DB files
           next if File.directory?(file) || (@exclude_git && file.start_with?("#{path}/.git"))
 
-          relative_file = file.sub(/^#{Regexp.escape path}\/?/, '')
+          relative_file = file.sub(%r{^#{Regexp.escape path}\/?}, '')
           zio.put_next_entry(relative_file)
           File.open(file, 'rb') do |f|
             zio.write f.read
@@ -76,7 +76,7 @@ module Paasal
     def write_zip_entries(path, sub_path, io)
       search_path = File.join(path, sub_path)
       Find.find(path) do |file|
-        zip_file_path = file.sub(/^#{Regexp.escape search_path}\/?/, '')
+        zip_file_path = file.sub(%r{^#{Regexp.escape search_path}\/?}, '')
         next if @exclude_git && zip_file_path.start_with?('.git')
         if File.directory?(file)
           io.mkdir(zip_file_path)
