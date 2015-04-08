@@ -121,7 +121,7 @@ module Paasal
           app[:created_at] = app.delete :date_created
           app[:updated_at] = app.delete :date_modified
           app[:state] = application_state(deployment)
-          app[:web_url] = deployment[:default_subdomain]
+          app[:web_url] = "http://#{deployment[:default_subdomain]}"
           app[:autoscaled] = false
           app[:region] = 'default'
           app[:instances] = deployment[:min_boxes]
