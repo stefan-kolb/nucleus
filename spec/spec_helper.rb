@@ -36,9 +36,13 @@ if ENV['CODECLIMATE_REPO_TOKEN']
   require 'codeclimate-test-reporter'
   SimpleCov.add_filter 'vendor'
   SimpleCov.formatters = []
+  # merge results of the last 1 hour
+  SimpleCov.merge_timeout 3600
   SimpleCov.start CodeClimate::TestReporter.configuration.profile
 else
   require 'simplecov'
+  # merge results of the last 1 hour
+  SimpleCov.merge_timeout 3600
   SimpleCov.start do
     add_filter 'spec/'
     add_filter 'scripts/'
