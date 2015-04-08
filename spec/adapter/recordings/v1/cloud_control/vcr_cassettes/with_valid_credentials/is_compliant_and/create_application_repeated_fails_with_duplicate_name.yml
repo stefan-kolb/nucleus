@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2015 17:04:40 GMT
+      - Wed, 08 Apr 2015 17:54:27 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -47,7 +47,7 @@ http_interactions:
       x-url:
       - "/token"
       X-Varnish:
-      - '1124364840'
+      - '1078402857'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -56,15 +56,15 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"token": "__TOKEN__", "expires": "2015-04-02T17:19:40.918483"}'
+      string: '{"token": "__TOKEN__", "expires": "2015-04-08T18:09:27.048120"}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 17:04:41 GMT
+  recorded_at: Wed, 08 Apr 2015 17:54:27 GMT
 - request:
     method: post
     uri: https://api.cloudcontrol.com/app
     body:
       encoding: UTF-8
-      string: '{"repository_type":"git","name":"paasal-test-app-min-properties","type":"nodejs"}'
+      string: '{"repository_type":"git","name":"paasaltestappminproperties13","type":"nodejs"}'
     headers:
       User-Agent:
       - excon/0.45.1
@@ -94,7 +94,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2015 17:04:41 GMT
+      - Wed, 08 Apr 2015 17:54:27 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -108,17 +108,16 @@ http_interactions:
       x-url:
       - "/app"
       X-Varnish:
-      - '1036792684'
+      - '2392487318'
       X-varnish-cache:
       - MISS
       Content-Length:
-      - '91'
+      - '58'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: 'Bad Request {"name": "Name may only contain a-z and 0-9 and must not
-        start with a number."}'
+      string: 'Bad Request {"name": "App with this Name already exists."}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 17:04:41 GMT
+  recorded_at: Wed, 08 Apr 2015 17:54:27 GMT
 recorded_with: VCR 2.9.3

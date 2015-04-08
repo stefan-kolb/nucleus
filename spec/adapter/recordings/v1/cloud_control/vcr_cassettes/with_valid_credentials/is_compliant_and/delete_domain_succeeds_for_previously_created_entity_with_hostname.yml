@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2015 17:10:10 GMT
+      - Wed, 08 Apr 2015 18:04:00 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -47,7 +47,7 @@ http_interactions:
       x-url:
       - "/token"
       X-Varnish:
-      - '1036806402'
+      - '1078429723'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -56,7 +56,267 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"token": "__TOKEN__", "expires": "2015-04-02T17:25:10.126208"}'
+      string: '{"token": "__TOKEN__", "expires": "2015-04-08T18:19:00.072831"}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 17:10:10 GMT
+  recorded_at: Wed, 08 Apr 2015 18:04:00 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/alias
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:04:01 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/alias"
+      X-Varnish:
+      - '1146465009'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '174'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"name": "paasal.paasaltestappallproperties13.cloudcontrolapp.com",
+        "is_default": true, "is_verified": true}, {"name": "paasal-paasaltestappallproperties13.cloudcontrolapp.com",
+        "is_default": true, "is_verified": true}, {"name": "paasal.paasaltestappallproperties13.cloudcontrolled.com",
+        "is_default": true, "is_verified": true}, {"name": "paasal-paasaltestappallproperties13.cloudcontrolled.com",
+        "is_default": true, "is_verified": true}, {"name": "cloudcontrol.adomainthatishopefullynotusedontheplatform.de",
+        "is_default": false, "is_verified": false}, {"name": "adomainthatishopefullynotusedontheplatform.de",
+        "is_default": false, "is_verified": false}]'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:04:01 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/alias/cloudcontrol.adomainthatishopefullynotusedontheplatform.de
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:04:02 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/alias/cloudcontrol.adomainthatishopefullynotusedontheplatform.de"
+      X-Varnish:
+      - '2392514051'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '225'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "cloudcontrol.adomainthatishopefullynotusedontheplatform.de",
+        "is_default": false, "is_verified": false, "verification_code": "cloudControl-verification:
+        946604eeb07559edca236dee8a89a5ce2b2257c95a5d4fb96735142523bb2bd5", "verification_errors":
+        0, "date_created": "2015-04-08T17:55:08", "date_modified": "2015-04-08T17:55:08"}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:04:02 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/alias/adomainthatishopefullynotusedontheplatform.de
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:04:02 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/alias/adomainthatishopefullynotusedontheplatform.de"
+      X-Varnish:
+      - '1078429837'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '222'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "adomainthatishopefullynotusedontheplatform.de", "is_default":
+        false, "is_verified": false, "verification_code": "cloudControl-verification:
+        946604eeb07559edca236dee8a89a5ce2b2257c95a5d4fb96735142523bb2bd5", "verification_errors":
+        0, "date_created": "2015-04-08T17:55:10", "date_modified": "2015-04-08T17:55:10"}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:04:02 GMT
+- request:
+    method: delete
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/alias/cloudcontrol.adomainthatishopefullynotusedontheplatform.de
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, DELETE, HEAD, OPTIONS
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 08 Apr 2015 18:04:03 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/alias/cloudcontrol.adomainthatishopefullynotusedontheplatform.de"
+      X-Varnish:
+      - '1058883170'
+      X-varnish-cache:
+      - MISS
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:04:03 GMT
 recorded_with: VCR 2.9.3

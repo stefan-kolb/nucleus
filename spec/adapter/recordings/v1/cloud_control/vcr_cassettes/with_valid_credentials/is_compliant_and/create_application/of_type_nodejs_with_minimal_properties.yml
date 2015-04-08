@@ -1,0 +1,388 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - POST, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 17:54:22 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/token"
+      X-Varnish:
+      - '1058855232'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '84'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"token": "__TOKEN__", "expires": "2015-04-08T18:09:22.153081"}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:54:22 GMT
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/app
+    body:
+      encoding: UTF-8
+      string: '{"repository_type":"git","name":"paasaltestappminproperties13","type":"nodejs"}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 17:54:23 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app"
+      X-Varnish:
+      - '1146437603'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '304'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappminproperties13", "buildpack_url": null, "repository":
+        "ssh://paasaltestappminproperties13@cloudcontrolled.com/repository.git", "type":
+        {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__", "first_name":
+        "", "last_name": "", "email": "__cloudcontrol:user__", "is_active": true,
+        "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-04-08T17:54:22.763165", "date_modified": "2015-04-08T17:54:22.764261",
+        "deployments": []}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:54:23 GMT
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/app/paasaltestappminproperties13/deployment
+    body:
+      encoding: UTF-8
+      string: '{"name":"paasal"}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 17:54:24 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappminproperties13/deployment"
+      X-Varnish:
+      - '1078402755'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '340'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappminproperties13/paasal", "stack": {"name": "pinky"},
+        "dep_id": "deph9tffrvp", "branch": "ssh://paasaltestappminproperties13@cloudcontrolled.com/repository.git",
+        "users": [], "static_files": "(removed)", "billing_account": null, "version":
+        "-1", "state": "not deployed", "date_created": "2015-04-08T17:54:23.643159",
+        "date_modified": "2015-04-08T17:54:23.643180", "is_default": false, "default_subdomain":
+        "paasal-paasaltestappminproperties13.cloudcontrolled.com", "min_boxes": 1,
+        "max_boxes": 1, "billed_boxes": {"free_boxes": 0.0, "boxes": 0.0, "until":
+        1428515664, "costs": 0.0}, "billed_addons": []}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:54:24 GMT
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/app/paasaltestappminproperties13/deployment/paasal/addon
+    body:
+      encoding: UTF-8
+      string: '{"addon":"config.free","options":"{\"paasal-initialized\": \"true\"}"}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 17:54:25 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappminproperties13/deployment/paasal/addon"
+      X-Varnish:
+      - '2392487204'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '102'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"addon_option": {"name": "config.free"}, "settings": {"CONFIG_VARS":
+        {"paasal-initialized": "true"}}}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:54:25 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappminproperties13/deployment/paasal/addon/config.free
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 17:54:25 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappminproperties13/deployment/paasal/addon/config.free"
+      X-Varnish:
+      - '1058855467'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '102'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"addon_option": {"name": "config.free"}, "settings": {"CONFIG_VARS":
+        {"paasal-initialized": "true"}}}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:54:25 GMT
+- request:
+    method: put
+    uri: https://api.cloudcontrol.com/app/paasaltestappminproperties13/deployment/paasal/addon/config.free
+    body:
+      encoding: UTF-8
+      string: '{"addon":"config.free","settings":"{\"paasal-initialized\":null}","force":true}'
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 17:54:26 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappminproperties13/deployment/paasal/addon/config.free"
+      X-Varnish:
+      - '1146437754'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '74'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"addon_option": {"name": "config.free"}, "settings": {"CONFIG_VARS":
+        {}}}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:54:26 GMT
+recorded_with: VCR 2.9.3

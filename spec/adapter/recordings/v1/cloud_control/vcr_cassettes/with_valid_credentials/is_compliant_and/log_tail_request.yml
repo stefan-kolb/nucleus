@@ -1,0 +1,674 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cloudcontrol.com/token
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - POST, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:01 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/token"
+      X-Varnish:
+      - '2392502968'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '84'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"token": "__TOKEN__", "expires": "2015-04-08T18:15:01.155888"}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:01 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:01 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13"
+      X-Varnish:
+      - '1078418665'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '314'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappallproperties13", "buildpack_url": null, "repository":
+        "ssh://paasaltestappallproperties13@cloudcontrolled.com/repository.git", "type":
+        {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__", "first_name":
+        "", "last_name": "", "email": "__cloudcontrol:user__", "is_active": true,
+        "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-04-08T17:54:17", "date_modified": "2015-04-08T17:54:17", "deployments":
+        [{"name": "paasaltestappallproperties13/paasal", "dep_id": "dep5r8zdn7j"}]}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:01 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:02 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal"
+      X-Varnish:
+      - '1146453925'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '362'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappallproperties13/paasal", "stack": {"name": "pinky"},
+        "dep_id": "dep5r8zdn7j", "branch": "ssh://paasaltestappallproperties13@cloudcontrolled.com/repository.git",
+        "users": [], "static_files": "(removed)", "billing_account": null, "version":
+        "34fafe270fad53d4f46c00829fc8732fe4bffb48", "state": "deployed", "date_created":
+        "2015-04-08T17:54:18", "date_modified": "2015-04-08T17:56:28", "is_default":
+        false, "default_subdomain": "paasal-paasaltestappallproperties13.cloudcontrolled.com",
+        "min_boxes": 1, "max_boxes": 1, "billed_boxes": {"boxes": 0.0, "until": 1428516002,
+        "free_boxes": 0.0, "costs": 0.0}, "billed_addons": []}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:02 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:03 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13"
+      X-Varnish:
+      - '1058871551'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '314'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappallproperties13", "buildpack_url": null, "repository":
+        "ssh://paasaltestappallproperties13@cloudcontrolled.com/repository.git", "type":
+        {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__", "first_name":
+        "", "last_name": "", "email": "__cloudcontrol:user__", "is_active": true,
+        "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-04-08T17:54:17", "date_modified": "2015-04-08T17:54:17", "deployments":
+        [{"name": "paasaltestappallproperties13/paasal", "dep_id": "dep5r8zdn7j"}]}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:03 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/log/access
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:03 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/log/access"
+      X-Varnish:
+      - '1146454017'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:03 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:05 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13"
+      X-Varnish:
+      - '1146454101'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '314'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappallproperties13", "buildpack_url": null, "repository":
+        "ssh://paasaltestappallproperties13@cloudcontrolled.com/repository.git", "type":
+        {"name": "nodejs"}, "owner": {"username": "__cloudcontrol:username__", "first_name":
+        "", "last_name": "", "email": "__cloudcontrol:user__", "is_active": true,
+        "billing_without_payment_info": false}, "users": [{"username": "__cloudcontrol:username__",
+        "email": "__cloudcontrol:user__", "role": ""}], "invitations": [], "date_created":
+        "2015-04-08T17:54:17", "date_modified": "2015-04-08T17:54:17", "deployments":
+        [{"name": "paasaltestappallproperties13/paasal", "dep_id": "dep5r8zdn7j"}]}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:05 GMT
+- request:
+    method: get
+    uri: http://paasal-paasaltestappallproperties13.cloudcontrolled.com/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - text/html; charset=utf-8
+      X-Powered-By:
+      - Express
+      ETag:
+      - '"300543841"'
+      x-host:
+      - paasal-paasaltestappallproperties13.cloudcontrolled.com
+      x-url:
+      - "/"
+      Content-Length:
+      - '3391'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Wed, 08 Apr 2015 18:00:06 GMT
+      X-Varnish:
+      - '1982247823'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-varnish-cache:
+      - MISS
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Word Finder</title>\n
+        \   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n
+        \   <script src=\"/public/jquery-1.8.0.js\"></script>\n    <script src=\"/socket.io/socket.io.js\"></script>\n
+        \   <script src=\"/public/hollywood.js\"></script>\n    <link rel=\"stylesheet\"
+        href=\"/public/bootstrap.css\" />\n    <script src=\"/public/bootstrap.js\"></script>\n
+        \   <link rel=\"stylesheet\" href=\"/public/app.css\" />\n  </head>\n  <body>\n
+        \   <div class=\"navbar navbar-inverse navbar-fixed-top\">\n      <div class=\"container\">\n
+        \       <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle\"
+        data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n            <span
+        class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n
+        \           <span class=\"icon-bar\"></span>\n          </button>\n          <a
+        class=\"navbar-brand\" href=\"/\">Word Finder</a>\n        </div>\n        <div
+        class=\"collapse navbar-collapse\">\n          <ul class=\"nav navbar-nav\">\n
+        \         </ul>\n        </div><!--/.nav-collapse -->\n      </div>\n    </div>\n\n
+        \   <div class=\"container\">\n      <div id=\"dashboard\">\n        <div
+        class=\"row\">\n          <h3>Word Finder</h3>\n\n          <p>\n          I
+        took every english word (over 200k words) and built a little app that will
+        help you find words that contain specific characters.\n          </p>\n          <hr/>\n
+        \       </div>\n\n\n        <div class=\"row\">\n            <p>Enter a word,
+        use _ and ? as needed (see instructions below)</p>\n          <form method=\"post\"
+        action=\"search\">\n            \n              <input type=\"text\"\n                     class=\"col-md-12\"\n
+        \                    name=\"pattern\"\n                     placeholder=\"enter
+        pattern and press\" />\n           \n          </form>\n        </div>\n        <hr/>\n\n\n\n\n
+        \         <div class=\"row\">\n            <h3>The underscore</h3>\n\n            <p>\n
+        \           Type a word into the text box with the following pattern:\n            </p>\n\n
+        \           <pre>\nhe__o\n            </pre>\n\n            <p>\n            And
+        you'll get words such as:\n            </p>\n\n            <pre>\nhello\nhelio\n
+        \           </pre>\n          </div>\n\n          <div class=\"row\">\n            <h3>The
+        question mark</h3>\n\n            <p>\n            This character is great
+        for games like What's the Phrase (a knock off of Wheel of Fortune)\n            </p>\n\n
+        \           <p>\n            Type a word into the text box with the following
+        pattern:\n            </p>\n\n            <pre>\nst???\n            </pre>\n\n
+        \           <p>\n            and you'll get words such as:\n            </p>\n\n
+        \           <pre>\nstack\nstade\nstaff\nstage\nstagy\n            </pre>\n\n
+        \           <p>\n            but you wont get words like\n            </p>\n\n
+        \           <pre>\nstart\n            </pre>\n\n            <p>\n            because
+        the `t` would already be visible (in What's the Phrase), and you would have
+        typed:\n            </p>\n\n            <pre>\nst??t\n            </pre>\n\n
+        \         </div>\n          <div class=\"row\">\n            <h3>I know regex</h3>\n\n
+        \           <p>\n                The behaviors above will be overriden if
+        you prefix and suffix your phrase with <code>/</code>, example:\n            </p>\n\n
+        \           <pre>/boo/</pre>\n\n            <p>\n                Will give
+        you all words that contain <code>boo</code>.\n            </p>\n          </div>\n
+        \       </div>\n      </div>\n    </body>\n</html>\n\n"
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:06 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/log/access
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:09 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/log/access"
+      X-Varnish:
+      - '2392503420'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:09 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/log/access
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:13 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/log/access"
+      X-Varnish:
+      - '1078419236'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:13 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappallproperties13/deployment/paasal/log/access
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, HEAD, OPTIONS
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:00:18 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappallproperties13/deployment/paasal/log/access"
+      X-Varnish:
+      - '1058872254'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:00:18 GMT
+recorded_with: VCR 2.9.3

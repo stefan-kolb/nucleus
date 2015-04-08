@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2015 17:04:37 GMT
+      - Wed, 08 Apr 2015 17:54:16 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -47,7 +47,7 @@ http_interactions:
       x-url:
       - "/token"
       X-Varnish:
-      - '1056406644'
+      - '1146437278'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -56,69 +56,7 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"token": "__TOKEN__", "expires": "2015-04-02T17:19:37.782733"}'
+      string: '{"token": "__TOKEN__", "expires": "2015-04-08T18:09:16.156500"}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 17:04:37 GMT
-- request:
-    method: post
-    uri: https://api.cloudcontrol.com/app
-    body:
-      encoding: UTF-8
-      string: '{"repository_type":"git","name":"paasal_test_create_with_invalid_runtime_name","type":"custom","buildpack_url":null}'
-    headers:
-      User-Agent:
-      - excon/0.45.1
-      Authorization:
-      - __AUTHORIZATION__
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip
-  response:
-    status:
-      code: 400
-      message: 
-    headers:
-      Accept-Ranges:
-      - bytes
-      Access-Control-Allow-Headers:
-      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
-      Access-Control-Allow-Methods:
-      - POST, GET, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Age:
-      - '0'
-      Allow:
-      - GET, POST, HEAD, OPTIONS
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 02 Apr 2015 17:04:38 GMT
-      Server:
-      - gunicorn/19.2.1
-      Strict-Transport-Security:
-      - max-age=15768000
-      Vary:
-      - Accept, Cookie
-      Via:
-      - 1.1 varnish
-      x-host:
-      - api.cloudcontrol.com
-      x-url:
-      - "/app"
-      X-Varnish:
-      - '2370156336'
-      X-varnish-cache:
-      - MISS
-      Content-Length:
-      - '91'
-      Connection:
-      - keep-alive
-    body:
-      encoding: UTF-8
-      string: 'Bad Request {"name": "Name may only contain a-z and 0-9 and must not
-        start with a number."}'
-    http_version: 
-  recorded_at: Thu, 02 Apr 2015 17:04:38 GMT
+  recorded_at: Wed, 08 Apr 2015 17:54:16 GMT
 recorded_with: VCR 2.9.3

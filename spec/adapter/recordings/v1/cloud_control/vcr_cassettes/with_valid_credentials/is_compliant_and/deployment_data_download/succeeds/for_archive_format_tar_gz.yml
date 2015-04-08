@@ -33,7 +33,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2015 17:09:45 GMT
+      - Wed, 08 Apr 2015 18:02:17 GMT
       Server:
       - gunicorn/19.2.1
       Strict-Transport-Security:
@@ -47,7 +47,7 @@ http_interactions:
       x-url:
       - "/token"
       X-Varnish:
-      - '2370169150'
+      - '2027694607'
       X-varnish-cache:
       - MISS
       Content-Length:
@@ -56,7 +56,77 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"token": "__TOKEN__", "expires": "2015-04-02T17:24:45.217989"}'
+      string: '{"token": "__TOKEN__", "expires": "2015-04-08T18:17:17.169081"}'
     http_version: 
-  recorded_at: Thu, 02 Apr 2015 17:09:45 GMT
+  recorded_at: Wed, 08 Apr 2015 18:02:17 GMT
+- request:
+    method: get
+    uri: https://api.cloudcontrol.com/app/paasaltestappminproperties13/deployment/paasal
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - excon/0.45.1
+      Authorization:
+      - __AUTHORIZATION__
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Headers:
+      - X-Requested-With, Authorization, Content-Type, Content-Length, Accept
+      Access-Control-Allow-Methods:
+      - POST, GET, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Age:
+      - '0'
+      Allow:
+      - GET, POST, PUT, DELETE, HEAD, OPTIONS
+      Content-Encoding:
+      - ''
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Apr 2015 18:02:17 GMT
+      Server:
+      - gunicorn/19.2.1
+      Strict-Transport-Security:
+      - max-age=15768000
+      Vary:
+      - Accept, Cookie, Accept-Encoding
+      Via:
+      - 1.1 varnish
+      x-host:
+      - api.cloudcontrol.com
+      x-url:
+      - "/app/paasaltestappminproperties13/deployment/paasal"
+      X-Varnish:
+      - '1755106852'
+      X-varnish-cache:
+      - MISS
+      Content-Length:
+      - '361'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"name": "paasaltestappminproperties13/paasal", "stack": {"name": "pinky"},
+        "dep_id": "deph9tffrvp", "branch": "ssh://paasaltestappminproperties13@cloudcontrolled.com/repository.git",
+        "users": [], "static_files": "(removed)", "billing_account": null, "version":
+        "2fecc963d0e7a31b1cdd1f06901f1efe644026c2", "state": "deployed", "date_created":
+        "2015-04-08T17:54:23", "date_modified": "2015-04-08T18:01:53", "is_default":
+        false, "default_subdomain": "paasal-paasaltestappminproperties13.cloudcontrolled.com",
+        "min_boxes": 1, "max_boxes": 1, "billed_boxes": {"boxes": 0.0, "until": 1428516137,
+        "free_boxes": 0.0, "costs": 0.0}, "billed_addons": []}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 18:02:17 GMT
 recorded_with: VCR 2.9.3
