@@ -12,8 +12,11 @@ module Paasal
             # no conversion needed, cc domains already have :name value
             cc_domains = get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/alias").body
             # the domain shall NOT be a CC system domain
-            cc_domains.find_all { |domain| !CC_URLS.any? { |cc_domain| domain[:name].include? cc_domain } }.compact
-            cc_domains.collect { |domain| to_paasal_domain(domain) }
+            cc_domains = cc_domains.find_all do |domain|
+              !CC_URLS.any? { |cc_domain| domain[:name].include? cc_domain }
+            end
+            # the list does not include the timestamps, fetch all
+            cc_domains.compact.collect { |domain| domain(application_id, domain[:name]) }
           end
 
           # @see Stub#domain
@@ -25,6 +28,12 @@ module Paasal
 
           # @see Stub#create_domain
           def create_domain(application_id, domain)
+            # check if name is available
+            if domain?(application_id, domain[:name])
+              fail Errors::SemanticAdapterRequestError,
+                   "Domain '#{domain[:name]}' is already assigned to the application"
+            end
+
             # no conversion needed, cc domains already have :name value
             cc_domain = post("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/alias",
                              body: { name: domain[:name] }).body
@@ -41,8 +50,15 @@ module Paasal
 
           private
 
+          def domain?(application_id, alias_name)
+            cc_domains = get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/alias").body
+            cc_domains.any? { |domain| domain[:name] == alias_name }
+          end
+
           def to_paasal_domain(domain)
             domain[:id] = domain[:name]
+            domain[:created_at] = domain.delete(:date_created)
+            domain[:updated_at] = domain.delete(:date_modified)
             domain
           end
         end
