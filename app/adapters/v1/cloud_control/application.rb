@@ -24,7 +24,9 @@ module Paasal
           def create_application(application)
             if application.key? :region
               unless application[:region].casecmp('default') == 0
-                fail Errors::AdapterRequestError, "Region '#{application[:region]}' does not exist at the endpoint"
+                fail Errors::SemanticAdapterRequestError,
+                     "Region '#{application[:region]}' does not exist at the endpoint. "\
+                     'Please check which regions are actually available on this endpoint.'
               end
               # there is no region in cloudControl --> remove from request
               application.delete :region
@@ -34,9 +36,9 @@ module Paasal
 
             # force the use of repository type 'git', unless overridden by the params
             default_params = { repository_type: 'git' }
-            application = default_params.merge(application)
+            cc_application = default_params.merge(application)
 
-            create_app_response = post('/app', body: application).body
+            create_app_response = post('/app', body: cc_application).body
 
             # create the default deployment, name will automatically become 'default'
             created_deployment = post("/app/#{create_app_response[:name]}/deployment", body: { name: 'paasal' }).body
@@ -73,9 +75,18 @@ module Paasal
             buildpack = find_runtime(runtimes[0])
             if native_runtime?(buildpack)
               application[:type] = buildpack
-            else
+            elsif buildpack
               application[:type] = 'custom'
               application[:buildpack_url] = buildpack
+            else
+              # 3rd party buildpack must be a valid URL
+              unless Regexp::PERFECT_URL_PATTERN =~ runtimes[0]
+                fail Errors::SemanticAdapterRequestError,
+                     "Invalid buildpack: '#{runtimes[0]}'. Please provide a valid buildpack URL for all "\
+                      'custom buildpacks that are not provided by cloud control.'
+              end
+              application[:type] = 'custom'
+              application[:buildpack_url] = runtimes[0]
             end
           end
         end
