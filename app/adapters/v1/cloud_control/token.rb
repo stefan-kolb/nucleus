@@ -6,7 +6,8 @@ module Paasal
         class Token < Paasal::Adapters::ExpiringTokenAuthClient
           # @see Paasal::Adapters::ExpiringTokenAuthClient#auth_header
           def auth_header
-            fail Paasal::Errors::AuthenticationError, 'Cached authentication token expired' if expired?
+            # call super for error checks, but ignore returned header
+            super
             { 'Authorization' => "cc_auth_token=\"#{api_token}\"" }
           end
         end
