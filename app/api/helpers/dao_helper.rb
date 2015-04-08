@@ -50,7 +50,7 @@ module Paasal
     # @param [Paasal::Store] dao the DAO to use for loading
     # @param [Symbol] id symbol where the entities id can be found in the params
     # @param [String] name entities name for error output
-    # @param [Hash] params parameters required when called from auth block
+    # @param [Hash] loading_params parameters required when called from auth block
     # @return [Paasal::AbstractModel] loaded entity's instance
     def load_entity(dao, id, name, loading_params = params)
       unless dao.key? loading_params[id]
@@ -59,18 +59,13 @@ module Paasal
       dao.get loading_params[id]
     end
 
-    # Create a DAO for with the given class, but only once per request.
-    # Return the existing DAO if it has already been created for the current request
+    # Retrieve the DAO for with the given class.
     #
     # @param [class] clazz DAO class for which an instance shall be created
     # @return [Store] concrete DAO store
     def create_dao(clazz)
       version = version_for_dao
-      return RequestStore.store[clazz] if RequestStore.exist?(clazz)
-      log.debug("Create #{clazz} for API #{version}")
-      dao = clazz.instance version
-      RequestStore.store[clazz] = dao
-      dao
+      clazz.instance version
     end
 
     def version_for_dao
