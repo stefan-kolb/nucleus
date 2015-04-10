@@ -12,18 +12,18 @@ describe Paasal::Adapters::V1::CloudControl do
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log get of type request does contain at least one',
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log
-                    'with valid credentials is compliant and log tail request receives new request log entries',
+                    'with valid credentials is compliant and log tail request',
                     # scale-out should work, but the test would require a valid billing address
                     'with valid credentials is compliant and scale-out']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
     # we must use these stupid names given that cloud control prohibits special characters and (!)
     # deleted application names are locked for about 48 hours :(
-    @app_min = { original_name: 'paasaltestappminproperties13',
-                         updated_name: 'paasaltestappminproperties13',
+    @app_min = { original_name: 'paasaltestappminproperties21',
+                         updated_name: 'paasaltestappminproperties21',
                          region: 'default' }
-    @app_all = { original_name: 'paasaltestappallproperties13',
-                         updated_name: 'paasaltestappallproperties13',
+    @app_all = { original_name: 'paasaltestappallproperties21',
+                         updated_name: 'paasaltestappallproperties21',
                          region: 'default' }
   end
   before do |example|
