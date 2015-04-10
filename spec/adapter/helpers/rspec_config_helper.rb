@@ -37,10 +37,9 @@ RSpec.configure do |config|
 
     # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
     # Use exclusive option to prevent accidental matching requests in different application states
-    VCR.insert_cassette(cassette_name, exclusive: true,
-                        allow_unused_http_interactions: false,
+    VCR.insert_cassette(cassette_name, exclusive: true, allow_unused_http_interactions: false,
                         match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
-                        decode_compressed_response: true)
+                        decode_compressed_response: true, serialize_with: :msgpack)
 
     # Fake Git and Filesystem interactions on replay
     if group_mock_fs

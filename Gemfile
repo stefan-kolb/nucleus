@@ -32,4 +32,5 @@ group :test do
   gem 'faker'
   gem 'simplecov', require: false
   gem 'oj'
+  gem 'msgpack'
 end

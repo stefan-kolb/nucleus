@@ -1,3 +1,5 @@
+require 'spec/adapter/helpers/vcr_msgpack_serializer'
+
 ########################
 # VCR CONFIG & FILTERS #
 ########################
@@ -22,6 +24,9 @@ VCR.configure do |c|
   c.preserve_exact_body_bytes do |http_message|
     http_message.body.encoding.name == 'ASCII-8BIT' || !http_message.body.valid_encoding?
   end
+
+  # custom serializer, which is about x times faster than the default YAML
+  c.cassette_serializers[:msgpack] = VCR::Cassette::Serializers::MessagePack
 
   def filter_header(vcr_config, key)
     vcr_config.filter_sensitive_data("__#{key.underscore.upcase}__") do |i|
