@@ -5,7 +5,7 @@ require 'spec/adapter/helpers/vcr_msgpack_serializer'
 ########################
 
 def vcr_record_mode
-  :once || (ENV['VCR_RECORD_MODE'] || :none).to_sym
+  (ENV['VCR_RECORD_MODE'] || :none).to_sym
 end
 
 VCR.configure do |c|
