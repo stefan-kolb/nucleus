@@ -158,8 +158,8 @@ module Paasal
       def hash_of(message_body)
         return {} if message_body.nil? || message_body.empty?
         begin
-          return MultiJson.load(message_body, symbolize_keys: true)
-        rescue MultiJson::ParseError
+          return Oj.load(message_body, symbol_keys: true)
+        rescue Oj::Error
           # parsing failed, content probably is no valid JSON content
           message_body
         end

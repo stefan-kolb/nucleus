@@ -14,6 +14,7 @@ require 'find'
 require 'filesize'
 require 'time'
 require 'securerandom'
+require 'oj'
 
 require 'rack/body_proxy'
 require 'rack/utils'

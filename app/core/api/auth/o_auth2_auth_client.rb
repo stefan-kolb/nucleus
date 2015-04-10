@@ -80,7 +80,7 @@ module Paasal
       end
 
       def body(response)
-        MultiJson.load(response.body, symbolize_keys: true)
+        Oj.load(response.body, symbol_keys: true)
       end
 
       def extract(body)

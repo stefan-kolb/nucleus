@@ -65,7 +65,7 @@ VCR.configure do |c|
   def filter_response_body(vcr_config, key)
     vcr_config.filter_sensitive_data("__#{key.underscore.upcase}__") do |i|
       begin
-        response_body = i.response.body.nil? || i.response.body.empty? ? {} : Oj.load(i.response.body)
+        response_body = i.response.body.nil? || i.response.body.empty? ? {} : MultiJson.load(i.response.body)
         if response_body.is_a? Array
           response_body.collect { |entry| filter_body(entry, key, 'RESPONSE') }.each_with_index do |replace, index|
             # replace sensitive value of the nested element

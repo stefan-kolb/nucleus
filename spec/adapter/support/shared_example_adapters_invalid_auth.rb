@@ -4,7 +4,7 @@ shared_examples 'compliant adapter with invalid credentials' do
     # get the swagger schema that includes all application endpoints
     browser = Rack::Test::Session.new(Rack::MockSession.new(Airborne.configuration.rack_app))
     browser.send('get', '/schema/endpoints', {}, {})
-    operations = MultiJson.load(browser.last_response.body, symbolize_keys: true)[:apis].collect do |api|
+    operations = Oj.load(browser.last_response.body, symbol_keys: true)[:apis].collect do |api|
       if api[:path].include?('/endpoints/{endpoint_id}/')
         { path: api[:path], methods: api[:operations].collect { |operation| operation[:method] } }
       end
