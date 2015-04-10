@@ -317,7 +317,7 @@ shared_examples 'valid:logs:get' do
 end
 
 shared_examples 'valid:logs:tail' do
-  describe 'log tail request', :as_cassette, :mock_websocket_on_replay do
+  describe 'log tail request', :as_cassette, :mock_websocket_on_replay, :em_reactor do
     # all tests must be merged into one test, otherwise
     before do
       # TODO: at the time of writing this test, we assume that each platform provides a request log.
@@ -359,7 +359,7 @@ shared_examples 'valid:logs:tail' do
     end
   end
 
-  describe 'log tail fails' do
+  describe 'log tail fails', :em_reactor do
     describe 'with non-existent log_id', :as_cassette do
       before do
         get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/unknown_id/tail", request_headers
