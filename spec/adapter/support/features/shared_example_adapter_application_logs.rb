@@ -317,6 +317,8 @@ shared_examples 'valid:logs:get' do
 end
 
 shared_examples 'valid:logs:tail' do
+  # This test fails sometimes with no received message and is caused by the fixed timeouts
+  # and delays in the platforms logging system.
   describe 'log tail request', :as_cassette, :mock_websocket_on_replay, :em_reactor do
     # all tests must be merged into one test, otherwise
     before do
@@ -330,7 +332,7 @@ shared_examples 'valid:logs:tail' do
       @recent = body.dup
 
       # invoke URL request after x seconds, so that the tailing actually receives new messages
-      EM.add_timer(3) do
+      EM.add_timer(4) do
         live_app = Excon.get(@app[:web_url])
         expect(live_app.status).to eql(200)
       end
@@ -338,16 +340,19 @@ shared_examples 'valid:logs:tail' do
       # TODO: use stream capable client to get rid of auto-close via the timeout in env['async.callback.auto.timeout']
       get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request/tail", request_headers)
     end
+    it 'is valid chunked request with encoding and receives at least one new message' do
+      # a valid GET request
+      expect_status 200
+      expect(headers['X-Request-ID']).to_not be_nil
 
-    include_examples 'a valid GET request'
-    include_examples 'a valid log encoding'
+      # a valid log encoding
+      expect(headers['Content-Type']).to eql('text/plain')
 
-    it 'is a chunked response message' do
+      # is a chunked response message
       expect(headers.keys).to include('Transfer-Encoding')
       expect(headers['Transfer-Encoding']).to eql('chunked')
-    end
 
-    it 'receives new request log entries' do
+      # receives new request log entries
       log_entries = body.split("\n")
       recent_entries = @recent.split("\n")
       new_entries = recent_entries - log_entries
