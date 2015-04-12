@@ -18,6 +18,9 @@ module Paasal
         ### Setup Rack Server ###
         #########################
 
+        # Enforce the usage of HTTPS connections
+        use ::Rack::SslEnforcer, except_environments: %w(test development)
+
         # Clear request caches
         use RequestStore::Middleware
 

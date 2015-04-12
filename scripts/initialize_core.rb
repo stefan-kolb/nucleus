@@ -13,4 +13,5 @@ Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAu
 # Lock the configuration, so it can't be manipulated
 configatron.lock!
 
+puts "Environment: #{ENV['RACK_ENV']}"
 puts 'Configuration locked!'

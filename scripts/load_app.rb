@@ -20,6 +20,7 @@ require 'rack/body_proxy'
 require 'rack/utils'
 require 'rack/response'
 require 'rack/auth/basic'
+require 'rack/ssl-enforcer'
 
 # Currently we need excon AND rest_client, due to excon not supporting multipart requests. See also:
 # https://github.com/excon/excon/issues/353
