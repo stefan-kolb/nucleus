@@ -166,7 +166,7 @@ module Paasal
       end
 
       def add_common_request_params(params)
-        common_params = { connection_timeout: 600, write_timeout: 300, read_timeout: 90 }
+        common_params = { connection_timeout: 610, write_timeout: 600, read_timeout: 600 }
         # allow to follow redirects in the APIs
         allowed_status_codes = params.key?(:expects) ? [*params[:expects]] : []
         unless params[:follow_redirects] == false
