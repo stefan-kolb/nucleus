@@ -1,7 +1,5 @@
 module Paasal
   module ApiDetector
-    extend Paasal::Logging
-
     # Get all API versions that are included in the project.
     # The API versions are identified by the presence of a directory below 'api/versions'.
     # An APIs directory will resolve to its version.
@@ -11,15 +9,14 @@ module Paasal
     # @return [Array<String>] names of the API versions
     def self.api_versions
       return @detected_api_versions if @detected_api_versions
-      # api_versions_dir = File.expand_path('../../../api/versions/*', __FILE__)
       api_versions_dir = 'app/api/versions/*'
-      log.debug "... looking for API versions at '#{api_versions_dir}'"
+      # ... looking for API versions at '#{api_versions_dir}'
       api_versions = []
       api_dirs = Dir.glob(api_versions_dir).select { |f| File.directory? f }
       api_dirs.each do |api_dir|
         api_versions << File.basename(api_dir)
       end unless api_dirs.nil?
-      log.debug "... found #{api_versions.size} API versions: #{api_versions.join(', ')}"
+      # ... found #{api_versions.size} API versions: #{api_versions.join(', ')}
       @detected_api_versions = api_versions
       @detected_api_versions
     end
