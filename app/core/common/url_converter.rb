@@ -4,7 +4,7 @@ module Paasal
     #    {scheme}://{prefix.}host.domain
     #    {prefix.}host.domain
     #
-    # An url that would raise an {ArgumentError} is
+    # An url that would raise an {::ArgumentError} is
     #    /path/to/somewhere
     #
     # @param [String] url_to_secure url that shall be converted to use HTTPS

@@ -76,7 +76,7 @@ module Paasal
         end
       end
 
-      # Create the cache key for the username / password combination and save it in the {RequestStore} to make it
+      # Create the cache key for the username / password combination and save it in the {::RequestStore} to make it
       # available throughout the current request.
       # @param [String] username the username for the authentication
       # @param [String] password the password for the authentication

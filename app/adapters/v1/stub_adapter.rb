@@ -270,7 +270,7 @@ module Paasal
         # * state == deployed
         # @param [String] application_id Id of the application for which the data is to be deployed
         # @param [Tempfile] application_archive compressed application archive that shall be deployed
-        # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::CompressionFormats#all}
+        # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::CompressionFormats.all}
         #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
@@ -296,7 +296,7 @@ module Paasal
         # The downloaded application archive must contain at least all files that were originally deployed,
         # but can also contain additional files, for instance log files.
         # @param [String] application_id Id of the application of which the data is to be downloaded
-        # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::CompressionFormats#all}
+        # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::CompressionFormats.all}
         #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed

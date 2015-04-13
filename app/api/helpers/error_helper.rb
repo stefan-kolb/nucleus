@@ -1,5 +1,5 @@
 module Paasal
-  # The ErrorHelper class extends {Grape::API::Helpers Grape's Helpers} and provides
+  # The ErrorHelper class extends +Grape::API::Helpers+ (Grape's Helpers) and provides
   # common methods for the API to raise errors.
   module ErrorHelper
     extend Grape::API::Helpers
@@ -7,7 +7,7 @@ module Paasal
     include Paasal::ErrorBuilder
 
     # Calling this method ends the user's request and raises an error response.
-    # See {Paasal::ErrorHelper#build_error_entity build_error_entity method} for more information
+    # See {ErrorBuilder#build_error_entity} for more information
     # about the error response.
     #
     # @param [Hash] error Constant that includes a default message, the status and error code

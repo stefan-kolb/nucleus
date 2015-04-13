@@ -1,7 +1,7 @@
 module Paasal
   module Adapters
     class HttpBasicAuthClient < AuthClient
-      # Create a new instance of an {BasicAuthClient}.
+      # Create a new instance of an {HttpBasicAuthClient}.
       # @param [Boolean] check_certificates true if SSL certificates are to be validated,
       # false if they are to be ignored (e.g. when using self-signed certificates in development environments)
       # @yield [verify_ssl, username, password] Auth credentials verification block,
