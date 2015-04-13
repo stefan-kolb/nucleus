@@ -162,7 +162,7 @@ VCR.configure do |c|
       request_2.body.gsub!(filename_2[1], 'filename="multipart-uploaded-file-by-paasal-42"') if filename_2
     end
 
-    # excute default comparison
+    # execute default comparison
     request_1.body == request_2.body
   end
 
