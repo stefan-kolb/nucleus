@@ -1,3 +1,4 @@
+import 'tasks/compatibility.rake'
 import 'spec/test_suites.rake'
 
 require 'rake'
@@ -47,7 +48,10 @@ end
 task :environment do
   ENV['RACK_ENV'] ||= 'development'
   require 'configatron'
+  require_relative 'scripts/load_config'
+  configatron.logging.level = Logger::Severity::ERROR
   require_relative 'scripts/load_app'
+  require_relative 'scripts/initialize'
 end
 
 task routes: :environment do
