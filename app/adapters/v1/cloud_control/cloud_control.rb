@@ -2,13 +2,13 @@ module Paasal
   module Adapters
     module V1
       class CloudControl < Stub
-        # all cloud foundry specific semantic errors shall have an error code of 422_6XXX
         include Paasal::Logging
         include Paasal::Adapters::V1::CloudControl::Application
         include Paasal::Adapters::V1::CloudControl::Buildpacks
         include Paasal::Adapters::V1::CloudControl::Domains
         include Paasal::Adapters::V1::CloudControl::Data
         include Paasal::Adapters::V1::CloudControl::Logs
+        include Paasal::Adapters::V1::CloudControl::SemanticErrors
         include Paasal::Adapters::V1::CloudControl::Vars
 
         # The default deployment name of cloud control applications that is used by PaaSal
@@ -71,10 +71,10 @@ module Paasal
           fail Errors::AdapterResourceNotFoundError, 'Resource not found' if message.nil?
 
           if message.include?('Billing account required')
-            fail Errors::PlatformSpecificSemanticError.new(message, API::ErrorMessages::PLATFORM_QUOTA_ERROR)
+            fail_with(:billing_required, [message])
           elsif CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS.any? { |msg| message.include? msg }
             # all these errors are limited to cloud control, e.g. the allowed name characters and max name length
-            fail Errors::PlatformSpecificSemanticError, message
+            fail_with(:bad_name, [message])
           elsif CC_SEMANTIC_ERROR_MSGS.any? { |msg| message.include? msg }
             fail Errors::SemanticAdapterRequestError, message
           end
@@ -128,21 +128,6 @@ module Paasal
             created_at: Time.at(0).to_datetime,
             updated_at: Time.at(0).to_datetime
           }
-        end
-
-        def to_paasal_app(app, deployment)
-          app[:id] = app[:name]
-          app[:created_at] = app.delete :date_created
-          app[:updated_at] = app.delete :date_modified
-          app[:state] = application_state(deployment)
-          app[:web_url] = "http://#{deployment[:default_subdomain]}"
-          app[:autoscaled] = false
-          app[:region] = 'default'
-          app[:instances] = deployment[:min_boxes]
-          app[:active_runtime] = app[:type][:name] == 'custom' ? app[:buildpack_url] : app[:type][:name]
-          app[:runtimes] = [app[:active_runtime]]
-          app[:release_version] = deployment[:version] != '-1' ? deployment[:version] : nil
-          app
         end
       end
     end

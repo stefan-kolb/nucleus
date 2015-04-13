@@ -68,10 +68,7 @@ module Paasal
           def apply_buildpack(application)
             runtimes = application.delete(:runtimes)
             return unless runtimes
-            if runtimes.length > 1
-              fail Errors::PlatformSpecificSemanticError.new('cloudControl only allows 1 runtime per application',
-                                                             422_600_1)
-            end
+            fail_with(:only_one_runtime) if runtimes.length > 1
             buildpack = find_runtime(runtimes[0])
             if native_runtime?(buildpack)
               application[:type] = buildpack
@@ -88,6 +85,21 @@ module Paasal
               application[:type] = 'custom'
               application[:buildpack_url] = runtimes[0]
             end
+          end
+
+          def to_paasal_app(app, deployment)
+            app[:id] = app[:name]
+            app[:created_at] = app.delete :date_created
+            app[:updated_at] = app.delete :date_modified
+            app[:state] = application_state(deployment)
+            app[:web_url] = "http://#{deployment[:default_subdomain]}"
+            app[:autoscaled] = false
+            app[:region] = 'default'
+            app[:instances] = deployment[:min_boxes]
+            app[:active_runtime] = app[:type][:name] == 'custom' ? app[:buildpack_url] : app[:type][:name]
+            app[:runtimes] = [app[:active_runtime]]
+            app[:release_version] = deployment[:version] != '-1' ? deployment[:version] : nil
+            app
           end
         end
       end
