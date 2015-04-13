@@ -18,6 +18,7 @@ namespace :spec do
     end
     desc 'Run all spec suites'
     task :all do
+      require 'English'
       failed = []
       SPEC_SUITES.each do |suite|
         p "Running spec suite #{suite[:id]} ..."
