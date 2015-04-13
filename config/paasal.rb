@@ -26,6 +26,7 @@ configatron.db.delete_on_shutdown = true
 # [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values,
 # which may partially override previously persisted entities.
 # False keeps the changes that were applied during runtime.
+# Defaults to: false
 configatron.db.override = false
 
 configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'

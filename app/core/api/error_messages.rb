@@ -75,16 +75,18 @@ module Paasal
         'saying the message was semantically false. Check the dev_message for detailed error analysis'
       }
 
+      # All platform specific semantic errors should have a unique error code!
       PLATFORM_SPECIFIC_ERROR_ENTITY = {
         status: 422,
-        error_code: 422_401,
+        error_code: 422_001,
         message: 'Unprocessable Entity: Request format was valid, but has been rejected by the endpoint, '\
           'saying the message contains data that can not be processed by this specific platform.'
       }
 
+      # Quota violations are a common issue and therefore deserve their own message ;)
       PLATFORM_QUOTA_ERROR = {
         status: 422,
-        error_code: 422_402,
+        error_code: 422_002,
         message: 'Unprocessable Entity: Request format was valid, but has been rejected by the endpoint. '\
           'Your account would exceed its quota limits. Please check your account and its billing status.'
       }
@@ -96,7 +98,7 @@ module Paasal
       RESCUED = {
         status: 500,
         error_code: 500_000,
-        message: 'Oops, something went wrong here :/'
+        message: 'Oops, something went terribly wrong here :/'
       }
 
       RESCUED_ADAPTER_CALL = {

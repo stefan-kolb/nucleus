@@ -91,6 +91,7 @@ module Paasal
 
       # TODO: wrapping could be used when the adapters are used as ruby gem, not in the RESTful API
       # def self.method_added(name)
+      #   # TODO: only wrap if method belongs to the Stub
       #   return if @__last_methods_added && @__last_methods_added.include?(name)
       #   with_wrapper = :"#{name}_with_before_each_method_call"
       #   without_wrapper = :"#{name}_without_before_each_method_call"

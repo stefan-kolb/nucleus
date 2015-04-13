@@ -8,11 +8,11 @@ Gem::Specification.new do |spec|
   spec.version       = Paasal::VERSION
   spec.authors       = ['Cedric Röck']
   spec.email         = ['paasal@roecky.net']
-  spec.summary       = 'PaaSal is an abstraction layer for the management functions of '\
+  spec.summary       = 'PaaSal is an abstraction layer for the deployment and management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
   spec.homepage      = 'https://paasal.github.io/croeck'
-  spec.license       = 'MIT'
+  spec.license       = 'TBD'
 
   # do not include test files, they would tremendously increase the gem size
   # spec.files = `git ls-files -z`.split("\x0") - Dir.glob('spec/adapter/{application-archives,recordings}/**/*')

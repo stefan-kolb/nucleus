@@ -83,12 +83,12 @@ module Paasal
         # @option application [String] :name The name of the application
         # @option application [Array<String>] :runtimes Runtimes (buildpacks) to use with the application
         # @option application [String] :region Region where the application shall be deployed,
-        # call {#regions} for a list of allowed values
+        #   call {#regions} for a list of allowed values
         # @option application [Boolean] :autoscaled True if the application shall scale automatically,
-        # false if manual scaling shall be used. WARNING: This option is currently not supported by most vendors!
+        #   false if manual scaling shall be used. WARNING: This option is currently not supported by most vendors!
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
-        # of the created application
+        #   of the created application
         def create_application(application)
           fail NOT_IMPLEMENTED_ERROR
         end
@@ -127,7 +127,7 @@ module Paasal
         # @param [String] application_id Id of the application for which the domain is to be retrieved
         # @param [String] domain_id Id of the domain object to retrieve
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
-        # or no domain matching the domain_id could be found
+        #   or no domain matching the domain_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Domain] domain entity compatible hash of the domain with the domain_id
         def domain(application_id, domain_id)
@@ -139,7 +139,7 @@ module Paasal
         # @param [Hash, Paasal::API::Models::Domain] domain domain entity compatible Hash.
         # @option application [String] :name The domain name, e.g. +myapplication.example.org+
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
-        # or no domain matching the domain_id could be found
+        #   or no domain matching the domain_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Domain] domain entity compatible hash of the created domain
         def create_domain(application_id, domain)
@@ -150,7 +150,7 @@ module Paasal
         # @param [String] application_id Id of the application for which the domain is to be deleted
         # @param [String] domain_id Id of the domain object to delete
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
-        # or no domain matching the domain_id could be found
+        #   or no domain matching the domain_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_domain(application_id, domain_id)
@@ -171,10 +171,10 @@ module Paasal
         # @param [String] application_id Id of the application for which the env_var is to be retrieved
         # @param [String] env_var_id Id of the env_var object to retrieve
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
-        # or no environment variable matching the env_var_id could be found
+        #   or no environment variable matching the env_var_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariable] environment variable entity compatible hash
-        # of the env. var with the env_var_id
+        #   of the env. var with the env_var_id
         def env_var(application_id, env_var_id)
           fail NOT_IMPLEMENTED_ERROR
         end
@@ -187,7 +187,7 @@ module Paasal
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariable] environment variable entity compatible hash
-        # of the created env. var
+        #   of the created env. var
         def create_env_var(application_id, env_var)
           fail NOT_IMPLEMENTED_ERROR
         end
@@ -198,10 +198,10 @@ module Paasal
         # @param [Hash, Paasal::API::Models::EnvironmentVariable] env_var env. var entity compatible Hash.
         # @option env_var [String] :value Value of the environment variable, e.g. +0.0.0.0+
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
-        # or no environment variable matching the env_var_id could be found
+        #   or no environment variable matching the env_var_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariable] environment variable entity compatible hash
-        # of the updated env. var
+        #   of the updated env. var
         def update_env_var(application_id, env_var_id, env_var)
           fail NOT_IMPLEMENTED_ERROR
         end
@@ -210,7 +210,7 @@ module Paasal
         # @param [String] application_id Id of the application for which the env_var is to be deleted
         # @param [String] env_var_id Id of the env_var object to delete
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
-        # or no environment variable matching the env_var_id could be found
+        #   or no environment variable matching the env_var_id could be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_env_var(application_id, env_var_id)
@@ -271,11 +271,11 @@ module Paasal
         # @param [String] application_id Id of the application for which the data is to be deployed
         # @param [Tempfile] application_archive compressed application archive that shall be deployed
         # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::CompressionFormats#all}
-        # for a list of all allowed values
+        #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::AdapterRequestError] if the application archive that shall be deployed is no
-        # valid application archive, or if the application_archive / compression_format are not supported
+        #   valid application archive, or if the application_archive / compression_format are not supported
         # @return [void]
         def deploy(application_id, application_archive, compression_format)
           fail NOT_IMPLEMENTED_ERROR
@@ -297,11 +297,11 @@ module Paasal
         # but can also contain additional files, for instance log files.
         # @param [String] application_id Id of the application of which the data is to be downloaded
         # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::CompressionFormats#all}
-        # for a list of all allowed values
+        #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::AdapterRequestError] if the application archive that shall be deployed is no
-        # valid application archive, or if the compression_format is not supported
+        #   valid application archive, or if the compression_format is not supported
         # @return [StringIO] binary application data
         def download(application_id, compression_format)
           fail NOT_IMPLEMENTED_ERROR
@@ -324,7 +324,7 @@ module Paasal
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Boolean] returns true if there is a log for the application with the log_id,
-        # false if it does not exist
+        #   false if it does not exist
         def log?(application_id, log_id)
           fail NOT_IMPLEMENTED_ERROR
         end
@@ -355,7 +355,7 @@ module Paasal
         # @param [String] application_id Id of the application of which the log is to be tailed
         # @param [String] log_id Id of the log that is to be tailed
         # @param [Paasal::RackStreamCallback] stream stream callback to which messages can be sent via
-        # the +send_message+ method
+        #   the +send_message+ method
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application or log could not be found
         # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
         # @return [Paasal::Adapters::TailStopper] callback object to stop the ongoing tail process

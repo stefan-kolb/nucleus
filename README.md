@@ -79,9 +79,9 @@ Additionally, manual tests were executed on Windows and MAC OS X using MRI 2.1.3
 ## Supported Vendors
 
 - Heroku
-- CloudFoundry
-- ~~Openshift 2~~
-- ~~CloudControl~~
+- CloudFoundry V2
+- Openshift V2 (except logging)
+- CloudControl
 
 ## Usage
 
@@ -115,7 +115,15 @@ require 'paasal'
 
 #### Communicate with an endpoint
 
-**TODO: simplify this approach. User does not have to know about app_domain. Find a way to utilize the config here.**
+** THIS IS ONLY A SKETCH HOW IT SHALL WORK WHEN WE FINISHED THE IMPLEMENTATION**
+
+TODOs:
+- Simplify this approach. User does not have to know about app_domain. Find a way to utilize the config here.
+- Provide authentication and then wrap calls as from within the API
+
+
+1) Acquire from manager with provided authentication, utilize config (import only once)
+2) Patch adapter, wrap each class with authentication repetition
 
 First, we need to acquire an adapter instance. Choose between one of the following classes:
 `Paasal::Adapters::V1::CloudControl`,
@@ -166,38 +174,66 @@ rackup
 **TODO: add more documentation here, especially examples (!)**
 
 The API of PaaSal is documented by the use of swagger.
-After your started a server insatnce, you can access an interactive UI at the `/docs` path.
+After your started a server instance, you can access an interactive UI at the `/docs` path.
 
 ## Functionality
 
 **TODO: specify what can already be done**
 
-### Authentication
-
-Authentication against the endpoint is managed by PaaSal.
-The credentials must be provided as `Basic authentication` header **within each single request**.
+The following list shows the degree to which the adapters implement the offered methods.
+This list is auto-generated and can be shown via:
 
 ```
-Authorization: Basic thebase64encodedcredentialsstring
+$ bundle exec rake compatibility:markdown
 ```
 
-#### Special characters (umlauts, ....)
+Method / Vendor|cloudControl|Cloud Foundry v2|Heroku|Openshift v2
+:--|:-:|:-:|:-:|:-:
+auth_client|true|true|true|true
+regions|true|true|true|true
+region|true|true|true|true
+applications|true|true|true|true
+application|true|true|true|true
+create_application|true|true|true|true
+update_application|false|true|true|false
+delete_application|true|true|true|true
+domains|true|true|true|true
+domain|true|true|true|true
+create_domain|true|true|true|true
+delete_domain|true|true|true|true
+env_vars|true|true|true|true
+env_var|true|true|true|true
+create_env_var|true|true|true|true
+update_env_var|true|true|true|true
+delete_env_var|true|true|true|true
+start|false|true|true|true
+stop|false|true|true|true
+restart|false|true|true|true
+deploy|true|true|true|true
+rebuild|true|true|true|true
+download|true|true|true|true
+scale|true|true|true|true
+log?|true|true|true|false
+logs|true|true|true|false
+log_entries|true|true|true|false
+tail|true|true|true|false
 
-The usage of special characters, for instance the german umlauts as ä, ö and ü may cause issues with some platforms.
-Please make sure to select the correct encoding for your credentials before encoding them with base64:
-
-Provider | Encoding | Known issues
-:--|:-:|:--
-heroku||
-cf-stackato|utf-8|Different encodings cause the requests to crash and return status 500
+**As of April, 13th 2015**
 
 ### Core constructs
 
-Vendors, Providers, Endpoints
+PaaSal could support any constellation of PaaS offers that are currently available.
+In order to do so, we differentiate between 3 types:
 
-**TODO: explain what is behind it**
+The **vendor**, or the PaaS platform, which determines the functionality,
+a **provider** that runs the vendor's platform and offers it to its customers and finally
+the **endpoint** of the provider's offer.
 
-All changes made to these entities at runtime will be discarded, unless you enable the functionality in the configuration and specify a location where to persist the data to.
+For most scenarios the *endpoint* is identical to the *provider*, but in some cases,
+for instance on [IBM Bluemix](https://console.ng.bluemix.net), *endpoints* distinguish different deployment regions.
+
+If running PaaSal as webservice, all changes made to these entities at runtime will be discarded,
+unless you enable the functionality in the configuration and specify a location where to persist the data to.
 
 #### Vendors
 You can use the API of PaaSal to show a list of all currently supported vendors.
@@ -430,26 +466,43 @@ The only requirement is that the name must be unique amongst the endpoints of *a
     POST /api/providers/cloud_foundry_v2/endpoints
     body: {"endpoint":{"name":"mynewcloudfoundryendpoint"}}
 
-#### Application logs
+### Authentication
 
-TODO: move to the proper section in this README file
+Authentication against the endpoint is managed by PaaSal.
+The credentials must be provided as `Basic authentication` header **within each single request**.
 
-##### Download a selected logfile of an application
+```
+Authorization: Basic thebase64encodedcredentialsstring
+```
+
+#### Special characters (umlauts, ....)
+
+The usage of special characters, for instance the german umlauts as ä, ö and ü may cause issues with some platforms.
+Please make sure to select the correct encoding for your credentials before encoding them with base64:
+
+* Stackato 3.4.2
+  * Different encodings cause the requests to crash and return status 500
+
+### Application logs
+
+Below are some examples how to use the API in order to obtain detailed application logs.
+
+#### Download a selected logfile of an application
 
 ```shell
 curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/download" -H "Authorization: {auth_header}" -O -J
 ```
 
-##### Download all logfiles of an application
+#### Download all logfiles of an application
 
 ```shell
 curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/download" -H "Authorization: {auth_header}" -O -J
 ```
 
-##### Tail a selected logfile of an application
+#### Tail a selected logfile of an application
 
 ```shell
-curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/tail" -H "Authorization: {auth_header}"
+curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/tail" -H "Authorization: {auth_header}" --raw -v
 ```
 
 ### Native calls (experimental)
@@ -520,15 +573,144 @@ GET /api/endpoints/heroku/applications/the_application_name/call/builds
 ]
 ```
 
-## Configuration
+## Adapters
 
-**TODO**
+The functionality to communicate with different platforms is implemented in so called *adapters*.
+However, not each adapter can fully support the abstract PaaSal definitions.
+Please refer to the [functionality section](#functionality) for more information about the supported functionalities.
+
+### Heroku
+
+[Heroku](http://heroku.com)
+
+#### Issues
+
+*No known issues*
+
+### Cloud Foundry v2
+
+[Cloud Foundry V2](http://cloudfoundry.org)
+
+[IBM Bluemix](https://console.ng.bluemix.net)
+
+[Stackato 3.4](http://www.activestate.com/stackato)
+
+#### Issues
+**Logs**
+CF stopped to provide the `stdout` and `stderr` files in the `logs` directory.
+Currently we do not know of an approach to fetch recent log entries without registering an additional service on the application.
+
+Moreover, logs can only be retrieved as long as at least once instance of the CF application is running, hence the application state is `running`.
+If there are no logs that can be retrieved, the log list will be empty and the direct call of a log file will result in an 404 error.
+
+### Openshift v2
+
+[Openshift V2](https://openshift.com)
+
+#### Issues
+
+**Application update**
+An application can't be updated, the `name` and `runtimes` can't be changed once created.
+
+**Application scaling**
+Applications not created with PaaSal can't be scaled if they were created with `scalable = false`
+
+**Performance**
+It ... takes ... ages ... to ... record ...
+
+**Logging**
+Logging is not implemented yet
+
+### cloudControl
+
+[cloudControl](http://cloudcontrol.com)
+
+[Cloud&Hear](https://www.cloudandheat.com/de/appelevator)
+
+[dotCloud](https://next.dotcloud.com)
+
+[exoscale](https://www.exoscale.ch)
+
+#### Issues
+**Application update**
+An application can't be updated, the `name` and `runtimes` can't be changed once created.
+
+**Application lifecycle**
+Applications on cloudControl can't be explicitly started or stopped.
+They start automatically upon the successful deployment of a valid application and stop once the _deployment_ has been deleted.
+
+**Logs**
+Log messages, for instance the request entries, do not appear instantly in the log.
+It may take some seconds or even minutes for them to show up.
+
+## Configuration
 
 Several parts of PaaSal can be configured, e.g. whether to persist your data or always start with a clean instance.
 
+### Application configuration
+
+Some aspects, for instance where the server shall save its storage files, can be adjusted.
+
+```ruby
+# [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
+# Defaults to: Logger::Severity::WARN
+# configatron.logging.level = Logger::Severity::WARN
+
+# [optional] Logging directory
+# Defaults to: File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
+# configatron.logging.path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
+
+# [optional] Database backend to use. Choose one of: [:Daybreak, :LMDB]
+# Defaults to: :Daybreak on Unix, :LMDB on windows systems.
+# configatron.db.backend = :Daybreak
+
+# [optional] Options to start the backend.
+# See http://www.rubydoc.info/gems/moneta/Moneta/Adapters for valid options on the chosen adapter.
+# Defaults to: {}
+# configatron.db.backend_options = {}
+
+# [optional] Please specify the DB directory if you plan to use a file storage.
+# Defaults to: a temporary directory.
+# configatron.db.path = '/path/to/the/application/paasal/store/'
+
+# [optional] If true, the DB will be deleted when the server is being closed.
+# Defaults to: false
+# configatron.db.delete_on_shutdown = false
+
+# [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values,
+# which may partially override previously persisted entities.
+# False keeps the changes that were applied during runtime.
+# Defaults to: false
+# configatron.db.override = false
+
+configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'
+configatron.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
+configatron.api.contact = 'youremail@example.org'
+# The name of the license.
+configatron.api.license = ''
+# The URL of the license.
+configatron.api.license_url = ''
+# The URL of the API terms and conditions.
+configatron.api.terms_of_service_url = 'API still under development, no guarantees (!)'
+```
+
+#### Database backend
+
+The database backend can be specified in the `paasal.rb` configuration file.
+It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems
+and [LMDB](https://github.com/minad/lmdb) on Windows.
+
 ### Vendors, Providers and Endpoints
 
-A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or be configured in `.yaml` files. These adapter configuration files are located in the project directory at `config/adapters`.
+A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or be configured in `.yaml` files.
+These adapter configuration files are located in the project directory at `config/adapters`.
+
+#### Add a new Provider
+
+To add a new provider, open the `config/adapters` directory and select the platform that the provider is using.
+For more explanations of the fields, or if the platform is not listed, please refer to the Guide [how to implement a new adapter)](wiki/implement_new_adapter.md).
+
+Next, add your provider and its endpoint(s) to the configuration file.
 
 ###### Example adapter configuration, here: Openshift 2
 
@@ -546,39 +728,6 @@ A vendor is reflected by an adapter implementation, but the providers and their 
           id: "openshift-online"
           url: "openshift.redhat.com/broker/rest"
 ```
-
-### Application configuration
-
-Some aspects, for instance where the server shall save its storage files, can be adjusted.
-
-```ruby
-# [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
-configatron.logging.level = Logger::Severity::WARN
-
-# [optional] Please specify the DB directory if you plan to persist your vendors, providers and their endpoints. Comment-out to use a temporary directory
-# configatron.db.path = '/path/to/the/application/paasal/store/'
-# [optional] If true, the DB will be deleted when the server is being closed.
-# configatron.db.delete_on_shutdown = false
-# [optional, requires 'configatron.db.path'] If true, the DB will be initialized with default values, which may partially override previously persisted entities. False keeps the changes that were applied during runtime.
-# configatron.db.override = false
-
-# You can change these values if you host the application and offer access to other users
-configatron.api.title = 'PaaSal - Platform as a Service abstraction layer API'
-configatron.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
-configatron.api.contact = 'youremail@example.org'
-# The name of the license.
-configatron.api.license = ''
-# The URL of the license.
-configatron.api.license_url = ''
-# The URL of the API terms and conditions.
-configatron.api.terms_of_service_url = 'API still under development, no guarantees (!)'
-```
-
-#### Database backend
-
-The database backend can be specified in the `paasal.rb` configuration file.
-It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems
-and [LMDB](https://github.com/minad/lmdb) on Windows.
 
 ## API clients
 
@@ -610,6 +759,7 @@ The application uses the following subset of error codes:
 406: API vendor or version not found
 422: Unprocessable Entity due to invalid parameters
 500: Internal processing error
+501: Not implemented, adapter does not provide this feature
 ```
 
 All errors are returned in a common schema:
@@ -632,48 +782,10 @@ As a reward of providing swagger-compatible API docs, clients can be generated f
 
 For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
 
-## Adapters
-
-### Heroku
-
-#### Issues
-
-*No known issues*
-
-### Cloud Foundry v2
-
-#### Issues
-**Logs**
-CF stopped to provide the `stdout` and `stderr` files in the `logs` directory.
-Currently we do not know of an approach to fetch recent log entries without registering an additional service on the application.
-
-Moreover, logs can only be retrieved as long as at least once instance of the CF application is running, hence the application state is `running`.
-If there are no logs that can be retrieved, the log list will be empty and the direct call of a log file will result in an 404 error.
-
-### Openshift v2
-
-#### Issues
-
-*NOT YET IMPLEMENTED*
-
-### cloudControl
-
-#### Issues
-**Application update**
-An application can't be updated, the `name` and `runtimes` can't be changed once created.
-
-**Application lifecycle**
-Applications on cloudControl can't be explicitly started or stopped.
-They start automatically upon the successful deployment of a valid application and stop once the _deployment_ has been deleted.
-
-**Logs**
-Log messages, for instance the request entries, do not appear instantly in the log.
-It may take some seconds or even minutes for them to show up.
-
 ## Tests
 
 The tests are divided into 3 categories, _unit_, _integration_ and _adapter_ tests.
-You can either call all tests or each suite seperately.
+You can either call all tests or each suite separately.
 
 **Invoke:**
 
@@ -753,8 +865,8 @@ bundle exec rake record`
 
 **Notes:**
 * You must be allowed to create at least 3 additional applications with your account, otherwise the quota restrictions will invalidate the test results.
-* A complete recording of a single vendor can currently take up to 10 minutes.
-If you only require certain functionality to be tested, make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
+* A complete recording of a single vendor usually takes 5 up to 15 minutes. Openshift currently takes more than 30 minutes...
+If you only require certain functionality to be tested (during development), make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
 * cloudControl requires you to change the application names if the previous recording was made within the last 2 days, otherwise if fails because the name is still locked.
 Change the name in the `spec/adapter/v1/cloud_control_spec.rb`.
 
