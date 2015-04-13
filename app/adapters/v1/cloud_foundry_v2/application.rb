@@ -74,13 +74,32 @@ module Paasal
             runtimes = application.delete(:runtimes)
             return unless runtimes
             if runtimes.length > 1
-              fail Errors::PlatformSpecificSemanticError.new('Cloud Foundry only allows 1 runtime per application',
-                                                             422_500_1)
+              fail_with(:only_one_runtime)
             end
 
             buildpack = find_runtime(runtimes[0])
             # use the translated buildpack name if available, otherwise pass on the given runtime name
             application[:buildpack] = buildpack ? buildpack : runtimes[0]
+          end
+
+          def to_paasal_app(app_resource)
+            metadata = app_resource[:metadata]
+            app = app_resource[:entity]
+
+            app[:id] = metadata[:guid]
+            app[:created_at] = metadata[:created_at]
+            app[:updated_at] = metadata[:updated_at] || metadata[:created_at]
+            app[:state] = application_state(app_resource)
+            app[:web_url] = "http://#{app_web_url(metadata[:guid])}"
+            # route could have been deleted by the user
+            app[:web_url] = nil unless domain?(metadata[:guid], app[:web_url])
+            # Stackato does support autoscaling
+            app[:autoscaled] = app.delete(:autoscale_enabled) || false
+            app[:region] = 'default'
+            app[:active_runtime] = app[:detected_buildpack]
+            app[:runtimes] = app[:buildpack] ? [app[:buildpack]] : []
+            app[:release_version] = app.delete(:version)
+            app
           end
         end
       end

@@ -20,9 +20,8 @@ module Paasal
         include Paasal::Adapters::V1::CloudFoundryV2::Logs
         include Paasal::Adapters::V1::CloudFoundryV2::Regions
         include Paasal::Adapters::V1::CloudFoundryV2::Scaling
+        include Paasal::Adapters::V1::CloudFoundryV2::SemanticErrors
         include Paasal::Adapters::V1::CloudFoundryV2::Vars
-
-        # all cloud foundry specific semantic errors shall have an error code of 422_5XXX
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
@@ -51,7 +50,7 @@ module Paasal
             # Indicating semantically invalid parameters
             fail Errors::SemanticAdapterRequestError, error.body[:description]
           elsif cf_error == 170_002
-            fail Errors::PlatformSpecificSemanticError, 'Application is still building'
+            fail_with(:build_in_progress)
           end
         end
 
@@ -114,7 +113,7 @@ module Paasal
           # multiple spaces and no default space (dammit), choose the first one...
           return users_spaces[0][:metadata][:guid] if users_spaces
           # user has no space assigned, fail since we cant determine a space guid
-          fail Errors::SemanticAdapterRequestError.new('User is not assigned to any space', '422_5002')
+          fail_with(:no_space_assigned)
         end
 
         def headers
@@ -133,26 +132,6 @@ module Paasal
 
         def app_web_url(app_guid)
           "#{app_guid}.#{@endpoint_app_domain}" if @endpoint_app_domain
-        end
-
-        def to_paasal_app(app_resource)
-          metadata = app_resource[:metadata]
-          app = app_resource[:entity]
-
-          app[:id] = metadata[:guid]
-          app[:created_at] = metadata[:created_at]
-          app[:updated_at] = metadata[:updated_at] || metadata[:created_at]
-          app[:state] = application_state(app_resource)
-          app[:web_url] = "http://#{app_web_url(metadata[:guid])}"
-          # route could have been deleted by the user
-          app[:web_url] = nil unless domain?(metadata[:guid], app[:web_url])
-          # Stackato does support autoscaling
-          app[:autoscaled] = app.delete(:autoscale_enabled) || false
-          app[:region] = 'default'
-          app[:active_runtime] = app[:detected_buildpack]
-          app[:runtimes] = app[:buildpack] ? [app[:buildpack]] : []
-          app[:release_version] = app.delete(:version)
-          app
         end
       end
     end
