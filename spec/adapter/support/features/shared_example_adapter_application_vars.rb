@@ -143,7 +143,7 @@ shared_examples 'valid:vars:create:422' do
       end
       include_examples 'a semantically invalid request'
       it 'bad request refers to already taken key' do
-        expect(json_body[:dev_message]).to include('already taken')
+        expect(json_body[:dev_message]).to include(' already ')
       end
     end
   end

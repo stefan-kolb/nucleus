@@ -4,14 +4,22 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
   before :all do
     @endpoint = 'openshift-online'
     @api_version = 'v1'
-    @app_min = { original_name: 'paasal-test-app-min-properties',
-                 updated_name: 'paasal-test-app-min-updated',
+    @app_min = { original_name: 'paasaltestappminproperties',
+                 updated_name: 'paasaltestappminproperties',
                  region: 'US' }
-    @app_all = { original_name: 'paasal-test-app-all-properties',
-                 updated_name: 'paasal-test-app-all-updated',
+    @app_all = { original_name: 'paasaltestappallproperties',
+                 updated_name: 'paasaltestappallproperties',
                  region: 'US' }
+    # application update is not supported
+    # TODO: logging is not yet implemented
+    @unsupported = ['with valid credentials is compliant and application update',
+                    'with valid credentials is compliant and log']
   end
-  before do
+  before do |example|
+    if skip_example?(described_class, example.metadata[:full_description], @unsupported)
+      skip('This feature is currently not supported by Openshift V2 - 501')
+    end
+    # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)
   end
 
@@ -27,9 +35,7 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
 
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
-
-    # TODO: implement adapter so that tests pass
-    # include_examples 'compliant adapter with valid credentials'
+    include_examples 'compliant adapter with valid credentials'
 
     describe 'native adapter call' do
       describe 'against endpoint' do

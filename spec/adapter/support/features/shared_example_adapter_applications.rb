@@ -47,7 +47,7 @@ shared_examples 'valid:applications:create' do
       describe 'region', :as_cassette do
         before do
           application = {
-            application: { name: 'paasaltestcreateinvalidregion', runtimes: [], region: 'anyinvalidregion' }
+            application: { name: 'paasaltestcreateinvalidregion', runtimes: ['nodejs'], region: 'anyinvalidregion' }
           }
           post "/endpoints/#{@endpoint}/applications", application, request_headers
         end
@@ -269,7 +269,7 @@ shared_examples 'valid:applications:data:deploy' do
       end
       describe 'and subsequent GET application with all properties shows that', :as_cassette do
         it 'state changes to deployed within timeout period' do
-          wait(10.seconds).for do
+          wait(60.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:state]
           end.to eq('deployed')
         end
@@ -288,7 +288,7 @@ shared_examples 'valid:applications:data:deploy' do
       end
       describe 'and subsequent GET application with min properties shows that', :as_cassette do
         it 'state changes to deployed within timeout period' do
-          wait(10.seconds).for do
+          wait(60.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)[:state]
           end.to eq('deployed')
         end
@@ -320,7 +320,7 @@ shared_examples 'valid:applications:data:rebuild' do
       it 'changes the application state' do
         app_before_rebuild = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
         post("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/rebuild", {}, request_headers)
-        wait(20.seconds).for do
+        wait(60.seconds).for do
           get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:release_version]
         end.not_to eq(app_before_rebuild[:release_version])
       end
