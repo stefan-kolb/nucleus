@@ -16,6 +16,7 @@ module Paasal
         include Paasal::Adapters::V1::Heroku::Lifecycle
         include Paasal::Adapters::V1::Heroku::Regions
         include Paasal::Adapters::V1::Heroku::Scaler
+        include Paasal::Adapters::V1::Heroku::SemanticErrors
         include Paasal::Adapters::V1::Heroku::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
@@ -44,15 +45,12 @@ module Paasal
             if error_response.body[:id] == 'invalid_params'
               fail Errors::SemanticAdapterRequestError, error_response.body[:message]
             elsif error_response.body[:id] == 'verification_required'
-              fail Errors::PlatformSpecificSemanticError.new(error_response.body[:message],
-                                                             API::ErrorMessages::PLATFORM_QUOTA_ERROR)
+              fail_with(:need_verification, [error_response.body[:message]])
             end
           elsif error_response.status == 404 && error_response.body[:id] == 'not_found'
             fail Errors::AdapterResourceNotFoundError, error_response.body[:message]
           else
-            p error_response
-            # TODO: implement me
-            log.warn 'Heroku error still unhandled---'
+            log.warn "Heroku error still unhandled: #{error_response}"
           end
         end
 
@@ -77,9 +75,7 @@ module Paasal
             runtime_is_url = runtime_identifier =~ /\A#{URI.regexp}\z/
             runtime_url = find_runtime(runtime_identifier)
             runtime_is_valid = runtime_url || runtime_is_url
-            fail Errors::PlatformSpecificSemanticError,
-                 "Invalid runtime: #{runtime_identifier} is neither a known runtime, "\
-                 'nor a buildpack URL' unless runtime_is_valid
+            fail_with(:invalid_runtime, []) unless runtime_is_valid
             # if runtime identifier is valid, we need to install the runtime
             runtimes_to_install.push(runtime_is_url ? runtime_identifier : runtime_url)
           end
@@ -152,19 +148,6 @@ module Paasal
             end
             latest_version_id
           end
-        end
-
-        def to_paasal_app(heroku_application)
-          # load dynos only once
-          dynos = dynos(heroku_application[:id])
-          # add missing fields to the application representation
-          heroku_application[:autoscaled] = false
-          heroku_application[:state] = application_state(heroku_application, dynos)
-          heroku_application[:instances] = application_instances(heroku_application[:id])
-          heroku_application[:active_runtime] = heroku_application.delete(:buildpack_provided_description)
-          heroku_application[:runtimes] = installed_buildpacks(heroku_application[:id])
-          heroku_application[:release_version] = latest_release(heroku_application[:id], dynos)
-          heroku_application
         end
       end
     end

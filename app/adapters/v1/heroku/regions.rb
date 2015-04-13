@@ -26,7 +26,7 @@ module Paasal
           def retrieve_region(application)
             return unless application.key?(:region)
             found_region = native_region(application[:region])
-            fail Errors::PlatformSpecificSemanticError,
+            fail Errors::SemanticAdapterRequestError,
                  "Region '#{application[:region]}' does not exist at the endpoint" if found_region.nil?
             application[:region] = found_region[:id]
           end
