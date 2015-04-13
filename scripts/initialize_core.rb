@@ -10,6 +10,23 @@ configatron.api.versions = Paasal::ApiDetector.api_versions
 # Add authorization strategy to grape and replace default http_basic
 Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAuth, ->(options) { [options[:realm]] })
 
+# Now setup the SSH key that is required for Git deployment by (at least) Openshift
+# first, load private key
+keyfile = File.join('bin', 'paasal.pem')
+configatron.public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
+
+if OS.unix?
+  # file must not be accessible by others, otherwise usage will be forbidden by git
+  FileUtils.chmod(0600, keyfile)
+  tmp_ssh_script = File.join('bin', 'trust_unix_ssh')
+  FileUtils.chmod('+x', tmp_ssh_script) unless File.executable?(tmp_ssh_script)
+else
+  tmp_ssh_script = File.join('bin', 'trust_win_ssh')
+end
+
+# use a custom SSH script
+Git.configure { |config| config.git_ssh = tmp_ssh_script }
+
 # Lock the configuration, so it can't be manipulated
 configatron.lock!
 

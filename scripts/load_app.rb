@@ -26,6 +26,9 @@ require 'kwalify'
 # serialization
 require 'oj'
 
+# SSH keys
+require 'sshkey'
+
 # Rack stuff
 require 'rack/body_proxy'
 require 'rack/utils'

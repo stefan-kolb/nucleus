@@ -49,6 +49,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'request_store', '~> 1.1'
   spec.add_runtime_dependency 'require_all', '~> 1.3'
   spec.add_runtime_dependency 'rubyzip', '~> 1.1'
+  spec.add_runtime_dependency 'sshkey', '~> 1.6.1'
   spec.add_runtime_dependency 'thin', '~> 1.6'
 
   spec.add_development_dependency 'bundler'
