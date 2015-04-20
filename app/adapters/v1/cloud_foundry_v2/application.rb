@@ -43,7 +43,7 @@ module Paasal
 
             response = post('/v2/apps', body: application).body
 
-            # now create the default route (similar to when using an UI, either Stackato or Bluemix) == web_url
+            # now create the default route (similar to when using an UI, e.g. Pivotal, Stackato or Bluemix) == web_url
             create_cf_domain(response[:metadata][:guid], @endpoint_app_domain, response[:metadata][:guid])
 
             # finally build the application response
@@ -61,10 +61,15 @@ module Paasal
 
           # @see Stub#delete_application
           def delete_application(application_name_or_id)
-            delete_response = delete("/v2/apps/#{application_name_or_id}", expects: [204, 404])
-            return unless delete_response.status == 404
-            found_guid = find_app_id_by_name(application_name_or_id, delete_response)
-            delete("/v2/apps/#{found_guid}", expects: 204)
+            app_guid = app_guid(application_name_or_id)
+            # first delete all service bindings
+            remove_all_services(app_guid)
+            # then delete the default route (otherwise it would remain as orphaned route)
+            routes = get("/v2/apps/#{app_guid}/routes?q=host:#{app_guid}&inline-relations-depth=1").body[:resources]
+            route = routes.find { |route| route[:entity][:domain][:entity][:name] == @endpoint_app_domain }
+            delete("/v2/routes/#{route[:metadata][:guid]}") if route
+            # and finally delete the app
+            delete("/v2/apps/#{app_guid}")
           end
 
           private
@@ -73,9 +78,7 @@ module Paasal
             # handle desired runtime(s)
             runtimes = application.delete(:runtimes)
             return unless runtimes
-            if runtimes.length > 1
-              fail_with(:only_one_runtime)
-            end
+            fail_with(:only_one_runtime) if runtimes.length > 1
 
             buildpack = find_runtime(runtimes[0])
             # use the translated buildpack name if available, otherwise pass on the given runtime name

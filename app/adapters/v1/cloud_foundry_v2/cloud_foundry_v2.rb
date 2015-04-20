@@ -21,6 +21,7 @@ module Paasal
         include Paasal::Adapters::V1::CloudFoundryV2::Regions
         include Paasal::Adapters::V1::CloudFoundryV2::Scaling
         include Paasal::Adapters::V1::CloudFoundryV2::SemanticErrors
+        include Paasal::Adapters::V1::CloudFoundryV2::Services
         include Paasal::Adapters::V1::CloudFoundryV2::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
@@ -41,8 +42,8 @@ module Paasal
               fail Errors::AuthenticationError, 'Endpoint authentication failed with OAuth2 token'
             end
           end
-          log.debug 'Unhandled CF error'
-          log.debug error
+          # error still unhandled, will result in a 500, server error
+          log.warn "Cloud Foundry error still unhandled: #{error}"
         end
 
         def handle_400_error(error, cf_error)
@@ -51,20 +52,24 @@ module Paasal
             fail Errors::SemanticAdapterRequestError, error.body[:description]
           elsif cf_error == 170_002
             fail_with(:build_in_progress)
+          elsif cf_error == 60_002
+            fail Errors::SemanticAdapterRequestError, 'Service is already assigned to the application'
           end
         end
 
         private
+
+        def guid?(name_or_id)
+          Regexp::UUID_PATTERN.match(name_or_id) ? true : false
+        end
 
         def default_organization_guid
           get("/v2/spaces/#{user_space_guid}").body[:entity][:organization_guid]
         end
 
         def app_guid(app_name_or_id)
-          if /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.match(app_name_or_id)
-            # app name is a UUID and therefore most likely the CF GUID
-            return app_name_or_id
-          end
+          # app name is a UUID and therefore most likely the CF GUID
+          return app_name_or_id if guid?(app_name_or_id)
           find_app_guid_by_name(app_name_or_id)
         end
 
