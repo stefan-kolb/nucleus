@@ -9,6 +9,7 @@ module Paasal
         include Paasal::Adapters::V1::CloudControl::Data
         include Paasal::Adapters::V1::CloudControl::Logs
         include Paasal::Adapters::V1::CloudControl::SemanticErrors
+        include Paasal::Adapters::V1::CloudControl::Services
         include Paasal::Adapters::V1::CloudControl::Vars
 
         # The default deployment name of cloud control applications that is used by PaaSal
@@ -16,7 +17,9 @@ module Paasal
         # Error messages of semantic errors that are platform specific
         CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS = ['cannot use this name', 'may only contain', 'this field has no more than']
         # Error messages of common semantic errors
-        CC_SEMANTIC_ERROR_MSGS = ['must be unique', 'already exists']
+        CC_SEMANTIC_ERROR_MSGS = ['must be unique', 'already exists',
+                                  'not a valid addon name', 'not a valid addon option']
+        CC_CONFLICT_ERROR_MSGS = ['Addon already exists']
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
@@ -59,12 +62,13 @@ module Paasal
           # cloud control responds almost every time with 400...
           if error_response.status == 400
             handle_400(message)
+          elsif error_response.status == 409 && CC_CONFLICT_ERROR_MSGS.any? { |msg| message.include? msg }
+            fail Errors::SemanticAdapterRequestError, message
           elsif error_response.status == 410
             fail Errors::AdapterResourceNotFoundError, 'Resource not found'
-          else
-            # TODO: implement me
-            log.warn 'Still unhandled status code in cloud control :/'
           end
+          # error still unhandled, will result in a 500, server error
+          log.warn "cloudControl error still unhandled: #{error_response}"
         end
 
         def handle_400(message)
@@ -90,6 +94,10 @@ module Paasal
         end
 
         private
+
+        def username
+          get('/user').body.first[:username]
+        end
 
         def application_state(deployment)
           # CloudControl does not create a deployment by default.
