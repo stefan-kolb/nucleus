@@ -9,7 +9,7 @@ module Paasal
             no_space_assigned: { code: 422_200_3, message: 'User is not assigned to any space' }
           }
 
-          def fail_with(error_name, params = {})
+          def fail_with(error_name, params = nil)
             error = ERROR_MESSAGES[error_name]
             fail Errors::PlatformSpecificSemanticError.new(error[:message] % params, error[:code])
           end
