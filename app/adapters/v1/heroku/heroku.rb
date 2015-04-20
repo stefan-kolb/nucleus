@@ -16,6 +16,7 @@ module Paasal
         include Paasal::Adapters::V1::Heroku::Lifecycle
         include Paasal::Adapters::V1::Heroku::Regions
         include Paasal::Adapters::V1::Heroku::Scaler
+        include Paasal::Adapters::V1::Heroku::Services
         include Paasal::Adapters::V1::Heroku::SemanticErrors
         include Paasal::Adapters::V1::Heroku::Vars
 
@@ -41,16 +42,22 @@ module Paasal
         end
 
         def handle_error(error_response)
-          if error_response.status == 422
-            if error_response.body[:id] == 'invalid_params'
-              fail Errors::SemanticAdapterRequestError, error_response.body[:message]
-            elsif error_response.body[:id] == 'verification_required'
-              fail_with(:need_verification, [error_response.body[:message]])
-            end
-          elsif error_response.status == 404 && error_response.body[:id] == 'not_found'
+          handle_422(error_response)
+          if error_response.status == 404 && error_response.body[:id] == 'not_found'
             fail Errors::AdapterResourceNotFoundError, error_response.body[:message]
-          else
-            log.warn "Heroku error still unhandled: #{error_response}"
+          elsif error_response.status == 503
+            fail Errors::PlatformUnavailableError, 'The Heroku API is currently not responding'
+          end
+          # error still unhandled, will result in a 500, server error
+          log.warn "Heroku error still unhandled: #{error_response}"
+        end
+
+        def handle_422(error_response)
+          return unless error_response.status == 422
+          if error_response.body[:id] == 'invalid_params'
+            fail Errors::SemanticAdapterRequestError, error_response.body[:message]
+          elsif error_response.body[:id] == 'verification_required'
+            fail_with(:need_verification, [error_response.body[:message]])
           end
         end
 
@@ -75,7 +82,7 @@ module Paasal
             runtime_is_url = runtime_identifier =~ /\A#{URI.regexp}\z/
             runtime_url = find_runtime(runtime_identifier)
             runtime_is_valid = runtime_url || runtime_is_url
-            fail_with(:invalid_runtime, []) unless runtime_is_valid
+            fail_with(:invalid_runtime, [runtime_identifier]) unless runtime_is_valid
             # if runtime identifier is valid, we need to install the runtime
             runtimes_to_install.push(runtime_is_url ? runtime_identifier : runtime_url)
           end
