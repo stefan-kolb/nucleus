@@ -14,7 +14,9 @@ describe Paasal::Adapters::V1::CloudControl do
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log tail request',
                     # scale-out should work, but the test would require a valid billing address
-                    'with valid credentials is compliant and scale-out']
+                    'with valid credentials is compliant and scaling succeeds with scale-out',
+                    # cloudControl does support the change, but we don't want to change into a payed plan just for tests
+                    'with valid credentials is compliant and application services plans change succeeds']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
     # we must use these stupid names given that cloud control prohibits special characters and (!)
@@ -25,6 +27,8 @@ describe Paasal::Adapters::V1::CloudControl do
     @app_all = { original_name: 'paasaltestappallproperties21',
                          updated_name: 'paasaltestappallproperties21',
                          region: 'default' }
+    # add mysqls with the free plan, does not requier billing account whereas other free plans do !?
+    @service = { id: 'mysqls', plan_id: 'free' }
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)

@@ -11,8 +11,14 @@ describe Paasal::Adapters::V1::CloudFoundryV2 do
                  updated_name: 'paasal-test-app-all-updated',
                  region: 'default' }
     @application_params = { memory: 256.to_i }
+    @service = { id: 'mongodb', plan_id: 'default' }
+    # Cloud Foundry does support the change, but we do not want to change into a payed plan just for testing
+    @unsupported = ['with valid credentials is compliant and application services plans change succeeds']
   end
-  before do
+  before do |example|
+    if skip_example?(described_class, example.metadata[:full_description], @unsupported)
+      skip('This feature is currently not supported by Cloud Foundry - 501')
+    end
     @adapter = load_adapter(@endpoint, @api_version)
   end
 

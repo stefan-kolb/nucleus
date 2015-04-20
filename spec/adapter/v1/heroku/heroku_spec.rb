@@ -3,8 +3,8 @@ require 'spec/adapter/adapter_spec_helper'
 describe Paasal::Adapters::V1::Heroku do
   before :all do
     # skip these example groups / tests for this adapter
-    # scale-out should work, but the test would require a valid billing address
-    @unsupported = ['with valid credentials is compliant and scale-out']
+    # Heroku does support the change, but we do not want to change into a payed plan just for testing
+    @unsupported = ['with valid credentials is compliant and application services plans change succeeds']
     @endpoint = 'heroku'
     @api_version = 'v1'
     @app_min = { original_name: 'paasal-test-app-min-properties',
@@ -13,6 +13,8 @@ describe Paasal::Adapters::V1::Heroku do
     @app_all = { original_name: 'paasal-test-app-all-properties',
                  updated_name: 'paasal-test-app-all-updated',
                  region: 'US' }
+    # add mongodb with the free plan (sandbox)
+    @service = { id: 'mongolab', plan_id: 'sandbox' }
 
     VCR.configure do |c|
       c.ignore_request do |request|

@@ -13,7 +13,11 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
     # application update is not supported
     # TODO: logging is not yet implemented
     @unsupported = ['with valid credentials is compliant and application update',
-                    'with valid credentials is compliant and log']
+                    'with valid credentials is compliant and log',
+                    # Openshift V2 does not quite use plans, therefore change is not yet implemented
+                    'with valid credentials is compliant and application services plans change']
+    # add mongodb with the default plan
+    @service = { id: 'mongodb-2.4', plan_id: 'default' }
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)
