@@ -5,9 +5,12 @@ require 'spec/adapter/support/features/shared_example_adapter_application_domain
 require 'spec/adapter/support/features/shared_example_adapter_application_lifecycle'
 require 'spec/adapter/support/features/shared_example_adapter_application_logs'
 require 'spec/adapter/support/features/shared_example_adapter_application_scaling'
+require 'spec/adapter/support/features/shared_example_adapter_application_services'
 require 'spec/adapter/support/features/shared_example_adapter_application_states'
 require 'spec/adapter/support/features/shared_example_adapter_application_vars'
 require 'spec/adapter/support/features/shared_example_adapter_regions'
+require 'spec/adapter/support/features/shared_example_adapter_services'
+require 'spec/adapter/support/features/shared_example_adapter_service_plans'
 
 shared_examples 'compliant adapter with valid credentials' do
   describe 'is compliant and' do
@@ -17,6 +20,14 @@ shared_examples 'compliant adapter with valid credentials' do
     # region list and get
     include_examples 'valid:regions:list'
     include_examples 'valid:regions:get'
+
+    # service list and get
+    include_examples 'valid:services:list'
+    include_examples 'valid:services:get'
+
+    # service plan list and get
+    include_examples 'valid:services:plans:list'
+    include_examples 'valid:services:plans:get'
 
     # application - create, list, show and update
     include_examples 'valid:applications:create'
@@ -54,6 +65,15 @@ shared_examples 'compliant adapter with valid credentials' do
 
     # access the application at its URL
     include_examples 'valid:applications:web'
+
+    # application services
+    include_examples 'valid:applications:services:list:empty'
+    include_examples 'valid:applications:services:add'
+    include_examples 'valid:applications:services:list'
+    include_examples 'valid:applications:services:get'
+    include_examples 'valid:applications:services:change'
+    # immediately remove the service, otherwise Openshift does not have enough gears for the scaling test
+    include_examples 'valid:applications:services:remove'
 
     # list, get and download log files
     include_examples 'valid:applications:logs:list'
