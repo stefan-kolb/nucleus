@@ -362,6 +362,102 @@ module Paasal
         def tail(application_id, log_id, stream)
           fail NOT_IMPLEMENTED_ERROR
         end
+
+        # List all services that are available at the endpoint.
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [Hash, Paasal::API::Models::Services] services list compatible hash
+        def services
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # Retrieve the service entity matching the given service_id.
+        # @param [String] service_id Id of the service that is to be retrieved
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the service could not be found
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [Hash, Paasal::API::Models::Service] service entity compatible hash
+        def service(service_id)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # List all plans that can be chosen for the service with the service_id, ascending order on the price.
+        # @param [String] service_id Id of the service the plans belong to
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the service could not be found
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [Hash, Paasal::API::Models::ServicePlans] service plan list compatible hash
+        def service_plans(service_id)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # Show the plan with the plan_id that is applicable to the service with the service_id.
+        # @param [String] service_id Id of the service the plans belongs to
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the service or the plan could not be found
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [Hash, Paasal::API::Models::ServicePlan] service plan entity compatible hash
+        def service_plan(service_id, plan_id)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # List all services that are installed on the application with the given application_id.
+        # @param [String] application_id Id of the application of which the services are to be listed of
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [Hash, Paasal::API::Models::InstalledServices] installed services list compatible hash
+        def installed_services(application_id)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # Retrieve the installed service entity matching the given service_id that is installed
+        # on the application with the given application_id.
+        # @param [String] service_id Id of the installed service that is to be retrieved
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application or service could not be found
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [Hash, Paasal::API::Models::InstalledService] installed service entity compatible hash
+        def installed_service(application_id, service_id)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # Add the service with the service_id to the application with the application_id.
+        # @param [String] application_id Id of the application of which the service is to be added to
+        # @param [Hash, Paasal::API::Models::Service] service_entity service entity compatible Hash.
+        # @option env_var [String] :id ID of the service to add to the application
+        # @param [Hash, Paasal::API::Models::ServicePlan] plan_entity service plan entity compatible Hash.
+        # @option env_var [String] :id ID of the service plan that shall be applied
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::SemanticAdapterRequestError] if the service to add or the plan to use
+        #   could not be found
+        # @return [Hash, Paasal::API::Models::InstalledService] installed service entity compatible hash
+        def add_service(application_id, service_entity, plan_entity)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # Change the service, e.g. the active plan, of the service with the service_id for
+        # the application with the application_id. Use the fields of the service_entity to execute the update.
+        # @param [String] application_id Id of the application of which the service is to be changed
+        # @param [String] service_id Id of the installed service that is to be updated. The id must not (but can) be
+        #   identical to the id of the service the installed service is based on.
+        # @param [Hash, Paasal::API::Models::ServicePlan] plan_entity service plan entity compatible Hash.
+        # @option env_var [String] :id ID of the service plan that shall be applied
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found or
+        #   the service was not installed on this application
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::SemanticAdapterRequestError] if the plan to use could not be found
+        # @return [Hash, Paasal::API::Models::InstalledService] installed service entity compatible hash
+        def change_service(application_id, service_id, plan_entity)
+          fail NOT_IMPLEMENTED_ERROR
+        end
+
+        # Remove the installed service with the service_id from the application with the application_id.
+        # @param [String] application_id Id of the application of which the service is to be removed from
+        # @param [String] service_id Id of the installed service that is to be removed from the application. The id
+        #   must not (but can) be identical to the id of the service the installed service is based on.
+        # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found or
+        #   the service was not installed on this application
+        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @return [void]
+        def remove_service(application_id, service_id)
+          fail NOT_IMPLEMENTED_ERROR
+        end
       end
     end
   end

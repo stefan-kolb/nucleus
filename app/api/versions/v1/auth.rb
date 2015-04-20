@@ -64,6 +64,13 @@ module Paasal
         mount Paasal::API::V1::ApplicationLogsTail
         # application - scaling operations
         mount Paasal::API::V1::ApplicationScaling
+        # application - services
+        mount Paasal::API::V1::ApplicationServices
+
+        # service operations
+        mount Paasal::API::V1::Services
+        # service plan operations
+        mount Paasal::API::V1::ServicePlans
       end
     end
   end

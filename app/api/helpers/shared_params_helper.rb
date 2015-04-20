@@ -24,6 +24,14 @@ module Paasal
       requires :log_id, type: String, desc: 'The ID of the logfile'
     end
 
+    params :service_id do
+      requires :service_id, type: String, desc: 'The ID of the service'
+    end
+
+    params :service_plan_id do
+      requires :service_plan_id, type: String, desc: 'The ID of the service plan'
+    end
+
     params :create_provider do
       # require the keys of the provider in the json object 'provider'
       requires :provider, type: Hash do
