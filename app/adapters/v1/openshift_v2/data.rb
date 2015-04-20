@@ -39,7 +39,9 @@ module Paasal
             end
             # compress files to archive but exclude the .git repo
             repo_name = "paasal.app.repo.openshift_v2.download.#{application_id}.#{SecureRandom.uuid}"
-            GitDeployer.new(repo_name, app[:git_url], nil).download(compression_format, true)
+            with_ssh_key do
+              GitDeployer.new(repo_name, app[:git_url], nil).download(compression_format, true)
+            end
           end
 
           # @see Stub#rebuild
@@ -53,7 +55,9 @@ module Paasal
             account = get('/user').body[:data]
             repo_name = "paasal.app.repo.openshift_v2.rebuild.#{application_id}.#{SecureRandom.uuid}"
 
-            GitDeployer.new(repo_name, app[:git_url], account[:email]).trigger_build
+            with_ssh_key do
+              GitDeployer.new(repo_name, app[:git_url], account[:email]).trigger_build
+            end
 
             # if auto deployment ist disabled, we must also trigger a clean build
             unless app[:auto_deploy]
