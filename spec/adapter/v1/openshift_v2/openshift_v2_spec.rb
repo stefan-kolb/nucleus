@@ -33,6 +33,11 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
     include_examples 'compliant adapter with invalid credentials'
   end
 
+  describe 'with empty credentials' do
+    let!(:request_headers) { { 'HTTP_AUTHORIZATION' => 'Basic ' + [':'].pack('m*').gsub(/\n/, '') } }
+    include_examples 'compliant adapter with invalid credentials'
+  end
+
   context 'with valid credentials' do
     let!(:request_headers) { credentials(@endpoint) }
     include_examples 'compliant adapter with valid credentials'
