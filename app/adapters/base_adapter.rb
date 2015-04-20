@@ -13,6 +13,8 @@ module Paasal
       include HttpTailClient
       include Logging
 
+      attr_reader :endpoint_url
+
       def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
         fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
         @endpoint_url = endpoint_url
@@ -84,7 +86,7 @@ module Paasal
       def cache_key(username, password)
         # calculate the cache only once per request
         return RequestStore.store[:cache_key] if RequestStore.exist?(:cache_key)
-        key = Digest::SHA256.hexdigest "#{@endpoint_url}#{username}:#{password}"
+        key = Digest::SHA256.hexdigest "#{endpoint_url}#{username}:#{password}"
         RequestStore.store[:cache_key] = key
         key
       end
