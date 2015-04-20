@@ -118,6 +118,12 @@ module Paasal
         error_code: 501_000,
         message: 'Not Implemented'
       }
+
+      UNAVAILABLE = {
+        status: 503,
+        error_code: 503_000,
+        message: 'Service Unavailable'
+      }
     end
   end
 end

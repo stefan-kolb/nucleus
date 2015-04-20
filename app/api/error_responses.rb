@@ -12,7 +12,8 @@ module Paasal
          [406, 'API vendor or version not found', Paasal::API::Models::Error],
          [422, 'Unprocessable Entity due to invalid parameters', Paasal::API::Models::Error],
          [500, 'Internal processing error', Paasal::API::Models::Error],
-         [501, 'Feature not implemented in the adapter', Paasal::API::Models::Error]]
+         [501, 'Feature not implemented in the adapter', Paasal::API::Models::Error],
+         [503, 'Destination service temporarily unavailable', Paasal::API::Models::Error]]
       end
     end
   end
