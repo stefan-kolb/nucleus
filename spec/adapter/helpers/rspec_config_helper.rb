@@ -7,10 +7,19 @@ RSpec.configure do |config|
     meta[:described_class].to_s.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, '')
   end
 
+  # Build the cassette name. If no :cassette_group is set the name will be resolved recursively to:
+  # {adapter}/vcr_cassettes/each/nested/rspec/example/group
+  # But if there is a :cassette_group in any of the example groups, the path will be:
+  # {adapter}/vcr_cassettes/parent/groups/{cassette_group}/nested/tests
   vcr_cassette_name_for = lambda do |meta|
     description = meta[:description]
     example_group = meta.key?(:example_group) ? meta[:example_group] : meta[:parent_example_group]
-    return File.join(vcr_cassette_name_for[example_group], description) if example_group
+    if example_group
+      if meta.key?(:cassette_group) && !meta[:parent_example_group].key?(:cassette_group)
+        return File.join(vcr_cassette_name_for[example_group], *meta[:cassette_group].split(';'))
+      end
+      return File.join(vcr_cassette_name_for[example_group], description)
+    end
     # modify adapter name and split by API version
     File.join(description.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, ''), 'vcr_cassettes')
   end

@@ -53,12 +53,12 @@ def skip_example?(described_class, current_test, to_skip)
 end
 
 def example_group_property(metadata, property)
-  example_group_property = metadata.key?(:example_group) ? metadata[:example_group][property] : false
-  parent_group_property = metadata.key?(:parent_example_group) ? metadata[:parent_example_group][property] : false
-
   # process recursive
-  return example_group_property(metadata[:parent_example_group], property) if parent_group_property
-  return metadata[:example_group] if example_group_property
+  if metadata.key?(:parent_example_group) && metadata[:parent_example_group][property]
+    return example_group_property(metadata[:parent_example_group], property)
+  elsif metadata.key?(:example_group) && metadata[:example_group][property]
+    return metadata[:example_group]
+  end
   # property for the shared example group was not found
   nil
 end
