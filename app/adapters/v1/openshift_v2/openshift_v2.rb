@@ -9,10 +9,11 @@ module Paasal
         include Paasal::Adapters::V1::OpenshiftV2::AppStates
         include Paasal::Adapters::V1::OpenshiftV2::Data
         include Paasal::Adapters::V1::OpenshiftV2::Domains
-        include Paasal::Adapters::V1::OpenshiftV2::SemanticErrors
         include Paasal::Adapters::V1::OpenshiftV2::Lifecycle
         include Paasal::Adapters::V1::OpenshiftV2::Logs
         include Paasal::Adapters::V1::OpenshiftV2::Regions
+        include Paasal::Adapters::V1::OpenshiftV2::SemanticErrors
+        include Paasal::Adapters::V1::OpenshiftV2::Services
         include Paasal::Adapters::V1::OpenshiftV2::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
@@ -36,9 +37,11 @@ module Paasal
             fail Errors::AdapterResourceNotFoundError, errors.collect { |e| e[:text] }.join(' ')
           elsif error_response.status == 422
             fail Errors::SemanticAdapterRequestError, errors.collect { |e| e[:text] }.join(' ')
-          else
-            log.warn "Openshift error still unhandled: #{error_response}"
+          elsif error_response.status == 503
+            fail Errors::PlatformUnavailableError, 'The Openshift API is currently not available'
           end
+          # error still unhandled, will result in a 500, server error
+          log.warn "Openshift error still unhandled: #{error_response}"
         end
 
         # @see Stub#scale
