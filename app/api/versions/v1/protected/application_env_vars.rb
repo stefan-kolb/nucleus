@@ -71,7 +71,7 @@ module Paasal
             end
 
             desc 'Delete an environment variable' do
-              failure [[200, 'Environment variable deleted']].concat ErrorResponses.standard_responses
+              failure [[204, 'Environment variable deleted']].concat ErrorResponses.standard_responses
             end
             delete '/' do
               with_authentication { adapter.delete_env_var(params[:application_id], params[:env_var_id]) }

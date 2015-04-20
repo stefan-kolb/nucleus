@@ -55,9 +55,7 @@ module Paasal
             end
 
             desc 'Delete a domain' do
-              success Models::Domain
-              failure [[200, 'Domain deleted',
-                        Models::Domains]].concat ErrorResponses.standard_responses
+              failure [[204, 'Domain deleted']].concat ErrorResponses.standard_responses
             end
             delete '/' do
               with_authentication { adapter.delete_domain(params[:application_id], params[:domain_id]) }
