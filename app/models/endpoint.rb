@@ -19,12 +19,5 @@ module Paasal
       @id = hash['id']
       @trust = hash.key?('trust') ? hash['trust'] : false
     end
-
-    def representation
-      msg = "Endpoint: #{@name}"
-      msg << " [#{@url}]" unless @url.nil? || @url.empty?
-      msg << ' *trusted*' if @trust
-      msg
-    end
   end
 end

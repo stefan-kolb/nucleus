@@ -10,17 +10,13 @@ module Paasal
     attr_accessor :updated_at
 
     def to_s
-      if self.respond_to?('representation') && !@name.nil? && !@name.to_s.strip.length == 0
-        return representation
-      end
+      return name if self.respond_to?('name')
+      return id if id
       super.to_s
     end
 
     def inspect
-      if self.respond_to?('representation') && !@name.nil? && @name.to_s.strip.length > 0
-        return representation
-      end
-      super.inspect
+      to_s
     end
   end
 end

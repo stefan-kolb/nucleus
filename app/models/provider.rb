@@ -18,10 +18,5 @@ module Paasal
       return unless hash.key?('endpoints')
       @endpoints = hash['endpoints'].map! { |e| e.is_a?(Paasal::Endpoint) ? e : Paasal::Endpoint.new(e) }
     end
-
-    def representation
-      msg = "Provider: #{@name}"
-      msg << ", #{@endpoints.size} endpoints" unless @endpoints.nil? || @endpoints.empty?
-    end
   end
 end
