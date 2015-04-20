@@ -11,7 +11,7 @@ shared_examples 'region entity schema' do
 end
 
 shared_examples 'valid:regions:list' do
-  describe 'list regions', :as_cassette do
+  describe 'list regions', :as_cassette, cassette_group: 'regions;list' do
     before { get("/endpoints/#{@endpoint}/regions", request_headers) }
     include_examples 'region list schema'
     include_examples 'a valid GET request'
@@ -23,7 +23,7 @@ shared_examples 'valid:regions:list' do
 end
 
 shared_examples 'valid:regions:get' do
-  describe 'get region', :as_cassette do
+  describe 'get region', :as_cassette, cassette_group: 'regions;get' do
     before { get("/endpoints/#{@endpoint}/regions/#{@app_all[:region]}", request_headers) }
     include_examples 'region entity schema'
     include_examples 'a valid GET request'

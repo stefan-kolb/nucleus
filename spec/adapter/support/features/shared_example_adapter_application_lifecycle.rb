@@ -1,72 +1,78 @@
 shared_examples 'valid:applications:lifecycle' do
-  describe 'lifecycle operation' do
+  describe 'lifecycle operations', cassette_group: 'application-actions;lifecycle' do
     [:@app_all, :@app_min].each do |app_name|
-      describe "start succeeds for #{app_name} if currently stopped", :as_cassette do
-        before do
-          post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/start",
-               {}, request_headers)
+      describe 'start' do
+        describe "succeeds for #{app_name} if currently stopped", :as_cassette do
+          before do
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/start",
+                 {}, request_headers)
+          end
+          it 'changes state to running within timeout period' do
+            wait(40.seconds).for do
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
+                  request_headers)[:state]
+            end.to eq('running')
+          end
         end
-        it 'changes state to running within timeout period' do
-          wait(40.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                request_headers)[:state]
-          end.to eq('running')
-        end
-      end
-      describe "start succeeds for #{app_name} if already running", :as_cassette do
-        before do
-          post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/start",
-               {}, request_headers)
-        end
-        it 'changes state to running within timeout period' do
-          expect(get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                     request_headers)[:state]).to eql('running')
-        end
-      end
-      describe "stop succeeds for #{app_name} if currently running", :as_cassette do
-        before do
-          post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/stop",
-               {}, request_headers)
-        end
-        it 'changes state to stopped within timeout period' do
-          wait(20.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                request_headers)[:state]
-          end.to eq('stopped')
+        describe "succeeds for #{app_name} if already running", :as_cassette do
+          before do
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/start",
+                 {}, request_headers)
+          end
+          it 'changes state to running within timeout period' do
+            expect(get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
+                       request_headers)[:state]).to eql('running')
+          end
         end
       end
-      describe "stop succeeds for #{app_name} if already stopped", :as_cassette do
-        before do
-          post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/stop",
-               {}, request_headers)
+      describe 'stop' do
+        describe "succeeds for #{app_name} if currently running", :as_cassette do
+          before do
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/stop",
+                 {}, request_headers)
+          end
+          it 'changes state to stopped within timeout period' do
+            wait(20.seconds).for do
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
+                  request_headers)[:state]
+            end.to eq('stopped')
+          end
         end
-        it 'changes state to stopped within timeout period' do
-          expect(get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                     request_headers)[:state]).to eql('stopped')
+        describe "succeeds for #{app_name} if already stopped", :as_cassette do
+          before do
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/stop",
+                 {}, request_headers)
+          end
+          it 'changes state to stopped within timeout period' do
+            expect(get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
+                       request_headers)[:state]).to eql('stopped')
+          end
         end
       end
-      describe "restart succeeds for #{app_name} if currently stopped", :as_cassette do
-        before do
-          post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/restart",
-               {}, request_headers)
+      describe 'restart' do
+        describe "succeeds for #{app_name} if currently stopped", :as_cassette do
+          before do
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/restart",
+                 {}, request_headers)
+          end
+          it 'changes state to running within timeout period' do
+            wait(20.seconds).for do
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
+                  request_headers)[:state]
+            end.to eq('running')
+          end
         end
-        it 'changes state to running within timeout period' do
-          wait(20.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                request_headers)[:state]
-          end.to eq('running')
-        end
-      end
-      describe "restart succeeds for #{app_name} if currently running", :as_cassette do
-        before do
-          post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/restart",
-               {}, request_headers)
-        end
-        it 'changes state to running within timeout period' do
-          wait(20.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                request_headers)[:state]
-          end.to eq('running')
+        describe "succeeds for #{app_name} if currently running", :as_cassette do
+          before do
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/restart",
+                 {}, request_headers)
+          end
+          it 'changes state to running within timeout period' do
+            wait(20.seconds).for do
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
+                  request_headers)[:state]
+            end.to eq('running')
+          end
         end
       end
     end
@@ -74,7 +80,7 @@ shared_examples 'valid:applications:lifecycle' do
 end
 
 shared_examples 'valid:applications:lifecycle:422' do
-  describe 'lifecycle operations before deployment' do
+  describe 'lifecycle operations before deployment', cassette_group: 'application-actions;lifecycle' do
     describe 'fail because there is no deployment' do
       describe 'start' do
         describe 'fails', :as_cassette do
