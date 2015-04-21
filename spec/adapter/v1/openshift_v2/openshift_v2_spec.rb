@@ -15,13 +15,13 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
     @unsupported = ['with valid credentials is compliant and application update',
                     'with valid credentials is compliant and log',
                     # Openshift V2 does not quite use plans, therefore change is not yet implemented
-                    'with valid credentials is compliant and application services plans change']
+                    'with valid credentials is compliant and application services change']
     # add mongodb with the default plan
     @service = { id: 'mongodb-2.4', plan_id: 'default' }
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)
-      skip('This feature is currently not supported by Openshift V2 - 501')
+      skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Openshift V2")
     end
     # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)

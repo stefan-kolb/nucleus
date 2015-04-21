@@ -16,7 +16,7 @@ describe Paasal::Adapters::V1::CloudControl do
                     # scale-out should work, but the test would require a valid billing address
                     'with valid credentials is compliant and scaling succeeds with scale-out',
                     # cloudControl does support the change, but we don't want to change into a payed plan just for tests
-                    'with valid credentials is compliant and application services plans change succeeds']
+                    'with valid credentials is compliant and application services change succeeds']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
     # we must use these stupid names given that cloud control prohibits special characters and (!)
@@ -32,7 +32,7 @@ describe Paasal::Adapters::V1::CloudControl do
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)
-      skip('This feature is currently not supported by cloudControl - 501')
+      skip("501 - '#{example.metadata[:full_description]}' is currently not supported by cloudControl")
     end
     # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)

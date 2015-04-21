@@ -4,7 +4,7 @@ describe Paasal::Adapters::V1::Heroku do
   before :all do
     # skip these example groups / tests for this adapter
     # Heroku does support the change, but we do not want to change into a payed plan just for testing
-    @unsupported = ['with valid credentials is compliant and application services plans change succeeds']
+    @unsupported = ['with valid credentials is compliant and application services change succeeds']
     @endpoint = 'heroku'
     @api_version = 'v1'
     @app_min = { original_name: 'paasal-test-app-min-properties',
@@ -26,7 +26,7 @@ describe Paasal::Adapters::V1::Heroku do
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)
-      skip('This feature is currently not supported by Heroku - 501')
+      skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Heroku")
     end
     # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)
