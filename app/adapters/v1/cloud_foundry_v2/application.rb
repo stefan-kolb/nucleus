@@ -66,8 +66,8 @@ module Paasal
             remove_all_services(app_guid)
             # then delete the default route (otherwise it would remain as orphaned route)
             routes = get("/v2/apps/#{app_guid}/routes?q=host:#{app_guid}&inline-relations-depth=1").body[:resources]
-            route = routes.find { |route| route[:entity][:domain][:entity][:name] == @endpoint_app_domain }
-            delete("/v2/routes/#{route[:metadata][:guid]}") if route
+            default_route = routes.find { |route| route[:entity][:domain][:entity][:name] == @endpoint_app_domain }
+            delete("/v2/routes/#{default_route[:metadata][:guid]}") if default_route
             # and finally delete the app
             delete("/v2/apps/#{app_guid}")
           end
