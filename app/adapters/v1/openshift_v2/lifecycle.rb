@@ -7,12 +7,7 @@ module Paasal
           def start(application_id)
             # if app is only deployed, we must first restore the latest deployment
             id = app_id_by_name(application_id)
-            state = application_state(get("/application/#{id}").body[:data])
-            if state == API::Models::Application::States::DEPLOYED
-              activate(id, latest_deployment(id)[:id])
-            elsif state == API::Models::Application::States::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
-            end
+            validate_start_requirements(id, 'start')
             to_paasal_app(send_event(id, 'start'))
           end
 
@@ -28,16 +23,20 @@ module Paasal
           # @see Stub#restart
           def restart(application_id)
             id = app_id_by_name(application_id)
-            state = application_state(get("/application/#{id}").body[:data])
-            if state == API::Models::Application::States::DEPLOYED
-              activate(id, latest_deployment(id)[:id])
-            elsif state == API::Models::Application::States::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be restarted'
-            end
+            validate_start_requirements(id, 'restart')
             to_paasal_app(send_event(id, 'restart'))
           end
 
           private
+
+          def validate_start_requirements(id, action)
+            state = application_state(get("/application/#{id}").body[:data])
+            if state == API::Models::Application::States::DEPLOYED
+              activate(id, latest_deployment(id)[:id])
+            elsif state == API::Models::Application::States::CREATED
+              fail Errors::SemanticAdapterRequestError, "Application must be deployed before it can be #{action}ed"
+            end
+          end
 
           def deployed?(application_id)
             app = get("/application/#{app_id_by_name(application_id)}").body[:data]
