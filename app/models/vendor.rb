@@ -8,13 +8,11 @@ module Paasal
   # @author Cedric Roeck (cedric.roeck@gmail.com)
   # @since 0.1.0
   class Vendor < Paasal::AbstractModel
-    attr_accessor :name             # text
     attr_accessor :providers        # seq
 
     def initialize(hash = nil)
+      super(hash)
       return if hash.nil?
-      @name = hash['name']
-      @id = hash['id']
       @providers = []
 
       return unless hash.key?('providers')

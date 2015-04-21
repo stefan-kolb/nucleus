@@ -6,13 +6,11 @@ module Paasal
     include Kwalify::Util::HashLike
 
     attr_accessor :vendor
-    attr_accessor :name             # text
     attr_accessor :endpoints        # seq
 
     def initialize(hash = nil)
+      super(hash)
       return if hash.nil?
-      @name = hash['name']
-      @id = hash['id']
       @endpoints = []
 
       return unless hash.key?('endpoints')

@@ -6,8 +6,15 @@ module Paasal
     include Kwalify::Util::HashLike
 
     attr_accessor :id
+    attr_accessor :name
     attr_accessor :created_at
     attr_accessor :updated_at
+
+    def initialize(hash = nil)
+      return if hash.nil?
+      @name = hash['name']
+      @id = hash['id']
+    end
 
     def to_s
       return name if self.respond_to?('name')
