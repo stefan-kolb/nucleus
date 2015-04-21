@@ -1,4 +1,5 @@
 import 'tasks/compatibility.rake'
+import 'tasks/evaluation.rake'
 import 'spec/test_suites.rake'
 
 require 'rake'
