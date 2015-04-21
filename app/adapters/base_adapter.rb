@@ -91,6 +91,20 @@ module Paasal
         key
       end
 
+      # Fail with a {Errors::PlatformSpecificSemanticError} error and format the error message to include the values
+      # that are passed in the params. Requires the adapter to provide a +semantic_error_messages+ method, which shall
+      # return a Hash with the platform specific semantic errors.
+      # @param [Symbol] error_name error that shall be returned
+      # @param [Array<String>] params values that are to be included in the error message template
+      # @raise [Errors::PlatformSpecificSemanticError]
+      def fail_with(error_name, params = nil)
+        unless respond_to?(:semantic_error_messages)
+          fail StandardError 'Invalid adapter implementation, no :semantic_error_messages method provided'
+        end
+        error = semantic_error_messages[error_name]
+        fail Errors::PlatformSpecificSemanticError.new(error[:message] % params, error[:code])
+      end
+
       # TODO: wrapping could be used when the adapters are used as ruby gem, not in the RESTful API
       # def self.method_added(name)
       #   # TODO: only wrap if method belongs to the Stub
