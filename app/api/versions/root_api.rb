@@ -71,7 +71,7 @@ module Paasal
       get '/' do
         api_versions = []
         # build entity compliant Hash
-        configatron.api.versions.each do |api_version|
+        paasal_config.api.versions.each do |api_version|
           api_versions << { name: api_version }
         end
 

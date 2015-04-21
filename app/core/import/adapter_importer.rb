@@ -84,7 +84,7 @@ module Paasal
     end
 
     def write(dao, object)
-      return unless !dao.key?(object.id) || (configatron.db.key?(:override) && configatron.db.override)
+      return unless !dao.key?(object.id) || (paasal_config.db.key?(:override) && paasal_config.db.override)
       dao.set object
     end
   end

@@ -62,11 +62,11 @@ end
 require_relative '../scripts/load_config'
 # disable logging
 # TODO: disable logging via proper config option
-configatron.logging.level = Logger::Severity::FATAL
+paasal_config.logging.level = Logger::Severity::FATAL
 # force tmp database
-configatron.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.paasal.test.store")
-configatron.db.delete_on_shutdown = true
-configatron.db.override = true
+paasal_config.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.paasal.test.store")
+paasal_config.db.delete_on_shutdown = true
+paasal_config.db.override = true
 
 # require our app
 require_relative '../scripts/load_app'

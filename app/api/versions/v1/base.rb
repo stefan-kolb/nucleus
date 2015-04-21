@@ -45,7 +45,7 @@ module Paasal
         end
 
         add_swagger_documentation api_version: version, mount_path: '/schema',
-                                  hide_documentation_path: true, info: configatron.api,
+                                  hide_documentation_path: true, info: paasal_config.api,
                                   specific_api_documentation: { desc: 'Platform as a Service abstraction layer '\
                                   'API swagger-compatible endpoint documentation.' }
       end

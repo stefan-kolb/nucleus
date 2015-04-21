@@ -1,7 +1,7 @@
 module Paasal
   module TestDataGenerator
     def self.clean
-      configatron.api.versions.each do |api_version|
+      paasal_config.api.versions.each do |api_version|
         Paasal::DB::AdapterDao.instance(api_version).clear
         Paasal::DB::EndpointDao.instance(api_version).clear
         Paasal::DB::ProviderDao.instance(api_version).clear

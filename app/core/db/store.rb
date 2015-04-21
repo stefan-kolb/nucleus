@@ -105,11 +105,11 @@ module Paasal
       private
 
       def path
-        File.join(configatron.db.path.chomp('/').chomp('\\'), @api_version)
+        File.join(paasal_config.db.path.chomp('/').chomp('\\'), @api_version)
       end
 
       def chosen_db_backend
-        return configatron.db.backend if configatron.db.key?(:backend)
+        return paasal_config.db.backend if paasal_config.db.key?(:backend)
         return :LMDB if OS.windows?
         :Daybreak
       end
@@ -122,8 +122,8 @@ module Paasal
                "Invalid database backend '#{db_backend}'. Please choose one of: #{allowed_backends.keys}"
         end
 
-        if configatron.db.key?(:backend_options)
-          backend_options = allowed_backends[db_backend].merge(configatron.db.backend_options)
+        if paasal_config.db.key?(:backend_options)
+          backend_options = allowed_backends[db_backend].merge(paasal_config.db.backend_options)
         else
           backend_options = allowed_backends[db_backend]
         end

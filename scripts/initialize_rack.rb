@@ -9,7 +9,7 @@ module Paasal
         #########################
 
         # Prepare logging directory
-        log_dir = configatron.logging.path
+        log_dir = paasal_config.logging.path
         FileUtils.mkdir_p(log_dir)
         # Setup request logging for the past 7 days
         logger = Logger.new(::File.join(log_dir, 'requests.log'), 'daily', 7)

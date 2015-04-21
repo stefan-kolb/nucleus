@@ -3,8 +3,10 @@ at_exit do
   puts '', '-----------------------------------------------', ''
   puts 'Cleaning up...'
 
-  if configatron.db.key?(:delete_on_shutdown) && configatron.db.delete_on_shutdown
-    FileUtils.rm_rf(configatron.db.path) if File.exist?(configatron.db.path) && File.directory?(configatron.db.path)
-    puts '... DB store successfully deleted' unless File.exist?(configatron.db.path)
+  if !paasal_config.db.key?(:delete_on_shutdown) || paasal_config.db.delete_on_shutdown
+    if File.exist?(paasal_config.db.path) && File.directory?(paasal_config.db.path)
+      FileUtils.rm_rf(paasal_config.db.path)
+    end
+    puts '... DB store successfully deleted' unless File.exist?(paasal_config.db.path)
   end
 end

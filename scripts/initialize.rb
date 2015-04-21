@@ -5,12 +5,12 @@ require_relative 'shutdown.rb'
 
 begin
   require_relative 'initialize_core.rb'
-  log.info "DB store assigned to #{configatron.db.path}"
+  log.info "DB store assigned to #{paasal_config.db.path}"
 
   # load vendors and put them into the db stores
   Paasal::AdapterImporter.new.import
 
-  configatron.api.versions.each do |api_version|
+  paasal_config.api.versions.each do |api_version|
     puts '', "Bootstraping DAOs for API #{api_version}"
     # Bootstrap DAOs for each API version
     Paasal::DB::VendorDao.instance api_version

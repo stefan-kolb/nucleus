@@ -1,11 +1,11 @@
 # set the temporary db file if is has not been specified via the config
-unless configatron.db.key?(:path)
+unless paasal_config.db.key?(:path)
   puts 'No custom store specified, generating temporary store filename'
-  configatron.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.store"
+  paasal_config.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.store"
 end
 
 # Check the API versions once and make them available via configatron
-configatron.api.versions = Paasal::ApiDetector.api_versions
+paasal_config.api.versions = Paasal::ApiDetector.api_versions
 
 # Add authorization strategy to grape and replace default http_basic
 Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAuth, ->(options) { [options[:realm]] })
@@ -13,7 +13,7 @@ Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAu
 # Now setup the SSH key that is required for Git deployment by (at least) Openshift
 # first, load private key
 keyfile = File.join('bin', 'paasal.pem')
-configatron.public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
+paasal_config.public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
 
 if OS.unix?
   # file must not be accessible by others, otherwise usage will be forbidden by git
@@ -28,7 +28,7 @@ end
 Git.configure { |config| config.git_ssh = tmp_ssh_script }
 
 # Lock the configuration, so it can't be manipulated
-configatron.lock!
+paasal_config.lock!
 
 puts "Environment: #{ENV['RACK_ENV']}"
 puts 'Configuration locked!'
