@@ -130,7 +130,7 @@ shared_examples 'valid:applications:services:get' do
 end
 
 shared_examples 'valid:applications:services:change' do
-  describe 'application services plans change', cassette_group: 'application-services;change' do
+  describe 'application services change', cassette_group: 'application-services;change' do
     describe 'fails' do
       describe 'with non-existent plan', :as_cassette do
         before do
@@ -166,7 +166,7 @@ shared_examples 'valid:applications:services:change' do
 end
 
 shared_examples 'valid:applications:services:remove' do
-  describe 'application services plans remove', cassette_group: 'application-services;remove' do
+  describe 'application services remove', cassette_group: 'application-services;remove' do
     describe 'fails' do
       describe 'with non-existent service', :as_cassette do
         before do

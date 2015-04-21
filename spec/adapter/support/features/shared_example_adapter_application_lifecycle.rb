@@ -52,8 +52,8 @@ shared_examples 'valid:applications:lifecycle' do
       describe 'restart' do
         describe "succeeds for #{app_name} if currently stopped", :as_cassette do
           before do
-            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/restart",
-                 {}, request_headers)
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/"\
+              'actions/restart', {}, request_headers)
           end
           it 'changes state to running within timeout period' do
             wait(20.seconds).for do
@@ -64,8 +64,8 @@ shared_examples 'valid:applications:lifecycle' do
         end
         describe "succeeds for #{app_name} if currently running", :as_cassette do
           before do
-            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/actions/restart",
-                 {}, request_headers)
+            post("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}/"\
+              'actions/restart', {}, request_headers)
           end
           it 'changes state to running within timeout period' do
             wait(20.seconds).for do

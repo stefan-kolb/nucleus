@@ -54,6 +54,13 @@ shared_examples 'compliant adapter with valid credentials' do
     include_examples 'valid:applications:domains:get'
     include_examples 'valid:applications:domains:list'
 
+    # application services
+    include_examples 'valid:applications:services:list:empty'
+    include_examples 'valid:applications:services:add'
+    include_examples 'valid:applications:services:list'
+    include_examples 'valid:applications:services:get'
+    include_examples 'valid:applications:services:change'
+
     # retrieve an empty log, must be done before deployment (!)
     include_examples 'valid:applications:logs:get:empty'
 
@@ -66,15 +73,6 @@ shared_examples 'compliant adapter with valid credentials' do
     # access the application at its URL
     include_examples 'valid:applications:web'
 
-    # application services
-    include_examples 'valid:applications:services:list:empty'
-    include_examples 'valid:applications:services:add'
-    include_examples 'valid:applications:services:list'
-    include_examples 'valid:applications:services:get'
-    include_examples 'valid:applications:services:change'
-    # immediately remove the service, otherwise Openshift does not have enough gears for the scaling test
-    include_examples 'valid:applications:services:remove'
-
     # list, get and download log files
     include_examples 'valid:applications:logs:list'
     include_examples 'valid:applications:logs:get'
@@ -82,12 +80,16 @@ shared_examples 'compliant adapter with valid credentials' do
     include_examples 'valid:applications:logs:download:all'
     include_examples 'valid:applications:logs:tail'
 
-    # scaling operations
-    include_examples 'valid:applications:scale'
-
     # download the deployed container bits
     include_examples 'valid:applications:data:download'
     include_examples 'valid:applications:data:rebuild'
+
+    # Services must be removed after (!) log tests, Heroku clears the logs when services are added / removed
+    # now remove the service before scaling, otherwise Openshift does not have enough gears for the scaling test
+    include_examples 'valid:applications:services:remove'
+
+    # scaling operations
+    include_examples 'valid:applications:scale'
 
     # delete operations
     include_examples 'valid:applications:domains:delete'
