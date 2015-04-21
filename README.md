@@ -115,21 +115,46 @@ require 'paasal'
 
 #### Communicate with an endpoint
 
-** THIS IS ONLY A SKETCH HOW IT SHALL WORK WHEN WE FINISHED THE IMPLEMENTATION**
+1) Configuration [optional]
+Adapt the configuration to your needs and adjust the values via `paasal_config`.
+The configuration *must* be changed before initializing the `AdapterResolver`, otherwise the configuration is locked and can't be changed anymore.
+
+For more information have a look at the [configuration](#configuration) section.
+
+2) Show all currently available API versions:
+```ruby
+Paasal::ApiDetector.api_versions
+```
+
+3) Instantiate the AdapterResolver for the desired API version:
+```ruby
+resolver = Paasal::AdapterResolver.new('v1')
+```
+
+4) Show all adapters that are supported by PaaSal on this specific API version:
+```ruby
+resolver.adapters
+
+{"cloudcontrol"=>Paasal::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Paasal::Adapters::V1::CloudFoundryV2, "heroku"=>Paasal::Adapters::V1::Heroku, "openshift_v2"=>Paasal::Adapters::V1::OpenshiftV2}
+```
+
+5) Create the adapter that you with to use, here we load the cloudControl adapter:
+```ruby
+adapter = resolver.load('cloudcontrol', 'api.cloudcontrol.com', 'your_username', 'your_password')
+```
+
+6) Start using the platform and invoke commands:
+```ruby
+# Show available regions
+adapter.regions
+# Create our first application
+app = adapter.create_application(region: 'default', name: 'myusersfirstapplication', runtimes: ['nodejs'])
+# And delete the application again ;-)
+adapter.delete_application(app[:id])
+```
 
 TODOs:
 - Simplify this approach. User does not have to know about app_domain. Find a way to utilize the config here.
-- Provide authentication and then wrap calls as from within the API
-
-
-1) Acquire from manager with provided authentication, utilize config (import only once)
-2) Patch adapter, wrap each class with authentication repetition
-
-First, we need to acquire an adapter instance. Choose between one of the following classes:
-`Paasal::Adapters::V1::CloudControl`,
-`Paasal::Adapters::V1::CloudFoundryV2`,
-`Paasal::Adapters::V1::Heroku`,
-`Paasal::Adapters::V1::OpenshiftV2`
 
 Initialize the adapter with the parameters:
 
@@ -140,14 +165,7 @@ Initialize the adapter with the parameters:
 adapter = Paasal::Adapters::V1::CloudFoundryV2.new(endpoint_url, endpoint_app_domain, check_certificates)
 ```
 
-Fire and forget, or: Invoke your actions
-
-```ruby
-# get information about an application
-adapter.application(application_id)
-```
-
-Check the **documentation** for a complete list of the supported actions.
+Check the **documentation** of the `Paasal::Adapters::V1::Stub` adapter (or any other API version) for a complete list of the supported actions.
 Refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands.
 
 ### Use the API

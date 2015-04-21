@@ -1,19 +1,15 @@
 require 'spec_helper'
 
-describe Paasal::AuthHelper do
+describe Paasal::Adapters::AuthenticationRetryWrapper do
   let!(:adapter) { double('adapter') }
   let!(:auth_client) { double('auth_client') }
   let!(:calculator) { double('calculator') }
-  let!(:helper) { Class.new.extend(Paasal::AuthHelper) }
   let!(:user) { 'my fictionary user' }
   let!(:pass) { 'my fictionary password' }
+  let!(:fake_env) { { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{user}:#{pass}"].pack('m*').gsub(/\n/, '') } }
   before do
-    helper.instance_variable_set :@env, 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{user}:#{pass}"].pack('m*').gsub(/\n/, '')
-    allow(helper).to receive(:adapter) { adapter }
-
     cache_key = 'a unique cache key!'
     cache_dao = double(Paasal::DB::CacheDao)
-    allow_any_instance_of(Paasal::AuthHelper).to receive(:request_cache) { cache_dao }
     allow(cache_dao).to receive(:get) do |key|
       key.end_with?('adapter') ? adapter : cache_key
     end
@@ -38,7 +34,7 @@ describe Paasal::AuthHelper do
         it 'response is returned in repeated call' do
           expect(auth_client).to receive(:refresh).once
           expect(calculator).to receive(:calc).exactly(2).times
-          helper.with_authentication { calculator.calc }
+          Paasal::Adapters::AuthenticationRetryWrapper.with_authentication(adapter, fake_env) { calculator.calc }
         end
       end
       context 'and refresh failed' do
@@ -51,15 +47,16 @@ describe Paasal::AuthHelper do
           it 'response is returned in repeated call after the authentication' do
             expect(auth_client).to receive(:authenticate).once
             expect(calculator).to receive(:calc).exactly(2).times
-            helper.with_authentication { calculator.calc }
+            Paasal::Adapters::AuthenticationRetryWrapper.with_authentication(adapter, fake_env) { calculator.calc }
           end
         end
         context 'and authentication failed' do
           it 'finally fails' do
             expect(auth_client).to receive(:authenticate).once.and_raise(Paasal::Errors::AuthenticationError, 'error')
             expect(calculator).to receive(:calc).exactly(1).times
-            expect { helper.with_authentication { calculator.calc } }
-              .to raise_error(Paasal::Errors::AuthenticationError)
+            expect do
+              Paasal::Adapters::AuthenticationRetryWrapper.with_authentication(adapter, fake_env) { calculator.calc }
+            end.to raise_error(Paasal::Errors::AuthenticationError)
           end
         end
       end
@@ -69,7 +66,7 @@ describe Paasal::AuthHelper do
   describe '#re_authenticate' do
     it 'calls authentication on the adapter' do
       expect(auth_client).to receive(:authenticate).once.with(user, pass)
-      helper.re_authenticate
+      Paasal::Adapters::AuthenticationRetryWrapper.re_authenticate(adapter, fake_env)
     end
   end
 end
