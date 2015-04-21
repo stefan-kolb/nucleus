@@ -11,10 +11,7 @@ module Paasal
       # unprocessed response
       # @raise [Paasal::Errors::ApiError] if the call failed and did not return the expected code(s)
       def head(path, params = {})
-        # idempotent: true, retry_limit: 2
-        params[:expects] = [200] unless params.key? :expects
-        params[:method] = :head
-        execute_request(path, params, params.delete(:native_call) { false })
+        execute_request(:head, [200], path, params, params.delete(:native_call) { false })
       end
 
       # Executes a GET request to the given URL.
@@ -27,10 +24,7 @@ module Paasal
       # unprocessed response
       # @raise [Paasal::Errors::ApiError] if the call failed and did not return the expected code(s)
       def get(path, params = {})
-        # idempotent: true, retry_limit: 2
-        params[:expects] = [200] unless params.key? :expects
-        params[:method] = :get
-        execute_request(path, params, params.delete(:native_call) { false })
+        execute_request(:get, [200], path, params, params.delete(:native_call) { false })
       end
 
       # Executes a POST request to the given URL.
@@ -44,9 +38,7 @@ module Paasal
       # unprocessed response
       # @raise [Paasal::Errors::ApiError] if the call failed and did not return the expected code(s)
       def post(path, params = {})
-        params[:expects] = [200, 201] unless params.key? :expects
-        params[:method] = :post
-        execute_request(path, params, params.delete(:native_call) { false })
+        execute_request(:post, [200, 201], path, params, params.delete(:native_call) { false })
       end
 
       # Executes a PATCH request to the given URL.
@@ -60,9 +52,7 @@ module Paasal
       # unprocessed response
       # @raise [Paasal::Errors::ApiError] if the call failed and did not return the expected code(s)
       def patch(path, params = {})
-        params[:expects] = [200, 201] unless params.key? :expects
-        params[:method] = :patch
-        execute_request(path, params, params.delete(:native_call) { false })
+        execute_request(:patch, [200, 201], path, params, params.delete(:native_call) { false })
       end
 
       # Executes a PUT request to the given URL.
@@ -76,9 +66,7 @@ module Paasal
       # unprocessed response
       # @raise [Paasal::Errors::ApiError] if the call failed and did not return the expected code(s)
       def put(path, params = {})
-        params[:expects] = [200, 201] unless params.key? :expects
-        params[:method] = :put
-        execute_request(path, params, params.delete(:native_call) { false })
+        execute_request(:put, [200, 201], path, params, params.delete(:native_call) { false })
       end
 
       # Executes a DELETE request to the given URL.
@@ -91,14 +79,15 @@ module Paasal
       # unprocessed response
       # @raise [Paasal::Errors::ApiError] if the call failed and did not return the expected code(s)
       def delete(path, params = {})
-        params[:expects] = [200, 204] unless params.key? :expects
-        params[:method] = :delete
-        execute_request(path, params, params.delete(:native_call) { false })
+        execute_request(:delete, [200, 204], path, params, params.delete(:native_call) { false })
       end
 
       private
 
-      def execute_request(path, params, native_call = false)
+      def execute_request(method, default_expect, path, params, native_call = false)
+        params[:expects] = default_expect unless params.key? :expects
+        params[:method] = method
+
         url = Regexp::PERFECT_URL_PATTERN =~ path ? path : to_url(path)
         response = Excon.new(url, excon_connection_params(params)).request(add_common_request_params(params))
         # we never want the JSON string, but always the hash representation
