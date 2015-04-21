@@ -94,7 +94,6 @@ module Paasal
           end
 
           def raw_installed_service(application_id, service_id)
-            p "Load raw for #{application_id} and #{service_id}"
             # here we probably receive the ID of the service, not the service assignment ID itself
             installed = get("/apps/#{application_id}/addons/#{service_id}", expects: [200, 404])
             if installed.status == 404
@@ -123,7 +122,6 @@ module Paasal
           end
 
           def to_paasal_installed_service(installed_service)
-            p "Load installed service data for: #{installed_service}"
             service = service(installed_service[:addon_service][:id])
             # get all variables and reject all that do not belong to the addon
             unless installed_service[:config_vars].nil? && installed_service[:config_vars].empty?
@@ -161,51 +159,6 @@ module Paasal
             @free_plans[service_id] = plans.any? { |plan| plan[:price][:cents] == 0 }
             @free_plans[service_id]
           end
-
-          # # @see Stub#services
-          # def services
-          #
-          # end
-          #
-          # # @see Stub#service
-          # def service(service_id)
-          #
-          # end
-          #
-          # # @see Stub#service_plans
-          # def service_plans
-          #
-          # end
-          #
-          # # @see Stub#service_plan
-          # def service_plan(service_id, plan_id)
-          #
-          # end
-          #
-          # # @see Stub#installed_services
-          # def installed_services(application_id)
-          #
-          # end
-          #
-          # # @see Stub#installed_service
-          # def installed_service(application_id, service_id)
-          #
-          # end
-          #
-          # # @see Stub#add_service
-          # def add_service(application_id, service_id)
-          #
-          # end
-          #
-          # # @see Stub#change_service
-          # def change_service(application_id, service_id, service_entity)
-          #
-          # end
-          #
-          # # @see Stub#remove_service
-          # def remove_service(application_id, service_id)
-          #
-          # end
         end
       end
     end
