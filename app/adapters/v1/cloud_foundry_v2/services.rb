@@ -54,20 +54,8 @@ module Paasal
           # @see Stub#add_service
           def add_service(application_name_or_id, service_entity, plan_entity)
             app_guid = app_guid(application_name_or_id)
-            begin
-              service_guid = service_guid(service_entity[:id], Errors::SemanticAdapterRequestError)
-              cf_service = get("/v2/services/#{service_guid}").body
-            rescue Errors::AdapterResourceNotFoundError
-              # convert to semantic error with the service being a body, not a path entity
-              raise Errors::SemanticAdapterRequestError,
-                    "Invalid service: Could not find service with the ID '#{service_entity[:id]}'"
-            end
-
-            # must be active and bindable?
-            # currently we focus only on bindable services
-            fail_with(:service_not_bindable, [service_entity[:id]]) unless cf_service[:entity][:bindable]
-            # service must be active, otherwise we can't create the instance
-            fail_with(:service_not_active, [service_entity[:id]]) unless cf_service[:entity][:active]
+            service_guid = service_guid(service_entity[:id], Errors::SemanticAdapterRequestError)
+            cf_service = load_allowed_service(service_entity, service_guid)
 
             # get the plan, throws 422 if the plan could not be found
             plan_guid = plan_guid(service_guid, plan_entity[:id])
@@ -116,6 +104,24 @@ module Paasal
           end
 
           private
+
+          def load_allowed_service(service_entity, service_guid)
+            begin
+              cf_service = get("/v2/services/#{service_guid}").body
+            rescue Errors::AdapterResourceNotFoundError
+              # convert to semantic error with the service being a body, not a path entity
+              raise Errors::SemanticAdapterRequestError,
+                    "Invalid service: Could not find service with the ID '#{service_entity[:id]}'"
+            end
+
+            # must be active and bindable?
+            # currently we focus only on bindable services
+            fail_with(:service_not_bindable, [service_entity[:id]]) unless cf_service[:entity][:bindable]
+            # service must be active, otherwise we can't create the instance
+            fail_with(:service_not_active, [service_entity[:id]]) unless cf_service[:entity][:active]
+            # service seems to be valid, return
+            cf_service
+          end
 
           def remove_all_services(app_guid)
             get("/v2/apps/#{app_guid}/service_bindings").body[:resources].collect do |binding|
@@ -228,14 +234,8 @@ module Paasal
           # </ul>
           def to_paasal_installed_service(cf_binding, cf_service = nil, cf_instance = nil)
             # load if not provided
-            unless cf_instance
-              if cf_binding[:entity].key?(:service_instance)
-                # use if nested property is available
-                cf_instance = cf_binding[:entity][:service_instance]
-              else
-                cf_instance = get("/v2/service_instances/#{cf_binding[:entity][:service_instance_guid]}").body
-              end
-            end
+            cf_instance = load_instance(cf_binding) unless cf_instance
+            cf_service = load_service(cf_instance) unless cf_service
             # load if not provided
             unless cf_service
               cf_service = get("/v2/service_plans/#{cf_instance[:entity][:service_plan_guid]}"\
@@ -250,6 +250,20 @@ module Paasal
             service[:web_url] = cf_instance[:entity][:dashboard_url]
             service[:properties] = binding_properties(cf_binding)
             service
+          end
+
+          def load_instance(cf_binding)
+            if cf_binding[:entity].key?(:service_instance)
+              # use if nested property is available
+              cf_binding[:entity][:service_instance]
+            else
+              get("/v2/service_instances/#{cf_binding[:entity][:service_instance_guid]}").body
+            end
+          end
+
+          def load_service(cf_instance)
+            get("/v2/service_plans/#{cf_instance[:entity][:service_plan_guid]}"\
+              '?inline-relations-depth=1').body[:entity][:service]
           end
 
           def binding_properties(binding)
