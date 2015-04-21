@@ -603,6 +603,12 @@ Currently we do not know of an approach to fetch recent log entries without regi
 Moreover, logs can only be retrieved as long as at least once instance of the CF application is running, hence the application state is `running`.
 If there are no logs that can be retrieved, the log list will be empty and the direct call of a log file will result in an 404 error.
 
+**Services**
+
+- As of now we focus only allow bindable services and create a new instance of the service to add
+- Therefrore services must be `active` and `bindable`
+- Only one instance of the same service can be bound to the application
+
 ### Openshift v2
 
 [Openshift V2](https://openshift.com)
@@ -615,8 +621,16 @@ An application can't be updated, the `name` and `runtimes` can't be changed once
 **Application scaling**
 Applications not created with PaaSal can't be scaled if they were created with `scalable = false`
 
+**Services**
+
+- Services can be added to the application, but scaling (gears, memory allocation, ...) and
+further configuration are not supported as of now.
+- We focus on the `embedded` cartridges and leave out the `standalone` services such as *Jenkins*.
+- With no service plans and therefore nothing to change, the *change service* function is not implemented.
+
 **Performance**
 It ... takes ... ages ... to ... record ...
+Even worse, actions quite often fail with Openshift internal timeouts :(
 
 **Logging**
 Logging is not implemented yet
@@ -760,6 +774,7 @@ The application uses the following subset of error codes:
 422: Unprocessable Entity due to invalid parameters
 500: Internal processing error
 501: Not implemented, adapter does not provide this feature
+503: Destination service temporarily unavailable
 ```
 
 All errors are returned in a common schema:
@@ -811,7 +826,8 @@ bundle exec rake spec:suite:integration
 
 ### Adapter Tests
 
-The adapter tests rely on previously recorded interactions with the provider's endpoints. They do not invoke external HTTP requests.
+The adapter tests rely on previously recorded interactions with the provider's endpoints.
+They do not invoke external HTTP requests.
 When code changes result in different requests, the interactions have to be re-recorded.
 
 **Invoke:**
@@ -819,6 +835,25 @@ When code changes result in different requests, the interactions have to be re-r
 ```
 bundle exec rake spec:suite:adapters
 ```
+
+Each interaction of the adapter tests shall be made only once.
+If there are further tests that all rely on the same request, the described spec shall be marked with `:as_cassette`.
+All subsequent tests in this group now use the initial recording.
+
+```ruby
+describe 'application services list empty', :as_cassette, cassette_group: 'application-services;list' do
+  before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services", request_headers }
+  include_examples 'a valid GET request'
+  include_examples 'installed service list schema'
+  it 'does not contain any services' do
+    expect(json_body[:services]).to eql([])
+  end
+end
+```
+
+The `cassette_group: 'application-services;list'` marker in this example forces the `VCR` cassettes to be placed into a
+directory structure of `application-services/list/{testname}.rec`.
+With this structure we can automatically evaluate the difference in the made requests for a specific operation.
 
 ##### Recording
 
