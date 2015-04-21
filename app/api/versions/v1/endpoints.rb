@@ -24,7 +24,10 @@ module Paasal
           end
           params do
             use :endpoint_id
-            use :update_endpoint
+            requires :endpoint, type: Hash do
+              optional :all, using: Paasal::API::Models::Endpoint.documentation
+                .except(:id, :applications, :created_at, :updated_at, :_links)
+            end
           end
           patch ':endpoint_id' do
             # load the endpoint and verify it is valid

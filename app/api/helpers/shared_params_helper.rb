@@ -31,35 +31,5 @@ module Paasal
     params :service_plan_id do
       requires :service_plan_id, type: String, desc: 'The ID of the service plan'
     end
-
-    params :create_provider do
-      # require the keys of the provider in the json object 'provider'
-      requires :provider, type: Hash do
-        requires :all, using: Paasal::API::Models::Provider.documentation.except(
-          :id, :endpoints, :created_at, :updated_at, :_links)
-      end
-    end
-
-    params :update_provider do
-      requires :provider, type: Hash do
-        optional :all, using: Paasal::API::Models::Provider.documentation
-          .except(:id, :endpoints, :vendor, :created_at, :updated_at, :_links)
-      end
-    end
-
-    params :create_endpoint do
-      # require the keys of the endpoint in the json object 'endpoint'
-      requires :endpoint, type: Hash do
-        requires :all, using: Paasal::API::Models::Endpoint.documentation.except(
-          :id, :applications, :created_at, :updated_at, :_links)
-      end
-    end
-
-    params :update_endpoint do
-      requires :endpoint, type: Hash do
-        optional :all, using: Paasal::API::Models::Endpoint.documentation
-          .except(:id, :applications, :created_at, :updated_at, :_links)
-      end
-    end
   end
 end

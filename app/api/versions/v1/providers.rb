@@ -47,7 +47,11 @@ module Paasal
           end
           params do
             use :provider_id
-            use :create_endpoint
+            # require the keys of the endpoint in the json object 'endpoint'
+            requires :endpoint, type: Hash do
+              requires :all, using: Paasal::API::Models::Endpoint.documentation
+                .except(:id, :applications, :created_at, :updated_at, :_links)
+            end
           end
           post ':provider_id/endpoints' do
             # load the vendor and verify it is valid
@@ -72,7 +76,10 @@ module Paasal
           end
           params do
             use :provider_id
-            use :update_provider
+            requires :provider, type: Hash do
+              optional :all, using: Paasal::API::Models::Provider.documentation
+                .except(:id, :endpoints, :vendor, :created_at, :updated_at, :_links)
+            end
           end
           patch ':provider_id' do
             # load the endpoint and verify it is valid

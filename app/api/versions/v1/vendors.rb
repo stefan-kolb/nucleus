@@ -56,7 +56,10 @@ module Paasal
           end
           params do
             use :vendor_id
-            use :create_provider
+            requires :provider, type: Hash do
+              requires :all, using: Paasal::API::Models::Provider.documentation
+                .except(:id, :endpoints, :created_at, :updated_at, :_links)
+            end
           end
           post ':vendor_id/providers' do
             # load the vendor and verify it is valid
