@@ -1,4 +1,9 @@
 require 'rack'
+require 'rack/body_proxy'
+require 'rack/utils'
+require 'rack/response'
+require 'rack/auth/basic'
+require 'rack/ssl-enforcer'
 
 module Paasal
   module Rack

@@ -1,5 +1,3 @@
-$LOAD_PATH.unshift('lib')
-
 require 'require_all'
 
 # Grape frameworks
@@ -28,13 +26,6 @@ require 'oj'
 
 # SSH keys
 require 'sshkey'
-
-# Rack stuff
-require 'rack/body_proxy'
-require 'rack/utils'
-require 'rack/response'
-require 'rack/auth/basic'
-require 'rack/ssl-enforcer'
 
 # Http clients, ...
 # Currently we need excon AND rest_client, due to excon not supporting multipart requests. See also:
@@ -71,7 +62,7 @@ require_all 'app/models'
 require_all 'app/core'
 
 # rack middleware
-require_all 'app/middleware'
+require_all 'app/api/middleware'
 
 # api
 require 'api/error_responses'

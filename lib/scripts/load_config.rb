@@ -1,10 +1,8 @@
-$LOAD_PATH.unshift('lib')
-
 # configuration
 require 'logger'
 require 'configatron/core'
 require 'ext/kernel'
-require_relative '../config/paasal'
+require 'paasal_config'
 
 # make sure we have a logging directory
 unless paasal_config.logging.key?(:path)

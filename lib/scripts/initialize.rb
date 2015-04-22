@@ -1,17 +1,17 @@
 include Paasal::Logging
 
 # Shutdown hook to cleanup
-require_relative 'shutdown.rb'
+require 'scripts/shutdown'
 
 begin
-  require_relative 'initialize_core.rb'
+  require 'scripts/initialize_core'
   log.info "DB store assigned to #{paasal_config.db.path}"
 
   # load vendors and put them into the db stores
   Paasal::AdapterImporter.new.import
 
   paasal_config.api.versions.each do |api_version|
-    puts '', "Bootstraping DAOs for API #{api_version}"
+    puts '', "Bootstraping DAOs for API #{api_version}..."
     # Bootstrap DAOs for each API version
     Paasal::DB::VendorDao.instance api_version
     Paasal::DB::ProviderDao.instance api_version
