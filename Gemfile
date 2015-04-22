@@ -15,11 +15,6 @@ gem 'grape-swagger', git: 'https://github.com/croeck/grape-swagger.git',
 gem 'rack-stream', git: 'https://github.com/croeck/rack-stream.git',
                    branch: 'lost_connection_callback', require: 'rack-stream'
 
-group :development do
-  # use patched version to prevent freezing
-  gem 'terminal-notifier-guard', git: 'https://github.com/croeck/terminal-notifier-guard.git'
-end
-
 group :test do
   # includes required fix for empty arrays as param value, see issue #122 and pull request #125
   # gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'empty-array-param'
