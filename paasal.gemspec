@@ -47,6 +47,9 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'oj'
   spec.add_runtime_dependency 'protobuf', '~> 3.4'
   spec.add_runtime_dependency 'rack-ssl-enforcer', '>= 0.2.8'
+  # TODO: Should be removed as soon as excon supports multipart requests
+  spec.add_runtime_dependency 'rest-client', '~> 1.8'
+
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'rack-stream', '~> 0.0'
   spec.add_runtime_dependency 'request_store', '~> 1.1'

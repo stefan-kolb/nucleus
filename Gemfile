@@ -3,9 +3,6 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in paasal.gemspec
 gemspec
 
-# TODO: Should be removed as soon as excon supports multipart requests
-gem 'rest-client'
-
 # Patched gems
 gem 'grape', git: 'https://github.com/croeck/grape.git',
              branch: 'paasal', require: 'grape'
