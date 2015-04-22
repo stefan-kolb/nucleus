@@ -59,7 +59,7 @@ else
 end
 
 # load configuration for integration tests
-require_relative '../scripts/load_config'
+require 'scripts/load_config'
 # disable logging
 # TODO: disable logging via proper config option
 paasal_config.logging.level = Logger::Severity::FATAL
@@ -69,12 +69,12 @@ paasal_config.db.delete_on_shutdown = true
 paasal_config.db.override = true
 
 # require our app
-require_relative '../scripts/load_app'
+require 'scripts/load_app'
 
 # initialize db, versions and auth strategy
-require_relative '../scripts/initialize_core'
+require 'scripts/initialize_core'
 
-require_relative 'factories/models.rb'
+require 'spec/factories/models'
 
 # require shared examples
 require_all 'spec/support'

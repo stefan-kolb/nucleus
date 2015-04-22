@@ -1,6 +1,9 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+%w(app config lib).each do |dir|
+  abs_dir = File.expand_path("../#{dir}", __FILE__)
+  $LOAD_PATH.unshift(abs_dir) unless $LOAD_PATH.include?(abs_dir)
+end
+
 require 'paasal/version'
 
 Gem::Specification.new do |spec|

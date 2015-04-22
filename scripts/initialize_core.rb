@@ -30,5 +30,5 @@ Git.configure { |config| config.git_ssh = tmp_ssh_script }
 # Lock the configuration, so it can't be manipulated
 paasal_config.lock!
 
-puts "Environment: #{ENV['RACK_ENV']}"
+puts "Rack environment: #{ENV['RACK_ENV']}" if ENV.key?('RACK_ENV')
 puts 'Configuration locked!'

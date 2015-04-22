@@ -91,7 +91,7 @@ module Paasal
     def setup
       # Initialize the application (import adapters, load DAOs, ...)
       # Once invoked the configuration is locked
-      require './scripts/initialize'
+      require 'scripts/initialize'
 
       # do only once
       return if @adapters
