@@ -1,0 +1,92 @@
+#!/usr/bin/env ruby
+
+# set the process name on ps, does not work on OS X due to system limitations
+$0 = 'PaaSal'
+Process.setproctitle('PaaSal') if Process.respond_to?(:setproctitle)
+
+root_dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+require 'rubygems'
+require 'optparse'
+require 'yaml'
+require 'thin'
+
+PAASAL_CONFIG_LOCATION = File.join(root_dir, 'config', 'paasal_config.rb')
+
+options = { env: 'development', logdir: File.join(root_dir, 'log'), config: File.expand_path(PAASAL_CONFIG_LOCATION) }
+optparse = OptionParser.new do |opts|
+  opts.banner = <<BANNER
+Usage:
+paasal [options]
+
+Options:
+BANNER
+  opts.on('-r', '--hostname HOSTNAME', 'Bind to HOST address (default: localhost)') { |host| ENV['PAASAL_API_HOST'] = host }
+  opts.on('-p', '--port PORT', 'Use PORT (default: 9292)') { |port| ENV['PAASAL_API_PORT'] = port }
+  opts.on('-e', '--env ENV', 'Environment (default: "development")') { |env| options[:env] = env }
+  opts.on('-t', '--timeout TIMEOUT', 'Timeout for single request (default: 30)') { |timeout| ENV['PAASAL_API_TIMEOUT'] = timeout }
+  opts.on('-h', '--help', '') { options[:help] = true }
+  opts.separator <<EOS
+
+Daemon options:
+EOS
+  opts.on('-d', '--daemon', 'Run the server as daemon in the background (default: false)') { options[:daemon] = true }
+  opts.on('-u', '--user USER', 'User to run daemon as. Use with -d (default: "nobody")') { |user| options[:user] = user }
+  opts.on('-g', '--group GROUP', 'Group to run daemon as. Use with -d (default: "nobody")') { |group| options[:group] = group }
+  opts.on('-b', '--pid PID', 'File to store PID (default: tmp/pids/thin.pid)') { |pid| options[:pid] = pid }
+  opts.on('-l', '--logdir LOGDIR', "Directory for log files if run as daemon, defaults to #{options[:logdir]}") { |opt| options[:logdir] = opt }
+  opts.separator <<EOS
+
+SSL options:
+EOS
+  opts.on('-s', '--ssl', 'Enable SSL (default: false, use with: ssl-key and ssl-cert)') { options[:ssl] = true }
+  opts.on('-k', '--ssl-key KEY', 'SSL key file to use (use with: ssl and ssl-cert)') { |key| options[:ssl_key] = key }
+  opts.on('-c', '--ssl-cert CERT', 'SSL certificate file to use (use with: ssl and ssl-key)') { |cert| options[:ssl_cert] = cert }
+end
+
+optparse.parse!
+
+if options[:help]
+ puts optparse
+ exit(0)
+end
+
+if options[:env] == 'production' && ( !options.key?(:ssl) || options[:ssl] == false)
+  puts 'You need to use HTTPS when running a production server. Please specify the SSL key and certificate.'
+  exit(201)
+end
+
+if options[:ssl]
+  unless options[:ssl_key]
+    puts "You need to set SSL key using '-k /path/to/keyfile.key'"
+    exit(101)
+  end
+  unless options[:ssl_cert]
+    puts "You need to set SSL certificate using '-c /path/to/certificate.crt'"
+    exit(102)
+  end
+end
+
+ENV['PAASAL_API_HOST'] = 'localhost' unless ENV['PAASAL_API_HOST']
+ENV['PAASAL_API_PORT'] = '9292' unless ENV['PAASAL_API_PORT']
+
+argv_opts = ARGV.clone
+argv_opts << ['start'] unless Thin::Runner.commands.include?(options[0])
+argv_opts << ['--address', ENV['PAASAL_API_HOST'] ]
+argv_opts << ['--port', ENV['PAASAL_API_PORT'] ]
+argv_opts << ['--rackup', File.join(root_dir, 'config.ru') ]
+argv_opts << ['-e', options[:env] ]
+argv_opts << ['--timeout', ENV['PAASAL_API_TIMEOUT'] || '60']
+argv_opts << ['--ssl', '--ssl-key-file', options[:ssl_key], '--ssl-cert-file', options[:ssl_cert]] if options[:ssl]
+
+if options[:daemon]
+  options[:env] = 'production'
+  argv_opts << [ '--daemonize', '--user', options[:user] || 'nobody', '--tag', 'PaaSal on Thin']
+  argv_opts << [ '--pid', options[:pid]] if options[:pid]
+  argv_opts << [ '--group', options[:group] || 'nobody' ]
+  argv_opts << [ '--log', File.join(options[:logdir], 'paasal_daemon.log')] unless ENV['PAASAL_API_LOG']
+end
+argv_opts.flatten!
+
+thin = Thin::Runner.new(argv_opts)
+thin.run!
