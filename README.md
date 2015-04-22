@@ -6,7 +6,8 @@
 # PaaSal
 
 _PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions of Platform-as-a-Service (PaaS) providers.  
-The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape). It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
+The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
+It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
 PaaSal differs between Vendor, Providers and Endpoints.
 A *Vendor* is the organziation that developed the platform.
@@ -27,7 +28,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
   * [Core constructs](#core-constructs)
     * [Vendors](#vendors)
     * [Providers](#providers)
-      * [List all providers that are registered for a vendor's platform:](#list-all-providers-that-are-registered-for-a-vendor's-platform:)
+      * [List all providers that are registered for a vendor's platform](#list-all-providers-that-are-registered-for-a-vendors-platform)
       * [Register new provider](#register-new-provider)
     * [Endpoints](#endpoints)
       * [List all endpoints that are registered for a provider](#list-all-endpoints-that-are-registered-for-a-provider)
@@ -89,19 +90,19 @@ Additionally, manual tests were executed on Windows and MAC OS X using MRI 2.1.3
 
 #### Require paasal and mark as dependency
 
-Add this line to your application's Gemfile:
+Add a dependency on the PaaSal gem, for instance in your application's Gemfile,
 
 ```ruby
 gem 'paasal'
 ```
 
-And then execute:
+upon which you would update your bundle.
 
 ```shell
-$ bundle
+$ bundle install
 ```
 
-Or install it yourself as:
+Of course you could also install the gem yourself as:
 
 ```shell
 $ gem install paasal
@@ -116,6 +117,7 @@ require 'paasal'
 #### Communicate with an endpoint
 
 1) Configuration [optional]
+
 Adapt the configuration to your needs and adjust the values via `paasal_config`.
 The configuration *must* be changed before initializing the `AdapterResolver`, otherwise the configuration is locked and can't be changed anymore.
 
@@ -181,11 +183,14 @@ The most convinient solution is to use the provided script:
 ./bin/paasal start
 ```
 
-Hower, you can also start the API using another rack compliant server, e.g. [thin](http://code.macournoyer.com/thin/) or rely on your default rack server:
+Hower, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
 
 ```
-rackup
+rackup -s thin config.ru
 ```
+
+Due to limitations in the log tailing process, currently PaaSal requires `thin` and does not work on other Rack servers.
+In theory, it should be possible to make other Rack servers work that also utilize [eventmachine](https://github.com/eventmachine/eventmachine).
 
 #### API endpoints
 
@@ -204,6 +209,8 @@ This list is auto-generated and can be shown via:
 ```
 $ bundle exec rake compatibility:markdown
 ```
+
+**State: April, 22nd 2015**
 
 Method / Vendor|cloudControl|Cloud Foundry v2|Heroku|Openshift v2
 :--|:-:|:-:|:-:|:-:
@@ -235,8 +242,15 @@ log?|true|true|true|false
 logs|true|true|true|false
 log_entries|true|true|true|false
 tail|true|true|true|false
-
-**As of April, 13th 2015**
+services|true|true|true|true
+service|true|true|true|true
+service_plans|true|true|true|true
+service_plan|true|true|true|true
+installed_services|true|true|true|true
+installed_service|true|true|true|true
+add_service|true|true|true|true
+change_service|true|true|true|false
+remove_service|true|true|true|true
 
 ### Core constructs
 
@@ -355,7 +369,7 @@ You can't create, delete or update a vendor at runtime because they represent th
 
 Providers can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
 
-##### List all providers that are registered for a vendor's platform:
+##### List all providers that are registered for a vendor's platform
 
 ```
 GET /api/vendors/cloud_foundry_v2/providers
