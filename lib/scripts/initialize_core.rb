@@ -12,7 +12,7 @@ Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAu
 
 # Now setup the SSH key that is required for Git deployment by (at least) Openshift
 # first, load private key
-keyfile = File.join('bin', 'paasal_git_key.pem')
+keyfile = File.join('config', 'paasal_git_key.pem')
 paasal_config.public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
 
 if OS.unix?
