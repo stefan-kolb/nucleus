@@ -12,8 +12,8 @@ module Paasal
 
     def initialize(hash = nil)
       super(hash)
-      return if hash.nil?
       @providers = []
+      return if hash.nil?
 
       return unless hash.key?('providers')
       @providers = hash['providers'].map! { |e| e.is_a?(Paasal::Provider) ? e : Paasal::Provider.new(e) }
