@@ -9,5 +9,5 @@ at_exit do
     end
     puts '... DB store successfully deleted' unless File.exist?(paasal_config.db.path)
   end
-  puts '... done! Bye :)'
+  puts '... done!', 'Bye :)'
 end
