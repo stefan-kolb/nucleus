@@ -21,7 +21,8 @@ module Paasal
     # @param [String] endpoint_url The URL endpoint at which the platform is running, which will be forced to https://
     # @param [String] username The username that shall be used for authentication
     # @param [String] password The password that shall be used for authentication
-    # @param [Hash<Symbol,?>] options Further options to apply when creating the adapter instance
+    # @param [Hash<Symbol,?>] options Further options to apply when creating the adapter instance.
+    #   If available, the default configuration of the vendor configuration is applied as default.
     # @option options [String] :app_domain The domain where applications of the platform will be made available at.
     #   This option must be set for custom deployments of platforms like Cloud Foundry or Openshift.
     #   For IBM Bluemix this value would be: +eu-gb.mybluemix.net+ or +ng.mybluemix.net+, depending on the endpoint.
@@ -33,6 +34,12 @@ module Paasal
 
       # make sure url uses https
       endpoint_url = secure_url(endpoint_url)
+
+      # load default configuration if available
+      if @configurations.key?(endpoint_url)
+        default_configuration = @configurations[endpoint_url]
+        options = default_configuration.merge(options)
+      end
 
       check_ssl = options.key?(:check_ssl) ? options[:check_ssl] : true
       adapter = @adapters[vendor].new(endpoint_url, options[:app_domain], check_ssl)
@@ -96,12 +103,20 @@ module Paasal
       # do only once
       return if @adapters
       @adapters = {}
+      @configurations = {}
       Paasal::Adapters.configuration_files.each do |adapter_config|
         vendor = Paasal::VendorParser.parse(adapter_config)
         next unless vendor
         adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, @api_version)
         next unless adapter_clazz
         @adapters[vendor.id] = adapter_clazz
+
+        # now load the default configurations for this vendor
+        vendor.providers.each do |provider|
+          provider.endpoints.each do |endpoint|
+            @configurations[secure_url(endpoint.url)] = { check_ssl: !endpoint.trust, app_domain: endpoint.app_domain }
+          end
+        end
       end
     end
   end
