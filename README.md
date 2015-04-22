@@ -192,6 +192,13 @@ rackup -s thin config.ru
 Due to limitations in the log tailing process, currently PaaSal requires `thin` and does not work on other Rack servers.
 In theory, it should be possible to make other Rack servers work that also utilize [eventmachine](https://github.com/eventmachine/eventmachine).
 
+#### HTTPS
+
+We highly encourage you to **only use https connections** when your application is running in production or used outside of your local computer.
+This is due to the fact that all passwords are passed via the HTTP basic authentication, which does not encrypt your data so that any 3rd party could log and identify your credentials.
+
+To enforce this policy, PaaSal will automatically redirect all connections on plain HTTP to HTTPS connections if it is running in production (detected via *RACK_ENV*).
+
 #### API endpoints
 
 **TODO: add more documentation here, especially examples (!)**
