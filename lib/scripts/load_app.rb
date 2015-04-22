@@ -55,11 +55,11 @@ require 'os'
 # require all patched classes
 require_all 'lib/ext'
 
-# models
-require_all 'app/models'
-
 # core
 require_all 'app/core'
+
+# persistence layer (models, stores and DAOs)
+require_all 'app/persistence'
 
 # rack middleware
 require_all 'app/rack_middleware'
