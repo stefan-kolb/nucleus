@@ -17,7 +17,7 @@ module Paasal
         log_dir = paasal_config.logging.path
         FileUtils.mkdir_p(log_dir)
         # Setup request logging for the past 7 days
-        logger = Logger.new(::File.join(log_dir, 'requests.log'), 'daily', 7)
+        logger = Logger.new(File.join(log_dir, 'requests.log'), 'daily', 7)
 
         #########################
         ### Setup Rack Server ###
@@ -36,7 +36,7 @@ module Paasal
         use Paasal::Middleware::AccessLogger, logger
 
         # log error stacktraces to a dedicated file
-        use Paasal::Middleware::ErrorRequestLogger, ::File.join('log/error.log')
+        use Paasal::Middleware::ErrorRequestLogger, File.join(log_dir, 'error.log')
 
         # redirect to the documentation, but do NOT call the index directly
         use ::Rack::Static, urls: { '/docs' => 'redirect.html' }, root: 'public/swagger-ui'
