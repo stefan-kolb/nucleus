@@ -62,7 +62,7 @@ require_all 'app/models'
 require_all 'app/core'
 
 # rack middleware
-require_all 'app/api/middleware'
+require_all 'app/rack_middleware'
 
 # api
 require 'api/error_responses'
