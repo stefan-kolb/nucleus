@@ -9,21 +9,19 @@ require 'paasal/version'
 Gem::Specification.new do |spec|
   spec.name          = 'paasal'
   spec.version       = Paasal::VERSION
-  spec.authors       = ['Cedric Röck']
+  spec.authors       = ['Cedric Roeck']
   spec.email         = ['paasal@roecky.net']
   spec.summary       = 'PaaSal is an abstraction layer for the deployment and management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
-  spec.homepage      = 'https://paasal.github.io/croeck'
+  spec.homepage      = 'https://github.com/croeck/paasal'
   spec.license       = 'TBD'
 
-  # do not include test files, they would tremendously increase the gem size
-  # spec.files = `git ls-files -z`.split("\x0") - Dir.glob('spec/adapter/{application-archives,recordings}/**/*')
-  # spec.test_files = []
+  spec.executables   = 'paasal'
+  spec.require_paths = %w(app config lib)
 
+  # eventually we should not include test files, they would tremendously increase the gem size
   spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
-  spec.require_paths = %w(lib app)
   spec.test_files    = `git ls-files -- spec/*`.split("\n")
 
   spec.add_runtime_dependency 'configatron', '~> 4.5'
@@ -35,8 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'git', '~> 1.2'
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'grape', '~> 0.11', '>= 0.11.1'
-  # TODO: adapt versions once all patches are included in the master branch
-  # spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
+  spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'
   spec.add_runtime_dependency 'kwalify', '~> 0.7'
