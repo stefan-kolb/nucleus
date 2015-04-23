@@ -102,6 +102,6 @@ def response_files_md5(response, downlaod_archive_format, sanitize = true)
   end
   downlaod_md5
 ensure
-  FileUtils.rm(response_file) unless response_file.nil?
+  FileUtils.rm_f(response_file) unless response_file.nil?
   FileUtils.rm_r(dir_download) unless dir_download.nil?
 end
