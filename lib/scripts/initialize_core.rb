@@ -21,7 +21,7 @@ if OS.unix?
   tmp_ssh_script = File.join('bin', 'ssh_trust_hosts_unix')
   FileUtils.chmod('+x', tmp_ssh_script) unless File.executable?(tmp_ssh_script)
 else
-  tmp_ssh_script = File.join('bin', 'ssh_trust_hosts_win.bat')
+  tmp_ssh_script = File.expand_path(File.join('bin', 'ssh_trust_hosts_win.bat'))
 end
 
 # use a custom SSH script
