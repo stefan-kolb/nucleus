@@ -57,6 +57,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
       * [Sensitive data](#sensitive-data)
 * [Schema validation](#schema-validation)
 * [Versioning](#versioning)
+* [Security](#security)
 * [Project structure](#project-structure)
 * [Contributing](#contributing)
   * [Add a new vendor](#add-a-new-vendor)
@@ -1041,12 +1042,26 @@ __each non-backward compatible change of the application must result in an incre
 
 Until the first release (v1), the initial version is: `0.1.0`.
 
+## Security
+
+As described in the [HTTPS](#https) section, we strongly encourage you to only run PaaSal with HTTPS.
+
+### Public key registration
+
+PaaSal uses the SSH key authentication for Git deployments.
+The private (!) key that will be used is located at `config/paasal_git_key.pem`.
+Using the pre-generated key mitigates issues with the key usage / generation on various platforms.
+To prevent abuse we register the key before each command and immediately remove the key once the command has been executed.
+
+**To improve the security of your deployment, you can tell PaaSal to use a custom private key.
+To do so, set the `paasal_config.ssh.custom_key` option in the common configuration to the private key file's location**
+
 ## Project structure
 
 ```
 app # The PaaSal application
 app/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
-app/api # Everything that is directly related to the RESTfulGrape API: entities, embedded helpers and the actual API version's definitions
+app/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
 app/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
 app/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
 app/rack_middleware # Rack middleware layers for authentication, request ids and logging

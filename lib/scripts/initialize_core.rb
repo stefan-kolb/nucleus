@@ -10,22 +10,41 @@ paasal_config.api.versions = Paasal::ApiDetector.api_versions
 # Add authorization strategy to grape and replace default http_basic
 Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAuth, ->(options) { [options[:realm]] })
 
-# Now setup the SSH key that is required for Git deployment by (at least) Openshift
-# first, load private key
-keyfile = File.join('config', 'paasal_git_key.pem')
-paasal_config.public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
-
-if OS.unix?
-  # file must not be accessible by others, otherwise usage will be forbidden by git
-  FileUtils.chmod(0600, keyfile)
-  tmp_ssh_script = File.join('bin', 'ssh_trust_hosts_unix')
-  FileUtils.chmod('+x', tmp_ssh_script) unless File.executable?(tmp_ssh_script)
+# make sure the key is always set
+if paasal_config.ssh.key?(:custom_key) && !paasal_config.ssh.custom_key.nil?
+  puts "Loading custom SSH key #{paasal_config.ssh.custom_key}"
+  # use the custom key file
+  keyfile = paasal_config.ssh.custom_key
 else
-  tmp_ssh_script = File.expand_path(File.join('bin', 'ssh_trust_hosts_win.bat'))
+  puts 'Loading default SSH key'
+  # Now setup the SSH key that is required for Git deployment by (at least) Openshift
+  # first, load private key
+  keyfile = File.join('config', 'paasal_git_key.pem')
 end
 
-# use a custom SSH script
-Git.configure { |config| config.git_ssh = tmp_ssh_script }
+# fail if file does not exist
+unless File.exist?(keyfile)
+  msg = "Could not find the SSH key: '#{keyfile}'"
+  STDERR.puts msg
+  fail Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY_FILE)
+end
+
+if File.read(keyfile).include?('ENCRYPTED')
+  msg = "Provided private key '#{keyfile}' must not be protected with a passphrase."
+  STDERR.puts msg
+  fail Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY_FILE_PROTECTED)
+end
+
+begin
+  public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
+rescue
+  msg = "Invalid SSH key '#{keyfile}', it key must be of type ssh-rsa."
+  STDERR.puts msg
+  raise Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY)
+end
+
+# now setup the SSHHandler
+paasal_config.ssh.handler = Paasal::SSHHandler.new(keyfile, public_key)
 
 # Lock the configuration, so it can't be manipulated
 paasal_config.lock!
