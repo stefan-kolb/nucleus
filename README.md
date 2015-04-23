@@ -111,6 +111,45 @@ We did not verify other alternatives, e.g. PuTTY's `plink.exe`.
 PuTTY is supposed (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options
 that allow to connect any git repository without confirmation of the host's identity.
 
+###### Known issues
+
+**Msgpack**:
+
+Running rake on Windows will fail if `msgpack` is installed in version v0.5.10. The issue is described
+[here](https://github.com/msgpack/msgpack-ruby/issues/38).
+
+You can fix the problem by running:
+
+```shell
+$ gem uninstall msgpack
+$ gem install msgpack --platform=ruby
+```
+
+**Eventmachine**:
+
+Eventmachine sometimes fails with the error `Encryption not available on this event-machine`.
+A fix is available, but requires a few steps:
+*Thanks to Ironfoundry for the solution at [https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c](https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c)
+
+1) Uninstall the gem
+
+```shell
+$ gem uninstall eventmachine
+```
+
+2) Download the OpenSSL package from [http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma](http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma)
+Do NOT use the latest version!
+
+3) Extract it to the desirec location, say XYC
+
+4) Re-install the gem and point to the OpenSSL installation directory (XYC)
+
+```shell
+$ gem install eventmachine -- --with-ssl-dir=XYC
+```
+
+*The above steps are verified to work on Windows 7 with Ruby 1.9.3 and 2.2.0*
+
 ### Use in your application
 
 #### Require paasal and mark as dependency
