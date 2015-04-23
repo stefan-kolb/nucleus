@@ -9,7 +9,9 @@ module Paasal
             account = get('/account').body
             repo_name = "paasal.app.repo.heroku.deploy.#{application_id}.#{SecureRandom.uuid}"
             # clone, extract, push and finally delete cloned repository (sync)
-            GitDeployer.new(repo_name, app[:git_url], account[:email]).deploy(file, file_compression_format)
+            with_ssh_key do
+              GitDeployer.new(repo_name, app[:git_url], account[:email]).deploy(file, file_compression_format)
+            end
 
             return unless application_state(app) == API::Models::Application::States::CREATED
             # instantly remove all initially added dynos to keep the 'deployed' state on first deployment
@@ -26,7 +28,9 @@ module Paasal
             end
             # compress files to archive but exclude the .git repo
             repo_name = "paasal.app.repo.heroku.download.#{application_id}.#{SecureRandom.uuid}"
-            GitDeployer.new(repo_name, app[:git_url], nil).download(compression_format, true)
+            with_ssh_key do
+              GitDeployer.new(repo_name, app[:git_url], nil).download(compression_format, true)
+            end
           end
 
           # @see Stub#rebuild
@@ -39,10 +43,29 @@ module Paasal
             account = get('/account').body
             repo_name = "paasal.app.repo.heroku.rebuild.#{application_id}.#{SecureRandom.uuid}"
 
-            GitDeployer.new(repo_name, app[:git_url], account[:email]).trigger_build
+            with_ssh_key do
+              GitDeployer.new(repo_name, app[:git_url], account[:email]).trigger_build
+            end
 
             # return with updated application
             application(application_id)
+          end
+
+          private
+
+          def with_ssh_key
+            # load ssh key into cloud control
+            matches = paasal_config.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
+            key_id = register_key(matches[1], matches[2])
+            return yield
+          ensure
+            # unload ssh key, allow 404 if the key couldn't be registered at first
+            delete("/account/keys/#{key_id}") if key_id
+          end
+
+          def register_key(type, key)
+            key_name = "paasal-#{SecureRandom.uuid}"
+            post('/account/keys', body: { public_key: [type, key, key_name].join(' ') }).body[:id]
           end
         end
       end
