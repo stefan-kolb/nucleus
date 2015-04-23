@@ -36,17 +36,18 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
   * [Native calls (experimental)](#native-calls-(experimental))
     * [Execute a native API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
     * [Execute a native API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoint's-application)
-* [Configuration](#configuration)
-  * [Vendors, Providers and Endpoints](#vendors,-providers-and-endpoints)
-  * [Application configuration](#application-configuration)
-* [API client(s)](#api-clients)
-  * [Accept Header](#accept-header)
-  * [Language specific clients](#language-specific-clients)
 * [Adapters](#adapters)
   * [Heroku](#heroku)
   * [Cloud Foundry v2](#cloud-foundry-v2)
   * [Openshift v2](#openshift-v2)
   * [cloudControl](#cloudControl)
+* [Configuration](#configuration)
+  * [Vendors, Providers and Endpoints](#vendors,-providers-and-endpoints)
+  * [Application configuration](#application-configuration)
+* [API client(s)](#api-clients)
+  * [Accept Header](#accept-header)
+  * [Error codes](#error-codes)
+  * [Language specific clients](#language-specific-clients)
 * [Tests](#tests)
   * [Unit Tests](#unit-tests)
   * [Integration Tests](#integration-tests)
@@ -79,12 +80,36 @@ Additionally, manual tests were executed on Windows and MAC OS X using MRI 2.1.3
 
 ## Supported Vendors
 
-- Heroku
-- CloudFoundry V2
-- Openshift V2 (except logging)
-- CloudControl
+- [Heroku](https://heroku.com)
+- [Cloud Foundry (API version 2)](http://cloudfoundry.org)
+- [Openshift (version 2, except logging)](https://openshift.com)
+- [cloudControl](https://www.cloudcontrol.com)
+
+More information on the vendors and the associated adapter can be found in the [adapters section](#adapters). 
 
 ## Usage
+
+PaaSal can either be used as standalone application / service, or as part of another ruby application.
+Please make sure to obey the following installation instructions before starting to use PaaSal.
+
+### Installation instructions
+
+1) The following (executable) files must be available on the system's *PATH*:
+
+- git
+- ssh
+
+#### Platform specific notes
+
+Unix systems should run fine out of the box, whereas Windows systems might need some adjustments:
+
+##### Windows
+
+Both files should be located in the `Git/bin` installation directory of [msysGit](https://msysgit.github.io/).
+PaaSal is verified to work with [msysGit](https://msysgit.github.io/) and the included version of `OpenSSH`.
+We did not verify other alternatives, e.g. PuTTY's `plink.exe`.
+PuTTY is supposed (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options
+that allow to connect any git repository without confirmation of the host's identity.
 
 ### Use in your application
 
@@ -124,28 +149,43 @@ The configuration *must* be changed before initializing the `AdapterResolver`, o
 For more information have a look at the [configuration](#configuration) section.
 
 2) Show all currently available API versions:
+
 ```ruby
 Paasal::ApiDetector.api_versions
 ```
 
 3) Instantiate the AdapterResolver for the desired API version:
+
 ```ruby
 resolver = Paasal::AdapterResolver.new('v1')
 ```
 
 4) Show all adapters that are supported by PaaSal on this specific API version:
+
 ```ruby
 resolver.adapters
+```
 
+```json
 {"cloudcontrol"=>Paasal::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Paasal::Adapters::V1::CloudFoundryV2, "heroku"=>Paasal::Adapters::V1::Heroku, "openshift_v2"=>Paasal::Adapters::V1::OpenshiftV2}
 ```
 
 5) Create the adapter that you with to use, here we load the cloudControl adapter:
+
 ```ruby
 adapter = resolver.load('cloudcontrol', 'api.cloudcontrol.com', 'your_username', 'your_password')
 ```
 
+By default, the adapter will be populated with the default configuration options that are defined in the vendor's configuration for the selected endpoint_url.
+If you are using a custom installation, e.g. of *Openshift* or *Cloud Foundry*, make sure to pass the option that describe the `app_domain`.
+Otherwise the `web_url` links created by PaaSal will be malformed.
+
+```ruby
+adapter = resolver.load('cloud_foundry_v2', 'api.example.org', 'your_username', 'your_password', app_domain: 'apps.example.org', check_ssl: false)
+```
+
 6) Start using the platform and invoke commands:
+
 ```ruby
 # Show available regions
 adapter.regions
@@ -155,24 +195,14 @@ app = adapter.create_application(region: 'default', name: 'myusersfirstapplicati
 adapter.delete_application(app[:id])
 ```
 
-TODOs:
-- Simplify this approach. User does not have to know about app_domain. Find a way to utilize the config here.
-
-Initialize the adapter with the parameters:
-
-```ruby
-# endpoint_url --> the API endpoint that shall be used, e.g. api.eu-gb.bluemix.net
-# endpoint_app_domain --> domain where all apps are available by default, e.g. {app_name}.herokuapps.com
-# check_certificates --> Boolean, false causes to trust all SSL certificates and skip their validation
-adapter = Paasal::Adapters::V1::CloudFoundryV2.new(endpoint_url, endpoint_app_domain, check_certificates)
-```
-
 Check the **documentation** of the `Paasal::Adapters::V1::Stub` adapter (or any other API version) for a complete list of the supported actions.
-Refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands.
+You can also refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands,
+including which fields are required and those that are only optional.
 
 ### Use the API
 
 Besides including the abstraction layer in your application, PaaSal can also be started and serve the RESTful API:
+For detailed usage information go to the section [API client(s)](#api-clients).
 
 #### Start the server
 
@@ -201,14 +231,10 @@ To enforce this policy, PaaSal will automatically redirect all connections on pl
 
 #### API endpoints
 
-**TODO: add more documentation here, especially examples (!)**
-
-The API of PaaSal is documented by the use of swagger.
-After your started a server instance, you can access an interactive UI at the `/docs` path.
+The API of PaaSal is documented by the use of [swagger](http://swagger.io).
+After your started a server instance, you can access an interactive [swagger-ui](https://github.com/swagger-api/swagger-ui) at the `/docs` path.
 
 ## Functionality
-
-**TODO: specify what can already be done**
 
 The following list shows the degree to which the adapters implement the offered methods.
 This list is auto-generated and can be shown via:
@@ -275,6 +301,7 @@ If running PaaSal as webservice, all changes made to these entities at runtime w
 unless you enable the functionality in the configuration and specify a location where to persist the data to.
 
 #### Vendors
+
 You can use the API of PaaSal to show a list of all currently supported vendors.
 This request if publicly available and does not require any authentication.
 
@@ -371,6 +398,7 @@ GET /api/vendors
 ```
 
 You can't create, delete or update a vendor at runtime because they represent the logic to communicate with their platform.
+All developers that want to have more information on how to add a new vendor can take a look at the instructions: [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
 
 #### Providers
 
@@ -432,7 +460,8 @@ GET /api/vendors/cloud_foundry_v2/providers
 }
 ```
 
-##### Register new provider
+##### Register a new provider at runtime
+
 The only requirement is that the name must be unique amongst the providers of *all* vendors:
 
     POST /api/vendors/cloud_foundry_v2/providers
@@ -499,7 +528,8 @@ GET /api/providers/bluemix/endpoints
 }
 ```
 
-##### Register new endpoint
+##### Register new endpoint at runtime
+
 The only requirement is that the name must be unique amongst the endpoints of *all* providers:
 
     POST /api/providers/cloud_foundry_v2/endpoints
@@ -558,6 +588,7 @@ Please be aware that you must also include the API version in the path if requir
 For instance Cloud Foundry requests would have to look like: `.../call/v2/app_usage_events`
 
 ##### Execute a native API call against the endpoint
+
 In this example we want to get the current user's account information.
 we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
 
@@ -582,6 +613,7 @@ GET /api/endpoints/heroku/call/account
 ```
 
 ##### Execute a native API call against an endpoint's application
+
 In this example we try to list the builds of an Heroku application.
 Therefore we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
 
@@ -616,7 +648,7 @@ GET /api/endpoints/heroku/applications/the_application_name/call/builds
 
 The functionality to communicate with different platforms is implemented in so called *adapters*.
 However, not each adapter can fully support the abstract PaaSal definitions.
-Please refer to the [functionality section](#functionality) for more information about the supported functionalities.
+Please refer to the [functionality section](#functionality) for more information about the supported features.
 
 ### Heroku
 
@@ -635,7 +667,9 @@ Please refer to the [functionality section](#functionality) for more information
 [Stackato 3.4](http://www.activestate.com/stackato)
 
 #### Issues
+
 **Logs**
+
 CF stopped to provide the `stdout` and `stderr` files in the `logs` directory.
 Currently we do not know of an approach to fetch recent log entries without registering an additional service on the application.
 
@@ -655,9 +689,11 @@ If there are no logs that can be retrieved, the log list will be empty and the d
 #### Issues
 
 **Application update**
+
 An application can't be updated, the `name` and `runtimes` can't be changed once created.
 
 **Application scaling**
+
 Applications not created with PaaSal can't be scaled if they were created with `scalable = false`
 
 **Services**
@@ -668,10 +704,12 @@ further configuration are not supported as of now.
 - With no service plans and therefore nothing to change, the *change service* function is not implemented.
 
 **Performance**
+
 It ... takes ... ages ... to ... record ...
 Even worse, actions quite often fail with Openshift internal timeouts :(
 
 **Logging**
+
 Logging is not implemented yet
 
 ### cloudControl
@@ -685,14 +723,18 @@ Logging is not implemented yet
 [exoscale](https://www.exoscale.ch)
 
 #### Issues
+
 **Application update**
+
 An application can't be updated, the `name` and `runtimes` can't be changed once created.
 
 **Application lifecycle**
+
 Applications on cloudControl can't be explicitly started or stopped.
 They start automatically upon the successful deployment of a valid application and stop once the _deployment_ has been deleted.
 
 **Logs**
+
 Log messages, for instance the request entries, do not appear instantly in the log.
 It may take some seconds or even minutes for them to show up.
 
@@ -749,13 +791,15 @@ paasal_config.api.terms_of_service_url = 'API still under development, no guaran
 
 #### Database backend
 
-The database backend can be specified in the `paasal.rb` configuration file.
+The database backend can be specified in the `config/paasal_config.rb` configuration file.
 It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems
 and [LMDB](https://github.com/minad/lmdb) on Windows.
 
+Note: *[Daybreak](https://github.com/propublica/daybreak) does not run on Windows*
+
 ### Vendors, Providers and Endpoints
 
-A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or be configured in `.yaml` files.
+A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or via `.yaml` configuration files.
 These adapter configuration files are located in the project directory at `config/adapters`.
 
 #### Add a new Provider
@@ -784,11 +828,9 @@ Next, add your provider and its endpoint(s) to the configuration file.
 
 ## API clients
 
-### REST client
-
 The API can be used with the REST client of your choice.
 
-##### Accept Header
+### Accept Header
 
 Paasal always uses the latest API version if no `Accept` header is specified.
 We therefore **strongly encourage** you to always specify the `Accept` header.
@@ -800,7 +842,7 @@ A sample `Accept` header would be:
 Accept = application/vnd.paasal-v1
 ```
 
-##### Error codes
+### Error codes
 
 The application uses the following subset of error codes:
 
@@ -841,23 +883,17 @@ For detailed information, please have a look at the [swagger-codegen project](ht
 The tests are divided into 3 categories, _unit_, _integration_ and _adapter_ tests.
 You can either call all tests or each suite separately.
 
-**Invoke:**
-
 ```
 bundle exec rake spec
 ```
 
 ### Unit Tests
 
-**Invoke:**
-
 ```
 bundle exec rake spec:suite:unit
 ```
 
 ### Integration Tests
-
-**Invoke:**
 
 ```
 bundle exec rake spec:suite:integration
@@ -868,8 +904,6 @@ bundle exec rake spec:suite:integration
 The adapter tests rely on previously recorded interactions with the provider's endpoints.
 They do not invoke external HTTP requests.
 When code changes result in different requests, the interactions have to be re-recorded.
-
-**Invoke:**
 
 ```
 bundle exec rake spec:suite:adapters
@@ -894,7 +928,7 @@ The `cassette_group: 'application-services;list'` marker in this example forces 
 directory structure of `application-services/list/{testname}.rec`.
 With this structure we can automatically evaluate the difference in the made requests for a specific operation.
 
-##### Recording
+#### Recording
 
 Recording new VCR cassettes requires you to have an account at the platform that shall be recorded.
 The credentials must be specified in the `config/.credentials` file.
@@ -944,10 +978,12 @@ If you only require certain functionality to be tested (during development), mak
 * cloudControl requires you to change the application names if the previous recording was made within the last 2 days, otherwise if fails because the name is still locked.
 Change the name in the `spec/adapter/v1/cloud_control_spec.rb`.
 
-###### Missing or invalid VCR recording
+##### Missing or invalid VCR recording
+
 If the recorded cassette is invalid due to a recent change, the test that use this cassette are going to fail.
 
-###### Sensitive data
+##### Sensitive data
+
 Most of the requests contain sensitive data that we do not want to be included in the recorded cassettes.
 By implementation, the API tokens and **all** data that is specified in the `config/.credentials` file are filtered.
 
@@ -973,15 +1009,20 @@ app # The PaaSal application
 app/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
 app/api # Everything that is directly related to the RESTfulGrape API: entities, embedded helpers and the actual API version's definitions
 app/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
-app/middleware # Rack middleware layers for authentication, request ids and logging
-app/models # The object classes that are to be maintained in the database: Vendor, Provider, Endpoint, ...
-bin # Binary startup files
+app/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
+app/rack_middleware # Rack middleware layers for authentication, request ids and logging
+bin # Binary startup files and GIT__SSH env. agents
 config # Configuration files for PaaSal and its adapters
-lib # Monkey patched classed, extensions and the gem definition files
+doc # Generated YARD documentation
+lib # Files that are more related to the usage as gem
+lib/ext # Monkey patched classed and extensions
+lib/paasal # Gem version and the gem only AdapterResolver class
+lib/scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
 public # public directory for rack, hosts the swagger-ui files for the live API documentation
 schemas # Kwalify schemas, used to parse the configuration and load new vendors at startup
-scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
 spec # All rspec test suites
+tasks # Rake tasks, mostly related to generate tables and statistics
+wiki # Further documentation files
 ```
 
 ## Contributing
