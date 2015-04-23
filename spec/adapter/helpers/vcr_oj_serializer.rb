@@ -1,4 +1,4 @@
-require 'msgpack'
+require 'oj'
 
 module VCR
   class Cassette

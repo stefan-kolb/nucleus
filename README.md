@@ -114,18 +114,6 @@ that allow to connect any git repository without confirmation of the host's iden
 
 ###### Known issues
 
-**Msgpack**:
-
-Running rake on Windows will fail if `msgpack` is installed in version v0.5.10. The issue is described
-[here](https://github.com/msgpack/msgpack-ruby/issues/38).
-
-You can fix the problem by running:
-
-```shell
-$ gem uninstall msgpack
-$ gem install msgpack --platform=ruby
-```
-
 **Eventmachine**:
 
 Eventmachine sometimes fails with the error `Encryption not available on this event-machine`.

@@ -1,5 +1,5 @@
 require 'rspec/core/rake_task'
-require 'msgpack'
+require 'oj'
 
 namespace :evaluation do
   namespace :requests do
@@ -26,8 +26,8 @@ namespace :evaluation do
         Find.find(method_recordings_dir) do |file|
           next if File.directory?(file)
           test = Pathname.new(file).relative_path_from(Pathname.new(method_recordings_dir)).to_s
-          # Load contents with the serializer, msgpack
-          cassette = ::MessagePack.unpack(File.read(file))
+          # Load contents with the serializer, oj
+          cassette = ::Oj.load(File.read(file))
           adaper_results[test] = cassette['http_interactions'].length
         end
         vendor_results[vendor_name] = adaper_results
