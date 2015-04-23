@@ -1,4 +1,4 @@
-require 'spec/adapter/helpers/vcr_msgpack_serializer'
+require 'spec/adapter/helpers/vcr_oj_serializer'
 
 ########################
 # VCR CONFIG & FILTERS #
@@ -26,7 +26,7 @@ VCR.configure do |c|
   end
 
   # custom serializer, which is about x times faster than the default YAML
-  c.cassette_serializers[:msgpack] = VCR::Cassette::Serializers::MessagePack
+  c.cassette_serializers[:oj] = VCR::Cassette::Serializers::Oj
 
   def filter_header(vcr_config, key)
     vcr_config.filter_sensitive_data("__#{key.underscore.upcase}__") do |i|

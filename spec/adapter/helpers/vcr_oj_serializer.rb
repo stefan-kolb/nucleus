@@ -3,37 +3,37 @@ require 'msgpack'
 module VCR
   class Cassette
     class Serializers
-      # The MessagePack serializer. Uses `MessagePack` internally.
+      # The Oj serializer. Uses `Oj` internally.
       #
-      # @see MessagePack
-      module MessagePack
+      # @see Oj
+      module Oj
         # @private
         ENCODING_ERRORS = [ArgumentError]
 
         # The file extension to use for this serializer.
         #
-        # @return [String] "rec"
+        # @return [String] "json"
         def self.file_extension
-          'rec'
+          'json'
         end
 
-        # Serializes the given hash using MessagePack.
+        # Serializes the given hash using Oj.
         #
         # @param [Hash] hash the object to serialize
-        # @return [String] the MessagePack string
+        # @return [String] the JSON string
         def self.serialize(hash)
           handle_encoding_errors do
-            ::MessagePack.pack(hash)
+            ::Oj.dump(hash)
           end
         end
 
-        # Deserializes the given string using MessagePack.
+        # Deserializes the given string using Oj.
         #
-        # @param [String] string the MessagePack string
+        # @param [String] string the JSON string
         # @return [Hash] the deserialized object
         def self.deserialize(string)
           handle_encoding_errors do
-            ::MessagePack.unpack(string)
+            ::Oj.load(string)
           end
         end
 
