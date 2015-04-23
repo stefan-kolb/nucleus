@@ -66,6 +66,8 @@ module Paasal
             fail Errors::SemanticAdapterRequestError, message
           elsif error_response.status == 410
             fail Errors::AdapterResourceNotFoundError, 'Resource not found'
+          elsif error_response.status == 503
+            fail Errors::PlatformUnavailableError, 'The cloudControl API is currently not available'
           end
           # error still unhandled, will result in a 500, server error
           log.warn "cloudControl error still unhandled: #{error_response}"
