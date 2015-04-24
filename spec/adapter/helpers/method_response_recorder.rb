@@ -156,7 +156,7 @@ module Paasal
       args.each do |arg|
         case arg
         when File
-          File.open(arg) { |io| digest_io_update(md5, io) }
+          File.open(arg, 'rb') { |io| digest_io_update(md5, io) }
         when Data, IO, Tempfile
           digest_io_update(md5, arg)
         else
@@ -167,6 +167,7 @@ module Paasal
     end
 
     def digest_io_update(digest, io)
+      io.binmode
       io.rewind if io.respond_to?(:rewind)
       while (buf = io.read(4096)) && buf.length > 0
         digest.update(buf)

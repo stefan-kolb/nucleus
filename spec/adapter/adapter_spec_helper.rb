@@ -75,7 +75,7 @@ def deployed_files_md5(deployed_archive, deployed_archive_format)
   Find.find(dir_deployed) do |file|
     next if File.directory? file
     relative_name = file.sub(%r{^#{Regexp.escape dir_deployed}\/?}, '')
-    deployed_md5[relative_name] = Digest::MD5.file(file).hexdigest
+    deployed_md5[relative_name] = os_neutral_file_md5(file)
   end
   deployed_md5
 ensure
@@ -98,10 +98,16 @@ def response_files_md5(response, downlaod_archive_format, sanitize = true)
   Find.find(dir_download) do |file|
     next if File.directory? file
     relative_name = file.sub(%r{^#{Regexp.escape dir_download}\/?}, '')
-    downlaod_md5[relative_name] = Digest::MD5.file(file).hexdigest
+    downlaod_md5[relative_name] = os_neutral_file_md5(file)
   end
   downlaod_md5
 ensure
   FileUtils.rm_f(response_file) unless response_file.nil?
   FileUtils.rm_r(dir_download) unless dir_download.nil?
+end
+
+def os_neutral_file_md5(file)
+  File.open(file, 'rb') do |file|
+    return Digest::MD5.hexdigest(file.read)
+  end
 end
