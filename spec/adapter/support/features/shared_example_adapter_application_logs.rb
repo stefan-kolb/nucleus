@@ -84,7 +84,7 @@ shared_examples 'valid:applications:logs:download' do
         end
         it 'unzipped content equals log content of the show request' do
           downlaod_md5 = response_files_md5(@download_response.body, 'zip', false)
-          show_md5 = Digest::MD5.hexdigest(@show_response.body.gsub(/\r\n/,'NL').gsub(/\r/,'NL').gsub(/\n/,'NL'))
+          show_md5 = Digest::MD5.hexdigest(@show_response.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
           expect(downlaod_md5.values[0]).to eq(show_md5)
         end
       end
@@ -114,7 +114,7 @@ shared_examples 'valid:applications:logs:download' do
         end
         it 'unzipped content equals log content of the show request' do
           downlaod_md5 = response_files_md5(@download_response.body, 'tar.gz', false)
-          show_md5 = Digest::MD5.hexdigest(@show_response.body.gsub(/\r\n/,'NL').gsub(/\r/,'NL').gsub(/\n/,'NL'))
+          show_md5 = Digest::MD5.hexdigest(@show_response.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
           expect(downlaod_md5.values[0]).to eq(show_md5)
         end
       end
@@ -188,7 +188,7 @@ shared_examples 'valid:applications:logs:download:all' do
 
           shown_md5 = {}
           @shown_responses.each do |id, shown_log|
-            shown_md5[id] = Digest::MD5.hexdigest(shown_log.body.gsub(/\r\n/,'NL').gsub(/\r/,'NL').gsub(/\n/,'NL'))
+            shown_md5[id] = Digest::MD5.hexdigest(shown_log.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
           end
           downlaod_md5 = response_files_md5(@download_response.body, 'zip', false)
 
@@ -236,7 +236,7 @@ shared_examples 'valid:applications:logs:download:all' do
 
           shown_md5 = {}
           @shown_responses.each do |id, shown_log|
-            shown_md5[id] = Digest::MD5.hexdigest(shown_log.body.gsub(/\r\n/,'NL').gsub(/\r/,'NL').gsub(/\n/,'NL'))
+            shown_md5[id] = Digest::MD5.hexdigest(shown_log.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
           end
           downlaod_md5 = response_files_md5(@download_response.body, 'tar.gz', false)
 
