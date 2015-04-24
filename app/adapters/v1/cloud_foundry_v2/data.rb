@@ -20,6 +20,7 @@ module Paasal
               converted_file = ArchiveConverter.convert(file, file_compression_format, 'zip', true)
               unless converted_file.respond_to?(:path) && converted_file.respond_to?(:read)
                 tmpfile = Tempfile.new(["paasal-cf-deploy-upload-#{app_guid}", '.zip'])
+                tmpfile.binmode
                 tmpfile.write converted_file.read
                 tmpfile.rewind
                 converted_file = tmpfile
@@ -63,6 +64,7 @@ module Paasal
 
             # write data to tmpfile so that it can be converted
             downloaded_application_archive = Tempfile.new(["paasal-cf-deployment-download-#{app_guid}", '.zip'])
+            downloaded_application_archive.binmode
             downloaded_application_archive.write StringIO.new(data).read
             downloaded_application_archive.rewind
 
