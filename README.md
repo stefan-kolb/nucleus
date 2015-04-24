@@ -3,7 +3,9 @@
 [![Code Climate](https://codeclimate.com/repos/54af9232695680520400157d/badges/d9c8c6bf17955025db7a/gpa.svg)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
 [![Test Coverage](https://codeclimate.com/repos/54af9232695680520400157d/badges/d9c8c6bf17955025db7a/coverage.svg)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
 
-# PaaSal
+
+![PaaSal](icons/paasal_200w.png "Platform as a Service abstraction layer")
+
 
 _PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions of Platform-as-a-Service (PaaS) providers.  
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
@@ -194,7 +196,7 @@ resolver = Paasal::AdapterResolver.new('v1')
 resolver.adapters
 ```
 
-```json
+```ruby
 {"cloudcontrol"=>Paasal::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Paasal::Adapters::V1::CloudFoundryV2, "heroku"=>Paasal::Adapters::V1::Heroku, "openshift_v2"=>Paasal::Adapters::V1::OpenshiftV2}
 ```
 
@@ -238,13 +240,13 @@ A rack server can be started in multiple ways.
 The most convinient solution is to use the provided script:  
 
 ```shell
-./bin/paasal start
+$ ./bin/paasal start
 ```
 
 Hower, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
 
-```
-rackup -s thin config.ru
+```shell
+$ rackup -s thin config.ru
 ```
 
 Due to limitations in the log tailing process, currently PaaSal requires `thin` and does not work on other Rack servers.
@@ -888,7 +890,7 @@ The application uses the following subset of error codes:
 
 All errors are returned in a common schema:
 
-```json
+```ruby
 {
   "status": HTTP_STATUS_CODE,
   "message": SIMPLE_ERROR_MESSAGE,
