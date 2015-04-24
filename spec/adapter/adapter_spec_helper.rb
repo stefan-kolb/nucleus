@@ -69,15 +69,8 @@ def deployed_files_md5(deployed_archive, deployed_archive_format)
   dir_deployed = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_deployed")
   Paasal::ArchiveExtractor.new.extract(deployed_archive, dir_deployed, deployed_archive_format)
   Paasal::ApplicationRepoSanitizer.new.sanitize(dir_deployed)
-
-  # generate MD5 hashes of deployed files
-  deployed_md5 = {}
-  Find.find(dir_deployed) do |file|
-    next if File.directory? file
-    relative_name = file.sub(%r{^#{Regexp.escape dir_deployed}\/?}, '')
-    deployed_md5[relative_name] = os_neutral_file_md5(file)
-  end
-  deployed_md5
+  # generate and return MD5 hashes of deployed files
+  os_neutral_dir_file_md5_hashes(dir_deployed)
 ensure
   FileUtils.rm_r(dir_deployed) unless dir_deployed.nil?
 end
@@ -93,21 +86,21 @@ def response_files_md5(response, downlaod_archive_format, sanitize = true)
   Paasal::ArchiveExtractor.new.extract(response_file, dir_download, downlaod_archive_format)
   Paasal::ApplicationRepoSanitizer.new.sanitize(dir_download) if sanitize
 
-  # generate MD5 hashes of downloaded files
-  downlaod_md5 = {}
-  Find.find(dir_download) do |file|
-    next if File.directory? file
-    relative_name = file.sub(%r{^#{Regexp.escape dir_download}\/?}, '')
-    downlaod_md5[relative_name] = os_neutral_file_md5(file)
-  end
-  downlaod_md5
+  # generate and return MD5 hashes of downloaded files
+  os_neutral_dir_file_md5_hashes(dir_download)
 ensure
   FileUtils.rm_f(response_file) unless response_file.nil?
   FileUtils.rm_r(dir_download) unless dir_download.nil?
 end
 
-def os_neutral_file_md5(file)
-  File.open(file, 'rb') do |file|
-    return Digest::MD5.hexdigest(file.read)
+def os_neutral_dir_file_md5_hashes(dir)
+  md5_hashes = {}
+  Find.find(dir) do |file|
+    next if File.directory? file
+    relative_name = file.sub(%r{^#{Regexp.escape dir}\/?}, '')
+    File.open(file, 'rb') do |opened_file|
+      md5_hashes[relative_name] =  Digest::MD5.hexdigest(opened_file.read)
+    end
   end
+  md5_hashes
 end
