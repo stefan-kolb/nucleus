@@ -2,6 +2,7 @@ require 'airborne'
 require 'rspec/wait'
 
 # load the app packages
+require 'scripts/shutdown'
 require 'scripts/initialize_core'
 require 'scripts/initialize_rack'
 
