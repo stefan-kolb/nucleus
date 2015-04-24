@@ -99,8 +99,8 @@ def os_neutral_dir_file_md5_hashes(dir)
   Find.find(dir) do |file|
     next if File.directory? file
     relative_name = file.sub(%r{^#{Regexp.escape dir}\/?}, '')
-    File.open(file, 'rb') do |opened_file|
-      md5_hashes[relative_name] =  Digest::MD5.hexdigest(opened_file.read)
+    File.open(file, 'rb') do |file_o|
+      md5_hashes[relative_name] = Digest::MD5.hexdigest(file_o.read.gsub(/\r\n/,'NL').gsub(/\r/,'NL').gsub(/\n/,'NL'))
     end
   end
   md5_hashes
