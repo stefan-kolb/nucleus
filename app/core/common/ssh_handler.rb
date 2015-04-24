@@ -19,6 +19,9 @@ module Paasal
         # file must not be accessible by others, otherwise usage will be forbidden by git.
         # Currently we're doing it only for PaaSal's keyfile...
         FileUtils.chmod(0600, @key_file) unless paasal_config.ssh.key?(:custom_key)
+      elsif OS.windows?
+        # windows requires the extension, otherwise git complains that it can't spawn such a file
+        @location = "#{@location}.bat"
       end
 
       # use a custom SSH script if not specified or explicitly requested
