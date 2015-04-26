@@ -8,12 +8,12 @@ module Paasal
 
         expose :id, documentation: {
           type: String, desc: 'Region name and identifier, e.g. \'EU\' or \'US\'',
-          required_details: { response: true }
+          required: true
         }
 
         expose :description, documentation: {
           type: String, desc: 'Region description, restrictions, etc.',
-          required_details: { response: false }
+          required: true
         }
 
         expose :_links, using: Paasal::API::Models::ApplicationLinks, documentation: {

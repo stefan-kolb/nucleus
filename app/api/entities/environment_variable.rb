@@ -8,17 +8,17 @@ module Paasal
 
         expose :id, documentation: {
           type: String, desc: 'Variable identifier, unique per application',
-          required_details: { request: { POST: false, PATCH: false }, response: true }
+          required: true
         }
 
         expose :key, documentation: {
           type: String, desc: 'Variable key, e.g. \'RAILS_ENV\'',
-          required_details: { request: { POST: true }, response: true }
+          required: true
         }
 
         expose :value, documentation: {
           type: String, desc: 'Variable value, e.g. \'development\'',
-          required_details: { request: { POST: true }, response: true }
+          required: true
         }
 
         expose :_links, using: Paasal::API::Models::BasicReferences, documentation: {

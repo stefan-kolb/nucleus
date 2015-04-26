@@ -8,7 +8,7 @@ module Paasal
 
         expose :name, documentation: {
           type: String, desc: 'Vendor name, e.g. \'Cloud Foundry\'',
-          required_details: { request: { POST: true, PATCH: false }, response: true },
+          required: true,
           allow_blank: false }
 
         expose :providers, documentation: {
@@ -18,7 +18,7 @@ module Paasal
         }, using: Models::Provider, unless: { collection: true }
 
         expose :_links, using: Paasal::API::Models::Links, documentation: {
-          required_details: { request: false, response: true },
+          required: true,
           type: 'References', desc: 'Resource links', is_array: true } do |instance, _o|
           {
             self: { href: link_resource(%w(vendors), instance) },

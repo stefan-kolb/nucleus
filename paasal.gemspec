@@ -34,8 +34,7 @@ Gem::Specification.new do |spec|
   # TODO: adapt versions once all patches are included in the master branch
   # spec.add_runtime_dependency 'grape', '~> 0.11', '>= 0.11.1'
   spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
-  # TODO: adapt versions once all patches are included in the master branch
-  # spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'
+  spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'
   spec.add_runtime_dependency 'kwalify', '~> 0.7'
   spec.add_runtime_dependency 'lmdb', '~> 0.4'
   spec.add_runtime_dependency 'logger', '~> 1.2'

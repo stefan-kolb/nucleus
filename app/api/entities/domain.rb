@@ -8,7 +8,7 @@ module Paasal
 
         expose :name, documentation: {
           type: String, desc: 'FQDN of the domain name, e.g. \'mydomain.com\'',
-          required_details: { request: { POST: true }, response: true }
+          required: true
         }
 
         expose :_links, using: Paasal::API::Models::BasicReferences, documentation: {

@@ -3,11 +3,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in paasal.gemspec
 gemspec
 
-# Both, grape and grape-swagger contain a bunch of fixes that are not yet included in the actual project.
-# The biggest change is the description of the params via `required_details`.
-# TODO: We should create the pull requests and remove the custom repositories as soon as the changes are in the projects
-gem 'grape', git: 'https://github.com/croeck/grape.git', branch: 'paasal', require: 'grape'
-gem 'grape-swagger', git: 'https://github.com/croeck/grape-swagger.git', branch: 'paasal', require: 'grape-swagger'
+gem 'grape', git: 'https://github.com/intridea/grape.git'
 
 # The pull request has already been made, but the repository is actually dead.
 # https://github.com/intridea/rack-stream/pull/6

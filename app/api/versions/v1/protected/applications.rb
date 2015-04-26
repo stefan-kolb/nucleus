@@ -75,7 +75,7 @@ module Paasal
             use :application_context
             # require the keys of the application in the json object 'application'
             requires :application, type: Hash do
-              optional :all, using: Paasal::API::Models::Application.documentation.slice(:name)
+              optional :name, Paasal::API::Models::Application.documentation[:name]
               optional :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
             end
           end

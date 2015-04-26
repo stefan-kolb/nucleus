@@ -10,7 +10,7 @@ module Paasal
 
         expose :id, documentation: {
           type: String, desc: 'Service ID, e.g. \'77140bb0-957b-4005-bdc4-c39427ee0390\'',
-          required_details: { request: true, response: true }
+          required: true
         }
 
         expose :_links, using: BasicReferences, documentation: {

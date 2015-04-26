@@ -8,7 +8,7 @@ module Paasal
           model_class_name = model.to_s.gsub(/^.*::/, '')
 
           expose :size, documentation: {
-            type: 'int', required_details: { response: true },
+            type: 'int', required: true,
             desc: "Number of items in the '#{key}' collection"
           } do |instance, _o|
             instance[:items].nil? ? 0 : instance[:items].size
@@ -16,14 +16,14 @@ module Paasal
 
           expose :items, as: key.to_sym, documentation: {
             type: model_class_name, desc: "List of #{full_name}", is_array: true,
-            required_details: { response: true }
+            required: true
           }, using: model
         end
 
         # TODO: document me
         def self.basic_links(unformatted_link, action_name)
           expose :_links, using: Models::BasicReferences, documentation: {
-            required_details: { response: true },
+            required: true,
             type: 'BasicReferences', desc: 'Resource links', is_array: true } do |_instance, o|
             {
               self: { href: link_resource(format(unformatted_link, o[:env]['rack.routing_args']), action_name) },

@@ -10,18 +10,18 @@ module Paasal
 
         expose :id, documentation: {
           type: String, desc: 'Log ID, unique per application, e.g. \'system\'',
-          required_details: { request: false, response: true }
+          required: true
         }
 
         expose :name, documentation: {
           type: String, desc: 'Name of the logfile, e.g. \'stdout\'',
-          required_details: { request: false, response: true }
+          required: true
         }
 
         expose :type, documentation: {
           type: String, desc: 'Logfile type',
           values: Application::LogfileType.all,
-          required_details: { request: false, response: true }
+          required: true
         }
 
         expose :_links, using: BasicReferences, documentation: {

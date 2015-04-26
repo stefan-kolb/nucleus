@@ -7,7 +7,7 @@ module Paasal
         params do
           use :application_context
         end
-        resource 'endpoints/:endpoint_id/applications/:application_id/actions', desc: 'Application actions',
+        resource 'endpoints/:endpoint_id/applications/:application_id/actions', desc: 'Lifecycle & scaling',
                   swagger: { nested: false, name: 'application-actions' } do
           desc 'Start the application' do
             success Models::Application
