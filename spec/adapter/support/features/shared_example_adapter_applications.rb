@@ -199,7 +199,7 @@ end
 
 shared_examples 'valid:app:wordfinder' do
   it 'request has status 200' do
-    @live_app.status = 200
+    expect(@live_app.status).to eql(200)
   end
   it 'is the wordfinder application title' do
     expect(@live_app.body).to include('<title>Word Finder</title>')
