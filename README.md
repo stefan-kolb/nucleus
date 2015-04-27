@@ -26,25 +26,25 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
     * [API endpoints](#api-endpoints)
 * [Functionality](#functionality)
   * [Authentication](#authentication)
-    * [Special characters (umlauts, ....)](#special-characters-(umlauts,-....))
+    * [Special characters (umlauts, ....)](#special-characters-umlauts-)
   * [Core constructs](#core-constructs)
     * [Vendors](#vendors)
     * [Providers](#providers)
       * [List all providers that are registered for a vendor's platform](#list-all-providers-that-are-registered-for-a-vendors-platform)
-      * [Register new provider](#register-new-provider)
+      * [Register a new provider at runtime](#register-a-new-provider-at-runtime)
     * [Endpoints](#endpoints)
       * [List all endpoints that are registered for a provider](#list-all-endpoints-that-are-registered-for-a-provider)
-      * [Register new endpoint](#register-new-endpoint)
-  * [Native calls (experimental)](#native-calls-(experimental))
+      * [Register a new endpoint at runtime](#register-a-new-endpoint-at-runtime)
+  * [Native calls (experimental)](#native-calls-experimental)
     * [Execute a native API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
-    * [Execute a native API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoint's-application)
+    * [Execute a native API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoints-application)
 * [Adapters](#adapters)
   * [Heroku](#heroku)
   * [Cloud Foundry v2](#cloud-foundry-v2)
   * [Openshift v2](#openshift-v2)
-  * [cloudControl](#cloudControl)
+  * [cloudControl](#cloudcontrol)
 * [Configuration](#configuration)
-  * [Vendors, Providers and Endpoints](#vendors,-providers-and-endpoints)
+  * [Vendors, Providers and Endpoints](#vendors-providers-and-endpoints)
   * [Application configuration](#application-configuration)
 * [API client(s)](#api-clients)
   * [Accept Header](#accept-header)
@@ -62,8 +62,6 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Security](#security)
 * [Project structure](#project-structure)
 * [Contributing](#contributing)
-  * [Add a new vendor](#add-a-new-vendor)
-  * [Add a vendor version](#add-a-vendor-version)
 * [Further documentation](#further-documentation)
 * [License](#license)
 
@@ -1084,6 +1082,10 @@ which tests for code style violations and executes all tests.
 ## Further documentation
 
 [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
+
+## License
+
+**TBD**
 
 ## shield.io badges (not working)
 
