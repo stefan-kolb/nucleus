@@ -52,6 +52,10 @@ describe Paasal::Adapters::V1::CloudFoundryV2 do
             expect_json_keys(:total_results, :total_pages, :resources)
           end
         end
+        describe 'fails for invalid OPTIONS method' do
+          before { options("/endpoints/#{@endpoint}/call/v2/buildpacks", request_headers) }
+          include_examples 'valid error schema'
+        end
       end
     end
   end

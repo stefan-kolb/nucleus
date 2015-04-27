@@ -62,6 +62,10 @@ describe Paasal::Adapters::V1::Heroku do
             expect_json_keys(:created_at, :description, :doc_url, :enabled, :id, :name, :state, :updated_at)
           end
         end
+        describe 'fails for invalid OPTIONS method' do
+          before { options("/endpoints/#{@endpoint}/call/account", request_headers) }
+          include_examples 'valid error schema'
+        end
       end
     end
   end

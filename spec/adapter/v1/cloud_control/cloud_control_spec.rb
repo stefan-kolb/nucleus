@@ -72,6 +72,10 @@ describe Paasal::Adapters::V1::CloudControl do
             expect_json_types(:array)
           end
         end
+        describe 'fails for invalid OPTIONS method' do
+          before { options("/endpoints/#{@endpoint}/call/addon", request_headers) }
+          include_examples 'valid error schema'
+        end
       end
     end
   end

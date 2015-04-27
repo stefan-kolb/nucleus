@@ -60,6 +60,10 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
             expect_json(type: 'cartridges', status: 'ok')
           end
         end
+        describe 'fails for invalid OPTIONS method' do
+          before { options("/endpoints/#{@endpoint}/call/cartridges", request_headers) }
+          include_examples 'valid error schema'
+        end
       end
     end
   end
