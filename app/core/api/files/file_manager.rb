@@ -6,13 +6,14 @@ module Paasal
       # Load the contents of the file.
       # @param [String] file absolute path of the file to read
       # @raise [Paasal::FileExistenceError] if the file does not exist
-      # @return [StringIO] binary contents of the file
+      # @return [StringIO] binary contents of the file, rewinded
       def self.load_file(file)
         io = StringIO.new('')
         File.open(file, 'r') do |opened_file|
           opened_file.binmode
           io.write opened_file.read
         end
+        io.rewind
         io
       end
 
