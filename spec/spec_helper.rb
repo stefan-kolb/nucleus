@@ -53,8 +53,10 @@ else
     add_group 'API entities', 'app/api/entities'
     add_group 'API helpers', 'app/api/helpers'
     add_group 'Core', 'app/core'
-    add_group 'Middleware', 'app/middleware'
+    add_group 'Middleware', 'app/rack_middleware'
     add_group 'Models', 'app/models'
+    add_group 'Persistence', 'app/persistence'
+    add_group 'Lib ext.', 'lib/ext'
   end
 end
 
