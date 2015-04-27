@@ -21,6 +21,13 @@ module Paasal
               docs: { href: link_docs }
           }
         end
+
+        # Create a link to the documentation for this specific API version
+        def link_docs
+          # TODO: evaluate how to provide swagger-ui documentations for multiple API versions
+          "#{link_generator.root_url}/docs"
+          # "#{link_generator.root_url}/docs/api/#{object[:name]}"
+        end
       end
     end
   end

@@ -45,17 +45,9 @@ module Paasal
         end
 
         # Create a link to the documentation.
-        # If the current object is the root node, the general documentation will be returned.
-        # If the current object is an API version, the documentation for this version will be returned.
-        #
         # @return [String] link to the API or API version documentation
         def link_docs
-          # TODO: move to ApiVersion class
-          if self.is_a?(ApiVersion)
-            "#{link_generator.root_url}/docs/api/#{object[:name]}"
-          else
-            "#{link_generator.root_url}/docs"
-          end
+          "#{link_generator.root_url}/docs"
         end
 
         # Create a link to the current API version.
