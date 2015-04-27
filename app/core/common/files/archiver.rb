@@ -9,7 +9,7 @@ module Paasal
     # @param [String] path which directory's contents are going to be compressed into the archive
     # @param [String] compression_format represented by well-known file extensions, e.g. zip or tar.gz
     # @raise [StandardError] if the compression_format is not supported and the directory can't be compressed
-    # @return [void]
+    # @return [StringIO] compressed data of the given input path
     def compress(path, compression_format)
       compression_method = compression_format.downcase.gsub(/\./, '_').underscore.to_sym
       fail StandardError,

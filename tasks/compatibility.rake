@@ -15,7 +15,7 @@ namespace :compatibility do
     adapter_dao.all.each do |adapter_index_entry|
       vendor_name = vendor_dao.get(provider_dao.get(endpoint_dao.get(adapter_index_entry.id).provider).vendor).name
       next if vendor_results.key?(vendor_name)
-      adaper_results = {}
+      adapter_results = {}
       adapter = adapter_index_entry.adapter_clazz.new('https://api.example.org', 'http://apps.example.org', true)
       stub.public_methods(false).each do |method_name|
         args = []
@@ -29,9 +29,9 @@ namespace :compatibility do
         rescue StandardError
           implemented = true
         end
-        adaper_results[method_name] = implemented
+        adapter_results[method_name] = implemented
       end
-      vendor_results[vendor_name] = adaper_results
+      vendor_results[vendor_name] = adapter_results
     end
 
     # table header
