@@ -746,7 +746,7 @@ Logging is not implemented yet
 
 [cloudControl](http://cloudcontrol.com)
 
-[Cloud&Hear](https://www.cloudandheat.com/de/appelevator)
+[Cloud&Heat](https://www.cloudandheat.com/de/appelevator)
 
 [dotCloud](https://next.dotcloud.com)
 
