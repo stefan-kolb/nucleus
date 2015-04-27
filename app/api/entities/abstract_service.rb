@@ -2,6 +2,7 @@ module Paasal
   module API
     module Models
       class AbstractService < PersistedEntity
+        # The name of the entity to be used
         def self.entity_name
           'AbstractService'
         end

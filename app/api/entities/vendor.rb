@@ -2,6 +2,7 @@ module Paasal
   module API
     module Models
       class Vendor < PersistedEntity
+        # The name of the entity to be used
         def self.entity_name
           'Vendor'
         end

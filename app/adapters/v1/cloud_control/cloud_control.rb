@@ -73,6 +73,16 @@ module Paasal
           log.warn "cloudControl error still unhandled: #{error_response}"
         end
 
+        # @see Stub#scale
+        def scale(application_id, instances)
+          # update the number of instances on the application's deployment
+          scale_response = put("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}",
+                               body: { min_boxes: instances }).body
+          to_paasal_app(get("/app/#{application_id}").body, scale_response)
+        end
+
+        private
+
         def handle_400(message)
           fail Errors::AdapterResourceNotFoundError, 'Resource not found' if message.nil?
 
@@ -86,16 +96,6 @@ module Paasal
           end
           fail Errors::AdapterRequestError, message
         end
-
-        # @see Stub#scale
-        def scale(application_id, instances)
-          # update the number of instances on the application's deployment
-          scale_response = put("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}",
-                               body: { min_boxes: instances }).body
-          to_paasal_app(get("/app/#{application_id}").body, scale_response)
-        end
-
-        private
 
         def username
           get('/user').body.first[:username]

@@ -2,7 +2,11 @@ module Paasal
   module Adapters
     module V1
       class CloudControl < Stub
+        # Semantic error messages that are specific for cloudControl
         module SemanticErrors
+          # Get all cloudControl specific semantic error definitions.
+          # @return [Hash<Symbol,Hash<Symbol,String>>] the error message definitions, including the error +code+,
+          #   e.g. +422_200_1+ and the +message+ that shall be formatted when used.
           def semantic_error_messages
             {
               # Error code '300_1': Only one runtime is allowed per cloudControl application

@@ -2,6 +2,7 @@ module Paasal
   module API
     module Models
       class Log < PersistedEntity
+        # The name of the entity to be used
         def self.entity_name
           'Log'
         end

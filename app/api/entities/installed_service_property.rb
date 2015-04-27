@@ -2,6 +2,7 @@ module Paasal
   module API
     module Models
       class InstalledServiceProperty < Grape::Entity
+        # The name of the entity to be used
         def self.entity_name
           'InstalledServiceProperty'
         end

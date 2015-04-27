@@ -17,6 +17,7 @@ module Paasal
       #    }
       #
       class Error < Grape::Entity
+        # The name of the entity to be used
         def self.entity_name
           'Error'
         end

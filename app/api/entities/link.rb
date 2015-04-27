@@ -4,6 +4,7 @@ module Paasal
       # The Link describes a reference inside the API that can
       # redirect to the current resource or any other resource.
       class Link < Grape::Entity
+        # The name of the entity to be used
         def self.entity_name
           'Link'
         end

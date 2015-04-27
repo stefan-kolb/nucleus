@@ -46,6 +46,8 @@ module Paasal
           log.warn "Cloud Foundry error still unhandled: #{error}"
         end
 
+        private
+
         def handle_400_error(error, cf_error)
           if cf_error == 150_001 || cf_error == 160_001 || cf_error > 100_000 && cf_error < 109_999
             # Indicating semantically invalid parameters
@@ -56,8 +58,6 @@ module Paasal
             fail Errors::SemanticAdapterRequestError, 'Service is already assigned to the application'
           end
         end
-
-        private
 
         def guid?(name_or_id)
           Regexp::UUID_PATTERN.match(name_or_id) ? true : false

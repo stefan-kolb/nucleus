@@ -2,7 +2,11 @@ module Paasal
   module Adapters
     module V1
       class CloudFoundryV2 < Stub
+        # Semantic error messages that are specific for Cloud Foundry V2
         module SemanticErrors
+          # Get all Cloud Foundry V2 specific semantic error definitions.
+          # @return [Hash<Symbol,Hash<Symbol,String>>] the error message definitions, including the error +code+,
+          #   e.g. +422_200_1+ and the +message+ that shall be formatted when used.
           def semantic_error_messages
             {
               only_one_runtime: { code: 422_200_1, message: 'Cloud Foundry V2 only allows 1 runtime per application' },

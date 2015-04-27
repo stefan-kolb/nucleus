@@ -2,7 +2,11 @@ module Paasal
   module Adapters
     module V1
       class Heroku < Stub
+        # Semantic error messages that are specific for Heroku
         module SemanticErrors
+          # Get all Heroku specific semantic error definitions.
+          # @return [Hash<Symbol,Hash<Symbol,String>>] the error message definitions, including the error +code+,
+          #   e.g. +422_200_1+ and the +message+ that shall be formatted when used.
           def semantic_error_messages
             {
               need_verification: { code: 422_100_1,
