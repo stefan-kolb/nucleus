@@ -1,4 +1,3 @@
-notification :terminal_notifier, activate: 'com.googlecode.iterm2', subtitle: 'Paasal - PaaS Abstraction Layer'
 interactor :simple
 
 guard 'bundler' do
