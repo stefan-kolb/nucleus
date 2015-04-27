@@ -15,7 +15,6 @@ module Paasal
       helpers Paasal::FormProcessingHelper
       helpers Paasal::LinkGeneratorHelper
       helpers Paasal::LogHelper
-      helpers Paasal::ResponseHelper
       helpers Paasal::SharedParamsHelper
 
       # we currently use only JSON messages
