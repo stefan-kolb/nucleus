@@ -47,8 +47,8 @@ end
 optparse.parse!
 
 if options[:help]
- puts optparse
- exit(0)
+  puts optparse
+  exit(0)
 end
 
 if options[:env] == 'production' && ( !options.key?(:ssl) || options[:ssl] == false)
