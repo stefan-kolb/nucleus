@@ -3,8 +3,6 @@ module Paasal
     class GitDeployer
       include Paasal::Logging
 
-      # TODO: write unit tests
-
       # Initialize a new instance of the GitDeployer
       # @param [String] user_email email address of the user, used as author of commits
       # @param [String] repo_url address where the repository can be retrieved
@@ -46,7 +44,8 @@ module Paasal
           # now remove all current files, except the git db
           Find.find(repo_dir) do |f|
             next if f.start_with?("#{repo_dir}/.git") || f == repo_dir
-            FileUtils.remove_dir(f)
+            FileUtils.rm_rf(f) if File.directory?(f)
+            FileUtils.rm_f(f) if File.file?(f)
           end
 
           # uncompress and extract to

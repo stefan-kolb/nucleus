@@ -12,7 +12,8 @@ module Paasal
     # @return [void]
     def compress(path, compression_format)
       compression_method = compression_format.downcase.gsub(/\./, '_').underscore.to_sym
-      fail StandardError, 'Unsupported compression format' unless self.respond_to?(compression_method, true)
+      fail StandardError,
+           "Unsupported compression format #{compression_format}" unless self.respond_to?(compression_method, true)
       send(compression_method, path)
     end
 
