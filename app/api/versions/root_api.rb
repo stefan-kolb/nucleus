@@ -8,14 +8,14 @@ module Paasal
     # such as authentication, error rescuing and fallback handling if an route could not be found (404).
     class RootAPI < Grape::API
       # include all shared helpers
-      helpers Paasal::AdapterHelper
-      helpers Paasal::AuthHelper
-      helpers Paasal::DaoHelper
-      helpers Paasal::ErrorHelper
-      helpers Paasal::FormProcessingHelper
-      helpers Paasal::LinkGeneratorHelper
-      helpers Paasal::LogHelper
-      helpers Paasal::SharedParamsHelper
+      helpers AdapterHelper
+      helpers AuthHelper
+      helpers DaoHelper
+      helpers ErrorHelper
+      helpers FormProcessingHelper
+      helpers LinkGeneratorHelper
+      helpers LogHelper
+      helpers SharedParamsHelper
 
       # we currently use only JSON messages
       content_type :json, 'application/json'

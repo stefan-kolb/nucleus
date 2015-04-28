@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class Calls < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         # TODO: test with post, or anything that requires a body
 

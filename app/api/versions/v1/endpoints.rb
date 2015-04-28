@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class Endpoints < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         # TODO: describe params only once for the resource
         resource :endpoints, desc: 'Endpoint and Application operations' do

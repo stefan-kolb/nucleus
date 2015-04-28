@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class Vendors < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         helpers do
           # noinspection RubyArgCount

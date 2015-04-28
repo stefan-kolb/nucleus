@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class Auth < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         # defines the authentication for all subsequently mounted routes
         http_basic(realm: 'PaaSal API Authorization @ %{endpoint_id}',

@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class Applications < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         resource 'endpoints/:endpoint_id/applications', desc: 'Endpoint\'s applications',
                  swagger: { name: 'applications', nested: false } do

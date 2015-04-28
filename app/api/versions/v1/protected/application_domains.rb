@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class ApplicationDomains < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         params do
           use :application_context

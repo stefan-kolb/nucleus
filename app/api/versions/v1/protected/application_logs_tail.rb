@@ -2,9 +2,9 @@ module Paasal
   module API
     module V1
       class ApplicationLogsTail < Grape::API
-        helpers Paasal::SharedParamsHelper
-        helpers Paasal::StreamingHelper
-        helpers Paasal::ErrorHelper
+        helpers SharedParamsHelper
+        helpers StreamingHelper
+        helpers ErrorHelper
 
         # TODO: find a way to describe the actual response formats with grape-swagger
 

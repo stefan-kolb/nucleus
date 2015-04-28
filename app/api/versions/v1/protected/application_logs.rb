@@ -2,7 +2,7 @@ module Paasal
   module API
     module V1
       class ApplicationLogs < Grape::API
-        helpers Paasal::SharedParamsHelper
+        helpers SharedParamsHelper
 
         # TODO: find a way to describe the actual response formats with grape-swagger
 
