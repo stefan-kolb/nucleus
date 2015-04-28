@@ -107,7 +107,9 @@ module Paasal
 
           def service_assignment_id(application_id, service_id)
             all_services = get("/apps/#{application_id}/addons").body
-            match = all_services.find { |service_assignment| service_assignment[:addon_service][:id] == service_id }
+            match = all_services.find do |addon|
+              addon[:addon_service][:id] == service_id || addon[:addon_service][:name] == service_id
+            end
             return match[:id] if match
             nil
           end
