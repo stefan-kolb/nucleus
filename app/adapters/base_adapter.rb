@@ -48,6 +48,19 @@ module Paasal
         auth_objects_cache[key]
       end
 
+      # Create the cache key for the username / password combination and save it in the {::RequestStore} to make it
+      # available throughout the current request.
+      # @param [String] username the username for the authentication
+      # @param [String] password the password for the authentication
+      # @return [String] calculated hash key for the input values
+      def cache_key(username, password)
+        # calculate the cache only once per request
+        return RequestStore.store[:cache_key] if RequestStore.exist?(:cache_key)
+        key = Digest::SHA256.hexdigest "#{endpoint_url}#{username}:#{password}"
+        RequestStore.store[:cache_key] = key
+        key
+      end
+
       # Get the cached authentication object and retrieve the presumably valid authentication header.
       # @return [Hash<String,String>] hash including a valid authentication header
       def headers
@@ -76,19 +89,6 @@ module Paasal
         else
           fail AdapterRequestError, 'Unsupported adapter call method. Allowed are: GET, POST, PATCH, PUT, DELETE'
         end
-      end
-
-      # Create the cache key for the username / password combination and save it in the {::RequestStore} to make it
-      # available throughout the current request.
-      # @param [String] username the username for the authentication
-      # @param [String] password the password for the authentication
-      # @return [String] calculated hash key for the input values
-      def cache_key(username, password)
-        # calculate the cache only once per request
-        return RequestStore.store[:cache_key] if RequestStore.exist?(:cache_key)
-        key = Digest::SHA256.hexdigest "#{endpoint_url}#{username}:#{password}"
-        RequestStore.store[:cache_key] = key
-        key
       end
 
       # Fail with a {Errors::PlatformSpecificSemanticError} error and format the error message to include the values
