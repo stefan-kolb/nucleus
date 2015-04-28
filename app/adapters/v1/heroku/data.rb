@@ -64,6 +64,10 @@ module Paasal
           end
 
           def register_key(type, key)
+            # skip if the key is already registered
+            installed_keys = get('/account/keys').body
+            return nil if installed_keys.any? { |key| key[:public_key].include?(key) }
+
             key_name = "paasal-#{SecureRandom.uuid}"
             post('/account/keys', body: { public_key: [type, key, key_name].join(' ') }).body[:id]
           end
