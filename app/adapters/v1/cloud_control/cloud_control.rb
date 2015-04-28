@@ -114,9 +114,9 @@ module Paasal
           # * running, if a data deployment was pushed
           return API::Models::Application::States::CREATED if deployment[:version] == '-1'
           # return API::Models::Application::States::DEPLOYED
+          return API::Models::Application::States::IDLE if deployment[:state] == 'idle'
           API::Models::Application::States::RUNNING
           # return API::Models::Application::States::STOPPED
-          # return API::Models::Application::States::IDLE
 
           # arriving here the above states do not catch all states of the cloudControl app, which should not happen ;-)
           # fail Errors::UnknownAdapterCallError, 'Could not determine application state. '\
