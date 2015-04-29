@@ -268,7 +268,7 @@ The following list shows the degree to which the adapters implement the offered 
 This list is auto-generated and can be shown via:
 
 ```
-$ bundle exec rake compatibility:markdown
+$ bundle exec rake evaluation:compatibility:markdown
 ```
 
 **State: April, 22nd 2015**
