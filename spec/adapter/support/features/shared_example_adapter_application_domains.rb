@@ -13,7 +13,7 @@ shared_examples 'domain entity schema' do
 end
 
 shared_examples 'valid:applications:domains:list:empty' do
-  describe 'domains list empty', :as_cassette, cassette_group: 'application-domains;list' do
+  describe 'domains list empty', :as_cassette, cassette_group: 'app-domains;list' do
     before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers }
     include_examples 'a valid GET request'
     include_examples 'domain list schema'
@@ -24,7 +24,7 @@ shared_examples 'valid:applications:domains:list:empty' do
 end
 
 shared_examples 'valid:applications:domains:list' do
-  describe 'domains list', cassette_group: 'application-domains;list' do
+  describe 'domains list', cassette_group: 'app-domains;list' do
     describe 'succeeds', :as_cassette do
       before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers }
       include_examples 'a valid GET request'
@@ -43,7 +43,7 @@ shared_examples 'valid:applications:domains:list' do
 end
 
 shared_examples 'valid:applications:domains:create' do
-  describe 'domains create', cassette_group: 'application-domains;create' do
+  describe 'domains create', cassette_group: 'app-domains;create' do
     describe 'fails' do
       describe 'with invalid name' do
         describe 'name without TLD', :as_cassette do
@@ -113,7 +113,7 @@ shared_examples 'valid:applications:domains:create' do
 end
 
 shared_examples 'valid:applications:domains:create:422' do
-  describe 'domains create fails', cassette_group: 'application-domains;create' do
+  describe 'domains create fails', cassette_group: 'app-domains;create' do
     describe 'if the name is already used', :as_cassette do
       before do
         post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains",
@@ -128,7 +128,7 @@ shared_examples 'valid:applications:domains:create:422' do
 end
 
 shared_examples 'valid:applications:domains:get' do
-  describe 'domains get', cassette_group: 'application-domains;get' do
+  describe 'domains get', cassette_group: 'app-domains;get' do
     describe 'succeeds' do
       describe 'with hostname', :as_cassette do
         before do
@@ -171,7 +171,7 @@ shared_examples 'valid:applications:domains:get' do
 end
 
 shared_examples 'valid:applications:domains:delete' do
-  describe 'domains delete', cassette_group: 'application-domains;delete' do
+  describe 'domains delete', cassette_group: 'app-domains;delete' do
     describe 'succeeds' do
       describe 'for previously created entity with hostname', :as_cassette do
         before do

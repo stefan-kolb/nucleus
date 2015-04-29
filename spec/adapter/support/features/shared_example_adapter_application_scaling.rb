@@ -1,5 +1,5 @@
 shared_examples 'valid:applications:scale' do
-  describe 'scaling', cassette_group: 'application-actions;scaling' do
+  describe 'scaling', cassette_group: 'app-actions;scaling' do
     describe 'succeeds' do
       describe 'with scale-out and adds an application instance', :as_cassette do
         before do

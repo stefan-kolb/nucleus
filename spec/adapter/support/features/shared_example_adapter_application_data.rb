@@ -1,5 +1,5 @@
 shared_examples 'valid:applications:data:download:422' do
-  describe 'deployment data download', cassette_group: 'application-data;download' do
+  describe 'deployment data download', cassette_group: 'app-data;download' do
     describe 'of type tar.gz fails when there is no deployment', :as_cassette do
       before do
         get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/download?archive_format=tar.gz",
@@ -15,9 +15,9 @@ shared_examples 'valid:applications:data:download:422' do
 end
 
 shared_examples 'valid:applications:data:deploy' do
-  describe 'deployment', cassette_group: 'application-data;deploy' do
+  describe 'deployment', cassette_group: 'app-data;deploy' do
     describe 'fails for' do
-      describe 'unsupported archive compression of type .tbz2', :as_cassette do
+      describe 'unsupported archive .tbz2', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/deploy",
                { file: Rack::Test::UploadedFile.new('spec/adapter/application-archives/valid-sample-app.tbz2',
@@ -26,7 +26,7 @@ shared_examples 'valid:applications:data:deploy' do
         end
         include_examples 'a bad request'
       end
-      describe 'unsupported archive compression of type .tbz2 but with supported mime type',
+      describe 'unsupported archive .tbz2 but with supported mime type',
                :as_cassette, :mock_fs_on_replay do
         before do
           post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/deploy",
@@ -68,8 +68,8 @@ shared_examples 'valid:applications:data:deploy' do
           expect_status 204
         end
       end
-      describe 'and subsequent GET application with all properties shows that', :as_cassette do
-        it 'state changes to deployed within timeout period' do
+      describe 'and app with all properties', :as_cassette do
+        it 'changes state to deployed' do
           wait(60.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:state]
           end.to eq('deployed')
@@ -87,8 +87,8 @@ shared_examples 'valid:applications:data:deploy' do
           expect_status 204
         end
       end
-      describe 'and subsequent GET application with min properties shows that', :as_cassette do
-        it 'state changes to deployed within timeout period' do
+      describe 'and app with min properties', :as_cassette do
+        it 'changes state to deployed' do
           wait(60.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)[:state]
           end.to eq('deployed')
@@ -99,7 +99,7 @@ shared_examples 'valid:applications:data:deploy' do
 end
 
 shared_examples 'valid:applications:data:rebuild:422' do
-  describe 'deployment data rebuild', cassette_group: 'application-data;rebuild' do
+  describe 'deployment data rebuild', cassette_group: 'app-data;rebuild' do
     describe 'fails when there is no deployment', :as_cassette do
       before do
         post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/rebuild", {}, request_headers
@@ -110,7 +110,7 @@ shared_examples 'valid:applications:data:rebuild:422' do
 end
 
 shared_examples 'valid:applications:data:rebuild' do
-  describe 'deployment data rebuild', :mock_fs_on_replay, cassette_group: 'application-data;rebuild' do
+  describe 'deployment data rebuild', :mock_fs_on_replay, cassette_group: 'app-data;rebuild' do
     describe 'succeeds', :as_cassette do
       before do
         post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/data/rebuild", {}, request_headers
@@ -132,7 +132,7 @@ shared_examples 'valid:applications:data:rebuild' do
 end
 
 shared_examples 'valid:applications:data:download' do
-  describe 'deployment data download', cassette_group: 'application-data;download' do
+  describe 'deployment data download', cassette_group: 'app-data;download' do
     describe 'succeeds', :mock_fs_on_replay do
       describe 'for default archive_format .zip', :as_cassette do
         before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/download", request_headers }

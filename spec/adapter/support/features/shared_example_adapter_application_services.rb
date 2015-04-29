@@ -17,7 +17,7 @@ shared_examples 'installed service entity schema' do
 end
 
 shared_examples 'valid:applications:services:list:empty' do
-  describe 'application services list empty', :as_cassette, cassette_group: 'application-services;list' do
+  describe 'application services list empty', :as_cassette, cassette_group: 'app-services;list' do
     before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services", request_headers }
     include_examples 'a valid GET request'
     include_examples 'installed service list schema'
@@ -28,7 +28,7 @@ shared_examples 'valid:applications:services:list:empty' do
 end
 
 shared_examples 'valid:applications:services:add' do
-  describe 'application services add', cassette_group: 'application-services;add' do
+  describe 'application services add', cassette_group: 'app-services;add' do
     describe 'succeeds' do
       describe 'with 1st invocation', :as_cassette do
         before do
@@ -84,7 +84,7 @@ shared_examples 'valid:applications:services:add' do
 end
 
 shared_examples 'valid:applications:services:list' do
-  describe 'application services list', cassette_group: 'application-services;list' do
+  describe 'application services list', cassette_group: 'app-services;list' do
     describe 'succeeds', :as_cassette do
       before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services", request_headers }
       include_examples 'a valid GET request'
@@ -102,7 +102,7 @@ shared_examples 'valid:applications:services:list' do
 end
 
 shared_examples 'valid:applications:services:get' do
-  describe 'application services get', cassette_group: 'application-services;get' do
+  describe 'application services get', cassette_group: 'app-services;get' do
     describe 'fails' do
       describe 'with non-existent service', :as_cassette do
         before do
@@ -130,7 +130,7 @@ shared_examples 'valid:applications:services:get' do
 end
 
 shared_examples 'valid:applications:services:change' do
-  describe 'application services change', cassette_group: 'application-services;change' do
+  describe 'application services change', cassette_group: 'app-services;change' do
     describe 'fails' do
       describe 'with non-existent plan', :as_cassette do
         before do
@@ -166,7 +166,7 @@ shared_examples 'valid:applications:services:change' do
 end
 
 shared_examples 'valid:applications:services:remove' do
-  describe 'application services remove', cassette_group: 'application-services;remove' do
+  describe 'application services remove', cassette_group: 'app-services;remove' do
     describe 'fails' do
       describe 'with non-existent service', :as_cassette do
         before do

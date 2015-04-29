@@ -24,7 +24,7 @@ shared_examples 'service plan entity schema' do
 end
 
 shared_examples 'valid:services:plans:get' do
-  describe 'services plans get', cassette_group: 'application-services-plans;get' do
+  describe 'services plans get', cassette_group: 'service-plans;get' do
     describe 'succeeds', :as_cassette do
       before { get "/endpoints/#{@endpoint}/services/#{@service[:id]}/plans/#{@service[:plan_id]}", request_headers }
       include_examples 'a valid GET request'
@@ -51,7 +51,7 @@ shared_examples 'valid:services:plans:get' do
 end
 
 shared_examples 'valid:services:plans:list' do
-  describe 'services plans list', cassette_group: 'application-services-plans;list' do
+  describe 'services plans list', cassette_group: 'service-plans;list' do
     describe 'succeeds', :as_cassette do
       before { get "/endpoints/#{@endpoint}/services/#{@service[:id]}/plans", request_headers }
       include_examples 'a valid GET request'

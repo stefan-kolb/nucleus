@@ -6,7 +6,8 @@ describe Paasal::Adapters::V1::CloudControl do
     # application update and lifecycle actions are not supported
     @unsupported = ['with valid credentials is compliant and application update',
                     'with valid credentials is compliant and lifecycle operation',
-                    'with valid credentials is compliant and deployment succeeds and subsequent',
+                    'with valid credentials is compliant and deployment succeeds and app with all properties changes',
+                    'with valid credentials is compliant and deployment succeeds and app with min properties changes',
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log download succeeds for type request as .log binary',
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log

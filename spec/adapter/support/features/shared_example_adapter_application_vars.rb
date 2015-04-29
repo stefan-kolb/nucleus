@@ -13,7 +13,7 @@ shared_examples 'env_var entity schema' do
 end
 
 shared_examples 'valid:applications:vars:list:empty' do
-  describe 'list env_vars', cassette_group: 'application-vars;list' do
+  describe 'list env_vars', cassette_group: 'app-vars;list' do
     describe 'with empty result list', :as_cassette do
       before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers }
       include_examples 'a valid GET request'
@@ -26,7 +26,7 @@ shared_examples 'valid:applications:vars:list:empty' do
 end
 
 shared_examples 'valid:applications:vars:list' do
-  describe 'list env_vars', cassette_group: 'application-vars;list' do
+  describe 'list env_vars', cassette_group: 'app-vars;list' do
     describe 'succeeds', :as_cassette do
       before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars", request_headers }
       include_examples 'a valid GET request'
@@ -44,9 +44,9 @@ shared_examples 'valid:applications:vars:list' do
 end
 
 shared_examples 'valid:applications:vars:create' do
-  describe 'create env_var', cassette_group: 'application-vars;create' do
+  describe 'create env_var', cassette_group: 'app-vars;create' do
     describe 'succeeds' do
-      describe 'using app with all properties', :as_cassette do
+      describe 'using app all', :as_cassette do
         before do
           post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
                { variable: { key: 'our_test_var_key', value: 'our_test_var_value' } }, request_headers
@@ -61,7 +61,7 @@ shared_examples 'valid:applications:vars:create' do
         end
       end
 
-      describe 'number 2 using app with all properties' do
+      describe 'no 2 using app all' do
         describe 'succeeds', :as_cassette do
           before do
             post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars",
@@ -146,7 +146,7 @@ shared_examples 'valid:applications:vars:create' do
 end
 
 shared_examples 'valid:applications:vars:update' do
-  describe 'update env_var', cassette_group: 'application-vars;update' do
+  describe 'update env_var', cassette_group: 'app-vars;update' do
     describe 'succeeds', :as_cassette do
       before do
         patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key",
@@ -202,7 +202,7 @@ shared_examples 'valid:applications:vars:update' do
 end
 
 shared_examples 'valid:applications:vars:get' do
-  describe 'get env_var', cassette_group: 'application-vars;get' do
+  describe 'get env_var', cassette_group: 'app-vars;get' do
     describe 'succeeds', :as_cassette do
       before do
         get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key", request_headers
@@ -227,7 +227,7 @@ shared_examples 'valid:applications:vars:get' do
 end
 
 shared_examples 'valid:applications:vars:delete' do
-  describe 'delete env_var', cassette_group: 'application-vars;delete' do
+  describe 'delete env_var', cassette_group: 'app-vars;delete' do
     describe 'succeeds', :as_cassette do
       before do
         delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key", request_headers

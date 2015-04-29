@@ -18,7 +18,7 @@ shared_examples 'application entity schema' do
 end
 
 shared_examples 'valid:applications:create' do
-  describe 'create application', cassette_group: 'application;create' do
+  describe 'create application', cassette_group: 'app;create' do
     describe 'succeeds' do
       describe 'of type nodejs with all properties', :as_cassette do
         before do
@@ -105,7 +105,7 @@ shared_examples 'valid:applications:create' do
 end
 
 shared_examples 'valid:applications:get' do
-  describe 'get application', cassette_group: 'application;get' do
+  describe 'get application', cassette_group: 'app;get' do
     describe 'fails for non-existent application', :as_cassette do
       before do
         get "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", request_headers
@@ -122,7 +122,7 @@ shared_examples 'valid:applications:get' do
 end
 
 shared_examples 'valid:applications:list' do
-  describe 'list applications', :as_cassette, cassette_group: 'application;list' do
+  describe 'list applications', :as_cassette, cassette_group: 'app;list' do
     before { get "/endpoints/#{@endpoint}/applications", request_headers }
     include_examples 'a valid GET request'
     include_examples 'application list schema'
@@ -130,8 +130,8 @@ shared_examples 'valid:applications:list' do
 end
 
 shared_examples 'valid:applications:update' do
-  describe 'application update', cassette_group: 'application;update' do
-    describe 'succeeds when' do
+  describe 'application update' do
+    describe 'succeeds when', cassette_group: 'app;update;succeeds' do
       describe 'changing only the name', :as_cassette do
         before do
           application = { application: { name: @app_all[:updated_name] } }
@@ -165,7 +165,7 @@ shared_examples 'valid:applications:update' do
         end
       end
 
-      describe 'reverting runtime change for app with min properties', :as_cassette do
+      describe 'reverting runtime change for app min', :as_cassette do
         before do
           application = { application: { runtimes: ['nodejs'] } }
           patch "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", application, request_headers
@@ -176,7 +176,7 @@ shared_examples 'valid:applications:update' do
         end
       end
 
-      describe 'reverting runtime change for app with all properties', :as_cassette do
+      describe 'reverting runtime change for app all', :as_cassette do
         before do
           application = { application: { runtimes: ['nodejs'] } }
           patch "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", application, request_headers
@@ -187,7 +187,7 @@ shared_examples 'valid:applications:update' do
         end
       end
     end
-    describe 'fails for non-existing application', :as_cassette do
+    describe 'fails for non-existing application', :as_cassette, cassette_group: 'app;update;fails' do
       before do
         application = { application: { name: 'renamednonexistingapp', runtimes: ['ruby'] } }
         patch "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", application, request_headers
@@ -211,7 +211,7 @@ shared_examples 'valid:app:wordfinder' do
 end
 
 shared_examples 'valid:applications:web' do
-  describe 'web url access is possible', cassette_group: 'application;web access' do
+  describe 'web url access is possible', cassette_group: 'app;web access' do
     describe 'for app with all properties', :as_cassette do
       before do
         app = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
@@ -235,27 +235,29 @@ shared_examples 'valid:applications:web' do
 end
 
 shared_examples 'valid:applications:delete' do
-  describe 'delete', cassette_group: 'application;delete' do
-    describe 'succeeds for' do
-      describe 'previously created application' do
-        describe 'with min properties', :as_cassette do
+  describe 'delete', cassette_group: 'app;delete' do
+    describe 'for created application' do
+      describe 'with min properties' do
+        describe 'succeeds', :as_cassette do
           before do
             delete "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers
           end
           include_examples 'a valid DELETE request'
         end
-        describe 'makes subsequent GET of application with min properties invalid', :as_cassette do
+        describe 'makes GET of that app return 404', :as_cassette do
           before { get "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers }
           include_examples 'an unknown requested resource'
         end
+      end
 
-        describe 'with all properties', :as_cassette do
+      describe 'with all properties' do
+        describe 'succeeds', :as_cassette do
           before do
             delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers
           end
           include_examples 'a valid DELETE request'
         end
-        describe 'makes subsequent GET of application with all properties invalid', :as_cassette do
+        describe 'makes GET of that app return 404', :as_cassette do
           before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
           include_examples 'an unknown requested resource'
         end

@@ -12,7 +12,7 @@ shared_examples 'a valid log encoding' do
 end
 
 shared_examples 'valid:applications:logs:list' do
-  describe 'logs list', cassette_group: 'application-logs;list' do
+  describe 'logs list', cassette_group: 'app-logs;list' do
     describe 'succeeds', :as_cassette do
       before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers }
       include_examples 'a valid GET request'
@@ -33,7 +33,7 @@ shared_examples 'valid:applications:logs:list' do
 end
 
 shared_examples 'valid:applications:logs:download' do
-  describe 'log download', cassette_group: 'application-logs;download' do
+  describe 'log download', cassette_group: 'app-logs;download' do
     describe 'succeeds' do
       describe 'for type request as .log', :as_cassette do
         before do
@@ -148,7 +148,7 @@ shared_examples 'valid:applications:logs:download' do
 end
 
 shared_examples 'valid:applications:logs:download:all' do
-  describe 'log download of all logs', cassette_group: 'application-logs;download-all' do
+  describe 'log download of all logs', cassette_group: 'app-logs;download-all' do
     # TODO: download all log files, non-empty archive after deployment (!) --> test both download formats
     describe 'succeeds' do
       describe 'as .zip', :as_cassette do
@@ -276,7 +276,7 @@ end
 
 # shall be retrieved before application deployment so that the request log is actually empty
 shared_examples 'valid:applications:logs:get:empty' do
-  describe 'log get', cassette_group: 'application-logs;get' do
+  describe 'log get', cassette_group: 'app-logs;get' do
     describe 'with empty results for type request', :as_cassette do
       before do
         # TODO: at the time of writing this test, we assume that each platform provides a request log.
@@ -294,7 +294,7 @@ end
 
 # shall be retrieved after application deployment so that the request log contains entries
 shared_examples 'valid:applications:logs:get' do
-  describe 'log get', cassette_group: 'application-logs;get' do
+  describe 'log get', cassette_group: 'app-logs;get' do
     describe 'of type request', :as_cassette do
       before do
         # TODO: at the time of writing this test, we assume that each platform provides a request log.
@@ -327,7 +327,7 @@ shared_examples 'valid:applications:logs:get' do
 end
 
 shared_examples 'valid:applications:logs:tail' do
-  describe 'log tail', :em_reactor, cassette_group: 'application-logs;tail' do
+  describe 'log tail', :em_reactor, cassette_group: 'app-logs;tail' do
     # This test fails sometimes with no received message and is caused by the fixed timeouts
     # and delays in the platforms logging system.
     describe 'request', :as_cassette, :mock_websocket_on_replay do
