@@ -77,7 +77,7 @@ namespace :evaluation do
       @vendor_results.each do |_vendor, results|
         results.each_with_index do |(method, supported), line|
           lines[line] = "#{method}" unless lines[line]
-          lines[line] << " & #{supported ? '\\ding{51}' : '\\textcolor{red}{\\ding{55}}'}"
+          lines[line] << " & #{supported ? '\\ding{51}' : '\\cellcolor{failedtablebg}{\\ding{55}}'}"
         end
       end
 

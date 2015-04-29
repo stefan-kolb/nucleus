@@ -74,7 +74,8 @@ namespace :evaluation do
 
       task :latex, [:save_to] => :load do |_t, args|
         table = []
-        table << "\\scriptsize{\\begin{longtable}{|L{12cm}|#{'c|' * @vendor_results.length}}"
+        table << '\\scriptsize'
+        table << "\\begin{longtable}{|L{12cm}|#{'c|' * @vendor_results.length}}"
         next_line = '  \\multicolumn{1}{l}{\\Large{\\textbf{recorded test cassette}}}'
         @vendor_results.keys.each do |vendor|
           next_line += " & \\multicolumn{1}{l}{\\turn{60}{#{vendor}}}"
@@ -114,7 +115,8 @@ namespace :evaluation do
           ((tests.map { |_key, value| value }.sum) / tests.length.to_f).round(2)
         end.join(' & ')} \\\\\\hline"
 
-        table << '\\end{longtable}}'
+        table << '\\end{longtable}'
+        table << '\\normalsize'
 
         # print lines
         table.each { |line| puts line }
