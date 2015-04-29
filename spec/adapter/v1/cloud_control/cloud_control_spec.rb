@@ -22,11 +22,11 @@ describe Paasal::Adapters::V1::CloudControl do
     @api_version = 'v1'
     # we must use these stupid names given that cloud control prohibits special characters and (!)
     # deleted application names are locked for about 48 hours :(
-    @app_min = { original_name: 'paasaltestappminproperties35',
-                         updated_name: 'paasaltestappminproperties35',
+    @app_min = { original_name: 'paasaltestappminproperties40',
+                         updated_name: 'paasaltestappminproperties40',
                          region: 'default' }
-    @app_all = { original_name: 'paasaltestappallproperties35',
-                         updated_name: 'paasaltestappallproperties35',
+    @app_all = { original_name: 'paasaltestappallproperties40',
+                         updated_name: 'paasaltestappallproperties40',
                          region: 'default' }
     # add mysqls with the free plan, does not requier billing account whereas other free plans do !?
     @service = { id: 'mysqls', plan_id: 'free' }
