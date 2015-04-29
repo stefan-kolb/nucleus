@@ -8,7 +8,6 @@ require 'grape-swagger'
 # actually more native
 require 'tmpdir'
 require 'find'
-require 'filesize'
 require 'time'
 require 'securerandom'
 require 'logger'
