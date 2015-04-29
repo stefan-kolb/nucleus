@@ -124,6 +124,13 @@ module Paasal
         error_code: 503_000,
         message: 'Service Unavailable'
       }
+
+      PLATFORM_GATEWAY_TIMEOUT = {
+        status: 504,
+        error_code: 504_000,
+        message: 'Gateway Timeout. The platform raised an internal Timeout error. We don\'t know to what '\
+          'degree the request has been processed, or if it wasn\'t executed at all.'
+      }
     end
   end
 end

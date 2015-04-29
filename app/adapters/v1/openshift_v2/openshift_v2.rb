@@ -39,6 +39,10 @@ module Paasal
             fail Errors::SemanticAdapterRequestError, errors.collect { |e| e[:text] }.join(' ')
           elsif error_response.status == 503
             fail Errors::PlatformUnavailableError, 'The Openshift API is currently not available'
+          elsif error_response.status == 504
+            fail Errors::PlatformTimeoutError, 'The Openshift API did not receive information from it\'s slaves. '\
+              'Most likely the request is still being executed. Please make sure to analyse whether the request '\
+              'was successful before invoking further actions.'
           end
           # error still unhandled, will result in a 500, server error
           log.warn "Openshift error still unhandled: #{error_response}"
