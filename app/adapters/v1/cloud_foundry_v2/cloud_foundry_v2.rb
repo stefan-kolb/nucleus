@@ -132,9 +132,6 @@ module Paasal
           # if the response is neither one of the codes, the call fails anyway...
         end
 
-        # TODO: handle duplicate name
-        # TODO: handle CF-AppMemoryQuotaExceeded --> QuotaError as custom 422
-
         def app_web_url(app_guid)
           "#{app_guid}.#{@endpoint_app_domain}" if @endpoint_app_domain
         end

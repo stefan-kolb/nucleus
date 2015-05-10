@@ -307,7 +307,7 @@ module Paasal
           fail NOT_IMPLEMENTED_ERROR
         end
 
-        # TODO: add documentation when vertical scaling is done
+        # TODO: Finish documentation when vertical scaling is added
         # Scale the application and adjust the number of instances that shall be running.
         # @param [String] application_id Id of the application which is to be scaled
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found

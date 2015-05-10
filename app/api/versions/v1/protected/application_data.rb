@@ -39,7 +39,7 @@ module Paasal
             end
 
             adapter.deploy(params[:application_id], params[:file].tempfile, compression_format)
-            # TODO: what shall we return here?
+            # TODO: what shall we return here? application or 204
             # do not include any data in the response
             status 204
           end

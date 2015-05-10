@@ -140,7 +140,6 @@ shared_examples 'valid:applications:vars:create' do
           expect(json_body[:dev_message]).to include(' already ')
         end
       end
-      # TODO: do we have any invalid / restricted properties?
     end
   end
 end

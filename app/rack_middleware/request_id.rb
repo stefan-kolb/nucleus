@@ -13,7 +13,6 @@ module Paasal
       end
 
       def call(env)
-        # TODO: handle cascaded requests, id already assigned to the thread !?
         # fetch the ID
         Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID'] || SecureRandom.uuid
         # make sure there is a request id assigned

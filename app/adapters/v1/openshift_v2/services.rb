@@ -17,13 +17,13 @@ module Paasal
           # @see Stub#service_plans
           def service_plans(service_id)
             cartridge = embedded_cartridge(service_id)
-            # TODO: Currently there are no plans, implement when required...
+            # Currently there are no plans, implement when required...
             [default_plan(cartridge)]
           end
 
           # @see Stub#service_plan
           def service_plan(service_id, plan_id)
-            # TODO: Currently there are no plans, implement when required...
+            # Currently there are no plans, implement when required...
             fail Errors::AdapterResourceNotFoundError, "No such service plan name '#{plan_id}' for service "\
               "'#{service_id}'" if plan_id != 'default'
             cartridge = embedded_cartridge(service_id)
@@ -116,7 +116,7 @@ module Paasal
 
           def to_paasal_installed_service(installed_service)
             installed_service = to_paasal_service(installed_service)
-            # TODO: Currently there are no plans, implement when required...
+            # Currently there are no plans, implement when required...
             installed_service[:active_plan] = 'default'
             installed_service[:properties] = installed_service.key?(:properties) ? installed_service[:properties] : []
             installed_service[:web_url] = nil

@@ -55,7 +55,6 @@ module Paasal
         end
 
         def handle_error(error_response)
-          # TODO: test if this is valid for all messages
           message = error_response.body.match(/{(.*?)}/)
           message = message[1] if message
 

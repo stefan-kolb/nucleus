@@ -110,7 +110,7 @@ module Paasal
         end
 
         def original_deployment(app, deployments = nil)
-          # TODO: this is actually quite scary, could easily fail with wring timing
+          # TODO: this is actually quite scary, could easily fail with wrong timing
           # What are the alternatives?
           # 1) Clone git repo and lookup commits --> insanely slow
           # 2) Identify initial commits by sha1 key --> would require collection of allowed values, which may change!

@@ -175,7 +175,6 @@ module Paasal
             current_log_boundary = /boundary=(\w+)/.match(current_log_response.headers['Content-Type'])[1]
             current_log = current_log_response.body
 
-            # TODO: improve this ugly piece of code to extract the message parts...
             boundary_regexp = /--#{Regexp.quote(current_log_boundary)}(--)?#{CRLF}/
             parts = current_log.split(boundary_regexp).collect do |chunk|
               header_part, _ = chunk.split(/#{CRLF}#{WSP}*#{CRLF}/m, 2)

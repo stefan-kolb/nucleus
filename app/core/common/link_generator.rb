@@ -5,7 +5,10 @@ module Paasal
       @version = api_version
     end
 
-    # TODO: add documentation
+    # Generate the link that references the resource.
+    # @param [Array<String>] namespaces nested namespaces that must be joined to access the resource
+    # @param [String] id id of the resource
+    # @return [String] URL to the resource
     def resource(namespaces, id)
       # resource can only exist for an API version
       link = api_root
@@ -23,7 +26,7 @@ module Paasal
       root_url << '/api'
     end
 
-    # TODO: add documentation
+    # Get the root URL of the Paasal API (scheme + host)
     def root_url
       "#{@env['rack.url_scheme']}://#{@env['HTTP_HOST']}"
     end

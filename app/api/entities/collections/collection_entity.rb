@@ -1,8 +1,16 @@
 module Paasal
   module API
     module Models
+      # The {CollectionEntity} is a Grape::Entity model for API references to match HATEOAS.
+      # It is based on the HAL syntax http://stateless.co/hal_specification.html and provides convenience methods
+      # to be used by child classes.
       class CollectionEntity < AbstractEntity
-        # TODO: document me
+        # A collection, for instance applications registered at the endpoint.
+        # Exposes the list of items and meta information, e.g. the size of the collection.
+        # @param [String] key key to be used in the api as entry
+        # @param [String] full_name full name of the entity, used for the collection's description
+        # @param [Paasal::API::Models::AbstractEntity] model class of the entities contained in the collection
+        # @return [void]
         def self.item_collection(key, full_name, model)
           present_collection true
           model_class_name = model.to_s.gsub(/^.*::/, '')
@@ -20,7 +28,10 @@ module Paasal
           }, using: model
         end
 
-        # TODO: document me
+        # Create the basic links for the collection. This includes the self-reference and the parent API element.
+        # @param [String] unformatted_link unformatted link of the parent resource
+        # @param [String] action_name name of the current action, to be used for self-reference
+        # @return [void]
         def self.basic_links(unformatted_link, action_name)
           expose :_links, using: Models::BasicReferences, documentation: {
             required: true,

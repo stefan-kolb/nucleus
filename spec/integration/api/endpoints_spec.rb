@@ -164,14 +164,4 @@ describe Paasal::API::V1::Endpoints do
     before { get "/endpoints/#{endpoint_a.id}/applications" }
     include_examples 'an unauthorized request'
   end
-
-  # TODO: move to adapter tests (!)
-  # context 'when authenticated' do
-  #   before { get "/endpoints/#{endpoint_a.id}/applications" }
-  #   include_examples 'a valid GET request'
-  #   # TODO: implement
-  #   xit 'returns the application list of the endpoint' do
-  #     get "endpoints/#{endpoint_a.id}/applications"
-  #   end
-  # end
 end

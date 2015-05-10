@@ -45,7 +45,6 @@ module Paasal
             self: { href: link_resource(%w(endpoints), instance) },
               # link back to the provider
               parent: { href: link_resource(%w(providers), instance.provider) },
-              # TODO: is only available when authenticated
               # associated applications
               applications: { href: link_child_resource(%w(endpoints), instance, %w(applications)) }, safe: true
           }

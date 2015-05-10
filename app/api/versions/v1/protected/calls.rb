@@ -4,8 +4,6 @@ module Paasal
       class Calls < Grape::API
         helpers SharedParamsHelper
 
-        # TODO: test with post, or anything that requires a body
-
         params do
           use :endpoint_id
         end

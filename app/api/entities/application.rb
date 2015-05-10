@@ -36,7 +36,6 @@ module Paasal
         }
 
         expose :autoscaled, documentation: {
-          # TODO: handle boolean properly
           type: Virtus::Attribute::Boolean, desc: 'Application auto-scaling: true if enabled, otherwise false',
           required: true
         }
@@ -53,7 +52,7 @@ module Paasal
           required: true
         }
 
-        # TODO: application instance levels
+        # TODO: add application instance levels for vertical scaling
 
         # read-only
         expose :state, documentation: {

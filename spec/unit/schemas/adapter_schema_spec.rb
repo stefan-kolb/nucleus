@@ -13,6 +13,4 @@ describe 'YAML adapter schema' do
     errors = @parser.errors
     expect(errors).to match_array([])
   end
-  # TODO: test adapter configs
-  # TODO: test adapter implementations
 end
