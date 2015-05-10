@@ -14,8 +14,7 @@ module Paasal
             use :endpoint_id
           end
           get '/' do
-            services = with_authentication { adapter.services }
-            present services, with: Models::Services
+            present adapter.services, with: Models::Services
           end
 
           desc 'Retrieve a specific service of the endpoint' do
@@ -28,8 +27,7 @@ module Paasal
           end
           # regex to allow dots in the service id as path element (as required by the Openshift V2 names)
           get ':service_id', requirements: { service_id: %r{[^\/]*} } do
-            service = with_authentication { adapter.service(params[:service_id]) }
-            present service, with: Models::Service
+            present adapter.service(params[:service_id]), with: Models::Service
           end
         end
       end

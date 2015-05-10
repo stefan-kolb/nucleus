@@ -38,7 +38,7 @@ module Paasal
               end
             end
 
-            with_authentication { adapter.deploy(params[:application_id], params[:file].tempfile, compression_format) }
+            adapter.deploy(params[:application_id], params[:file].tempfile, compression_format)
             # TODO: what shall we return here?
             # do not include any data in the response
             status 204
@@ -49,8 +49,7 @@ module Paasal
             failure [[200, 'Application rebuild done', Models::Application]].concat ErrorResponses.standard_responses
           end
           post '/rebuild' do
-            application = with_authentication { adapter.rebuild(params[:application_id]) }
-            present application, with: Models::Application
+            present adapter.rebuild(params[:application_id]), with: Models::Application
           end
 
           desc 'Download the application data, binary attachment' do
@@ -65,7 +64,7 @@ module Paasal
           end
           get '/download' do
             compression_format = params[:archive_format]
-            data = with_authentication { adapter.download(params[:application_id], compression_format) }
+            data = adapter.download(params[:application_id], compression_format)
             filename = "#{params[:endpoint_id]}.app.source.#{params[:application_id]}.#{compression_format}"
             content_type MIME::Types.of(filename).first.content_type
             env['api.format'] = :binary

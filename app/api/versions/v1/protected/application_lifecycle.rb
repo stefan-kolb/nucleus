@@ -15,8 +15,7 @@ module Paasal
                       Models::Application]].concat ErrorResponses.standard_responses
           end
           post '/start' do
-            application = with_authentication { adapter.start(params[:application_id]) }
-            present application, with: Models::Application
+            present adapter.start(params[:application_id]), with: Models::Application
           end
 
           desc 'Stop the application' do
@@ -25,8 +24,7 @@ module Paasal
                       Models::Application]].concat ErrorResponses.standard_responses
           end
           post '/stop' do
-            application = with_authentication { adapter.stop(params[:application_id]) }
-            present application, with: Models::Application
+            present adapter.stop(params[:application_id]), with: Models::Application
           end
 
           desc 'Restart the application' do
@@ -35,8 +33,7 @@ module Paasal
                       Models::Application]].concat ErrorResponses.standard_responses
           end
           post '/restart' do
-            application = with_authentication { adapter.restart(params[:application_id]) }
-            present application, with: Models::Application
+            present adapter.restart(params[:application_id]), with: Models::Application
           end
         end # end of resource
       end

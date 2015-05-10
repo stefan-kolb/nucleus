@@ -1,5 +1,6 @@
 module Paasal
-  # TODO: document me
+  # The {AdapterResolver} can be used within Ruby applications to retrieve a PaaSal adapter.
+  # Returned adapters are patched so that each call enforces authentication and retries a call when a token was expired.
   class AdapterResolver
     include Paasal::UrlConverter
 
@@ -45,10 +46,8 @@ module Paasal
       adapter = @adapters[vendor].new(endpoint_url, options[:app_domain], check_ssl)
 
       fake_env = { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
-      stub_class(adapter).instance_methods(false).each do |method_to_wrap|
-        # wrap method with authentication repetition call
-        patch_method(adapter, method_to_wrap, fake_env)
-      end
+      # patch the adapter so that calls are wrapped and expect valid authentication
+      AdapterAuthenticationInductor.patch(adapter, fake_env)
 
       cache_key = adapter.cache_key(username, password)
       # no auth object available, perform authentication first
@@ -63,37 +62,6 @@ module Paasal
     end
 
     private
-
-    # Patch the actual method that is defined in an API version stub.
-    # The method shall than be able to update the authentication token if the initial authentication expired.<br>
-    # Only major authentication issues, e.g. if the credentials are repeatedly rejected,
-    # will be thrown to the adapter caller.
-    def patch_method(adapter, method_to_wrap, fake_env)
-      with_wrapper = :"#{method_to_wrap}_with_before_each_method_call"
-      without_wrapper = :"#{method_to_wrap}_without_before_each_method_call"
-      @__last_methods_added = [method_to_wrap, with_wrapper, without_wrapper]
-      # wrap the method call
-      adapter.define_singleton_method with_wrapper do |*args, &block|
-        log.debug "Calling adapter method '#{method_to_wrap}' against #{endpoint_url}"
-        # use the AuthenticationRetryWrapper to retry calls if tokens expired, ...
-        Paasal::Adapters::AuthenticationRetryWrapper.with_authentication(adapter, fake_env) do
-          return send without_wrapper, *args, &block
-        end
-      end
-      # now do the actual method re-assignment
-      adapter.define_singleton_method without_wrapper, adapter.method(method_to_wrap)
-      adapter.define_singleton_method method_to_wrap, adapter.method(with_wrapper)
-      @__last_methods_added = nil
-    end
-
-    def stub_class(adapter)
-      parent = adapter.class
-      loop do
-        break if parent.superclass == Adapters::BaseAdapter
-        parent = parent.superclass
-      end
-      parent
-    end
 
     def setup
       # Initialize the application (import adapters, load DAOs, ...)

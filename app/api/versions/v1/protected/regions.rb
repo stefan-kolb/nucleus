@@ -13,8 +13,7 @@ module Paasal
             use :endpoint_id
           end
           get '/' do
-            regions = with_authentication { adapter.regions }
-            present regions, with: Models::Regions
+            present adapter.regions, with: Models::Regions
           end
 
           desc 'Get a specific deployment region' do
@@ -26,8 +25,7 @@ module Paasal
             requires :region_id, type: String, desc: 'The regions ID'
           end
           get ':region_id' do
-            region = with_authentication { adapter.region params[:region_id] }
-            present region, with: Models::Region
+            present adapter.region(params[:region_id]), with: Models::Region
           end
         end
       end

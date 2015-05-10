@@ -14,8 +14,7 @@ module Paasal
             failure [[200, 'Domains retrieved', Models::Domains]].concat ErrorResponses.standard_responses
           end
           get '/' do
-            domains = with_authentication { adapter.domains(params[:application_id]) }
-            present domains, with: Models::Domains
+            present adapter.domains(params[:application_id]), with: Models::Domains
           end
 
           desc 'Create a domain' do
@@ -34,9 +33,7 @@ module Paasal
             unless /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/ =~ domain_params[:name]
               fail Errors::SemanticAdapterRequestError, "'#{domain_params[:name]}'' is not a valid domain name"
             end
-
-            domain = with_authentication { adapter.create_domain(params[:application_id], domain_params) }
-            present domain, with: Models::Domain
+            present adapter.create_domain(params[:application_id], domain_params), with: Models::Domain
           end
 
           params do
@@ -50,15 +47,14 @@ module Paasal
                         Models::Domains]].concat ErrorResponses.standard_responses
             end
             get '/' do
-              domain = with_authentication { adapter.domain(params[:application_id], params[:domain_id]) }
-              present domain, with: Models::Domain
+              present adapter.domain(params[:application_id], params[:domain_id]), with: Models::Domain
             end
 
             desc 'Delete a domain' do
               failure [[204, 'Domain deleted']].concat ErrorResponses.standard_responses
             end
             delete '/' do
-              with_authentication { adapter.delete_domain(params[:application_id], params[:domain_id]) }
+              adapter.delete_domain(params[:application_id], params[:domain_id])
               # respond with 204 when entity is deleted (see rfc7231)
               status 204
             end

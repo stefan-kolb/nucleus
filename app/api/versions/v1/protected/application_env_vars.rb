@@ -16,8 +16,7 @@ module Paasal
                       Models::EnvironmentVariables]].concat ErrorResponses.standard_responses
           end
           get '/' do
-            vars = with_authentication { adapter.env_vars(params[:application_id]) }
-            present vars, with: Models::EnvironmentVariables
+            present adapter.env_vars(params[:application_id]), with: Models::EnvironmentVariables
           end
 
           desc 'Create an environment variable' do
@@ -33,8 +32,7 @@ module Paasal
           end
           post '/' do
             var_params = declared(params, include_missing: false)[:variable]
-            var = with_authentication { adapter.create_env_var(params[:application_id], var_params) }
-            present var, with: Models::EnvironmentVariable
+            present adapter.create_env_var(params[:application_id], var_params), with: Models::EnvironmentVariable
           end
 
           params do
@@ -47,8 +45,7 @@ module Paasal
                         Models::EnvironmentVariable]].concat ErrorResponses.standard_responses
             end
             get '/' do
-              var = with_authentication { adapter.env_var(params[:application_id], params[:env_var_id]) }
-              present var, with: Models::EnvironmentVariable
+              present adapter.env_var(params[:application_id], params[:env_var_id]), with: Models::EnvironmentVariable
             end
 
             desc 'Update an environment variable\'s value' do
@@ -64,17 +61,15 @@ module Paasal
             end
             patch '/' do
               var_params = declared(params, include_missing: false)[:variable]
-              var = with_authentication do
-                adapter.update_env_var(params[:application_id], params[:env_var_id], var_params)
-              end
-              present var, with: Models::EnvironmentVariable
+              present adapter.update_env_var(params[:application_id], params[:env_var_id], var_params),
+                      with: Models::EnvironmentVariable
             end
 
             desc 'Delete an environment variable' do
               failure [[204, 'Environment variable deleted']].concat ErrorResponses.standard_responses
             end
             delete '/' do
-              with_authentication { adapter.delete_env_var(params[:application_id], params[:env_var_id]) }
+              adapter.delete_env_var(params[:application_id], params[:env_var_id])
               # respond with 204 when entity is deleted (see rfc7231)
               status 204
             end

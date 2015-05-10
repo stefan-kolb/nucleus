@@ -18,8 +18,7 @@ module Paasal
           end
           post '/scale' do
             # TODO: enrich with scale-up and scale-down parameters
-            application = with_authentication { adapter.scale(params[:application_id], params[:instances]) }
-            present application, with: Models::Application
+            present adapter.scale(params[:application_id], params[:instances]), with: Models::Application
           end
         end # end of resource
       end

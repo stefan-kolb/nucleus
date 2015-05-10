@@ -16,8 +16,7 @@ module Paasal
             failure [[200, 'Logs retrieved', Models::Logs]].concat ErrorResponses.standard_responses
           end
           get '/' do
-            logs = with_authentication { adapter.logs(params[:application_id]) }
-            present logs, with: Models::Logs
+            present adapter.logs(params[:application_id]), with: Models::Logs
           end
 
           desc 'Download all log files as archive' do
@@ -31,7 +30,7 @@ module Paasal
           end
           get '/download' do
             # returns an array of log entries
-            logs = with_authentication { adapter.logs(params[:application_id]) }
+            logs = adapter.logs(params[:application_id])
             archive_filename = "paasal.app.generic.logs.download.#{params[:application_id]}"\
               ".#{SecureRandom.uuid}.#{params[:archive_format]}"
             tmp_dir = File.join(Dir.tmpdir, archive_filename)
@@ -48,7 +47,7 @@ module Paasal
               valid_logfiles = 0
               logs.each do |logfile|
                 log.debug "Including #{logfile[:id]} in archive download"
-                log_entries = with_authentication { adapter.log_entries(params[:application_id], logfile[:id]) }
+                log_entries = adapter.log_entries(params[:application_id], logfile[:id])
                 next unless log_entries && log_entries.length > 0
                 data = StringIO.new(log_entries.join("\n"))
                 filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.#{logfile[:id]}.log"
@@ -82,10 +81,7 @@ module Paasal
             end
             get '/' do
               # execute the actual request and fetch the log
-              log_entries = with_authentication do
-                # returns an array of log entries
-                adapter.log_entries(params[:application_id], params[:log_id])
-              end
+              log_entries = adapter.log_entries(params[:application_id], params[:log_id])
 
               status 200
               header 'Content-Type', 'text/plain'
@@ -104,7 +100,7 @@ module Paasal
             end
             get '/download' do
               # returns an array of log entries
-              log_entries = with_authentication { adapter.log_entries(params[:application_id], params[:log_id]) }
+              log_entries = adapter.log_entries(params[:application_id], params[:log_id])
               data = StringIO.new(log_entries.join("\n"))
               filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.log."\
                 "#{params[:log_id]}.#{params[:file_format]}"

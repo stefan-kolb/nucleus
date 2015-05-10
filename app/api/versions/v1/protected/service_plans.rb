@@ -17,8 +17,7 @@ module Paasal
               failure [[200, 'Services retrieved', Models::Services]].concat ErrorResponses.standard_responses
             end
             get '/' do
-              service_plans = with_authentication { adapter.service_plans(params[:service_id]) }
-              present service_plans, with: Models::ServicePlans
+              present adapter.service_plans(params[:service_id]), with: Models::ServicePlans
             end
 
             desc 'Retrieve a specific plan of the service' do
@@ -30,8 +29,7 @@ module Paasal
             end
             # regex to allow dots in the service id as path element
             get ':service_plan_id', requirements: { service_plan_id: %r{[^\/]*} } do
-              service_plan = with_authentication { adapter.service_plan(params[:service_id], params[:service_plan_id]) }
-              present service_plan, with: Models::ServicePlan
+              present adapter.service_plan(params[:service_id], params[:service_plan_id]), with: Models::ServicePlan
             end
           end
         end

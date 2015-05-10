@@ -34,8 +34,7 @@ module Paasal
                 RequestStore.store[:cache_key] = request_cache.get("#{env['HTTP_X_REQUEST_ID']}.auth.cache.key")
 
                 # we need to check file existence before, otherwise we would have returned status 200 already
-                log_exists = with_authentication { adapter.log?(params[:application_id], params[:log_id]) }
-                unless log_exists
+                unless adapter.log?(params[:application_id], params[:log_id])
                   fail Errors::AdapterResourceNotFoundError, "Invalid log file '#{params[:log_id]}', "\
                     "not available for application '#{params[:application_id]}'"
                 end
@@ -56,9 +55,7 @@ module Paasal
                   Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
                   begin
                     # execute the actual request and stream the logging message
-                    tail_polling = with_authentication do
-                      adapter.tail(params[:application_id], params[:log_id], stream)
-                    end
+                    tail_polling = adapter.tail(params[:application_id], params[:log_id], stream)
 
                     # this should at the moment only apply to tests, closing the tailing action when X seconds passed
                     if env['async.callback.auto.timeout']

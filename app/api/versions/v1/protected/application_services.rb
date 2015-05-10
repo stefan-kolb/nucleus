@@ -15,8 +15,7 @@ module Paasal
                     ].concat ErrorResponses.standard_responses
           end
           get '/' do
-            installed_services = with_authentication { adapter.installed_services(params[:application_id]) }
-            present installed_services, with: Models::InstalledServices
+            present adapter.installed_services(params[:application_id]), with: Models::InstalledServices
           end
 
           desc 'Add a service to the application' do
@@ -35,10 +34,8 @@ module Paasal
             end
           end
           post '/' do
-            installed_service = with_authentication do
-              adapter.add_service(params[:application_id], params[:service], params[:plan])
-            end
-            present installed_service, with: Models::InstalledService
+            present adapter.add_service(params[:application_id], params[:service], params[:plan]),
+                    with: Models::InstalledService
           end
 
           params do
@@ -52,10 +49,8 @@ module Paasal
                       ].concat ErrorResponses.standard_responses
             end
             get '/' do
-              installed_service = with_authentication do
-                adapter.installed_service(params[:application_id], params[:service_id])
-              end
-              present installed_service, with: Models::InstalledService
+              present adapter.installed_service(params[:application_id], params[:service_id]),
+                      with: Models::InstalledService
             end
 
             desc 'Change a service that is already applied to the application' do
@@ -70,17 +65,15 @@ module Paasal
               end
             end
             patch '/' do
-              installed_service = with_authentication do
-                adapter.change_service(params[:application_id], params[:service_id], params[:plan])
-              end
-              present installed_service, with: Models::InstalledService
+              present adapter.change_service(params[:application_id], params[:service_id], params[:plan]),
+                      with: Models::InstalledService
             end
 
             desc 'Remove a service from the application' do
               failure [[204, 'Service removed']].concat ErrorResponses.standard_responses
             end
             delete '/' do
-              with_authentication { adapter.remove_service(params[:application_id], params[:service_id]) }
+              adapter.remove_service(params[:application_id], params[:service_id])
               # respond with 204 when entity is deleted (see rfc7231)
               status 204
             end

@@ -18,6 +18,9 @@ module Paasal
             # use the already secured (https) URL of the index_entry
             adapter = index_entry.adapter_clazz.new(index_entry.url, endpoint.app_domain, !endpoint.trust)
 
+            # patch the adapter so that calls are wrapped and expect valid authentication
+            AdapterAuthenticationInductor.patch(adapter, env)
+
             # save info for the current request, no need to retrieve multiple times
             request_cache.set("#{env['HTTP_X_REQUEST_ID']}.adapter", adapter)
             request_cache.set("#{env['HTTP_X_REQUEST_ID']}.endpoint", endpoint)
