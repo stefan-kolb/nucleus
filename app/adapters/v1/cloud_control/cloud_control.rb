@@ -1,3 +1,5 @@
+require 'net/ssh'
+
 module Paasal
   module Adapters
     module V1
@@ -80,6 +82,23 @@ module Paasal
           to_paasal_app(get("/app/#{application_id}").body, scale_response)
         end
 
+        # @see Stub#start
+        def start(application_id)
+          # fail if there is no deployment
+          unless data_uploaded?(application_id)
+            fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
+          end
+
+          # if no cloudControl deployment has been made, trigger it
+          if default_deployment(application_id)[:version] == '-1'
+            # deploy via the API, use version identifier -1 to refer a new build
+            put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
+          end
+
+          # return the application object
+          to_paasal_app(get("/app/#{application_id}").body, default_deployment(application_id))
+        end
+
         private
 
         def handle_400(message)
@@ -100,19 +119,32 @@ module Paasal
           get('/user').body.first[:username]
         end
 
+        def data_uploaded?(application_id)
+          attempts = 0
+          with_ssh_key do
+            loop do
+              begin
+                return GitRepoAnalyzer.any_branch?('cloudcontrolled.com', 'repository', application_id)
+              rescue Net::SSH::AuthenticationFailed => e
+                attempts += 1
+                raise e if attempts >= 15
+                log.debug('SSH authentication failed, sleep and repeat')
+                # authentication is not yet ready, wait a short time
+                sleep(2.0)
+              end
+            end
+          end
+        end
+
         def application_state(deployment)
-          # CloudControl does not create a deployment by default.
-          # It also does not support start and stop operations.
-          # One workaround is to create (start) and delete (stop) all deployments.
-          # When stopping, we delete and immediately re-create the deployment.
-          # Then its state shall be not deployed, which could be interpreted as equivalent to stopped,
-          #  since the deployment code is still in the git repository.
-          #
-          # With cloud control not supporting the PaaSal application lifecycle, only 2 actual states remain:<br>
+          # With cloud control not supporting the PaaSal application lifecycle, only 3 actual states remain:<br>
           # * created, when no data deployment (not to confuse with cloud control deployment object) has been made yet
+          # * deployed, when only the data has been pushed into the repository (no build)
           # * running, if a data deployment was pushed
-          return API::Models::Application::States::CREATED if deployment[:version] == '-1'
-          # return API::Models::Application::States::DEPLOYED
+          if deployment[:version] == '-1'
+            return API::Models::Application::States::DEPLOYED if data_uploaded?(deployment[:name].split(%r{/})[0])
+            return API::Models::Application::States::CREATED
+          end
           return API::Models::Application::States::IDLE if deployment[:state] == 'idle'
           API::Models::Application::States::RUNNING
           # return API::Models::Application::States::STOPPED
@@ -137,6 +169,17 @@ module Paasal
             created_at: Time.at(0).to_datetime,
             updated_at: Time.at(0).to_datetime
           }
+        end
+
+        def with_ssh_key
+          user = username
+          # load ssh key into cloud control
+          matches = paasal_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
+          key_id = register_key(user, matches[1], matches[2])
+          return yield
+        ensure
+          # unload ssh key, allow 404 if the key couldn't be registered at first
+          delete("/user/#{user}/key/#{key_id}") if key_id
         end
       end
     end

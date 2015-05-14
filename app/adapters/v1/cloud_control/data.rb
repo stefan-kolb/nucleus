@@ -4,9 +4,6 @@ module Paasal
       class CloudControl < Stub
         # cloud control data management operations
         module Data
-          # BEWARE:<br>
-          # cloud control violates the PaaSal application lifecycle. After the deployment, the application
-          # is immediately running and can't be stopped!
           # @see Stub#deploy
           def deploy(application_id, file, compression_format)
             # get deployment, also serves as 404 check for application
@@ -18,10 +15,6 @@ module Paasal
               deployer = GitDeployer.new(name, deployment[:branch], user[:email], PAASAL_DEPLOYMENT)
               deployer.deploy(file, compression_format)
             end
-
-            # now deploy via the API, use version identifier -1 to refer a new build
-            put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
-            # FIXME: application can't be stopped, cloud control does not yet offer lifecycle operations
           end
 
           # @see Stub#download
@@ -62,17 +55,6 @@ module Paasal
           end
 
           private
-
-          def with_ssh_key
-            user = username
-            # load ssh key into cloud control
-            matches = paasal_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
-            key_id = register_key(user, matches[1], matches[2])
-            return yield
-          ensure
-            # unload ssh key, allow 404 if the key couldn't be registered at first
-            delete("/user/#{user}/key/#{key_id}") if key_id
-          end
 
           def register_key(user, type, key)
             key_name = "paasal-#{SecureRandom.uuid}"
