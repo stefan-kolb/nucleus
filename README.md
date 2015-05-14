@@ -238,7 +238,7 @@ A rack server can be started in multiple ways.
 The most convinient solution is to use the provided script:  
 
 ```shell
-$ ./bin/paasal start
+$ ./bin/paasal
 ```
 
 Hower, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
