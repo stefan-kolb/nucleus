@@ -5,9 +5,12 @@ describe Paasal::Adapters::V1::CloudControl do
     # skip these example groups / tests for this adapter, both,
     # application update and lifecycle actions are not supported
     @unsupported = ['with valid credentials is compliant and application update',
-                    'with valid credentials is compliant and lifecycle operation',
-                    'with valid credentials is compliant and deployment succeeds and app with all properties changes',
-                    'with valid credentials is compliant and deployment succeeds and app with min properties changes',
+                    'with valid credentials is compliant and lifecycle operations stop',
+                    'with valid credentials is compliant and lifecycle operations restart',
+                    'with valid credentials is compliant and lifecycle operations fail before deployment '\
+                      'was made stop',
+                    'with valid credentials is compliant and lifecycle operations fail before deployment '\
+                      'was made restart',
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log download succeeds for type request as .log binary',
                     # TODO: currently there are some delays, requests take up to 5min to appear in the log
@@ -22,11 +25,11 @@ describe Paasal::Adapters::V1::CloudControl do
     @api_version = 'v1'
     # we must use these stupid names given that cloud control prohibits special characters and (!)
     # deleted application names are locked for about 48 hours :(
-    @app_min = { original_name: 'paasaltestappminproperties40',
-                         updated_name: 'paasaltestappminproperties40',
+    @app_min = { original_name: 'paasaltestappminproperties62',
+                         updated_name: 'paasaltestappminproperties62',
                          region: 'default' }
-    @app_all = { original_name: 'paasaltestappallproperties40',
-                         updated_name: 'paasaltestappallproperties40',
+    @app_all = { original_name: 'paasaltestappallproperties62',
+                         updated_name: 'paasaltestappallproperties62',
                          region: 'default' }
     # add mysqls with the free plan, does not requier billing account whereas other free plans do !?
     @service = { id: 'mysqls', plan_id: 'free' }
