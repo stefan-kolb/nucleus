@@ -18,7 +18,7 @@ shared_examples 'application entity schema' do
 end
 
 shared_examples 'valid:applications:create' do
-  describe 'create application', cassette_group: 'app;create' do
+  describe 'create application', :mock_fs_on_replay, cassette_group: 'app;create' do
     describe 'succeeds' do
       describe 'of type nodejs with all properties', :as_cassette do
         before do
@@ -105,7 +105,7 @@ shared_examples 'valid:applications:create' do
 end
 
 shared_examples 'valid:applications:get' do
-  describe 'get application', cassette_group: 'app;get' do
+  describe 'get application', :mock_fs_on_replay, cassette_group: 'app;get' do
     describe 'fails for non-existent application', :as_cassette do
       before do
         get "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", request_headers
@@ -122,7 +122,7 @@ shared_examples 'valid:applications:get' do
 end
 
 shared_examples 'valid:applications:list' do
-  describe 'list applications', :as_cassette, cassette_group: 'app;list' do
+  describe 'list applications', :mock_fs_on_replay, :as_cassette, cassette_group: 'app;list' do
     before { get "/endpoints/#{@endpoint}/applications", request_headers }
     include_examples 'a valid GET request'
     include_examples 'application list schema'

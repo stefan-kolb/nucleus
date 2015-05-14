@@ -1,5 +1,5 @@
 shared_examples 'valid:applications:lifecycle' do
-  describe 'lifecycle operations', cassette_group: 'app-actions;lifecycle' do
+  describe 'lifecycle operations', :mock_fs_on_replay, cassette_group: 'app-actions;lifecycle' do
     [:@app_all, :@app_min].each do |app_name|
       describe 'start' do
         describe "succeeds for #{app_name} if currently stopped", :as_cassette do
@@ -80,43 +80,42 @@ shared_examples 'valid:applications:lifecycle' do
 end
 
 shared_examples 'valid:applications:lifecycle:422' do
-  describe 'lifecycle operations before deployment' do
-    describe 'fail because there is no deployment', cassette_group: 'app-actions;lifecycle;fail' do
-      describe 'start' do
-        describe 'fails', :as_cassette do
-          before do
-            post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/actions/start", {}, request_headers
-          end
-          include_examples 'a semantically invalid request'
+  describe 'lifecycle operations fail before deployment was made', :mock_fs_on_replay,
+           cassette_group: 'app-actions;lifecycle;fail' do
+    describe 'start' do
+      describe 'fails', :as_cassette do
+        before do
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/actions/start", {}, request_headers
         end
-        describe 'subsq. req. shows no state changes', :as_cassette do
-          before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
-          include_examples 'application state: created'
-        end
+        include_examples 'a semantically invalid request'
       end
-      describe 'stop' do
-        describe 'fails', :as_cassette do
-          before do
-            post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/actions/stop", {}, request_headers
-          end
-          include_examples 'a semantically invalid request'
-        end
-        describe 'subsq. req. shows no state changes', :as_cassette do
-          before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
-          include_examples 'application state: created'
-        end
+      describe 'subsq. req. shows no state changes', :as_cassette do
+        before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
+        include_examples 'application state: created'
       end
-      describe 'restart' do
-        describe 'fails', :as_cassette do
-          before do
-            post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/actions/restart", {}, request_headers
-          end
-          include_examples 'a semantically invalid request'
+    end
+    describe 'stop' do
+      describe 'fails', :as_cassette do
+        before do
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/actions/stop", {}, request_headers
         end
-        describe 'subsq. req. shows no state changes', :as_cassette do
-          before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
-          include_examples 'application state: created'
+        include_examples 'a semantically invalid request'
+      end
+      describe 'subsq. req. shows no state changes', :as_cassette do
+        before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
+        include_examples 'application state: created'
+      end
+    end
+    describe 'restart' do
+      describe 'fails', :as_cassette do
+        before do
+          post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/actions/restart", {}, request_headers
         end
+        include_examples 'a semantically invalid request'
+      end
+      describe 'subsq. req. shows no state changes', :as_cassette do
+        before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers }
+        include_examples 'application state: created'
       end
     end
   end

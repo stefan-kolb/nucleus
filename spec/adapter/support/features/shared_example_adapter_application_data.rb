@@ -1,5 +1,5 @@
 shared_examples 'valid:applications:data:download:422' do
-  describe 'deployment data download', cassette_group: 'app-data;download' do
+  describe 'deployment data download', :mock_fs_on_replay, cassette_group: 'app-data;download' do
     describe 'of type tar.gz fails when there is no deployment', :as_cassette do
       before do
         get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/download?archive_format=tar.gz",
@@ -99,7 +99,7 @@ shared_examples 'valid:applications:data:deploy' do
 end
 
 shared_examples 'valid:applications:data:rebuild:422' do
-  describe 'deployment data rebuild', cassette_group: 'app-data;rebuild' do
+  describe 'deployment data rebuild', :mock_fs_on_replay, cassette_group: 'app-data;rebuild' do
     describe 'fails when there is no deployment', :as_cassette do
       before do
         post "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/rebuild", {}, request_headers
