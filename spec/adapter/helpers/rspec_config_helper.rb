@@ -92,7 +92,7 @@ RSpec.configure do |config|
       end
 
       method_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'method_cassettes')
-      recorder = Paasal::MethodResponseRecorder.new(self, File.expand_path(method_path))
+      recorder = Paasal::MethodResponseRecorder.new(self, example, File.expand_path(method_path))
       recorder.setup(Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
       recorder.setup(Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
       recorder.setup(Paasal::Adapters::ArchiveConverter, [:convert])

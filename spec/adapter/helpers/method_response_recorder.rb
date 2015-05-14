@@ -5,7 +5,8 @@ require 'oj'
 
 module Paasal
   class MethodResponseRecorder
-    def initialize(test, data_dir)
+    def initialize(test, example, data_dir)
+      @example_group_name = example.metadata[:example_group][:full_description]
       @test = test
       @data_dir = data_dir
     end
@@ -163,6 +164,8 @@ module Paasal
           md5.update(arg.to_s)
         end
       end
+      # update with the test name, so that failing tests do not influence others
+      md5.update(@example_group_name)
       md5.hexdigest
     end
 
