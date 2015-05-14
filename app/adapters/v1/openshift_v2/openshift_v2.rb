@@ -32,7 +32,8 @@ module Paasal
         end
 
         def handle_error(error_response)
-          errors = error_response.body[:messages].collect { |error| { field: error[:field], text: error[:text] } }
+          # some error messages do not have the proper error message format
+          errors = openshift_errors(error_response)
           if error_response.status == 404 && errors.any? { |e| e[:text].include?('not found') }
             fail Errors::AdapterResourceNotFoundError, errors.collect { |e| e[:text] }.join(' ')
           elsif error_response.status == 422
@@ -46,6 +47,14 @@ module Paasal
           end
           # error still unhandled, will result in a 500, server error
           log.warn "Openshift error still unhandled: #{error_response}"
+        end
+
+        def openshift_errors(error_response)
+          if error_response.body.is_a?(Hash) && error_response.body.key?(:messages)
+            error_response.body[:messages].collect { |error| { field: error[:field], text: error[:text] } }
+          else
+            []
+          end
         end
 
         # @see Stub#scale
