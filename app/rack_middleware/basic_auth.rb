@@ -24,7 +24,9 @@ module Paasal
       # @yieldparam [Hash] env the global rack environment, includes values like the X-Request-ID
       # @yieldreturn [Boolean] true if credentials were verified and are correct, false if they are invalid
       def initialize(app, realm = nil, &authenticator)
-        @app, @realm, @authenticator = app, realm, authenticator
+        @app = app
+        @realm = realm
+        @authenticator = authenticator
       end
 
       def call(env)

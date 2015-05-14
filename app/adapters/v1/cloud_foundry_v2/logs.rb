@@ -177,7 +177,7 @@ module Paasal
 
             boundary_regexp = /--#{Regexp.quote(current_log_boundary)}(--)?#{CRLF}/
             parts = current_log.split(boundary_regexp).collect do |chunk|
-              header_part, _ = chunk.split(/#{CRLF}#{WSP}*#{CRLF}/m, 2)
+              header_part = chunk.split(/#{CRLF}#{WSP}*#{CRLF}/m, 2)[0]
               if header_part
                 headers = header_part.split(/\r\n/).map { |kv| kv }
                 headers.length > 1 ? headers[1] : nil
