@@ -73,6 +73,18 @@ namespace :evaluation do
       end
 
       task :latex, [:save_to] => :load do |_t, args|
+        tests_with_wait = %w(app-actions/lifecycle/restart/succeeds
+                             app-actions/lifecycle/start/succeeds_for_app_all_if_currently_stopped
+                             app-actions/lifecycle/start/succeeds_for_app_min_if_currently_stopped
+                             app-actions/lifecycle/stop/succeeds_for_app_all_if_currently_running
+                             app-actions/lifecycle/stop/succeeds_for_app_min_if_currently_running
+                             app-data/deploy/succeeds/and_app_with
+                             app-data/rebuild/changes_the_release_version_property
+                             app/web access/for_app_with_min_properties)
+        ignore_tests_with_wait = 0
+        ignore_req_with_wait = {}
+        @vendor_results.each { |vendor, _| ignore_req_with_wait[vendor] = 0 }
+
         table = []
         table << '\\scriptsize'
         table << "\\begin{longtable}{|L{12cm}|#{'c|' * @vendor_results.length}}"
@@ -89,10 +101,17 @@ namespace :evaluation do
         table << '  \\endlastfoot'
 
         lines = []
-        @all_tests.sort.each_with_index do |test_name, line|
-          @vendor_results.each do |_vendor, results|
-            lines[line] = "#{test_name}" unless lines[line]
-            lines[line] << " & #{results[test_name]}"
+        @all_tests.sort.each_with_index do |t_name, line|
+          @vendor_results.each do |v, results|
+            unless lines[line]
+              lines[line] = "#{t_name}"
+              if tests_with_wait.any? { |name| t_name.start_with?(name) }
+                ignore_tests_with_wait += 1
+                lines[line] = "\\rowcolor{failedtablebg}#{lines[line]}"
+              end
+            end
+            ignore_req_with_wait[v] += results[t_name].to_i if tests_with_wait.any? { |name| t_name.start_with?(name) }
+            lines[line] << " & #{results[t_name]}"
           end
         end
 
@@ -113,7 +132,21 @@ namespace :evaluation do
         end.join(' & ')} \\\\\\hline"
         table << "  Avg. vendor API requests per tested method & #{@vendor_results.collect do |_name, tests|
           ((tests.map { |_key, value| value }.sum) / tests.length.to_f).round(2)
+        end.join(' & ')} \\\\\\hhline{|=|#{'=|' * @vendor_results.length}}"
+
+        # sanitize stats, exclude methods with rspec wait repetitions
+        table << "  Tested methods without repeated requests & #{@vendor_results.collect do |_n, tests|
+          tests.length - ignore_tests_with_wait
         end.join(' & ')} \\\\\\hline"
+
+        table << "  Total vendor API requests without repeated requests & #{@vendor_results.collect do |name, tests|
+          tests.map { |_key, value| value }.sum - ignore_req_with_wait[name]
+        end.join(' & ')} \\\\\\hline"
+        table << '  Avg. vendor API requests per tested method without repeated requests & '\
+          "#{@vendor_results.collect do |name, tests|
+            ((tests.map { |_key, value| value }.sum - ignore_req_with_wait[name]) /
+            (tests.length - ignore_tests_with_wait).to_f).round(2)
+          end.join(' & ')} \\\\\\hline"
 
         table << '\\end{longtable}'
         table << '\\normalsize'
