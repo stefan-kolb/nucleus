@@ -52,14 +52,14 @@ RSpec.configure do |config|
                         match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
                         decode_compressed_response: true, serialize_with: :oj)
 
+    # fake UUIDs to have identical filenames in repetitive tests
+    allow(SecureRandom).to receive(:uuid) do
+      @counter = '000000000000' unless @counter
+      "2d931510-d99f-494a-8c67-#{@counter.next!}"
+    end
+
     # Fake Git and Filesystem interactions on replay
     if group_mock_fs
-      # fake UUIDs to have identical filenames in repetitive tests
-      allow(SecureRandom).to receive(:uuid) do
-        @counter = '000000000000' unless @counter
-        "2d931510-d99f-494a-8c67-#{@counter.next!}"
-      end
-
       tmpfile_name = lambda do |prefix_suffix|
         case prefix_suffix
         when String
@@ -94,6 +94,7 @@ RSpec.configure do |config|
       method_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'method_cassettes')
       recorder = Paasal::MethodResponseRecorder.new(self, example, File.expand_path(method_path))
       recorder.setup(Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
+      recorder.setup(Paasal::Adapters::GitRepoAnalyzer, [:any_branch?])
       recorder.setup(Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
       recorder.setup(Paasal::Adapters::ArchiveConverter, [:convert])
     end
