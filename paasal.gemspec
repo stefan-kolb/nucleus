@@ -1,6 +1,6 @@
 # coding: utf-8
 %w(app config lib).each do |dir|
-  abs_dir = File.expand_path("../#{dir}", __FILE__)
+  abs_dir = File.expand_path(File.join(File.dirname(__FILE__), dir))
   $LOAD_PATH.unshift(abs_dir) unless $LOAD_PATH.include?(abs_dir)
 end
 
