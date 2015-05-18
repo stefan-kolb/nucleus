@@ -50,7 +50,7 @@ Gem::Specification.new do |spec|
   # Logging
   spec.add_runtime_dependency 'logger', '~> 1.2'
   # Application archive handling, detect unsupported uploads
-  spec.add_runtime_dependency 'mime-types'
+  spec.add_runtime_dependency 'mime-types', '~> 2.4'
 
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
