@@ -19,7 +19,6 @@ module Paasal
     # Load the adapter to interact with the platform of the vendor that is offered at the endpoint_url.
     # @param [String] vendor The vendor / adapter name that shall be used to communicate with the endpoint.
     #   Must be supported, otherwise a +StandardError+ will be thrown.
-    # @param [String] endpoint_url The URL endpoint at which the platform is running, which will be forced to https://
     # @param [String] username The username that shall be used for authentication
     # @param [String] password The password that shall be used for authentication
     # @param [Hash<Symbol,?>] options Further options to apply when creating the adapter instance.
@@ -28,17 +27,19 @@ module Paasal
     #   This option must be set for custom deployments of platforms like Cloud Foundry or Openshift.
     #   For IBM Bluemix this value would be: +eu-gb.mybluemix.net+ or +ng.mybluemix.net+, depending on the endpoint.
     # @option options [String] :check_ssl Set to false if SSL certificates shall not be verified (trust self-signed)
-    # @raise [StandardError] if the vendor is unknown / not supported
-    def load(vendor, endpoint_url, username, password, options = {})
+    # @option options [String] :api_url URL of the endpoint's API that shall be used.
+    #   Must be specified if there are multiple endpoints available and will be forced to https://
+    # @raise [StandardError] if the vendor is unknown / not supported or no unique API endpoint could be identified
+    def load(vendor, username, password, options = {})
       setup
       fail StandardError, "Could not find adapter for vendor '#{vendor}'" unless @adapters.key?(vendor)
 
-      # make sure url uses https
-      endpoint_url = secure_url(endpoint_url)
+      # load the endpoint's HTTPS enabled API URL
+      endpoint_url = load_endpoint(vendor, options)
 
       # load default configuration if available
-      if @configurations.key?(endpoint_url)
-        default_configuration = @configurations[endpoint_url]
+      if @configurations[vendor].key?(endpoint_url)
+        default_configuration = @configurations[vendor][endpoint_url]
         options = default_configuration.merge(options)
       end
 
@@ -63,13 +64,30 @@ module Paasal
 
     private
 
+    def load_endpoint(vendor, options)
+      if options.key?(:api_url)
+        # use chosen url endpoint
+        endpoint_url = options[:api_url]
+      elsif @configurations[vendor].length == 1
+        # use default endpoint
+        endpoint_url = @configurations[vendor].keys.first
+      else
+        fail StandardError, "Could not identify an API endpoint for the vendor '#{vendor}'. "\
+          "Please specify the API URL to use with the ':api_url' option."
+      end
+
+      # make sure url uses https
+      secure_url(endpoint_url)
+    end
+
     def setup
+      # perform the setup only once
+      return if @adapters
+
       # Initialize the application (import adapters, load DAOs, ...)
       # Once invoked the configuration is locked
       require 'scripts/initialize'
 
-      # do only once
-      return if @adapters
       @adapters = {}
       @configurations = {}
       Paasal::Adapters.configuration_files.each do |adapter_config|
@@ -78,11 +96,13 @@ module Paasal
         adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, @api_version)
         next unless adapter_clazz
         @adapters[vendor.id] = adapter_clazz
+        @configurations[vendor.id] = {}
 
         # now load the default configurations for this vendor
         vendor.providers.each do |provider|
           provider.endpoints.each do |endpoint|
-            @configurations[secure_url(endpoint.url)] = { check_ssl: !endpoint.trust, app_domain: endpoint.app_domain }
+            @configurations[vendor.id][secure_url(endpoint.url)] = { check_ssl: !endpoint.trust,
+                                                                     app_domain: endpoint.app_domain }
           end
         end
       end
