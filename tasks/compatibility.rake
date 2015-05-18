@@ -49,7 +49,7 @@ namespace :evaluation do
       @vendor_results.each do |_vendor, results|
         results.each_with_index do |(method, supported), line|
           lines[line] = "#{method}" unless lines[line]
-          lines[line] << "|#{supported}"
+          lines[line] << "|#{supported ? '&#10003;' : '&#10007;'}"
         end
       end
 
