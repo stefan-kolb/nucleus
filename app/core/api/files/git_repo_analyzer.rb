@@ -8,7 +8,9 @@ module Paasal
       # @return [TrueClass, FalseClass] true if the repository has any non-empty branch, e.g. 'master'
       def self.any_branch?(repo_host, repo_name, username)
         repository_branches = nil
-        Net::SSH.start(repo_host, username, forward_agent: true, auth_methods: ['publickey']) do |ssh|
+        options = { forward_agent: true, auth_methods: ['publickey'],
+                    keys: [paasal_config.ssh.handler.key_file], keys_only: true }
+        Net::SSH.start(repo_host, username, options) do |ssh|
           ssh.exec! "git-upload-pack '/#{repo_name}.git'" do |ch, stream, data|
             repository_branches = data unless stream == :stderr
             ch.close

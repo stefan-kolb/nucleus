@@ -11,40 +11,28 @@ paasal_config.api.versions = Paasal::ApiDetector.api_versions
 Grape::Middleware::Auth::Strategies.add(:http_basic, Paasal::Middleware::BasicAuth, ->(options) { [options[:realm]] })
 
 # make sure the key is always set
+key_file = nil
 if paasal_config.ssh.key?(:custom_key) && !paasal_config.ssh.custom_key.nil?
   puts "Loading custom SSH key #{paasal_config.ssh.custom_key}"
   # use the custom key file
-  keyfile = paasal_config.ssh.custom_key
-else
-  puts 'Loading default SSH key'
-  # Now setup the SSH key that is required for Git deployment by (at least) Openshift
-  # first, load private key
-  keyfile = File.join('config', 'paasal_git_key.pem')
-end
+  key_file = paasal_config.ssh.custom_key
 
-# fail if file does not exist
-unless File.exist?(keyfile)
-  msg = "Could not find the SSH key: '#{keyfile}'"
-  STDERR.puts msg
-  fail Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY_FILE)
-end
+  # fail if file does not exist
+  unless File.exist?(key_file)
+    msg = "Could not find the SSH key: '#{key_file}'"
+    STDERR.puts msg
+    fail Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY_FILE)
+  end
 
-if File.read(keyfile).include?('ENCRYPTED')
-  msg = "Provided private key '#{keyfile}' must not be protected with a passphrase."
-  STDERR.puts msg
-  fail Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY_FILE_PROTECTED)
-end
-
-begin
-  public_key = SSHKey.new(File.read(keyfile), comment: 'PaaSal').ssh_public_key
-rescue
-  msg = "Invalid SSH key '#{keyfile}', it key must be of type ssh-rsa."
-  STDERR.puts msg
-  raise Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY)
+  if File.read(key_file).include?('ENCRYPTED')
+    msg = "Provided private key '#{key_file}' must not be protected with a passphrase."
+    STDERR.puts msg
+    fail Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY_FILE_PROTECTED)
+  end
 end
 
 # now setup the SSHHandler
-paasal_config.ssh.handler = Paasal::SSHHandler.new(keyfile, public_key)
+paasal_config.ssh.handler = Paasal::SSHHandler.new(key_file)
 
 # Lock the configuration, so it can't be manipulated
 paasal_config.lock!

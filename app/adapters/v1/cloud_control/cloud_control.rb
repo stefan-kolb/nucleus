@@ -84,13 +84,14 @@ module Paasal
 
         # @see Stub#start
         def start(application_id)
+          deployment = default_deployment(application_id)
           # fail if there is no deployment
-          unless data_uploaded?(application_id)
+          unless data_uploaded?(deployment)
             fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
           end
 
           # if no cloudControl deployment has been made, trigger it
-          if default_deployment(application_id)[:version] == '-1'
+          if deployment[:version] == '-1'
             # deploy via the API, use version identifier -1 to refer a new build
             put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
           end
@@ -119,14 +120,18 @@ module Paasal
           get('/user').body.first[:username]
         end
 
-        def data_uploaded?(application_id)
+        def data_uploaded?(deployment)
+          application_id = deployment[:name].split(%r{/})[0]
+          repo_host = URI.parse(deployment[:branch]).host
+          repo_path = URI.parse(deployment[:branch]).path.gsub(%r{^/}, '').chomp('.git')
           attempts = 0
           with_ssh_key do
             loop do
               begin
-                return GitRepoAnalyzer.any_branch?('cloudcontrolled.com', 'repository', application_id)
+                return GitRepoAnalyzer.any_branch?(repo_host, repo_path, application_id)
               rescue Net::SSH::AuthenticationFailed => e
                 attempts += 1
+                # wait up to 30 seconds
                 raise e if attempts >= 15
                 log.debug('SSH authentication failed, sleep and repeat')
                 # authentication is not yet ready, wait a short time
@@ -142,7 +147,7 @@ module Paasal
           # * deployed, when only the data has been pushed into the repository (no build)
           # * running, if a data deployment was pushed
           if deployment[:version] == '-1'
-            return API::Models::Application::States::DEPLOYED if data_uploaded?(deployment[:name].split(%r{/})[0])
+            return API::Models::Application::States::DEPLOYED if data_uploaded?(deployment)
             return API::Models::Application::States::CREATED
           end
           return API::Models::Application::States::IDLE if deployment[:state] == 'idle'
