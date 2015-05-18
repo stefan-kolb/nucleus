@@ -1,9 +1,5 @@
 # coding: utf-8
-%w(app config lib).each do |dir|
-  abs_dir = File.expand_path("../#{dir}", __FILE__)
-  $LOAD_PATH.unshift(abs_dir) unless $LOAD_PATH.include?(abs_dir)
-end
-
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 require 'paasal/version'
 
 Gem::Specification.new do |spec|
@@ -16,12 +12,12 @@ Gem::Specification.new do |spec|
   spec.description   = ''
   spec.homepage      = 'https://github.com/croeck/paasal'
   spec.license       = 'TBD'
-
   spec.executables   = 'paasal'
-  spec.require_paths = %w(app config lib)
+  spec.require_paths = ['lib']
+  spec.required_ruby_version = '>= 1.9.3'
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f[%r{^(spec/adapter|icons)/}] }
+  spec.files         = `git ls-files -z --exclude-standard`.split("\x0").reject { |f| f[%r{^(spec/adapter|icons)/}] }
   # again only unit and integration, but no adapter test files
   spec.test_files    = spec.files.grep(%r{^(spec)/})
 

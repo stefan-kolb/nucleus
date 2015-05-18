@@ -49,10 +49,10 @@ end
 task :environment do
   ENV['RACK_ENV'] ||= 'development'
   require 'configatron'
-  require_relative 'lib/scripts/load_config'
+  require 'paasal/scripts/setup_config'
   paasal_config.logging.level = Logger::Severity::ERROR
-  require_relative 'lib/scripts/load_app'
-  require_relative 'lib/scripts/initialize'
+  require 'paasal/scripts/load'
+  require 'paasal/scripts/initialize'
 end
 
 task routes: :environment do

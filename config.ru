@@ -7,15 +7,15 @@ require 'rubygems'
 require 'bundler/setup'
 
 # Load configuration
-require 'scripts/load_config'
+require 'paasal/scripts/setup_config'
 # Load application
-require 'scripts/load_app'
+require 'paasal/scripts/load'
 # Initialize the application
-require 'scripts/initialize'
+require 'paasal/scripts/initialize'
 
 # Initialize the Rack environment
 # GO TO THIS FILE TO INCLUDE MIDDLEWARE (!)
-require 'scripts/initialize_rack'
+require 'paasal/scripts/initialize_rack'
 
 ## finally start the application
 run Paasal::Rack.app

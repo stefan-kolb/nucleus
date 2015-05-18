@@ -1,5 +1,5 @@
 require 'spec/unit/unit_spec_helper'
-require 'app/core/common/thread_config_accessor'
+require 'paasal/core/common/thread_config_accessor'
 
 class ThreadedConfig
   thread_config_accessor :setting_a, default: 5

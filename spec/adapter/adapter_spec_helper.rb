@@ -2,8 +2,8 @@ require 'airborne'
 require 'rspec/wait'
 
 # load the app packages
-require 'scripts/shutdown'
-require 'scripts/initialize_rack'
+require 'paasal/scripts/shutdown'
+require 'paasal/scripts/initialize_rack'
 
 # patch rspec so that all tests run in an EM reactor, as provided by the used Thin server
 require 'spec/adapter/helpers/rspec_eventmachine_patch'
