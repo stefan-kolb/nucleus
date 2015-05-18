@@ -20,9 +20,10 @@ Gem::Specification.new do |spec|
   spec.executables   = 'paasal'
   spec.require_paths = %w(app config lib)
 
-  # eventually we should not include test files, they would tremendously increase the gem size
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.test_files    = `git ls-files -- spec/*`.split("\n")
+  # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f[%r{^(spec/adapter|icons)/}] }
+  # again only unit and integration, but no adapter test files
+  spec.test_files    = spec.files.grep(%r{^(spec)/})
 
   # used as global configuration
   spec.add_runtime_dependency 'configatron', '~> 4.5'
