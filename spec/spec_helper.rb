@@ -73,6 +73,9 @@ paasal_config.db.override = true
 # require our app
 require 'scripts/load_app'
 
+# load the certificate to use for the tests only
+paasal_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
+
 # initialize db, versions and auth strategy
 require 'scripts/initialize_core'
 

@@ -3,7 +3,6 @@ require 'rspec/wait'
 
 # load the app packages
 require 'scripts/shutdown'
-require 'scripts/initialize_core'
 require 'scripts/initialize_rack'
 
 # patch rspec so that all tests run in an EM reactor, as provided by the used Thin server
