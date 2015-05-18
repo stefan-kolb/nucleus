@@ -8,17 +8,12 @@ module Paasal
     #
     # @return [Array<String>] names of the API versions
     def self.api_versions
-      return @detected_api_versions if @detected_api_versions
       api_versions_dir = 'app/api/versions/*'
-      # ... looking for API versions at '#{api_versions_dir}'
-      api_versions = []
-      api_dirs = Dir.glob(api_versions_dir).select { |f| File.directory? f }
-      api_dirs.each do |api_dir|
-        api_versions << File.basename(api_dir)
-      end unless api_dirs.nil?
-      # ... found #{api_versions.size} API versions: #{api_versions.join(', ')}
-      @detected_api_versions = api_versions
-      @detected_api_versions
+      return @api_versions if @api_versions
+
+      @api_versions = Dir.glob(api_versions_dir).map do |f|
+        File.basename(f) if File.directory?(f)
+      end.compact
     end
   end
 end
