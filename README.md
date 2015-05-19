@@ -1047,19 +1047,19 @@ To do so, set the `paasal_config.ssh.custom_key` option in the common configurat
 ## Project structure
 
 ```
-app # The PaaSal application
-app/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
-app/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
-app/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
-app/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
-app/rack_middleware # Rack middleware layers for authentication, request ids and logging
 bin # Binary startup files and GIT__SSH env. agents
 config # Configuration files for PaaSal and its adapters
 doc # Generated YARD documentation
-lib # Files that are more related to the usage as gem
-lib/ext # Monkey patched classed and extensions
+lib # The PaaSal application source code
 lib/paasal # Gem version and the gem only AdapterResolver class
-lib/scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
+lib/paasal/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
+lib/paasal/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
+lib/paasal/api/rack_middleware # Rack middleware layers for authentication, request ids and logging
+lib/paasal/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
+lib/paasal/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
+lib/paasal/ext # Monkey patched classed and extensions
+lib/paasal/api_ext # Monkey patched classed and extensions related only to the API
+lib/paasal/scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
 public # public directory for rack, hosts the swagger-ui files for the live API documentation
 schemas # Kwalify schemas, used to parse the configuration and load new vendors at startup
 spec # All rspec test suites
