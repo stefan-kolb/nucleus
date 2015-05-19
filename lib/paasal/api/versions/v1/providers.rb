@@ -43,7 +43,6 @@ module Paasal
           desc 'Create a new endpoint entity that belongs to this provider' do
             success Models::Endpoint
             failure [[201, 'Endpoint created', Models::Endpoint]].concat ErrorResponses.standard_responses
-            headers(Location: { description: 'Link to the created entity', required: true })
           end
           params do
             use :provider_id
