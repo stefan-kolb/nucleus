@@ -24,7 +24,7 @@ module Paasal
       return if hash.nil?
       @url = hash['url']
       @app_domain = hash['app_domain']
-      @trust = hash.key?('trust') if hash.key?('trust')
+      @trust = hash['trust'] if hash.key?('trust')
     end
   end
 end

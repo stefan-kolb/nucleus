@@ -49,8 +49,10 @@ module Paasal
             use :provider_id
             # require the keys of the endpoint in the json object 'endpoint'
             requires :endpoint, type: Hash do
+              # both are optional
+              optional :all, using: Paasal::API::Models::Endpoint.documentation.slice(:app_domain, :trust)
               requires :all, using: Paasal::API::Models::Endpoint.documentation
-                .except(:id, :applications, :created_at, :updated_at, :_links)
+                .except(:id, :app_domain, :trust, :applications, :created_at, :updated_at, :_links)
             end
           end
           post ':provider_id/endpoints' do

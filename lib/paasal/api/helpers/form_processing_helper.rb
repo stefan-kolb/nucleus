@@ -11,10 +11,12 @@ module Paasal
           allow_blank = entity_documentation[key.to_sym][:allow_blank]
           # allow_nil = entity_documentation[key][:required]
 
-          # currently no nil values allowed
-          next if value.nil?
-          # if value is blank, blank must be allowed
-          next if value.empty? && !allow_blank
+          unless value.is_a?(TrueClass) || value.is_a?(FalseClass)
+            # currently no nil values allowed
+            next if value.nil?
+            # if value is blank, blank must be allowed
+            next if value.empty? && !allow_blank
+          end
           # finally update the value
           entity.send("#{key}=", value)
         end unless fields.nil?

@@ -38,6 +38,16 @@ module Paasal
           required: true,
           allow_blank: false }
 
+        expose :app_domain, documentation: {
+          type: String, desc: 'Default application domain, where created apps can be accessed',
+          required: false }
+
+        expose :trust, documentation: {
+          type: Virtus::Attribute::Boolean, desc: 'Trust the endpoint, if true the SSL certificates are not checked',
+          required: true, example: false, default: false } do |trusted, _options|
+            trusted[:trust] ? trusted[:trust] : false
+          end
+
         expose :_links, using: Paasal::API::Models::Links, documentation: {
           required: true,
           type: 'References', desc: 'Resource links', is_array: true } do |instance, _o|
