@@ -8,9 +8,8 @@ module Paasal
     #
     # @return [Array<String>] names of the API versions
     def self.api_versions
-      api_versions_dir = 'app/api/versions/*'
       return @api_versions if @api_versions
-
+      api_versions_dir = "#{Paasal.root}/app/api/versions/*"
       @api_versions = Dir.glob(api_versions_dir).map do |f|
         File.basename(f) if File.directory?(f)
       end.compact

@@ -8,7 +8,7 @@ module Paasal
     # @return [Array<File>] all adapter configuration files
     def self.configuration_files
       return @configuration_files if @configuration_files
-      adapter_dir = 'config/adapters'
+      adapter_dir = "#{Paasal.root}/config/adapters"
       files = Dir[File.join(adapter_dir, '*.yml')] | Dir[File.join(adapter_dir, '*.yaml')]
       files = files.flatten.compact
       files.collect! { |file| File.expand_path(file) }
@@ -42,7 +42,7 @@ module Paasal
       log.debug "... trying to resolve adapter for config #{adapter_config} and API #{api_version}..."
       adapter_name = File.basename(adapter_config).sub(/.[^.]+\z/, '.rb')
       # file_search_path = File.expand_path("../../../adapters/#{api_version}/*/#{adapter_name}", __FILE__)
-      file_search_path = "app/adapters/#{api_version}/*/#{adapter_name}"
+      file_search_path = "#{Paasal.root}/app/adapters/#{api_version}/*/#{adapter_name}"
       adapter_file = Dir.glob(file_search_path)
       fail AmbiguousAdapterError, "More than 1 adapter file found for #{adapter_name}" unless adapter_file.size <= 1
 

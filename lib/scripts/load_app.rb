@@ -50,32 +50,34 @@ require 'rubygems/package'
 
 # OS detection
 require 'os'
+# Root directory
+require 'root_dir'
 
 # require all patched classes
-require_all 'lib/ext'
+require_all "#{Paasal.root}/lib/ext"
 
 # core
-require_all 'app/core'
+require_all "#{Paasal.root}/app/core"
 
 # persistence layer (models, stores and DAOs)
-require_all 'app/persistence'
+require_all "#{Paasal.root}/app/persistence"
 
 # rack middleware
-require_all 'app/rack_middleware'
+require_all "#{Paasal.root}/app/rack_middleware"
 
 # api
 require 'api/error_responses'
-require_all 'app/api/entities'
-require_all 'app/api/helpers'
+require_all "#{Paasal.root}/app/api/entities"
+require_all "#{Paasal.root}/app/api/helpers"
 
 # adapters
-require_all 'app/adapters'
+require_all "#{Paasal.root}/app/adapters"
 
 # This is a workaround to properly load all swagger-documentation:
 # Load each api version, but start with the protected controllers
 Paasal::ApiDetector.api_versions.each do |api_version|
-  require_all "app/api/versions/#{api_version}/protected"
-  require_all "app/api/versions/#{api_version}"
+  require_all "#{Paasal.root}/app/api/versions/#{api_version}/protected"
+  require_all "#{Paasal.root}/app/api/versions/#{api_version}"
 end
 # Finally load the complete API to make sure we did not miss anything
-require_all 'app/api'
+require_all "#{Paasal.root}/app/api"
