@@ -6,10 +6,10 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
     @api_version = 'v1'
     @app_min = { original_name: 'paasaltestappminproperties',
                  updated_name: 'paasaltestappminproperties',
-                 region: 'US' }
+                 region: 'aws-us-east-1' }
     @app_all = { original_name: 'paasaltestappallproperties',
                  updated_name: 'paasaltestappallproperties',
-                 region: 'US' }
+                 region: 'aws-us-east-1' }
     # application update is not supported
     # TODO: logging is not yet implemented
     @unsupported = ['with valid credentials is compliant and application update',

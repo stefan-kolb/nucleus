@@ -6,7 +6,7 @@ shared_examples 'valid:applications:scale' do
           post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
                { instances: 2 }, request_headers
         end
-        include_examples 'a valid POST request'
+        include_examples 'a valid POST action request'
         it 'changes instances property of the application' do
           expect(json_body[:instances]).to eql(2)
         end
@@ -17,7 +17,7 @@ shared_examples 'valid:applications:scale' do
           post "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}/actions/scale",
                { instances: 1 }, request_headers
         end
-        include_examples 'a valid POST request'
+        include_examples 'a valid POST action request'
         it 'changes instances property of the application' do
           expect(json_body[:instances]).to eql(1)
         end
