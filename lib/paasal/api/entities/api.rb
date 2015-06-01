@@ -6,10 +6,10 @@ module Paasal
         expose :versions,  documentation: {
           type: 'Paasal::API::Version', is_array: true,
           desc: 'List of available API versions'
-        }, using: Models::ApiVersion
+        }, using: ApiVersion
 
-        expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
+        expose :_links, using: Links, documentation: {
+          type: 'References', required: true, desc: 'Resource links' } do |_i, _o|
           {
             self: { href: link_api_root },
               # link to the API documentation

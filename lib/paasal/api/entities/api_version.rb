@@ -9,10 +9,10 @@ module Paasal
         expose :resources,  documentation: {
           type: 'Paasal::API::Models::VersionResource', is_array: true,
            desc: 'Resources of the API version'
-        }, using: Models::ApiVersionResource, unless: { collection: true }
+        }, using: ApiVersionResource, unless: { collection: true }
 
-        expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links', is_array: true } do |_i, _o|
+        expose :_links, using: Links, documentation: {
+          type: 'References', required: true, desc: 'Resource links' } do |_i, _o|
           {
             self: { href: link_resource(%w(resources)) },
               # link back to the API root

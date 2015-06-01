@@ -33,8 +33,8 @@ module Paasal
           desc: 'The costs when adding this service to your application. Each cost entry must be payed for. This can '\
             'include fixed costs, e.g. to be payed per month, and usage dependent costs, e.g. to be payed per X calls',
           required: true,
-          as_array: true
-        }, using: Paasal::API::Models::ServiceCosts
+          is_array: true
+        }, using: ServiceCosts
       end
     end
   end

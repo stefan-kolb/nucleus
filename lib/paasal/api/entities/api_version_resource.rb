@@ -6,8 +6,8 @@ module Paasal
           type: String, desc: 'Resource name, e.g. providers'
         }
 
-        expose :_links, using: Paasal::API::Models::Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links', is_array: true } do |i, _o|
+        expose :_links, using: Links, documentation: {
+          type: 'References', required: true, desc: 'Resource links', required: true } do |i, _o|
           {
             self: { href: link_resource([i[:name]]) }
           }

@@ -13,7 +13,7 @@ module Paasal
         }
 
         expose :_links, using: Paasal::API::Models::BasicReferences, documentation: {
-          type: 'BasicReferences', desc: 'Resource links', is_array: true } do |instance, o|
+          type: 'BasicReferences', desc: 'Resource links', required: true } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
                                               ['applications', o[:env]['rack.routing_args'][:application_id],

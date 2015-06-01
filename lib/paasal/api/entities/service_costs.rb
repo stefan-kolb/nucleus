@@ -24,7 +24,7 @@ module Paasal
           desc: 'Price that has to be paid per period, listed in the available currencies',
           required: true,
           is_array: true
-        }, using: Paasal::API::Models::ServiceCostsPrice
+        }, using: ServiceCostsPrice
       end
     end
   end
