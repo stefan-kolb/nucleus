@@ -89,23 +89,6 @@ module Paasal
 
         private
 
-        def to_paasal_region(region)
-          region[:id] = parse_region_name(region.delete(:name))
-          # first created zone
-          region[:created_at] = region[:zones].min_by { |v| v[:created_at] }
-          # last updated zone
-          region[:updated_at] = region[:zones].max_by { |v| v[:updated_at] }
-          region
-        end
-
-        def parse_region_name(region_name)
-          # for 'aws-us-east-1'
-          parsed_name = /\w+-([a-zA-Z]{2})-\w+-\d/.match(region_name)
-          fail Errors::UnknownAdapterCallError, "Invalid region format detected: '#{region_name}'" unless parsed_name
-          # we return 'US'
-          parsed_name[1].upcase
-        end
-
         def headers
           super.merge('Accept' => 'application/json; version=1.7', 'Content-Type' => 'application/json')
         end

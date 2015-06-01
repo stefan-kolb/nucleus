@@ -91,7 +91,7 @@ module Paasal
             app[:state] = application_state(app, gear_groups, deployments)
             app[:web_url] = app.delete :app_url
             app[:autoscaled] = app.delete :scalable
-            app[:region] = parse_region_name(gear_groups[0][:gears][0][:region])
+            app[:region] = gear_groups[0][:gears][0][:region]
             app[:instances] = app.delete :gear_count
             app[:created_at] = app.delete :creation_time
             # applications can't be updated, use creation timestamp

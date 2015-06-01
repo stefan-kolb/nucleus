@@ -40,7 +40,16 @@ module Paasal
           def native_region(region_name)
             response = get('/regions').body[:data]
             response.delete_if { |region| region[:allow_selection] == false }
-            response.find { |region| parse_region_name(region[:name]).casecmp(region_name) == 0 }
+            response.find { |region| region[:name].casecmp(region_name) == 0 }
+          end
+
+          def to_paasal_region(region)
+            region[:id] = region.delete(:name)
+            # first created zone
+            region[:created_at] = region[:zones].min_by { |v| v[:created_at] }
+            # last updated zone
+            region[:updated_at] = region[:zones].max_by { |v| v[:updated_at] }
+            region
           end
         end
       end
