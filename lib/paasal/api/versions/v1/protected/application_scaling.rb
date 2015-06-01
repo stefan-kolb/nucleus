@@ -19,6 +19,7 @@ module Paasal
           post '/scale' do
             # TODO: enrich with scale-up and scale-down parameters
             present adapter.scale(params[:application_id], params[:instances]), with: Models::Application
+            status 200
           end
         end # end of resource
       end

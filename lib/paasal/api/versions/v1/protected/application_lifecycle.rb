@@ -16,6 +16,7 @@ module Paasal
           end
           post '/start' do
             present adapter.start(params[:application_id]), with: Models::Application
+            status 200
           end
 
           desc 'Stop the application' do
@@ -25,6 +26,7 @@ module Paasal
           end
           post '/stop' do
             present adapter.stop(params[:application_id]), with: Models::Application
+            status 200
           end
 
           desc 'Restart the application' do
@@ -34,6 +36,7 @@ module Paasal
           end
           post '/restart' do
             present adapter.restart(params[:application_id]), with: Models::Application
+            status 200
           end
         end # end of resource
       end
