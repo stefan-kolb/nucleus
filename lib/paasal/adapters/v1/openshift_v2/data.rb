@@ -23,10 +23,7 @@ module Paasal
 
             return unless app_state == API::Enums::ApplicationStates::CREATED
 
-            # state was created, rollback to the 'inactive' application to keep state as 'deployed'
-            log.debug 'state before deployment was \'created\', preserve deployed state'
-            activate(application_id, original_deployment(app)[:id])
-            # and finally stop so we don't get to see the sample application
+            # and finally stop so we don't get to see the sample application and switch to the deployed state
             send_event(application_id, 'stop')
           end
 

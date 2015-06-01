@@ -13,7 +13,7 @@ module Paasal
             return :deployed if state_deployed?(app, gear_groups, deployments)
             return :running if gear_groups[0][:gears].any? { |gear| gear[:state] == 'started' }
             return :stopped if gear_groups[0][:gears].all? { |gear| gear[:state] == 'stopped' }
-            return :idle if gear_groups[0][:gears].any? { |gear| gear[:state] == 'idle' }
+            return :idle if gear_groups[0][:gears].all? { |gear| gear[:state] == 'idle' }
 
             log.debug("Failed to determine state for: #{app}")
             fail Errors::UnknownAdapterCallError,
@@ -46,13 +46,20 @@ module Paasal
           end
 
           def state_deployed?(app, gear_groups, deployments)
-            currently_activated = active_deployment(app, deployments) unless currently_activated
+            # Gears must all be stopped
+            return false unless gear_groups[0][:gears].all? { |gear| gear[:state] == 'stopped' }
+
+            deployments = load_deployments(app[:id]) unless deployments
+
+            # If there still is the initial deployment, then the state can be deployed.
             original_os_deployment = original_deployment(app, deployments) unless original_os_deployment
-            if original_os_deployment && original_os_deployment[:id] == currently_activated[:id] &&
-               gear_groups[0][:gears].all? { |gear| gear[:state] == 'stopped' }
-              return true
-            end
-            false
+            return false unless original_os_deployment
+
+            activations = deployments.inject(0){ |s, e| s += e[:activations].length }
+            # deduct the activations of the original deployment
+            activations -= original_os_deployment[:activations].length
+            return false if activations > 1
+            true
           end
         end
       end
