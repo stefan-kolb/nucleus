@@ -877,13 +877,13 @@ The application uses the following subset of error codes:
 ```
 400: Bad Request
 401: Unauthorized
-403: Forbidden
 404: Resource not found
 406: API vendor or version not found
 422: Unprocessable Entity due to invalid parameters
 500: Internal processing error
 501: Not implemented, adapter does not provide this feature
 503: Destination service temporarily unavailable
+504: Gateway Time-out
 ```
 
 All errors are returned in a common schema:

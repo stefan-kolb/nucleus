@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   # TODO: adapt versions once all patches are included in the master branch
   # Used to build the API
   # spec.add_runtime_dependency 'grape', '~> 0.11', '>= 0.11.1'
+  spec.add_runtime_dependency 'grape'
   spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
   # Used to document the API
   spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'
@@ -47,7 +48,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'logger', '~> 1.2'
   # Application archive handling, detect unsupported uploads
   spec.add_runtime_dependency 'mime-types', '~> 2.4'
-
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
   # Openshift logging access and direct Git SSH requests
@@ -79,9 +79,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard-rack'
   spec.add_development_dependency 'guard-rubocop'
   spec.add_development_dependency 'guard-yard'
-  spec.add_development_dependency 'inch'
+  spec.add_development_dependency 'inch', '~> 0.6.2'
   spec.add_development_dependency 'rake', '~> 10.4'
-  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop', '~> 0.31.0'
   spec.add_development_dependency 'vcr', '~> 2.9'
   spec.add_development_dependency 'webmock', '~> 1.20'
   spec.add_development_dependency 'yard', '~> 0.8'
