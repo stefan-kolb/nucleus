@@ -18,8 +18,7 @@ module Paasal
             # auto deployment could be active for applications not created with PaaSal
             return if app[:auto_deploy]
 
-            # deploy
-            post("/application/#{app_id}/deployments", body: { force_clean_build: true })
+            build_deployment(app_id)
 
             return unless app_state == API::Enums::ApplicationStates::CREATED
 
@@ -57,16 +56,18 @@ module Paasal
             end
 
             # if auto deployment ist disabled, we must also trigger a clean build
-            unless app[:auto_deploy]
-              # deploy
-              post("/application/#{app_id}/deployments", body: { force_clean_build: true })
-            end
+            build_deployment(app_id) unless app[:auto_deploy]
 
             # return with updated application
             application(application_id)
           end
 
           private
+
+          def build_deployment(app_id)
+            # deploy
+            post("/application/#{app_id}/deployments", body: { force_clean_build: true })
+          end
 
           def with_ssh_key
             # 409 Conflict:

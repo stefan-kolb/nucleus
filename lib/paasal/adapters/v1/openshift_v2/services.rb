@@ -18,16 +18,22 @@ module Paasal
           def service_plans(service_id)
             cartridge = embedded_cartridge(service_id)
             # Currently there are no plans, implement when required...
-            [default_plan(cartridge)]
+            return [default_plan(cartridge)] if cartridge[:usage_rates].empty?
+            cartridge[:usage_rates].collect { |usage_rate| to_paasal_plan(cartridge, usage_rate) }
           end
 
           # @see Stub#service_plan
           def service_plan(service_id, plan_id)
-            # Currently there are no plans, implement when required...
-            fail Errors::AdapterResourceNotFoundError, "No such service plan name '#{plan_id}' for service "\
-              "'#{service_id}'" if plan_id != 'default'
             cartridge = embedded_cartridge(service_id)
-            default_plan(cartridge)
+            if (cartridge[:usage_rates].empty? && plan_id != 'default') ||
+               (!cartridge[:usage_rates].empty? && !cartridge[:usage_rates].any? { |rate| rate[:plan_id] == plan_id })
+              # Currently there are no plans, implement when required...
+              fail Errors::AdapterResourceNotFoundError, "No such service plan name '#{plan_id}' for service "\
+                "'#{service_id}'"
+            end
+
+            return default_plan(cartridge) if cartridge[:usage_rates].empty?
+            to_paasal_plan(cartridge, cartridge[:usage_rates].find { |rate| rate[:plan_id] == plan_id })
           end
 
           # @see Stub#installed_services
@@ -121,6 +127,25 @@ module Paasal
             installed_service[:properties] = installed_service.key?(:properties) ? installed_service[:properties] : []
             installed_service[:web_url] = nil
             installed_service
+          end
+
+          def to_paasal_plan(cartridge, usage_rate)
+            {
+              id: usage_rate[:plan_id],
+              name: usage_rate[:plan_id],
+              description: nil,
+              free: false,
+              costs: [{
+                # Openshift online currently bills in USD, EUR and CAD
+                price: [{ amount: usage_rate[:cad], currency: 'CAD' },
+                        { amount: usage_rate[:eur], currency: 'EUR' },
+                        { amount: usage_rate[:usd], currency: 'USD' }],
+                per_instance: false,
+                period: usage_rate[:duration]
+              }],
+              created_at: cartridge[:creation_time],
+              updated_at: cartridge[:creation_time]
+            }
           end
 
           def default_plan(cartridge)

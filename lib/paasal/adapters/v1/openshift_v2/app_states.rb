@@ -55,7 +55,7 @@ module Paasal
             original_os_deployment = original_deployment(app, deployments) unless original_os_deployment
             return false unless original_os_deployment
 
-            activations = deployments.inject(0){ |s, e| s += e[:activations].length }
+            activations = deployments.inject(0) { |a, e| a + e[:activations].length }
             # deduct the activations of the original deployment
             activations -= original_os_deployment[:activations].length
             return false if activations > 1
