@@ -11,8 +11,8 @@ module Paasal
            desc: 'Resources of the API version'
         }, using: ApiVersionResource, unless: { collection: true }
 
-        expose :_links, using: Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links' } do |_i, _o|
+        expose :_links, using: ApiReferences, documentation: {
+          type: 'ApiReferences', required: true, desc: 'Resource links' } do |_i, _o|
           {
             self: { href: link_resource(%w(resources)) },
               # link back to the API root

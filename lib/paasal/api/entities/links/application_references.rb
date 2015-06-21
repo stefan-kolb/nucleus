@@ -1,7 +1,7 @@
 module Paasal
   module API
     module Models
-      class ApplicationLinks < Grape::Entity
+      class ApplicationReferences < Grape::Entity
         def self.entity_name
           'ApplicationReferences'
         end
@@ -22,6 +22,10 @@ module Paasal
 
         expose :domains,
                documentation: { type: 'Link', desc: 'Reference to the application\'s domains, also called routes' },
+               using: Paasal::API::Models::Link, safe: true
+
+        expose :services,
+               documentation: { type: 'Link', desc: 'Reference to the application\'s services.' },
                using: Paasal::API::Models::Link, safe: true
       end
     end

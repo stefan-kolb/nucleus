@@ -35,7 +35,7 @@ module Paasal
         }
 
         expose :required_services, documentation: {
-          type: String, desc: 'A complete list of services that are also required when using this service by their IDs',
+          type: String, desc: 'A complete list of services that are also required when installing this service',
           required: true,
           is_array: true
         }

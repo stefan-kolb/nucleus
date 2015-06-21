@@ -1,9 +1,9 @@
 module Paasal
   module API
     module Models
-      class Links < Grape::Entity
+      class ApiReferences < Grape::Entity
         def self.entity_name
-          'References'
+          'ApiReferences'
         end
 
         expose :self, documentation: { type: 'Link', desc: 'Self-reference', required: true },

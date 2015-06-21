@@ -8,8 +8,8 @@ module Paasal
           desc: 'List of available API versions'
         }, using: ApiVersion
 
-        expose :_links, using: Links, documentation: {
-          type: 'References', required: true, desc: 'Resource links' } do |_i, _o|
+        expose :_links, using: ApiReferences, documentation: {
+          type: 'ApiReferences', required: true, desc: 'Resource links' } do |_i, _o|
           {
             self: { href: link_api_root },
               # link to the API documentation

@@ -17,9 +17,9 @@ module Paasal
           desc: 'Endpoints of the provider\'s service'
         }, using: Models::Endpoint, unless: { collection: true }
 
-        expose :_links, using: Paasal::API::Models::Links, documentation: {
+        expose :_links, using: ApiReferences, documentation: {
           required: true,
-          type: 'References', desc: 'Resource links', required: true } do |instance, _o|
+          type: 'ApiReferences', desc: 'Resource links', required: true } do |instance, _o|
           {
             self: { href: link_resource(%w(providers), instance) },
               # link back to the vendor

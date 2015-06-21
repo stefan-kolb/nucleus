@@ -48,9 +48,9 @@ module Paasal
             trusted[:trust] ? trusted[:trust] : false
           end
 
-        expose :_links, using: Paasal::API::Models::Links, documentation: {
+        expose :_links, using: ApiReferences, documentation: {
           required: true,
-          type: 'References', desc: 'Resource links', required: true } do |instance, _o|
+          type: 'ApiReferences', desc: 'Resource links', required: true } do |instance, _o|
           {
             self: { href: link_resource(%w(endpoints), instance) },
               # link back to the provider
