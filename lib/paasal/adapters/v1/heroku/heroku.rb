@@ -15,7 +15,7 @@ module Paasal
         include Paasal::Adapters::V1::Heroku::Logs
         include Paasal::Adapters::V1::Heroku::Lifecycle
         include Paasal::Adapters::V1::Heroku::Regions
-        include Paasal::Adapters::V1::Heroku::Scaler
+        include Paasal::Adapters::V1::Heroku::Scaling
         include Paasal::Adapters::V1::Heroku::Services
         include Paasal::Adapters::V1::Heroku::SemanticErrors
         include Paasal::Adapters::V1::Heroku::Vars

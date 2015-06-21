@@ -2,7 +2,7 @@ module Paasal
   module Adapters
     module V1
       class Heroku < Stub
-        module Scaler
+        module Scaling
           # @see Stub#scale
           def scale(application_id, instances)
             scale_web(application_id, instances)
