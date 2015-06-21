@@ -32,6 +32,8 @@ module Paasal
           end
           post '/' do
             var_params = declared(params, include_missing: false)[:variable]
+            # allow ALL values in the vendor specific section
+            var_params.merge!(params[:variable][:vendor_specific]) if params[:variable].key?(:vendor_specific)
             present adapter.create_env_var(params[:application_id], var_params), with: Models::EnvironmentVariable
           end
 
@@ -61,6 +63,8 @@ module Paasal
             end
             patch '/' do
               var_params = declared(params, include_missing: false)[:variable]
+              # allow ALL values in the vendor specific section
+              var_params.merge!(params[:variable][:vendor_specific]) if params[:variable].key?(:vendor_specific)
               present adapter.update_env_var(params[:application_id], params[:env_var_id], var_params),
                       with: Models::EnvironmentVariable
             end

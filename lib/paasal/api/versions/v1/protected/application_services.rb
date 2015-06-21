@@ -34,7 +34,15 @@ module Paasal
             end
           end
           post '/' do
-            present adapter.add_service(params[:application_id], params[:service], params[:plan]),
+            declared_params = declared(params, include_missing: false)
+            service_params = declared_params[:service]
+            plan_params = declared_params[:plan]
+
+            # allow ALL values in the vendor specific section
+            service_params.merge!(params[:service][:vendor_specific]) if params[:service].key?(:vendor_specific)
+            plan_params.merge!(params[:plan][:vendor_specific]) if params[:plan].key?(:vendor_specific)
+
+            present adapter.add_service(params[:application_id], service_params, plan_params),
                     with: Models::InstalledService
           end
 
@@ -65,7 +73,13 @@ module Paasal
               end
             end
             patch '/' do
-              present adapter.change_service(params[:application_id], params[:service_id], params[:plan]),
+              declared_params = declared(params, include_missing: false)
+              plan_params = declared_params[:plan]
+
+              # allow ALL values in the vendor specific section
+              plan_params.merge!(params[:plan][:vendor_specific]) if params[:plan].key?(:vendor_specific)
+
+              present adapter.change_service(params[:application_id], params[:service_id], plan_params),
                       with: Models::InstalledService
             end
 

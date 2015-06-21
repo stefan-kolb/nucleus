@@ -33,6 +33,8 @@ module Paasal
             unless /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)/ =~ domain_params[:name]
               fail Errors::SemanticAdapterRequestError, "'#{domain_params[:name]}'' is not a valid domain name"
             end
+            # allow ALL values in the vendor specific section
+            domain_params.merge!(params[:domain][:vendor_specific]) if params[:domain].key?(:vendor_specific)
             present adapter.create_domain(params[:application_id], domain_params), with: Models::Domain
           end
 
