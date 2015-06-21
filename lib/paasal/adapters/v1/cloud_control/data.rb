@@ -8,6 +8,8 @@ module Paasal
           def deploy(application_id, file, compression_format)
             # get deployment, also serves as 404 check for application
             deployment = default_deployment(application_id)
+            current_state = application_state(deployment)
+
             user = get('/user').body[0]
             name = "paasal.app.repo.cloudControl.deploy.#{application_id}.#{SecureRandom.uuid}"
             # push to the deployment branch, here: paasal
@@ -15,6 +17,13 @@ module Paasal
               deployer = GitDeployer.new(name, deployment[:branch], user[:email], PAASAL_DEPLOYMENT)
               deployer.deploy(file, compression_format)
             end
+
+            return if current_state == API::Enums::ApplicationStates::CREATED ||
+                      current_state == API::Enums::ApplicationStates::DEPLOYED
+
+            # Deploy via the API, use version identifier -1 to refer a new build,
+            # but ONLY (!) if the application is not in the CREATED or DEPLOYED state
+            put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
           end
 
           # @see Stub#download

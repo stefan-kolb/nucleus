@@ -9,7 +9,10 @@ module Paasal
         include Paasal::Adapters::V1::CloudControl::Buildpacks
         include Paasal::Adapters::V1::CloudControl::Domains
         include Paasal::Adapters::V1::CloudControl::Data
+        include Paasal::Adapters::V1::CloudControl::Lifecycle
         include Paasal::Adapters::V1::CloudControl::Logs
+        include Paasal::Adapters::V1::CloudControl::Regions
+        include Paasal::Adapters::V1::CloudControl::Scaling
         include Paasal::Adapters::V1::CloudControl::SemanticErrors
         include Paasal::Adapters::V1::CloudControl::Services
         include Paasal::Adapters::V1::CloudControl::Vars
@@ -44,18 +47,6 @@ module Paasal
           end
         end
 
-        # @see Stub#regions
-        def regions
-          [default_region]
-        end
-
-        # @see Stub#region
-        def region(region_name)
-          fail Errors::AdapterResourceNotFoundError,
-               "Region '#{region_name}' does not exist at the endpoint" unless region_name.casecmp('default') == 0
-          default_region
-        end
-
         def handle_error(error_response)
           message = error_response.body.match(/{(.*?)}/)
           message = message[1] if message
@@ -72,32 +63,6 @@ module Paasal
           end
           # error still unhandled, will result in a 500, server error
           log.warn "cloudControl error still unhandled: #{error_response}"
-        end
-
-        # @see Stub#scale
-        def scale(application_id, instances)
-          # update the number of instances on the application's deployment
-          scale_response = put("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}",
-                               body: { min_boxes: instances }).body
-          to_paasal_app(get("/app/#{application_id}").body, scale_response)
-        end
-
-        # @see Stub#start
-        def start(application_id)
-          deployment = default_deployment(application_id)
-          # fail if there is no deployment
-          unless data_uploaded?(deployment)
-            fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
-          end
-
-          # if no cloudControl deployment has been made, trigger it
-          if deployment[:version] == '-1'
-            # deploy via the API, use version identifier -1 to refer a new build
-            put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
-          end
-
-          # return the application object
-          to_paasal_app(get("/app/#{application_id}").body, default_deployment(application_id))
         end
 
         private
@@ -165,15 +130,6 @@ module Paasal
 
         def headers
           super.merge('Content-Type' => 'application/json')
-        end
-
-        def default_region
-          {
-            id: 'default',
-            description: 'Default region, cloudControl does not support multi regions yet.',
-            created_at: Time.at(0).to_datetime,
-            updated_at: Time.at(0).to_datetime
-          }
         end
 
         def with_ssh_key

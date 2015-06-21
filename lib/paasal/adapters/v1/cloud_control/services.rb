@@ -42,7 +42,7 @@ module Paasal
 
           # @see Stub#installed_service
           def installed_service(application_id, service_name)
-            # we also require the installed plan to retrieve the service
+            # we also require the installed plan to retrieve the service, the list does not include all properties :(
             plan_name = active_plan(application_id, service_name)
             assignment = get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon/#{plan_name}").body
             installed_service = service(parse_service_name(assignment[:addon_option][:name]))
