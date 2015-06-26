@@ -5,6 +5,7 @@ module Paasal
       #   API documentation
       class OpenshiftV2 < Stub
         include Paasal::Logging
+        include Paasal::Adapters::V1::OpenshiftV2::Authentication
         include Paasal::Adapters::V1::OpenshiftV2::Application
         include Paasal::Adapters::V1::OpenshiftV2::AppStates
         include Paasal::Adapters::V1::OpenshiftV2::Data
@@ -19,17 +20,6 @@ module Paasal
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
-        end
-
-        # @see Stub#auth_client
-        def auth_client
-          HttpBasicAuthClient.new @check_certificates do |verify_ssl, headers|
-            # auth verification block
-            headers['Accept'] = 'application/json; version=1.7'
-            result = Excon.new("#{@endpoint_url}/user", ssl_verify_peer: verify_ssl).get(headers: headers)
-            # Openshift returns 401 for invalid credentials --> auth failed, return false
-            result.status != 401
-          end
         end
 
         def handle_error(error_response)
