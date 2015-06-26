@@ -83,6 +83,7 @@ module Paasal
             heroku_application[:active_runtime] = heroku_application.delete(:buildpack_provided_description)
             heroku_application[:runtimes] = installed_buildpacks(heroku_application[:id])
             heroku_application[:release_version] = latest_release(heroku_application[:id], dynos)
+            heroku_application[:region] = heroku_application[:region][:name]
             heroku_application
           end
         end
