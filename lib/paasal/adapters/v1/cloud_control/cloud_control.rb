@@ -5,6 +5,7 @@ module Paasal
     module V1
       class CloudControl < Stub
         include Paasal::Logging
+        include Paasal::Adapters::V1::CloudControl::Authentication
         include Paasal::Adapters::V1::CloudControl::Application
         include Paasal::Adapters::V1::CloudControl::Buildpacks
         include Paasal::Adapters::V1::CloudControl::Domains
@@ -28,23 +29,6 @@ module Paasal
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
-        end
-
-        # @see Stub#auth_client
-        def auth_client
-          Token.new @check_certificates do |_verify_ssl, username, password|
-            auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
-            begin
-              # ssl verification is implemented by the HttpClient itself
-              response = post('/token', headers: auth_headers)
-              # parse to retrieve the token and expiration date
-              expires = Date.parse(response.body[:expires])
-              [response.body[:token], expires]
-            rescue Errors::ApiError
-              # ignore the error, return nil for failed authentication
-              nil
-            end
-          end
         end
 
         def handle_error(error_response)
