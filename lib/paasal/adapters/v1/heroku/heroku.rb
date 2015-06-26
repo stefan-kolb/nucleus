@@ -7,6 +7,7 @@ module Paasal
       # @see https://devcenter.heroku.com/articles/platform-api-reference Heroku Platform API
       class Heroku < Stub
         include Paasal::Logging
+        include Paasal::Adapters::V1::Heroku::Authentication
         include Paasal::Adapters::V1::Heroku::Application
         include Paasal::Adapters::V1::Heroku::AppStates
         include Paasal::Adapters::V1::Heroku::Buildpacks
@@ -22,23 +23,6 @@ module Paasal
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
-        end
-
-        # @see Stub#auth_client
-        def auth_client
-          log.debug "Authenticate @ #{@endpoint_url}"
-          TokenAuthClient.new @check_certificates do |verify_ssl, username, password|
-            response = Excon.new("#{@endpoint_url}/login?username=#{username}&password=#{password}",
-                                 ssl_verify_peer: verify_ssl).post
-            # Heroku returns 404 for invalid credentials, then we do not return an API token
-            if response.status == 404
-              nil
-            else
-              # extract the token
-              response_parsed = JSON.parse(response.body)
-              response_parsed['api_key']
-            end
-          end
         end
 
         def handle_error(error_response)
