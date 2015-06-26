@@ -35,8 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'git', '~> 1.2'
   # TODO: adapt versions once all patches are included in the master branch
   # Used to build the API
-  # spec.add_runtime_dependency 'grape', '~> 0.11', '>= 0.11.1'
-  spec.add_runtime_dependency 'grape'
+  spec.add_runtime_dependency 'grape', '~> 0.12'
   spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
   # Used to document the API
   spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'

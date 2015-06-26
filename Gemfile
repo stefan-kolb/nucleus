@@ -3,8 +3,6 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in paasal.gemspec
 gemspec
 
-gem 'grape', git: 'https://github.com/intridea/grape.git'
-
 group :test do
   gem 'airborne'
   gem 'codeclimate-test-reporter', require: nil
