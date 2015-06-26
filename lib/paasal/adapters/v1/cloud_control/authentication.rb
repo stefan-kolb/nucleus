@@ -12,7 +12,7 @@ module Paasal
                 # ssl verification is implemented by the HttpClient itself
                 response = post('/token', headers: auth_headers)
                 # parse to retrieve the token and expiration date
-                expires = Date.parse(response.body[:expires])
+                expires = Time.parse(response.body[:expires])
                 [response.body[:token], expires]
               rescue Errors::ApiError
                 # ignore the error, return nil for failed authentication
