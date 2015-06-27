@@ -35,12 +35,13 @@
 # Defaults to: nil
 # paasal_config.ssh.custom_key = nil
 
-paasal_config.api.title = 'PaaSal - Platform as a Service abstraction layer API'
-paasal_config.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
-paasal_config.api.contact = 'cedric.roeck@gmail.com'
-# The name of the license.
-paasal_config.api.license = ''
-# The URL of the license.
-paasal_config.api.license_url = ''
-# The URL of the API terms and conditions.
-paasal_config.api.terms_of_service_url = 'API still under development, no guarantees (!)'
+# [optional] Specify the public API description
+# paasal_config.api.title = 'PaaSal - Platform as a Service abstraction layer API'
+# paasal_config.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
+# paasal_config.api.contact = 'paasal@roecky.net'
+# # The name of the license.
+# paasal_config.api.license = 'TBD'
+# # The URL of the license.
+# paasal_config.api.license_url = ''
+# # The URL of the API terms and conditions.
+# paasal_config.api.terms_of_service_url = 'API still under development, no guarantees (!)'

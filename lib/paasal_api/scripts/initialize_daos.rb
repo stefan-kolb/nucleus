@@ -1,6 +1,6 @@
 # set the temporary db file if is has not been specified via the config
 unless paasal_config.db.key?(:path)
-  puts 'No custom store specified, generating temporary store filename'
+  puts 'No custom DB store specified, generating temporary store filename'
   paasal_config.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.store"
 end
 
