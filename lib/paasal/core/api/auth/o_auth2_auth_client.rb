@@ -23,7 +23,7 @@ module Paasal
       end
 
       def auth_header
-        fail Errors::AuthenticationError, 'Authentication client was not authenticated yet' unless @access_token
+        fail Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @access_token
         if expired?
           log.debug('OAuth2 access_token is expired, trigger refresh before returning auth_header')
           # token is expired, renew first
@@ -35,7 +35,7 @@ module Paasal
 
       def refresh
         if @refresh_token.nil?
-          fail Errors::AuthenticationError, "Can't refresh token before initial authentication"
+          fail Errors::EndpointAuthenticationError, "Can't refresh token before initial authentication"
         end
         log.debug("Attempt to refresh the access_token with our refresh_token: '#{@refresh_token}'")
         response = post(query: { grant_type: 'refresh_token', refresh_token: @refresh_token })
@@ -64,7 +64,7 @@ module Paasal
           log.error("OAuth2 for '#{@auth_url}' failed with status 403 (access denied), indicating an adapter issue")
           raise Errors::UnknownAdapterCallError, 'Access to resource denied, probably the adapter must be updated'
         when 400, 401
-          raise Errors::AuthenticationError, body(e.response)[:error_description]
+          raise Errors::EndpointAuthenticationError, body(e.response)[:error_description]
         end
         # re-raise all unhandled exception, indicating adapter issues
         raise Errors::UnknownAdapterCallError, 'OAuth2 call failed unexpectedly, probably the adapter must be updated'

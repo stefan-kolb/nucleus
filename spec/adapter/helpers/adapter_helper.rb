@@ -11,7 +11,7 @@ module Paasal
           # save them in hash via adapter clazz as key
           @version_based_adapters = {}
           @version_based_endpoints = {}
-          Paasal::ApiDetector.api_versions.each do |api_version|
+          Paasal::VersionDetector.api_versions.each do |api_version|
             adapters = {}
             endpoints = {}
             Paasal::Adapters.configuration_files.each do |adapter_config|

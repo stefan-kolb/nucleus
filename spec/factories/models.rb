@@ -21,7 +21,7 @@ FactoryGirl.define do
       # associate with provider
       unless endpoint.provider.nil?
         # TODO: find a solution how to test when multiple API versions are to be supported
-        dao = Paasal::DB::ProviderDao.instance('v1')
+        dao = Paasal::API::DB::ProviderDao.instance('v1')
         provider = dao.get endpoint.provider
         provider.endpoints = [] if provider.endpoints.nil?
         provider.endpoints << endpoint.id
@@ -42,7 +42,7 @@ FactoryGirl.define do
       # associate with vendor
       unless provider.vendor.nil?
         # TODO: find a solution how to test when multiple API versions are to be supported
-        dao = Paasal::DB::VendorDao.instance('v1')
+        dao = Paasal::API::DB::VendorDao.instance('v1')
         vendor = dao.get provider.vendor
         vendor.providers = [] if vendor.providers.nil?
         vendor.providers << provider.id

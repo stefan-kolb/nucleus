@@ -13,14 +13,14 @@ module Paasal
       def self.with_authentication(adapter, env)
         begin
           response = yield
-        rescue Errors::AuthenticationError
+        rescue Errors::EndpointAuthenticationError
           # first attempt with actually valid credentials failed, try to refresh token based clients
           username, password = username_password(env)
           begin
             auth_client = adapter.cached(adapter.cache_key(username, password))
             auth_client.refresh
             response = yield
-          rescue Errors::AuthenticationError
+          rescue Errors::EndpointAuthenticationError
             # refresh failed, too
             log.debug 'Call failed (401), start repetition by removing outdated cache entry'
             re_authenticate(adapter, env)
@@ -37,7 +37,7 @@ module Paasal
       # that appear to be outdated.<br>
       # If the refresh fails, a complete re-authentication will be forced.
       #
-      # @raise [Paasal::Errors::AuthenticationError] if both, refresh and authentication fail
+      # @raise [Paasal::Errors::EndpointAuthenticationError] if both, refresh and authentication fail
       # @return [void]
       def self.refresh_token(auth_client)
         # we first try to renew our token before invalidating the cache
@@ -52,7 +52,7 @@ module Paasal
       #
       # @param [Paasal::Adapters::BaseAdapter] adapter adapter that is used for the ongoing request
       # @param [Hash<String, String>] env Rack environment, shall contain HTTP authentication information
-      # @raise [Paasal::Errors::AuthenticationError] if authentication at the endpoint fails
+      # @raise [Paasal::Errors::EndpointAuthenticationError] if authentication at the endpoint fails
       # @return [void]
       def self.re_authenticate(adapter, env)
         log.debug('Invoked re-authentication')

@@ -20,7 +20,7 @@ module Paasal
 
             build_deployment(app_id)
 
-            return unless app_state == API::Enums::ApplicationStates::CREATED
+            return unless app_state == Enums::ApplicationStates::CREATED
 
             # and finally stop so we don't get to see the sample application and switch to the deployed state
             send_event(application_id, 'stop')
@@ -30,7 +30,7 @@ module Paasal
           def download(application_id, compression_format)
             # Only possible with git
             app = get("/application/#{app_id_by_name(application_id)}").body[:data]
-            if application_state(app) == API::Enums::ApplicationStates::CREATED
+            if application_state(app) == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
             # compress files to archive but exclude the .git repo
@@ -44,7 +44,7 @@ module Paasal
           def rebuild(application_id)
             app_id = app_id_by_name(application_id)
             app = get("/application/#{app_id}").body[:data]
-            if application_state(app) == API::Enums::ApplicationStates::CREATED
+            if application_state(app) == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
             end
 

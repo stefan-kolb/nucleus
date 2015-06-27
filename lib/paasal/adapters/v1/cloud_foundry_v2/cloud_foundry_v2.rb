@@ -39,7 +39,7 @@ module Paasal
             if [1001].include? cf_error
               fail Errors::AdapterRequestError, "#{error.body[:description]} (#{cf_error} - #{error.body[:error_code]})"
             elsif [10_002].include?(cf_error) || error.status == 401
-              fail Errors::AuthenticationError, 'Endpoint authentication failed with OAuth2 token'
+              fail Errors::EndpointAuthenticationError, 'Endpoint authentication failed with OAuth2 token'
             end
           end
           # error still unhandled, will result in a 500, server error

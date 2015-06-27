@@ -15,7 +15,7 @@ module Paasal
       # which must be matched by the adapters.<br>
       # <br>
       # Adapter methods shall raise:<br>
-      # {Errors::AuthenticationError} == 401 if a endpoint call failed due to bad credentials<br>
+      # {Errors::EndpointAuthenticationError} == 401 if a endpoint call failed due to bad credentials<br>
       # {Errors::AdapterResourceNotFoundError} == 404 if a resource could not be found<br>
       # {Errors::SemanticAdapterRequestError} == 422 if the request could not be processed due to
       # common semantic errors<br>
@@ -45,7 +45,7 @@ module Paasal
         # Return a list of all {Paasal::API::Models::Region class} compatible objects
         # that are available on the current endpoint.<br>
         # If the platform does not offer multi-region support, one 'default' region shall be returned.
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Regions] region entity compatible Hash of available regions
         def regions
           fail NOT_IMPLEMENTED_ERROR
@@ -56,14 +56,14 @@ module Paasal
         #
         # @param [String] region_id Id of the region object to retrieve
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no region matching the region_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Region] region entity compatible Hash with the id region_id
         def region(region_id)
           fail NOT_IMPLEMENTED_ERROR
         end
 
         # Get a list of all applications that are accessible to the authenticated user account.
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Applications] application entity list compatible hash
         def applications
           fail NOT_IMPLEMENTED_ERROR
@@ -72,7 +72,7 @@ module Paasal
         # Retrieve the application entity of the application with the given application_id.
         # @param [String] application_id Id of the application object to retrieve
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash with the application_id
         def application(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -86,7 +86,7 @@ module Paasal
         #   call {#regions} for a list of allowed values
         # @option application [Boolean] :autoscaled True if the application shall scale automatically,
         #   false if manual scaling shall be used. WARNING: This option is currently not supported by most vendors!
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
         #   of the created application
         def create_application(application)
@@ -99,7 +99,7 @@ module Paasal
         # @option application [Array<String>] :runtimes Runtimes (buildpacks) to use with the application
         # @param [String] application_id Id of the application object that shall be updated
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash with the application_id
         def update_application(application_id, application)
           fail NOT_IMPLEMENTED_ERROR
@@ -108,7 +108,7 @@ module Paasal
         # Delete the application with the given application_id on the endpoint.
         # @param [String] application_id Id of the application object that shall be deleted
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_application(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -117,7 +117,7 @@ module Paasal
         # Get a list of all domains that are assigned to the application.
         # @param [String] application_id Id of the application for which the domains are to be retrieved
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Domains] domain entity list compatible hash
         def domains(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -128,7 +128,7 @@ module Paasal
         # @param [String] domain_id Id of the domain object to retrieve
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
         #   or no domain matching the domain_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Domain] domain entity compatible hash of the domain with the domain_id
         def domain(application_id, domain_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -140,7 +140,7 @@ module Paasal
         # @option application [String] :name The domain name, e.g. +myapplication.example.org+
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
         #   or no domain matching the domain_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Domain] domain entity compatible hash of the created domain
         def create_domain(application_id, domain)
           fail NOT_IMPLEMENTED_ERROR
@@ -151,7 +151,7 @@ module Paasal
         # @param [String] domain_id Id of the domain object to delete
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
         #   or no domain matching the domain_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_domain(application_id, domain_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -160,7 +160,7 @@ module Paasal
         # Get a list of all environment variables that are assigned to the application.
         # @param [String] application_id Id of the application for which the env_vars are to be retrieved
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariables] environment variable entity list compatible hash
         def env_vars(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -172,7 +172,7 @@ module Paasal
         # @param [String] env_var_id Id of the env_var object to retrieve
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
         #   or no environment variable matching the env_var_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariable] environment variable entity compatible hash
         #   of the env. var with the env_var_id
         def env_var(application_id, env_var_id)
@@ -185,7 +185,7 @@ module Paasal
         # @option env_var [String] :key Key of the environment variable, e.g. +IP+
         # @option env_var [String] :value Value of the environment variable, e.g. +0.0.0.0+
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariable] environment variable entity compatible hash
         #   of the created env. var
         def create_env_var(application_id, env_var)
@@ -199,7 +199,7 @@ module Paasal
         # @option env_var [String] :value Value of the environment variable, e.g. +0.0.0.0+
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
         #   or no environment variable matching the env_var_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::EnvironmentVariable] environment variable entity compatible hash
         #   of the updated env. var
         def update_env_var(application_id, env_var_id, env_var)
@@ -211,7 +211,7 @@ module Paasal
         # @param [String] env_var_id Id of the env_var object to delete
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if no app matching the application_id,
         #   or no environment variable matching the env_var_id could be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_env_var(application_id, env_var_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -226,7 +226,7 @@ module Paasal
         # * state == running
         # @param [String] application_id Id of the application which is to be started
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::SemanticAdapterRequestError] if the application is not deployed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
         def start(application_id)
@@ -241,7 +241,7 @@ module Paasal
         # * state == stopped
         # @param [String] application_id Id of the application which is to be stopped
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::SemanticAdapterRequestError] if the application is not deployed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
         def stop(application_id)
@@ -257,7 +257,7 @@ module Paasal
         # * state == running
         # @param [String] application_id Id of the application which is to be restarted
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::SemanticAdapterRequestError] if the application is not deployed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
         def restart(application_id)
@@ -273,7 +273,7 @@ module Paasal
         # @param [Symbol] compression_format archive formats, see {Paasal::API::Enums::CompressionFormats.all}
         #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::AdapterRequestError] if the application archive that shall be deployed is no
         #   valid application archive, or if the application_archive / compression_format are not supported
         # @return [void]
@@ -286,7 +286,7 @@ module Paasal
         # previously failed application start after the issues have been resolved.
         # @param [String] application_id Id of the application which is to be rebuild
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
         def rebuild(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -299,7 +299,7 @@ module Paasal
         # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::Enums.all}
         #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::AdapterRequestError] if the application archive that shall be deployed is no
         #   valid application archive, or if the compression_format is not supported
         # @return [StringIO] binary application data
@@ -311,7 +311,7 @@ module Paasal
         # Scale the application and adjust the number of instances that shall be running.
         # @param [String] application_id Id of the application which is to be scaled
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::SemanticAdapterRequestError] if the number of instances is disallowed on the platform
         # @return [Hash, Paasal::API::Models::Application] application entity compatible Hash
         def scale(application_id, instances)
@@ -322,7 +322,7 @@ module Paasal
         # @param [String] application_id Id of the application of which the log existence is to be checked
         # @param [String] log_id Id of the log whose existence is to be checked
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Boolean] returns true if there is a log for the application with the log_id,
         #   false if it does not exist
         def log?(application_id, log_id)
@@ -332,7 +332,7 @@ module Paasal
         # Get a list of all logs that are available for the application.
         # @param [String] application_id Id of the application of which the logs are to be listed
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Logs] log entity list compatible hash
         def logs(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -342,7 +342,7 @@ module Paasal
         # @param [String] application_id Id of the application of which the log_entries are to be retrieved
         # @param [String] log_id Id of the log for which the entries are to be retrieved
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application or log could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Array<String>] array of log entries, starting with the earliest entry at pos [0]
         def log_entries(application_id, log_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -357,14 +357,14 @@ module Paasal
         # @param [Paasal::RackStreamCallback] stream stream callback to which messages can be sent via
         #   the +send_message+ method
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application or log could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Paasal::Adapters::TailStopper] callback object to stop the ongoing tail process
         def tail(application_id, log_id, stream)
           fail NOT_IMPLEMENTED_ERROR
         end
 
         # List all services that are available at the endpoint.
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Services] services list compatible hash
         def services
           fail NOT_IMPLEMENTED_ERROR
@@ -373,7 +373,7 @@ module Paasal
         # Retrieve the service entity matching the given service_id.
         # @param [String] service_id Id of the service that is to be retrieved
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the service could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::Service] service entity compatible hash
         def service(service_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -382,7 +382,7 @@ module Paasal
         # List all plans that can be chosen for the service with the service_id, ascending order on the price.
         # @param [String] service_id Id of the service the plans belong to
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the service could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::ServicePlans] service plan list compatible hash
         def service_plans(service_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -391,7 +391,7 @@ module Paasal
         # Show the plan with the plan_id that is applicable to the service with the service_id.
         # @param [String] service_id Id of the service the plans belongs to
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the service or the plan could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::ServicePlan] service plan entity compatible hash
         def service_plan(service_id, plan_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -400,7 +400,7 @@ module Paasal
         # List all services that are installed on the application with the given application_id.
         # @param [String] application_id Id of the application of which the services are to be listed of
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::InstalledServices] installed services list compatible hash
         def installed_services(application_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -410,7 +410,7 @@ module Paasal
         # on the application with the given application_id.
         # @param [String] service_id Id of the installed service that is to be retrieved
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application or service could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Paasal::API::Models::InstalledService] installed service entity compatible hash
         def installed_service(application_id, service_id)
           fail NOT_IMPLEMENTED_ERROR
@@ -423,7 +423,7 @@ module Paasal
         # @param [Hash, Paasal::API::Models::ServicePlan] plan_entity service plan entity compatible Hash.
         # @option env_var [String] :id ID of the service plan that shall be applied
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::SemanticAdapterRequestError] if the service to add or the plan to use
         #   could not be found
         # @return [Hash, Paasal::API::Models::InstalledService] installed service entity compatible hash
@@ -440,7 +440,7 @@ module Paasal
         # @option env_var [String] :id ID of the service plan that shall be applied
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found or
         #   the service was not installed on this application
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @raise [Paasal::Errors::SemanticAdapterRequestError] if the plan to use could not be found
         # @return [Hash, Paasal::API::Models::InstalledService] installed service entity compatible hash
         def change_service(application_id, service_id, plan_entity)
@@ -453,7 +453,7 @@ module Paasal
         #   must not (but can) be identical to the id of the service the installed service is based on.
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found or
         #   the service was not installed on this application
-        # @raise [Paasal::Errors::AuthenticationError] if the authentication on the endpoint failed
+        # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def remove_service(application_id, service_id)
           fail NOT_IMPLEMENTED_ERROR

@@ -18,14 +18,15 @@ module Paasal
       def authenticate(username, password)
         packed_credentials = ["#{username}:#{password}"].pack('m*').gsub(/\n/, '')
         valid = @verification.call(verify_ssl, 'Authorization' => "Basic #{packed_credentials}")
-        fail Errors::AuthenticationError, 'Authentication failed, credentials seem to be invalid' unless valid
+        fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless valid
         # verification passed, credentials are valid
         @packed_credentials = packed_credentials
         self
       end
 
       def auth_header
-        fail Errors::AuthenticationError, 'Authentication client was not authenticated yet' unless @packed_credentials
+        fail Errors::EndpointAuthenticationError,
+             'Authentication client was not authenticated yet' unless @packed_credentials
         { 'Authorization' => "Basic #{@packed_credentials}" }
       end
     end

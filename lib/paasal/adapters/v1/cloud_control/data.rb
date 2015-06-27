@@ -18,8 +18,8 @@ module Paasal
               deployer.deploy(file, compression_format)
             end
 
-            return if current_state == API::Enums::ApplicationStates::CREATED ||
-                      current_state == API::Enums::ApplicationStates::DEPLOYED
+            return if current_state == Enums::ApplicationStates::CREATED ||
+                      current_state == Enums::ApplicationStates::DEPLOYED
 
             # Deploy via the API, use version identifier -1 to refer a new build,
             # but ONLY (!) if the application is not in the CREATED or DEPLOYED state
@@ -30,7 +30,7 @@ module Paasal
           def download(application_id, compression_format)
             # get deployment, also serves as 404 check for application
             deployment = default_deployment(application_id)
-            if application_state(deployment) == API::Enums::ApplicationStates::CREATED
+            if application_state(deployment) == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
 
@@ -45,7 +45,7 @@ module Paasal
           def rebuild(application_id)
             # get deployment, also serves as 404 check for application
             deployment = default_deployment(application_id)
-            if application_state(deployment) == API::Enums::ApplicationStates::CREATED
+            if application_state(deployment) == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
             end
 

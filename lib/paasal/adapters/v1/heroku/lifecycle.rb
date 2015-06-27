@@ -12,10 +12,10 @@ module Paasal
             log.debug "Start @ #{@endpoint_url}"
 
             app = application(application_id)
-            if app[:state] == API::Enums::ApplicationStates::DEPLOYED
+            if app[:state] == Enums::ApplicationStates::DEPLOYED
               # add web dyno if there currently are no dynos (state == deployed)
               scale_web(application_id, 1)
-            elsif app[:state] == API::Enums::ApplicationStates::CREATED
+            elsif app[:state] == Enums::ApplicationStates::CREATED
               # fail if there is no deployment
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
             end
@@ -30,7 +30,7 @@ module Paasal
 
             # fail if there is no deployment
             app = application(application_id)
-            if app[:state] == API::Enums::ApplicationStates::CREATED
+            if app[:state] == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
             end
 

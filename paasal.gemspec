@@ -17,7 +17,9 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.3'
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
-  spec.files         = `git ls-files -z --exclude-standard`.split("\x0").reject { |f| f[%r{^(spec/adapter|icons)/}] }
+  spec.files         = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|
+    f[%r{^(lib/paasal_api|spec/adapter|icons)/}]
+  end
   # again only unit and integration, but no adapter test files
   spec.test_files    = spec.files.grep(%r{^(spec)/})
 

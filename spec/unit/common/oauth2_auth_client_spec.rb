@@ -37,8 +37,8 @@ describe Paasal::Adapters::OAuth2AuthClient do
       describe '#authenticate' do
         context 'with invalid credentials' do
           it 'raises an error when authentication failed' do
-            expect { client.authenticate(invalid_username, invalid_password) }.to raise_error
-            Paasal::Errors::AuthenticationError
+            expect { client.authenticate(invalid_username, invalid_password) }.to raise_error(
+              Paasal::Errors::EndpointAuthenticationError)
           end
         end
 
@@ -51,14 +51,12 @@ describe Paasal::Adapters::OAuth2AuthClient do
       end
       describe '#refresh' do
         it 'can not be invoked' do
-          expect { client.refresh }.to raise_error
-          Paasal::Errors::AuthenticationError
+          expect { client.refresh }.to raise_error(Paasal::Errors::EndpointAuthenticationError)
         end
       end
       describe '#auth_header' do
         it 'can not be invoked' do
-          expect { client.auth_header }.to raise_error
-          Paasal::Errors::AuthenticationError
+          expect { client.auth_header }.to raise_error(Paasal::Errors::EndpointAuthenticationError)
         end
       end
     end

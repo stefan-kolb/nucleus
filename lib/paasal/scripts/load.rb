@@ -1,6 +1,17 @@
-# 1) load 3rd party dependencies
+# First, load 3rd party dependencies
 require_relative 'load_dependencies'
-# 2) load the paasal core application
-require_relative 'load_app'
-# 3) load the HTTP API extension
-require_relative 'load_api'
+
+# require all patched classes
+require_rel '../ext'
+
+# OS detection
+require 'paasal/os'
+
+# Root directory convenience module
+require 'paasal/root_dir'
+
+# core
+require_rel '../core'
+
+# adapters
+require_rel '../adapters'

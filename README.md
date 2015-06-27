@@ -179,7 +179,7 @@ For more information have a look at the [configuration](#configuration) section.
 2) Show all currently available API versions:
 
 ```ruby
-Paasal::ApiDetector.api_versions
+Paasal::VersionDetector.api_versions
 ```
 
 3) Instantiate the AdapterResolver for the desired API version:

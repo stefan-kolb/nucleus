@@ -14,7 +14,7 @@ module Paasal
                 # parse to retrieve the token and expiration date
                 expires = Time.parse(response.body[:expires])
                 [response.body[:token], expires]
-              rescue Errors::ApiError
+              rescue Errors::AdapterError
                 # ignore the error, return nil for failed authentication
                 nil
               end

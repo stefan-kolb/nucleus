@@ -37,7 +37,7 @@ module Paasal
                    "Invalid log file '#{log_id}', not available for application '#{application_id}'"
             end
 
-            return build_log_entries(application_id) if log_id.to_sym == API::Enums::ApplicationLogfileType::BUILD
+            return build_log_entries(application_id) if log_id.to_sym == Enums::ApplicationLogfileType::BUILD
 
             request_body = request_body(log_id.to_sym).merge(tail: false)
             log = post("/apps/#{application_id}/log-sessions", body: request_body).body
@@ -52,7 +52,7 @@ module Paasal
           # @see Stub#tail
           def tail(application_id, log_id, stream)
             # Currently no tailing for build log possible
-            if log_id == API::Enums::ApplicationLogfileType::BUILD
+            if log_id == Enums::ApplicationLogfileType::BUILD
               entries = build_log_entries(application_id)
               entries.each { |entry| stream.send_message(entry) }
               stream.close
@@ -67,11 +67,11 @@ module Paasal
 
           def available_log_types
             log_types = {}
-            log_types[API::Enums::ApplicationLogfileType::API] = { source: 'heroku', dyno: 'api' }
-            log_types[API::Enums::ApplicationLogfileType::APPLICATION] = { source: 'app' }
-            log_types[API::Enums::ApplicationLogfileType::REQUEST] = { source: 'heroku', dyno: 'router' }
+            log_types[Enums::ApplicationLogfileType::API] = { source: 'heroku', dyno: 'api' }
+            log_types[Enums::ApplicationLogfileType::APPLICATION] = { source: 'app' }
+            log_types[Enums::ApplicationLogfileType::REQUEST] = { source: 'heroku', dyno: 'router' }
             # TODO: filter only for web and worker dynos (must be merged manually :/)
-            log_types[API::Enums::ApplicationLogfileType::SYSTEM] = { source: 'heroku' }
+            log_types[Enums::ApplicationLogfileType::SYSTEM] = { source: 'heroku' }
             log_types
           end
 

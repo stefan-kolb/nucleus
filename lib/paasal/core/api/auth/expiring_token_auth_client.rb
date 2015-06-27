@@ -22,7 +22,7 @@ module Paasal
 
       def authenticate(username, password)
         token, expiration_time = @token_expiration_parser.call(verify_ssl, username, password)
-        fail Errors::AuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
+        fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
         # verification passed, credentials are valid
         @api_token = token
         @expires = expiration_time
@@ -30,8 +30,8 @@ module Paasal
       end
 
       def auth_header
-        fail Errors::AuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
-        fail Paasal::Errors::AuthenticationError, 'Cached authentication token expired' if expired?
+        fail Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
+        fail Errors::EndpointAuthenticationError, 'Cached authentication token expired' if expired?
         { 'Authorization' => "Bearer #{api_token}" }
       end
 

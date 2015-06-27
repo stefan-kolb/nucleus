@@ -2,11 +2,11 @@ module Paasal
   module TestDataGenerator
     def self.clean
       paasal_config.api.versions.each do |api_version|
-        Paasal::DB::AdapterDao.instance(api_version).clear
-        Paasal::DB::EndpointDao.instance(api_version).clear
-        Paasal::DB::ProviderDao.instance(api_version).clear
-        Paasal::DB::VendorDao.instance(api_version).clear
-        Paasal::DB::CacheDao.instance(api_version).clear
+        Paasal::API::DB::AdapterDao.instance(api_version).clear
+        Paasal::API::DB::EndpointDao.instance(api_version).clear
+        Paasal::API::DB::ProviderDao.instance(api_version).clear
+        Paasal::API::DB::VendorDao.instance(api_version).clear
+        Paasal::API::DB::CacheDao.instance(api_version).clear
       end
     end
   end
@@ -17,13 +17,13 @@ module Paasal
       version = 'v1'
       case entity
       when Paasal::Endpoint
-        dao = Paasal::DB::EndpointDao.instance(version)
+        dao = Paasal::API::DB::EndpointDao.instance(version)
       when Paasal::Provider
-        dao = Paasal::DB::ProviderDao.instance(version)
+        dao = Paasal::API::DB::ProviderDao.instance(version)
       when Paasal::Vendor
-        dao = Paasal::DB::VendorDao.instance(version)
+        dao = Paasal::API::DB::VendorDao.instance(version)
       when Paasal::AdapterIndexEntry
-        dao = Paasal::DB::AdapterDao.instance(version)
+        dao = Paasal::API::DB::AdapterDao.instance(version)
       end
       dao
     end

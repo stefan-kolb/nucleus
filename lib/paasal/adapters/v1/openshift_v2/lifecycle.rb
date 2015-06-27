@@ -31,16 +31,16 @@ module Paasal
 
           def validate_start_requirements(id, action)
             state = application_state(get("/application/#{id}").body[:data])
-            if state == API::Enums::ApplicationStates::DEPLOYED
+            if state == Enums::ApplicationStates::DEPLOYED
               activate(id, latest_deployment(id)[:id])
-            elsif state == API::Enums::ApplicationStates::CREATED
+            elsif state == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, "Application must be deployed before it can be #{action}ed"
             end
           end
 
           def deployed?(application_id)
             app = get("/application/#{app_id_by_name(application_id)}").body[:data]
-            application_state(app) != API::Enums::ApplicationStates::CREATED
+            application_state(app) != Enums::ApplicationStates::CREATED
           end
 
           # Send the event and trigger an action.

@@ -21,7 +21,7 @@ module Paasal
       begin
         send(compression_method, file, destination_path)
       rescue Zip::Error, Zlib::GzipFile::Error
-        raise Errors::ApplicationArchiveError, "Failed to extract #{compression_format} archive"
+        raise API::Errors::ApplicationArchiveError, "Failed to extract #{compression_format} archive"
       end
     end
 

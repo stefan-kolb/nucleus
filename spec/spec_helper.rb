@@ -49,14 +49,15 @@ else
     add_filter 'config/'
 
     add_group 'Adapters', 'lib/paasal/adapters'
-    add_group 'API versions', 'lib/paasal/api/versions'
-    add_group 'API entities', 'lib/paasal/api/entities'
-    add_group 'API helpers', 'lib/paasal/api/helpers'
     add_group 'Core', 'lib/paasal/core'
-    add_group 'Middleware', 'lib/paasal/rack_middleware'
-    add_group 'Models', 'lib/paasal/models'
     add_group 'Persistence', 'lib/paasal/persistence'
     add_group 'Lib ext.', 'lib/paasal/ext'
+    add_group 'API versions', 'lib/paasal_api/api/versions'
+    add_group 'API entities', 'lib/paasal_api/api/entities'
+    add_group 'API helpers', 'lib/paasal_api/api/helpers'
+    add_group 'API Middleware', 'lib/paasal_api/rack_middleware'
+    add_group 'API Models', 'lib/paasal_api/models'
+    add_group 'API Lib ext.', 'lib/paasal_api/ext'
   end
 end
 
@@ -71,13 +72,15 @@ paasal_config.db.delete_on_shutdown = true
 paasal_config.db.override = true
 
 # require our app
-require 'paasal/scripts/load'
+require 'paasal_api/scripts/load_api'
 
 # load the certificate to use for the tests only
 paasal_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
 
 # initialize db, versions and auth strategy
-require 'paasal/scripts/initialize_core'
+require 'paasal/scripts/initialize_config'
+# initialize the api config
+require 'paasal_api/scripts/initialize_api_config'
 
 require 'spec/factories/models'
 

@@ -3,10 +3,10 @@ module Paasal
     module V1
       class CloudFoundryV2 < Stub
         module Logs
-          LOGGREGATOR_TYPES = [API::Enums::ApplicationLogfileType::API,
-                               API::Enums::ApplicationLogfileType::APPLICATION,
-                               API::Enums::ApplicationLogfileType::REQUEST,
-                               API::Enums::ApplicationLogfileType::SYSTEM]
+          LOGGREGATOR_TYPES = [Enums::ApplicationLogfileType::API,
+                               Enums::ApplicationLogfileType::APPLICATION,
+                               Enums::ApplicationLogfileType::REQUEST,
+                               Enums::ApplicationLogfileType::SYSTEM]
           # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
           CRLF = "\r\n"
           WSP  = "\s"
@@ -25,15 +25,15 @@ module Paasal
                 filename = logfile_line.rpartition(' ').first.strip
                 if filename == 'staging_task.log'
                   filename = 'build'
-                  log_type = API::Enums::ApplicationLogfileType::BUILD
+                  log_type = Enums::ApplicationLogfileType::BUILD
                 else
-                  log_type = API::Enums::ApplicationLogfileType::OTHER
+                  log_type = Enums::ApplicationLogfileType::OTHER
                 end
                 # TODO: right now, we always assume the log has recently been updated
                 logs.push(id: filename, name: filename, type: log_type, created_at: app_created,
                           updated_at: Time.now.utc.iso8601)
               end
-            rescue Errors::ApiError
+            rescue Errors::AdapterError
               log.debug('no logs directory found for cf application')
             end
 
@@ -43,7 +43,7 @@ module Paasal
               logs.push(id: type, name: type, type: type, created_at: app_created, updated_at: Time.now.utc.iso8601)
             end
             # TODO: 'all' is probably not perfect, since the build log wont be included
-            logs.push(id: 'all', name: 'all', type: API::Enums::ApplicationLogfileType::OTHER,
+            logs.push(id: 'all', name: 'all', type: Enums::ApplicationLogfileType::OTHER,
                       created_at: app_created, updated_at: Time.now.utc.iso8601)
             logs
           end
@@ -52,7 +52,7 @@ module Paasal
           def log?(application_name_or_id, log_id)
             app_guid = app_guid(application_name_or_id)
             # test file existence
-            log_id = 'staging_task.log' if log_id.to_sym == API::Enums::ApplicationLogfileType::BUILD
+            log_id = 'staging_task.log' if log_id.to_sym == Enums::ApplicationLogfileType::BUILD
             # checks also if application is even valid
             response = get("/v2/apps/#{app_guid}/instances/0/files/logs/#{log_id}",
                            follow_redirects: false, expects: [200, 302, 400])
@@ -84,7 +84,7 @@ module Paasal
               # fetch recent data from loggregator and return an array of log entries
               recent_decoded = recent_log_messages(app_guid, loggregator_filter(log_id))
               recent_decoded.collect { |log_msg| construct_log_entry(log_msg) }
-            elsif log_id.to_sym == API::Enums::ApplicationLogfileType::BUILD
+            elsif log_id.to_sym == Enums::ApplicationLogfileType::BUILD
               # handle special staging log
               build_log_entries(app_guid)
             else
@@ -104,13 +104,13 @@ module Paasal
 
           def loggregator_filter(log_id)
             case log_id.to_sym
-            when API::Enums::ApplicationLogfileType::API
+            when Enums::ApplicationLogfileType::API
               filter = ['API']
-            when API::Enums::ApplicationLogfileType::APPLICATION
+            when Enums::ApplicationLogfileType::APPLICATION
               filter = ['APP']
-            when API::Enums::ApplicationLogfileType::REQUEST
+            when Enums::ApplicationLogfileType::REQUEST
               filter = ['RTR']
-            when API::Enums::ApplicationLogfileType::SYSTEM
+            when Enums::ApplicationLogfileType::SYSTEM
               filter = %w(STG LGR DEA)
             when :all
               # no filter, show all
@@ -204,7 +204,7 @@ module Paasal
 
           def tail_file(app_guid, log_id, stream)
             log.debug 'Tailing CF log file'
-            log_id = 'staging_task.log' if log_id.to_sym == API::Enums::ApplicationLogfileType::BUILD
+            log_id = 'staging_task.log' if log_id.to_sym == Enums::ApplicationLogfileType::BUILD
 
             # cache headers as they are bound to a request and could be lost with the next tick
             headers_to_use = headers

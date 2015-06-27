@@ -8,22 +8,22 @@ module Paasal
 
           def application_state(app, retrieved_dynos = nil)
             # 1: created, both repo and slug are nil
-            return API::Enums::ApplicationStates::CREATED unless repo_or_slug_content?(app)
+            return Enums::ApplicationStates::CREATED unless repo_or_slug_content?(app)
 
             # all subsequent states require dynos to be determined
             dynos = retrieved_dynos ? retrieved_dynos : dynos(app[:id])
 
             # 2: deployed if no dynos assigned
-            return API::Enums::ApplicationStates::DEPLOYED if dynos.empty?
+            return Enums::ApplicationStates::DEPLOYED if dynos.empty?
 
             # 3: stopped if maintenance
-            return API::Enums::ApplicationStates::STOPPED if app[:maintenance] || dynos_not_running?(dynos)
+            return Enums::ApplicationStates::STOPPED if app[:maintenance] || dynos_not_running?(dynos)
 
             # 4: running if no maintenance (checked above) and at least ony dyno is up
-            return API::Enums::ApplicationStates::RUNNING if dyno_states(dynos).include?('up')
+            return Enums::ApplicationStates::RUNNING if dyno_states(dynos).include?('up')
 
             # 5: idle if all dynos are idling
-            return API::Enums::ApplicationStates::IDLE if dynos_idle?(dynos)
+            return Enums::ApplicationStates::IDLE if dynos_idle?(dynos)
 
             # arriving here the above states do not catch all states of the Heroku app, which should not happen ;-)
             log.debug("Faild to determine state for: #{app}, #{dynos}")

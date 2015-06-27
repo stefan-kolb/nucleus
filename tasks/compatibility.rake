@@ -7,10 +7,10 @@ namespace :evaluation do
       api_version = 'v1'
       stub = Paasal::Adapters.const_get(api_version.upcase).const_get('Stub').new 'https://api.example.org'
 
-      adapter_dao = Paasal::DB::AdapterDao.instance(api_version)
-      endpoint_dao = Paasal::DB::EndpointDao.instance(api_version)
-      provider_dao = Paasal::DB::ProviderDao.instance(api_version)
-      vendor_dao = Paasal::DB::VendorDao.instance(api_version)
+      adapter_dao = Paasal::API::DB::AdapterDao.instance(api_version)
+      endpoint_dao = Paasal::API::DB::EndpointDao.instance(api_version)
+      provider_dao = Paasal::API::DB::ProviderDao.instance(api_version)
+      vendor_dao = Paasal::API::DB::VendorDao.instance(api_version)
       @vendor_results = {}
 
       adapter_dao.all.each do |adapter_index_entry|

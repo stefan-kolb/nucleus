@@ -13,7 +13,7 @@ module Paasal
               GitDeployer.new(repo_name, app[:git_url], account[:email]).deploy(file, file_compression_format)
             end
 
-            return unless application_state(app) == API::Enums::ApplicationStates::CREATED
+            return unless application_state(app) == Enums::ApplicationStates::CREATED
             # instantly remove all initially added dynos to keep the 'deployed' state on first deployment
             log.debug 'state before deployment was \'created\', scale web to 0'
             scale_web(application_id, 0)
@@ -23,7 +23,7 @@ module Paasal
           def download(application_id, compression_format)
             # Only possible with git, not with HTTP builds
             app = get("/apps/#{application_id}").body
-            if application_state(app) == API::Enums::ApplicationStates::CREATED
+            if application_state(app) == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
             # compress files to archive but exclude the .git repo
@@ -36,7 +36,7 @@ module Paasal
           # @see Stub#rebuild
           def rebuild(application_id)
             app = get("/apps/#{application_id}").body
-            if application_state(app) == API::Enums::ApplicationStates::CREATED
+            if application_state(app) == Enums::ApplicationStates::CREATED
               fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
             end
 

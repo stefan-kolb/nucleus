@@ -96,12 +96,12 @@ module Paasal
           # * deployed, when only the data has been pushed into the repository (no build)
           # * running, if a data deployment was pushed
           if deployment[:version] == '-1'
-            return API::Enums::ApplicationStates::DEPLOYED if data_uploaded?(deployment)
-            return API::Enums::ApplicationStates::CREATED
+            return Enums::ApplicationStates::DEPLOYED if data_uploaded?(deployment)
+            return Enums::ApplicationStates::CREATED
           end
-          return API::Enums::ApplicationStates::IDLE if deployment[:state] == 'idle'
-          API::Enums::ApplicationStates::RUNNING
-          # return API::Enums::ApplicationStates::STOPPED
+          return Enums::ApplicationStates::IDLE if deployment[:state] == 'idle'
+          Enums::ApplicationStates::RUNNING
+          # return Enums::ApplicationStates::STOPPED
 
           # arriving here the above states do not catch all states of the cloudControl app, which should not happen ;-)
           # fail Errors::UnknownAdapterCallError, 'Could not determine application state. '\

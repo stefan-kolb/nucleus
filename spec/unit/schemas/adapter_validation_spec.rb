@@ -2,7 +2,7 @@ require 'spec/unit/unit_spec_helper'
 require 'kwalify'
 
 describe 'Paasal::Adapters' do
-  Paasal::ApiDetector.api_versions.each do |api_version|
+  Paasal::VersionDetector.api_versions.each do |api_version|
     describe "API #{api_version}" do
       it 'has valid adapter requirements' do
         expect(Paasal::API.requirements(api_version)).to_not be_nil

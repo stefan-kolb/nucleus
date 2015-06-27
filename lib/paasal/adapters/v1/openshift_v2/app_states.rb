@@ -4,7 +4,7 @@ module Paasal
       class OpenshiftV2 < Stub
         module AppStates
           # Determine the current state of the application in the PaaSal lifecycle.
-          # @return [Symbol] application state according to {Paasal::API::Enums::ApplicationStates}
+          # @return [Symbol] application state according to {Paasal::Enums::ApplicationStates}
           def application_state(app, gear_groups = nil, deployments = nil)
             deployments = load_deployments(app[:id]) unless deployments
             gear_groups = load_gears(app[:id]) unless gear_groups

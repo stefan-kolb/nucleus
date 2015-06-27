@@ -7,11 +7,11 @@ module Paasal
           # Cloud control log types. The +key+ and +id+ shall match the PaaSal definitions of log files,
           # whereas the +name+ shall match the cloud control log id.
           LOG_TYPES = {
-            all: { id: 'all', name: 'all', type: API::Enums::ApplicationLogfileType::OTHER },
-            request: { id: 'request', name: 'access', type: API::Enums::ApplicationLogfileType::REQUEST },
-            application: { id: 'application', name: 'error', type: API::Enums::ApplicationLogfileType::APPLICATION },
-            api: { id: 'api', name: 'deploy', type: API::Enums::ApplicationLogfileType::API },
-            system: { id: 'system', name: 'worker', type: API::Enums::ApplicationLogfileType::SYSTEM }
+            all: { id: 'all', name: 'all', type: Enums::ApplicationLogfileType::OTHER },
+            request: { id: 'request', name: 'access', type: Enums::ApplicationLogfileType::REQUEST },
+            application: { id: 'application', name: 'error', type: Enums::ApplicationLogfileType::APPLICATION },
+            api: { id: 'api', name: 'deploy', type: Enums::ApplicationLogfileType::API },
+            system: { id: 'system', name: 'worker', type: Enums::ApplicationLogfileType::SYSTEM }
           }
 
           # @see Stub#logs
