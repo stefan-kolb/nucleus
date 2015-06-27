@@ -19,7 +19,6 @@ module Paasal
         }, using: Models::Provider, unless: { collection: true }
 
         expose :_links, using: ApiReferences, documentation: {
-          required: true,
           type: 'ApiReferences', desc: 'Resource links', required: true } do |instance, _o|
           {
             self: { href: link_resource(%w(vendors), instance) },

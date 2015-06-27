@@ -34,9 +34,6 @@ module Paasal
         env['api.endpoint'].log.debug e.to_s
         e.backtrace.each { |line| env['api.endpoint'].log.debug line }
 
-        p e.to_s
-        e.backtrace.each { |line| p line }
-
         if e.is_a?(API::Errors::ApiError) || e.is_a?(Paasal::Errors::AdapterError)
           # willingly sent error, no need for stacktrace
           entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
