@@ -4,7 +4,8 @@ describe Paasal::Adapters::V1::Heroku do
   before :all do
     # skip these example groups / tests for this adapter
     # Heroku does support the change, but we do not want to change into a payed plan just for testing
-    @unsupported = ['with valid credentials is compliant and application services change succeeds']
+    @unsupported = ['with valid credentials is compliant and application services change succeeds',
+                    'with valid credentials is compliant and scaling succeeds with scale-out']
     @endpoint = 'heroku'
     @api_version = 'v1'
     @app_min = { original_name: 'paasal-test-app-min-properties',
