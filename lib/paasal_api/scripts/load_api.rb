@@ -15,6 +15,9 @@ require 'rack/stream'
 # Now we start loading the HTTP API
 #
 
+# Root directory convenience module
+require 'paasal_api/api_root_dir'
+
 # require all patched classes for the API
 require_rel '../ext'
 

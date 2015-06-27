@@ -80,7 +80,7 @@ paasal_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_ke
 # initialize db, versions and auth strategy
 require 'paasal/scripts/initialize_config'
 # initialize the api config
-require 'paasal_api/scripts/initialize_api_config'
+require 'paasal_api/scripts/initialize_api_customizations'
 
 require 'spec/factories/models'
 

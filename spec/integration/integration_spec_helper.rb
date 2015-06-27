@@ -1,5 +1,4 @@
 require 'spec/spec_helper'
-require 'paasal/scripts/initialize_config'
 require 'paasal_api/scripts/rack_application'
 require 'spec/integration/test_data_generator'
 require 'spec/support/shared_example_request_types'

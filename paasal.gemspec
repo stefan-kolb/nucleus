@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'faye-websocket', '~> 0.9'
   # Application data handling
   spec.add_runtime_dependency 'git', '~> 1.2'
-  # TODO: adapt versions once all patches are included in the master branch
   # Used to build the API
   spec.add_runtime_dependency 'grape', '~> 0.12'
   spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'

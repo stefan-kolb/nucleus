@@ -1,3 +1,5 @@
+puts 'Initializing default PaaSal config...'
+
 # Check the API versions once and make them available via configatron
 paasal_config.api.versions = Paasal::VersionDetector.api_versions
 
