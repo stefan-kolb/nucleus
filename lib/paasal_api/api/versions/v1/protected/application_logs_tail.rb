@@ -40,7 +40,7 @@ module Paasal
                 end
 
                 tail_polling = nil
-                stream = RackStreamCallback.new(self)
+                stream = StreamCallback.new(self)
                 after_connection_error do
                   # save request id to deferred thread for logging associations
                   Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']

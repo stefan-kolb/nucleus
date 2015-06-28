@@ -3,7 +3,7 @@ module Paasal
     module Errors
       class ResourceNotFoundError < ApiError
         # initialize with default error to be 404, resource not found
-        def initialize(message, ui_error = API::ErrorMessages::NOT_FOUND)
+        def initialize(message, ui_error = ErrorMessages::NOT_FOUND)
           super(message, ui_error)
         end
       end

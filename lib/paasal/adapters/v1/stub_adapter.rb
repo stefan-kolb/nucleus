@@ -354,7 +354,7 @@ module Paasal
         # is called.
         # @param [String] application_id Id of the application of which the log is to be tailed
         # @param [String] log_id Id of the log that is to be tailed
-        # @param [Paasal::RackStreamCallback] stream stream callback to which messages can be sent via
+        # @param [Paasal::StreamCallback] stream stream callback to which messages can be sent via
         #   the +send_message+ method
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application or log could not be found
         # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed

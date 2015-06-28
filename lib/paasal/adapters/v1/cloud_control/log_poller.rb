@@ -18,7 +18,7 @@ module Paasal
             # Start the continuous polling of the logs.
             # @param [String] application_name the name (the ID) of the application
             # @param [Array<String>] logs_to_poll IDs of the logs to poll
-            # @param [RackStreamCallback] stream stream callback to push messages
+            # @param [StreamCallback] stream stream callback to push messages
             # @return [void]
             def start(application_name, logs_to_poll, stream)
               @polling_active = true

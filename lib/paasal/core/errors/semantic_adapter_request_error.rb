@@ -9,7 +9,7 @@ module Paasal
     # These errors are clearly to be distinguished from malformed requests.
     class SemanticAdapterRequestError < AdapterError
       # initialize with default error to be 422
-      def initialize(message, error_code = nil, ui_error = API::ErrorMessages::BAD_REQUEST_ENTITY)
+      def initialize(message, error_code = nil, ui_error = ErrorMessages::BAD_REQUEST_ENTITY)
         # allow to customize the error code
         ui_error[:error_code] = error_code unless error_code.nil?
         super(message, ui_error)

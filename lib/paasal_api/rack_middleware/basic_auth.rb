@@ -53,12 +53,12 @@ module Paasal
         private
 
         def unauthorized(dev_msg, env)
-          send_response(Paasal::API::ErrorMessages::AUTH_UNAUTHORIZED, dev_msg, env,
+          send_response(Paasal::ErrorMessages::AUTH_UNAUTHORIZED, dev_msg, env,
                         'WWW-Authenticate' => challenge.to_s)
         end
 
         def bad_request(dev_msg, env)
-          send_response(Paasal::API::ErrorMessages::AUTH_BAD_REQUEST, dev_msg, env)
+          send_response(Paasal::ErrorMessages::AUTH_BAD_REQUEST, dev_msg, env)
         end
 
         def send_response(error_msg, dev_msg, env, additional_headers = {})

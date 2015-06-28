@@ -1,5 +1,5 @@
 module Paasal
-  class RackStreamCallback
+  class StreamCallback
     include Paasal::Logging
 
     attr_accessor :closed

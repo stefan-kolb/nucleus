@@ -55,7 +55,7 @@ module Paasal
       # @return [Paasal::AbstractModel] loaded entity's instance
       def load_entity(dao, id, name, loading_params = params)
         unless dao.key? loading_params[id]
-          to_error(Paasal::API::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'")
+          to_error(Paasal::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'")
         end
         dao.get loading_params[id]
       end
