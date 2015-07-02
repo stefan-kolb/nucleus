@@ -235,13 +235,13 @@ For detailed usage information go to the section [API client(s)](#api-clients).
 #### Start the server
 
 A rack server can be started in multiple ways.
-The most convinient solution is to use the provided script:  
+The most convenient solution is to use the provided script:  
 
 ```shell
 $ ./bin/paasal
 ```
 
-Hower, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
+However, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
 
 ```shell
 $ rackup -s thin config.ru

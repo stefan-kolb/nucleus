@@ -34,7 +34,7 @@ module Paasal
                 RestClient::Request.execute(method: :put, url: url, payload: request_body,
                                             headers: headers, verify_ssl: @check_certificates)
               rescue RestClient::BadRequest => e
-                raise Errors::BadRequestError, e.http_body
+                raise Errors::AdapterRequestError, e.http_body
               end
             ensure
               if tmpfile

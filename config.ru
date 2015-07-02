@@ -17,5 +17,5 @@ require 'paasal_api/scripts/initialize_api'
 # GO TO THIS FILE TO INCLUDE MIDDLEWARE (!)
 require 'paasal_api/scripts/rack_application'
 
-## finally start the application
+# finally start the application
 run Paasal::API::Rack.app

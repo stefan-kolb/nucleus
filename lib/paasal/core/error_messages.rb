@@ -6,13 +6,6 @@ module Paasal
     # CLIENT ERRORS #
     #################
 
-    # not further specified bad request
-    BAD_REQUEST = {
-      status: 400,
-      error_code: 400_000,
-      message: 'Bad Request'
-    }
-
     ENDPOINT_BAD_REQUEST = {
       status: 400,
       error_code: 400_001,

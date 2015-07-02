@@ -88,7 +88,7 @@ module Paasal
       # Initialize the application (import adapters, load DAOs, ...)
       require 'paasal/scripts/initialize'
       # load the configuration values
-      require 'paasal/scripts/initialize_config'
+      require 'paasal/scripts/initialize_config_defaults'
       # Once invoked the configuration is locked
       require 'paasal/scripts/finalize'
 

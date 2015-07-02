@@ -34,7 +34,7 @@ module Paasal
         env['api.endpoint'].log.debug e.to_s
         e.backtrace.each { |line| env['api.endpoint'].log.debug line }
 
-        if e.is_a?(API::Errors::ApiError) || e.is_a?(Paasal::Errors::AdapterError)
+        if e.is_a?(Errors::ApiError) || e.is_a?(Paasal::Errors::AdapterError)
           # willingly sent error, no need for stacktrace
           entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
         elsif e.is_a?(Grape::Exceptions::ValidationErrors) || e.is_a?(Grape::Exceptions::InvalidMessageBody)
@@ -50,7 +50,7 @@ module Paasal
         end
 
         # send response via Rack, since Grape does not support error! or entities via :with in the rescue block
-        ::Rack::Response.new([API::Models::Error.new(entity).to_json], entity[:status], entity[:headers]).finish
+        ::Rack::Response.new([Models::Error.new(entity).to_json], entity[:status], entity[:headers]).finish
       end
 
       # ATTENTION (!) BE AWARE THAT THE APIs MUST ALWAYS

@@ -20,7 +20,7 @@ begin
   end
 
   # now load the configuration values
-  require 'paasal/scripts/initialize_config'
+  require 'paasal/scripts/initialize_config_defaults'
 
   require 'paasal_api/scripts/initialize_api_customizations'
 

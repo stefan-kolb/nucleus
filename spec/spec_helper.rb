@@ -78,7 +78,7 @@ require 'paasal_api/scripts/load_api'
 paasal_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
 
 # initialize db, versions and auth strategy
-require 'paasal/scripts/initialize_config'
+require 'paasal/scripts/initialize_config_defaults'
 # initialize the api config
 require 'paasal_api/scripts/initialize_api_customizations'
 
