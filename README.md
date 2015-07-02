@@ -179,7 +179,7 @@ For more information have a look at the [configuration](#configuration) section.
 2) Show all currently available API versions:
 
 ```ruby
-Paasal::ApiDetector.api_versions
+Paasal::VersionDetector.api_versions
 ```
 
 3) Instantiate the AdapterResolver for the desired API version:
@@ -235,13 +235,13 @@ For detailed usage information go to the section [API client(s)](#api-clients).
 #### Start the server
 
 A rack server can be started in multiple ways.
-The most convinient solution is to use the provided script:  
+The most convenient solution is to use the provided script:  
 
 ```shell
 $ ./bin/paasal
 ```
 
-Hower, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
+However, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
 
 ```shell
 $ rackup -s thin config.ru
@@ -877,13 +877,13 @@ The application uses the following subset of error codes:
 ```
 400: Bad Request
 401: Unauthorized
-403: Forbidden
 404: Resource not found
 406: API vendor or version not found
 422: Unprocessable Entity due to invalid parameters
 500: Internal processing error
 501: Not implemented, adapter does not provide this feature
 503: Destination service temporarily unavailable
+504: Gateway Time-out
 ```
 
 All errors are returned in a common schema:
@@ -1047,19 +1047,19 @@ To do so, set the `paasal_config.ssh.custom_key` option in the common configurat
 ## Project structure
 
 ```
-app # The PaaSal application
-app/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
-app/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
-app/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
-app/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
-app/rack_middleware # Rack middleware layers for authentication, request ids and logging
 bin # Binary startup files and GIT__SSH env. agents
 config # Configuration files for PaaSal and its adapters
 doc # Generated YARD documentation
-lib # Files that are more related to the usage as gem
-lib/ext # Monkey patched classed and extensions
+lib # The PaaSal application source code
 lib/paasal # Gem version and the gem only AdapterResolver class
-lib/scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
+lib/paasal/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
+lib/paasal/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
+lib/paasal/api/rack_middleware # Rack middleware layers for authentication, request ids and logging
+lib/paasal/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
+lib/paasal/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
+lib/paasal/ext # Monkey patched classed and extensions
+lib/paasal/api_ext # Monkey patched classed and extensions related only to the API
+lib/paasal/scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
 public # public directory for rack, hosts the swagger-ui files for the live API documentation
 schemas # Kwalify schemas, used to parse the configuration and load new vendors at startup
 spec # All rspec test suites

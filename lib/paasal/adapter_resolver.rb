@@ -4,9 +4,9 @@ module Paasal
   class AdapterResolver
     include Paasal::UrlConverter
 
-    def initialize(api_version)
-      fail 'No such API version' unless Paasal::ApiDetector.api_versions.include?(api_version)
-      @api_version = api_version
+    def initialize(requested_version)
+      fail 'No such version supported' unless Paasal::VersionDetector.api_versions.include?(requested_version)
+      @api_version = requested_version
     end
 
     # Get a list of all adapters that are currently supported.
@@ -30,6 +30,7 @@ module Paasal
     # @option options [String] :api_url URL of the endpoint's API that shall be used.
     #   Must be specified if there are multiple endpoints available and will be forced to https://
     # @raise [StandardError] if the vendor is unknown / not supported or no unique API endpoint could be identified
+    # @return [Paasal::Adapters::BaseAdapter] loaded adapter implementation
     def load(vendor, username, password, options = {})
       setup
       fail StandardError, "Could not find adapter for vendor '#{vendor}'" unless @adapters.key?(vendor)
@@ -85,8 +86,11 @@ module Paasal
       return if @adapters
 
       # Initialize the application (import adapters, load DAOs, ...)
+      require 'paasal/scripts/initialize'
+      # load the configuration values
+      require 'paasal/scripts/initialize_config_defaults'
       # Once invoked the configuration is locked
-      require 'scripts/initialize'
+      require 'paasal/scripts/finalize'
 
       @adapters = {}
       @configurations = {}

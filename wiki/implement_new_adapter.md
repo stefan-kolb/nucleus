@@ -45,7 +45,7 @@ The third level describes all API endpoints.
 
 Start by selecting the API version you want to implement the adapter for.
 Next, create a copy of the `app/adapters/{API_VERSION}/stub_adapter.rb` matching the API version.
-The pasted file must (!) be copied to `app/adapters/{API_VERSION}/{vendor_id}/vendor_id.rb`.
+The pasted file must (!) be copied to `app/adapters/{API_VERSION}/{vendor_id}/{vendor_id}.rb`.
 Please make sure that the `{vendor_id}` actually is equal to the **ID** that was assigned to the vendor in the `.yml` configuration file.
 
 Open the new adapter file and change the namespace so that it matches the chosen naming and inherits from the `Stub`.

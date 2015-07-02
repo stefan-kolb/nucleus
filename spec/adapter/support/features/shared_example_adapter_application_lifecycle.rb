@@ -8,7 +8,7 @@ shared_examples 'valid:applications:lifecycle' do
                  {}, request_headers)
           end
           it 'changes state to running within timeout period' do
-            wait(40.seconds).for do
+            wait(60.seconds).for do
               get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
                   request_headers)[:state]
             end.to eq('running')
@@ -32,7 +32,7 @@ shared_examples 'valid:applications:lifecycle' do
                  {}, request_headers)
           end
           it 'changes state to stopped within timeout period' do
-            wait(20.seconds).for do
+            wait(60.seconds).for do
               get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
                   request_headers)[:state]
             end.to eq('stopped')
@@ -56,7 +56,7 @@ shared_examples 'valid:applications:lifecycle' do
               'actions/restart', {}, request_headers)
           end
           it 'changes state to running within timeout period' do
-            wait(20.seconds).for do
+            wait(60.seconds).for do
               get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
                   request_headers)[:state]
             end.to eq('running')
@@ -68,7 +68,7 @@ shared_examples 'valid:applications:lifecycle' do
               'actions/restart', {}, request_headers)
           end
           it 'changes state to running within timeout period' do
-            wait(20.seconds).for do
+            wait(60.seconds).for do
               get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
                   request_headers)[:state]
             end.to eq('running')

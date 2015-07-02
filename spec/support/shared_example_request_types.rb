@@ -77,6 +77,13 @@ shared_examples 'a valid POST request' do
   end
 end
 
+shared_examples 'a valid POST action request' do
+  include_examples 'contains the request ID'
+  it 'has status 200' do
+    expect_status 200
+  end
+end
+
 shared_examples 'a valid PATCH request' do
   include_examples 'contains the request ID'
   it 'has status 200' do

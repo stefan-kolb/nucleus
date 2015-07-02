@@ -26,7 +26,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     # do a full application start, load entities and put them into the db stores
-    Paasal::AdapterImporter.new.import
+    Paasal::API::AdapterImporter.new.import
     Excon.defaults[:mock] = false
   end
 

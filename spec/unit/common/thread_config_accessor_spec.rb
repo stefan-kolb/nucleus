@@ -1,5 +1,5 @@
 require 'spec/unit/unit_spec_helper'
-require 'app/core/common/thread_config_accessor'
+require 'paasal/core/common/thread_config_accessor'
 
 class ThreadedConfig
   thread_config_accessor :setting_a, default: 5
@@ -91,7 +91,7 @@ describe 'ThreadConfigAccessor' do
     end
 
     it 'should not allow to change the default values' do
-      Thread.new { expect { @config.setting_a = 10 }.to raise_error }.join
+      Thread.new { expect { @config.setting_a = 10 }.to raise_error(NoMethodError) }.join
     end
   end
 end

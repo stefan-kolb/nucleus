@@ -45,23 +45,24 @@ else
   SimpleCov.merge_timeout 3600
   SimpleCov.start do
     add_filter 'spec/'
-    add_filter 'scripts/'
+    add_filter 'lib/paasal/scripts/'
     add_filter 'config/'
 
-    add_group 'Adapters', 'app/adapters'
-    add_group 'API versions', 'app/api/versions'
-    add_group 'API entities', 'app/api/entities'
-    add_group 'API helpers', 'app/api/helpers'
-    add_group 'Core', 'app/core'
-    add_group 'Middleware', 'app/rack_middleware'
-    add_group 'Models', 'app/models'
-    add_group 'Persistence', 'app/persistence'
-    add_group 'Lib ext.', 'lib/ext'
+    add_group 'Adapters', 'lib/paasal/adapters'
+    add_group 'Core', 'lib/paasal/core'
+    add_group 'Persistence', 'lib/paasal/persistence'
+    add_group 'Lib ext.', 'lib/paasal/ext'
+    add_group 'API versions', 'lib/paasal_api/api/versions'
+    add_group 'API entities', 'lib/paasal_api/api/entities'
+    add_group 'API helpers', 'lib/paasal_api/api/helpers'
+    add_group 'API Middleware', 'lib/paasal_api/rack_middleware'
+    add_group 'API Models', 'lib/paasal_api/models'
+    add_group 'API Lib ext.', 'lib/paasal_api/ext'
   end
 end
 
 # load configuration for integration tests
-require 'scripts/load_config'
+require 'paasal/scripts/setup_config'
 # disable logging
 # TODO: disable logging via proper config option
 paasal_config.logging.level = Logger::Severity::FATAL
@@ -71,13 +72,15 @@ paasal_config.db.delete_on_shutdown = true
 paasal_config.db.override = true
 
 # require our app
-require 'scripts/load_app'
+require 'paasal_api/scripts/load_api'
 
 # load the certificate to use for the tests only
 paasal_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
 
 # initialize db, versions and auth strategy
-require 'scripts/initialize_core'
+require 'paasal/scripts/initialize_config_defaults'
+# initialize the api config
+require 'paasal_api/scripts/initialize_api_customizations'
 
 require 'spec/factories/models'
 

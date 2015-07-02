@@ -2,8 +2,9 @@ require 'airborne'
 require 'rspec/wait'
 
 # load the app packages
-require 'scripts/shutdown'
-require 'scripts/initialize_rack'
+require 'paasal/scripts/shutdown'
+require 'paasal_api/scripts/shutdown_api'
+require 'paasal_api/scripts/rack_application'
 
 # patch rspec so that all tests run in an EM reactor, as provided by the used Thin server
 require 'spec/adapter/helpers/rspec_eventmachine_patch'
@@ -28,7 +29,7 @@ SimpleCov.command_name 'spec:suite:adapters'
 # TODO: implement multi-version support for tests
 # Setup the rack application, use API v1
 Airborne.configure do |config|
-  config.rack_app = Paasal::Rack.app
+  config.rack_app = Paasal::API::Rack.app
   config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
 end
 

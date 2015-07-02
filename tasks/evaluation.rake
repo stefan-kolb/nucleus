@@ -9,10 +9,10 @@ namespace :evaluation do
         # TODO: choose API version
         api_version = 'v1'
 
-        adapter_dao = Paasal::DB::AdapterDao.instance(api_version)
-        endpoint_dao = Paasal::DB::EndpointDao.instance(api_version)
-        provider_dao = Paasal::DB::ProviderDao.instance(api_version)
-        vendor_dao = Paasal::DB::VendorDao.instance(api_version)
+        adapter_dao = Paasal::API::DB::AdapterDao.instance(api_version)
+        endpoint_dao = Paasal::API::DB::EndpointDao.instance(api_version)
+        provider_dao = Paasal::API::DB::ProviderDao.instance(api_version)
+        vendor_dao = Paasal::API::DB::VendorDao.instance(api_version)
         @vendor_results = {}
 
         adapter_dao.all.each do |adapter_index_entry|

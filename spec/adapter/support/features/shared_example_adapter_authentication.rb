@@ -11,7 +11,7 @@ shared_examples 'valid:auth_client' do
       expect(@auth_client).to be_a Paasal::Adapters::AuthClient
     end
     it 'is not immediately authenticated' do
-      expect { @auth_client.auth_header }.to raise_error(Paasal::Errors::AuthenticationError)
+      expect { @auth_client.auth_header }.to raise_error(Paasal::Errors::EndpointAuthenticationError)
     end
   end
 end
