@@ -51,8 +51,8 @@ task :environment do
   require 'configatron'
   require 'paasal/scripts/setup_config'
   paasal_config.logging.level = Logger::Severity::ERROR
-  require 'paasal/scripts/load'
-  require 'paasal/scripts/initialize'
+  require 'paasal_api/scripts/load_api'
+  require 'paasal_api/scripts/initialize_api'
 end
 
 task routes: :environment do
