@@ -53,7 +53,7 @@ Gem::Specification.new do |spec|
   # Openshift logging access and direct Git SSH requests
   spec.add_runtime_dependency 'net-ssh'
   # Used for JSON / Hash conversion and test cassette serialization (is way faster than other JSON libs)
-  spec.add_runtime_dependency 'oj'
+  spec.add_runtime_dependency 'oj', '= 2.12.9'
   # Required for Cloud Foundry log messages
   spec.add_runtime_dependency 'protobuf', '~> 3.4'
   # To make sure HTTPS is used instead of HTTP
