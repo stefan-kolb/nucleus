@@ -38,7 +38,7 @@ module Paasal
         when ::String
           msg
         when ::Exception
-          "#{ msg.message } (#{ msg.class })\n" << (msg.backtrace || []).join("\n")
+          "#{msg.message} (#{msg.class})\n" << (msg.backtrace || []).join("\n")
         else
           msg.inspect
         end

@@ -52,7 +52,7 @@ class MultiLogger
       @loggers.each { |logger| logger.send(level.downcase, args) }
     end
 
-    define_method("#{ level.downcase }?".to_sym) do
+    define_method("#{level.downcase}?".to_sym) do
       @level <= Logger::Severity.const_get(level)
     end
   end
