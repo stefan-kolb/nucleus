@@ -1,5 +1,6 @@
 module Paasal
   module Adapters
+    # Implementation of the AuthClient that works with the HTTP basic authentication.
     class HttpBasicAuthClient < AuthClient
       # Create a new instance of an {HttpBasicAuthClient}.
       # @param [Boolean] check_certificates true if SSL certificates are to be validated,
@@ -15,6 +16,7 @@ module Paasal
         super(check_certificates)
       end
 
+      # @see AuthClient#authenticate
       def authenticate(username, password)
         packed_credentials = ["#{username}:#{password}"].pack('m*').gsub(/\n/, '')
         valid = @verification.call(verify_ssl, 'Authorization' => "Basic #{packed_credentials}")
@@ -24,6 +26,7 @@ module Paasal
         self
       end
 
+      # @see AuthClient#auth_header
       def auth_header
         fail Errors::EndpointAuthenticationError,
              'Authentication client was not authenticated yet' unless @packed_credentials

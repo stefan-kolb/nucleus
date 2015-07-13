@@ -20,6 +20,7 @@ module Paasal
         super(check_certificates)
       end
 
+      # @see AuthClient#authenticate
       def authenticate(username, password)
         token, expiration_time = @token_expiration_parser.call(verify_ssl, username, password)
         fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
@@ -29,6 +30,7 @@ module Paasal
         self
       end
 
+      # @see AuthClient#auth_header
       def auth_header
         fail Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
         fail Errors::EndpointAuthenticationError, 'Cached authentication token expired' if expired?

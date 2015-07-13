@@ -1,5 +1,7 @@
 module Paasal
   module Adapters
+    # The AuthenticationRetryWrapper module can be used to invoke commands in a block that repeats its execution in case
+    # the first attempt raises an {Paasal::Errors::EndpointAuthenticationError}.
     module AuthenticationRetryWrapper
       extend Paasal::Logging
 
@@ -37,6 +39,7 @@ module Paasal
       # that appear to be outdated.<br>
       # If the refresh fails, a complete re-authentication will be forced.
       #
+      # @param [Paasal::Adapters::AuthClient] auth_client platform specific version of the authentication client
       # @raise [Paasal::Errors::EndpointAuthenticationError] if both, refresh and authentication fail
       # @return [void]
       def self.refresh_token(auth_client)
