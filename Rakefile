@@ -78,7 +78,7 @@ end
 
 begin
   require 'yard'
-  DOC_FILES = %w(app/**/*.rb lib/**/*.rb README.md)
+  DOC_FILES = %w(lib/**/*.rb)
 
   YARD::Rake::YardocTask.new(:doc) do |t|
     t.files   = DOC_FILES

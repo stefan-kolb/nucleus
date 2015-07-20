@@ -296,7 +296,7 @@ module Paasal
         # The downloaded application archive must contain at least all files that were originally deployed,
         # but can also contain additional files, for instance log files.
         # @param [String] application_id Id of the application of which the data is to be downloaded
-        # @param [Symbol] compression_format archive formats, see {Paasal::API::Parameters::Enums.all}
+        # @param [Symbol] compression_format archive formats, see {Paasal::API::Enums::CompressionFormats.all}
         #   for a list of all allowed values
         # @raise [Paasal::Errors::AdapterResourceNotFoundError] if the application could not be found
         # @raise [Paasal::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed

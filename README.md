@@ -35,9 +35,9 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
     * [Endpoints](#endpoints)
       * [List all endpoints that are registered for a provider](#list-all-endpoints-that-are-registered-for-a-provider)
       * [Register a new endpoint at runtime](#register-a-new-endpoint-at-runtime)
-  * [Native calls (experimental)](#native-calls-experimental)
-    * [Execute a native API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
-    * [Execute a native API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoints-application)
+  * [Custom API calls (experimental)](#custom-api-calls-experimental)
+    * [Execute a custom API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
+    * [Execute a custom API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoints-application)
 * [Adapters](#adapters)
   * [Heroku](#heroku)
   * [Cloud Foundry v2](#cloud-foundry-v2)
@@ -602,20 +602,20 @@ curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{a
 curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{app_id}/logs/{log_id}/tail" -H "Authorization: {auth_header}" --raw -v
 ```
 
-### Native calls (experimental)
+### Custom API calls (experimental)
 
-You can also execute native calls against the endpoint's API by using PaaSal.
+You can also execute custom API calls against the endpoint's API by using PaaSal.
 This feature is included as experimental functionality and **does not returned unified objects or errors**.
 The response of the API is passed 1:1 to the REST client.
 
-The native calls can be made either against the endpoint or against an application.
+The custom calls can be made either against the endpoint or against an application.
 Allowed HTTP methods are `GET`, `POST`,`PATCH`, `PUT` and `DELETE`.
 Data embedded in a requests body is used 1:1 in the API call, header information are going to be discarded.
 
 Please be aware that you must also include the API version in the path if required by the platform.
 For instance Cloud Foundry requests would have to look like: `.../call/v2/app_usage_events`
 
-##### Execute a native API call against the endpoint
+##### Execute a custom API call against the endpoint
 
 In this example we want to get the current user's account information.
 we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
@@ -640,7 +640,7 @@ GET /api/endpoints/heroku/call/account
 }
 ```
 
-##### Execute a native API call against an endpoint's application
+##### Execute a custom API call against an endpoint's application
 
 In this example we try to list the builds of an Heroku application.
 Therefore we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
@@ -769,6 +769,11 @@ It may take some seconds or even minutes for them to show up.
 ## Configuration
 
 Several parts of PaaSal can be configured, e.g. whether to persist your data or always start with a clean instance.
+There are two different locations at which the configuration files can be placed.
+They are described with increasing importance, meaning that the last option overwrites keys that were also configured in the previous files:
+
+1. A file in user account's home directory. On UNIX systems this file must be placed at `~/.paasal/paasal_config.rb`, whereas it is expected at `~/paasal/paasal_config.rb` if running Windows.
+2. The `config/paasal_config.rb` file in the project's directory
 
 ### Application configuration
 
@@ -1051,15 +1056,17 @@ bin # Binary startup files and GIT__SSH env. agents
 config # Configuration files for PaaSal and its adapters
 doc # Generated YARD documentation
 lib # The PaaSal application source code
-lib/paasal # Gem version and the gem only AdapterResolver class
+lib/paasal # Gem compatible directory of the core, includes the AdapterResolver class
 lib/paasal/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
-lib/paasal/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
-lib/paasal/api/rack_middleware # Rack middleware layers for authentication, request ids and logging
 lib/paasal/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
-lib/paasal/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
 lib/paasal/ext # Monkey patched classed and extensions
-lib/paasal/api_ext # Monkey patched classed and extensions related only to the API
-lib/paasal/scripts # Initialization scripts, bootstrapping rackup and shutdown hooks to cleanup the database
+lib/paasal/scripts # Initialization scripts, bootstrapping and shutdown hooks
+lib/paasal_api/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
+lib/paasal_api/ext # Monkey patched classed and extensions related only to the API
+lib/paasal_api/import # Import management of the adapter configuration files
+lib/paasal_api/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
+lib/paasal_api/rack_middleware # Rack middleware layers for authentication, request ids and logging
+lib/paasal_api/scripts # Initialization scripts, bootstrapping, rackup and shutdown hooks of the API
 public # public directory for rack, hosts the swagger-ui files for the live API documentation
 schemas # Kwalify schemas, used to parse the configuration and load new vendors at startup
 spec # All rspec test suites
