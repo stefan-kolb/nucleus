@@ -63,7 +63,6 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Project structure](#project-structure)
 * [Contributing](#contributing)
 * [Further documentation](#further-documentation)
-* [License](#license)
 
 ## Ruby Interpreter Compatibility
 
