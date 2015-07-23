@@ -11,7 +11,7 @@ _PaaSal_ is a RESTful abstraction layer to achieve unified deployment and manage
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
 It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
-PaaSal differs between Vendor, Providers and Endpoints.
+PaaSal differentiates between Vendor, Providers and Endpoints.
 A *Vendor* is the organziation that developed the platform.
 The *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
 
