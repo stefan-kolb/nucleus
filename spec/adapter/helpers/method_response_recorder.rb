@@ -148,7 +148,9 @@ module Paasal
     end
 
     def cassette_dir(class_name, method_name, hash)
-      File.join(@data_dir, class_name.to_s.underscore, method_name.to_s.underscore, hash)
+      # Strip out the non-ascii characters of method names, e.g. question marks
+      method_name_sanitized = method_name.to_s.underscore.gsub(/[^0-9A-Za-z.\-]/, '_')
+      File.join(@data_dir, class_name.to_s.underscore, method_name_sanitized, hash)
     end
 
     def args_hash(*args)
