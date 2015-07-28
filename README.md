@@ -342,25 +342,13 @@ This request if publicly available and does not require any authentication.
 However, you can't create, delete or update a vendor at runtime because they represent the logic to communicate with their platform.
 All developers that want to have more information on how to add a new vendor can take a look at the instructions: [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
 
-#### Providers
+#### Providers and Endpoints
 
-Providers can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
+Providers and Endpoints can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
 
-A new provider can be registered at runtime by sending a `POST` request.
-The only requirement is that the name must be unique amongst the providers of *all* vendors:
-
-    POST /api/vendors/cloud_foundry_v2/providers
-    body: {"provider":{"name":"mynewcloudfoundryprovider"}}
-
-#### Endpoints
-
-Endpoints can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
-
-A new endpoint can be registered at runtime by sending a `POST` request.
-The only requirement is that the name must be unique amongst the endpoints of *all* providers:
-
-    POST /api/providers/cloud_foundry_v2/endpoints
-    body: {"endpoint":{"name":"mynewcloudfoundryendpoint"}}
+A new entity can be registered at runtime by sending a `POST` request.
+Whereas the Provider only requires a `name`, the endpoint also needs a further attribute, the `url`.
+Please refer to the swagger-ui documentation for additional information about the requests.
 
 ### Authentication
 
