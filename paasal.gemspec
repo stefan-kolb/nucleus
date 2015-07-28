@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
   spec.homepage      = 'https://github.com/croeck/paasal'
-  spec.license       = 'TBD'
+  spec.license       = 'MIT'
   spec.executables   = 'paasal'
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 1.9.3'
