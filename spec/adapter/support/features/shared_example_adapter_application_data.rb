@@ -70,7 +70,7 @@ shared_examples 'valid:applications:data:deploy' do
       end
       describe 'and app with all properties', :as_cassette do
         it 'changes state to deployed' do
-          wait(60.seconds).for do
+          wait(180.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:state]
           end.to eq('deployed')
         end
@@ -89,7 +89,7 @@ shared_examples 'valid:applications:data:deploy' do
       end
       describe 'and app with min properties', :as_cassette do
         it 'changes state to deployed' do
-          wait(60.seconds).for do
+          wait(180.seconds).for do
             get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)[:state]
           end.to eq('deployed')
         end

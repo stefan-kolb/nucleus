@@ -109,7 +109,28 @@ module Paasal
         end
 
         def default_deployment(application_id)
-          get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}").body
+          # get and return paasal deployment, but catch arising 404 errors
+          return get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}").body
+        rescue Errors::AdapterResourceNotFoundError
+          # if 404, list all deployments
+          all_deployments = get("/app/#{application_id}/deployment").body
+
+          # fail 422 (platform specific) if no deployment is available at all
+          fail_with(:no_deployment) if all_deployments.length == 0
+
+          # return deployment[0] if collection size is 1
+          return all_deployments[0] if all_deployments.length == 1
+
+          # return 'default' if more than 1 deployment and 'default' is included
+          def_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].downcase == 'default' }
+          return def_deployment if def_deployment
+
+          # return 'paasal' if more than 1 deployment, but no 'default' is included
+          paasal_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].downcase == 'paasal' }
+          return paasal_deployment if paasal_deployment
+
+          # fail 422 if no 'default', no 'paasal', and more than 1 deployment is available (could not identify default)
+          fail_with(:ambiguous_deployments)
         end
 
         def headers

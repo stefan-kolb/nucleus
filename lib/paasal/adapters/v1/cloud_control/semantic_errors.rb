@@ -15,7 +15,13 @@ module Paasal
               billing_required: { code: 422_300_2,
                                   message: 'cloudControl requires a billing account to allow this action: %s' },
               # Error code '300_3': Malformed name, please follow the requirements of cloudControl app names
-              bad_name: { code: 422_300_3, message: '%s' }
+              bad_name: { code: 422_300_3, message: '%s' },
+              # Error code '300_3': Malformed name, please follow the requirements of cloudControl app names
+              ambiguous_deployments: { code: 422_300_4, message: 'Unable to identify the deployment that shall be '\
+                'used. PaaSal require to find: a) exactly one deployment, b) a "default" deployment or '\
+                'c) a "paasal" deployment' },
+              no_deployment: { code: 422_300_5, message: 'No deployment found. PaaSal requires to find: a) '\
+                'exactly one deployment, b) a "default" deployment or c) a "paasal" deployment' }
             }
           end
         end
