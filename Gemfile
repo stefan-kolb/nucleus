@@ -10,8 +10,7 @@ group :test do
   gem 'faker'
   gem 'memfs'
   # includes required fix for empty arrays as param value, see issue #122 and pull request #125,
-  # as well as the merging of chunk parts (no pull request made)
-  gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'paasal'
+  gem 'rack-test', git: 'https://github.com/croeck/rack-test.git', branch: 'empty-array-param'
   gem 'rspec-wait'
   gem 'simplecov', require: false
 end

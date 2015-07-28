@@ -9,6 +9,9 @@ require 'paasal_api/scripts/rack_application'
 # patch rspec so that all tests run in an EM reactor, as provided by the used Thin server
 require 'spec/adapter/helpers/rspec_eventmachine_patch'
 
+# patch rack-test so that all chunked responses are merged before they get processed
+require 'spec/adapter/helpers/rack_test_mock_session_patch'
+
 require 'spec/spec_helper'
 require 'spec/adapter/helpers/credentials_helper'
 require 'spec/adapter/helpers/method_response_recorder'
