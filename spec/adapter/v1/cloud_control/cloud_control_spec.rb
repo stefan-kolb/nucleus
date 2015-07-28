@@ -11,11 +11,9 @@ describe Paasal::Adapters::V1::CloudControl do
                       'was made stop',
                     'with valid credentials is compliant and lifecycle operations fail before deployment '\
                       'was made restart',
-                    # TODO: currently there are some delays, requests take up to 5min to appear in the log
+                    # currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log download succeeds for type request as .log binary',
-                    # TODO: currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log get of type request does contain at least one',
-                    # TODO: currently there are some delays, requests take up to 5min to appear in the log
                     'with valid credentials is compliant and log tail request',
                     # scale-out should work, but the test would require a valid billing address
                     'with valid credentials is compliant and scaling succeeds with scale-out',
