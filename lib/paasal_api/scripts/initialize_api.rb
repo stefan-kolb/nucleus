@@ -8,8 +8,8 @@ begin
   paasal_config.api.title = 'PaaSal - Platform as a Service abstraction layer API'
   paasal_config.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
   paasal_config.api.contact = 'paasal@roecky.net'
-  paasal_config.api.license = 'TBD'
-  paasal_config.api.license_url = ''
+  paasal_config.api.license = 'MIT'
+  paasal_config.api.license_url = 'http://opensource.org/licenses/MIT'
   paasal_config.api.terms_of_service_url = 'API still under development, no guarantees (!)'
 
   # include the configuration of the project to overwrite the home dir config
