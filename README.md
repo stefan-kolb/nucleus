@@ -89,7 +89,7 @@ More information on the vendors and the associated adapter can be found in the [
 
 ## Usage
 
-PaaSal can either be used as standalone application / service, or as part of another ruby application.
+PaaSal can either be used as standalone application/service, or as part of another ruby application.
 Please make sure to obey the following installation instructions before starting to use PaaSal.
 
 ### Installation instructions
@@ -99,7 +99,7 @@ Please make sure to obey the following installation instructions before starting
 - git
 - ssh
 
-#### Platform specific notes
+#### Platform-specific notes
 
 Unix systems should run fine out of the box, whereas Windows systems might need some adjustments:
 
@@ -108,8 +108,7 @@ Unix systems should run fine out of the box, whereas Windows systems might need 
 Both files should be located in the `Git/bin` installation directory of [msysGit](https://msysgit.github.io/).
 PaaSal is verified to work with [msysGit](https://msysgit.github.io/) and the included version of `OpenSSH`.
 We did not verify other alternatives, e.g. PuTTY's `plink.exe`.
-PuTTY is supposed (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options
-that allow to connect any git repository without confirmation of the host's identity.
+PuTTY is supposed to (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options that allow to connect any git repository without confirmation of the host's identity.
 
 ###### Known issues
 
@@ -117,7 +116,7 @@ that allow to connect any git repository without confirmation of the host's iden
 
 Eventmachine sometimes fails with the error `Encryption not available on this event-machine`.
 A fix is available, but requires a few steps:
-*Thanks to Ironfoundry for the solution at [https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c](https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c)
+*Thanks to Iron Foundry for the solution at [https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c](https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c)
 
 1) Uninstall the gem
 
@@ -128,7 +127,7 @@ $ gem uninstall eventmachine
 2) Download the OpenSSL package from [http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma](http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma)
 Do NOT use the latest version!
 
-3) Extract it to the desirec location, say XYC
+3) Extract it to the desired location, say XYC
 
 4) Re-install the gem and point to the OpenSSL installation directory (XYC)
 
