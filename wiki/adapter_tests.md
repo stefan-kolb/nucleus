@@ -36,7 +36,7 @@ With this structure we can automatically evaluate the difference in the made req
 Recording new VCR cassettes requires you to have an account at the platform that shall be recorded.
 The credentials must be specified in the `config/.credentials` file.
 
-The file is ignored and shall _never_ be committed. It must use the following syntax:
+The file is ignored and must _never_ be committed. It must use the following syntax:
 
 ```
 heroku:
@@ -44,6 +44,7 @@ heroku:
   password: 'my_heroku_usernames_password'
 ```
 
+Additional attributes can be used to filter out personal data from the recordings that may be included in the HTTP interactions (see [Sensitive data](#sensitive-data)).
 A complete .credentials file could then look like:
 
 ```yaml
@@ -71,7 +72,7 @@ openshift-online:
 To record the interactions, you only have to call the Rake `record` task, eg. by calling:
 
 ```
-bundle exec rake record`
+bundle exec rake record
 ```
 
 **Notes:**
