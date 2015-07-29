@@ -29,11 +29,11 @@ end
 
 The `cassette_group: 'application-services;list'` marker in this example forces the `VCR` cassettes to be placed into a
 directory structure of `application-services/list/{testname}.rec`.
-With this structure we can automatically evaluate the difference in the made requests for a specific operation.
+With this structure we can automatically evaluate request differences for a specific operation.
 
 ## Recording
 
-Recording new VCR cassettes requires you to have an account at the platform that shall be recorded.
+Recording new VCR cassettes requires a valid user account at the platform that shall be recorded.
 The credentials must be specified in the `config/.credentials` file.
 
 The file is ignored and must _never_ be committed. It must use the following syntax:
@@ -69,7 +69,7 @@ openshift-online:
   id:       'my_os_user_id'
 ```
 
-To record the interactions, you only have to call the Rake `record` task, eg. by calling:
+To record the interactions, you only have to call the Rake `record` task:
 
 ```
 bundle exec rake record
@@ -77,14 +77,14 @@ bundle exec rake record
 
 **Notes:**
 * You must be allowed to create at least 3 additional applications with your account, otherwise the quota restrictions will invalidate the test results.
-* A complete recording of a single vendor usually takes 5 up to 15 minutes. Openshift currently takes more than 30 minutes...
-If you only require certain functionality to be tested (during development), make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
+* A complete recording of a single vendor usually takes 5 up to 15 minutes. Openshift currently takes more than 30 minutes.
+If you only require a certain functionality to be tested (during development), make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
 * cloudControl requires you to change the application names if the previous recording was made within the last 2 days, otherwise if fails because the name is still locked.
 Change the name in the `spec/adapter/v1/cloud_control_spec.rb`.
 
 ### Missing or invalid VCR recording
 
-If the recorded cassette is invalid due to a recent change, the test that use this cassette are going to fail.
+If the recorded cassette is invalid due to a recent change, tests that use this cassette are going to fail.
 
 ### Sensitive data
 
