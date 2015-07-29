@@ -29,12 +29,7 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
     * [Special characters (umlauts, ....)](#special-characters-umlauts-)
   * [Core constructs](#core-constructs)
     * [Vendors](#vendors)
-    * [Providers](#providers)
-      * [List all providers that are registered for a vendor's platform](#list-all-providers-that-are-registered-for-a-vendors-platform)
-      * [Register a new provider at runtime](#register-a-new-provider-at-runtime)
-    * [Endpoints](#endpoints)
-      * [List all endpoints that are registered for a provider](#list-all-endpoints-that-are-registered-for-a-provider)
-      * [Register a new endpoint at runtime](#register-a-new-endpoint-at-runtime)
+    * [Providers and Endpoints](#providers-and-endpoints)
   * [Custom API calls (experimental)](#custom-api-calls-experimental)
     * [Execute a custom API call against the endpoint](#execute-a-native-api-call-against-the-endpoint)
     * [Execute a custom API call against an endpoint's application](#execute-a-native-api-call-against-an-endpoints-application)
@@ -51,12 +46,6 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
   * [Error codes](#error-codes)
   * [Language specific clients](#language-specific-clients)
 * [Tests](#tests)
-  * [Unit Tests](#unit-tests)
-  * [Integration Tests](#integration-tests)
-  * [Adapter Tests](#adapter-tests)
-    * [Recording](#recording)
-      * [Missing or invalid VCR recording](#missing-or-invalid-vcr-recording)
-      * [Sensitive data](#sensitive-data)
 * [Schema validation](#schema-validation)
 * [Versioning](#versioning)
 * [Security](#security)
@@ -436,28 +425,7 @@ Therefore we append the `call` action to the application at the endpoint, follow
 GET /api/endpoints/heroku/applications/the_application_name/call/builds
 ```
 
-```json
-[
-  {
-    "created_at": "2014-11-18T10:33:25+00:00",
-    "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "slug": {
-      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    },
-    "source_blob": {
-      "url": null,
-      "version": null,
-      "version_description": null
-    },
-    "status": "succeeded",
-    "updated_at": "2014-11-18T10:43:34+00:00",
-    "user": {
-      "email": "theusersemail@provider.domain",
-      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    }
-  }
-]
-```
+The response is the unprocessed response of the Heroku API as shown in the previous example.
 
 ## Adapters
 
@@ -467,19 +435,13 @@ Please refer to the [functionality section](#functionality) for more information
 
 ### Heroku
 
-[Heroku](http://heroku.com)
-
-#### Issues
+Providers: [Heroku](http://heroku.com)
 
 *No known issues*
 
 ### Cloud Foundry v2
 
-[Cloud Foundry V2](http://cloudfoundry.org)
-
-[IBM Bluemix](https://console.ng.bluemix.net)
-
-[Stackato 3.4](http://www.activestate.com/stackato)
+Providers: [Cloud Foundry V2](http://cloudfoundry.org), [IBM Bluemix](https://console.ng.bluemix.net), [Stackato 3.4](http://www.activestate.com/stackato)
 
 #### Issues
 
@@ -499,7 +461,7 @@ If there are no logs that can be retrieved, the log list will be empty and the d
 
 ### Openshift v2
 
-[Openshift V2](https://openshift.com)
+Providers: [Openshift V2](https://openshift.com)
 
 #### Issues
 
@@ -509,7 +471,7 @@ An application can't be updated, the `name` and `runtimes` can't be changed once
 
 **Application scaling**
 
-Applications not created with PaaSal can't be scaled if they were created with `scalable = false`
+Applications not created with PaaSal can't be scaled if they were created with the attribute `scalable = false`
 
 **Services**
 
@@ -529,13 +491,7 @@ Logging is not implemented yet
 
 ### cloudControl
 
-[cloudControl](http://cloudcontrol.com)
-
-[Cloud&Heat](https://www.cloudandheat.com/de/appelevator)
-
-[dotCloud](https://next.dotcloud.com)
-
-[exoscale](https://www.exoscale.ch)
+Providers: [cloudControl](http://cloudcontrol.com), [Cloud&Heat](https://www.cloudandheat.com/de/appelevator), [dotCloud](https://next.dotcloud.com), [exoscale](https://www.exoscale.ch)
 
 #### Issues
 
@@ -545,8 +501,9 @@ An application can't be updated, the `name` and `runtimes` can't be changed once
 
 **Application lifecycle**
 
-Applications on cloudControl can't be explicitly started or stopped.
-They start automatically upon the successful deployment of a valid application and stop once the _deployment_ has been deleted.
+Applications on cloudControl can't be explicitly stopped or restarted.
+They start after the successful build of the application, which is therefore postponed up to the first invocation of the start operation.
+Application only stop once the corresponding _deployment_ has been deleted.
 
 **Logs**
 
@@ -658,107 +615,10 @@ You can either call all tests or each suite separately.
 
 ```
 bundle exec rake spec
-```
-
-### Unit Tests
-
-```
 bundle exec rake spec:suite:unit
-```
-
-### Integration Tests
-
-```
 bundle exec rake spec:suite:integration
-```
-
-### Adapter Tests
-
-The adapter tests rely on previously recorded interactions with the provider's endpoints.
-They do not invoke external HTTP requests.
-When code changes result in different requests, the interactions have to be re-recorded.
-
-```
 bundle exec rake spec:suite:adapters
 ```
-
-Each interaction of the adapter tests shall be made only once.
-If there are further tests that all rely on the same request, the described spec shall be marked with `:as_cassette`.
-All subsequent tests in this group now use the initial recording.
-
-```ruby
-describe 'application services list empty', :as_cassette, cassette_group: 'application-services;list' do
-  before { get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services", request_headers }
-  include_examples 'a valid GET request'
-  include_examples 'installed service list schema'
-  it 'does not contain any services' do
-    expect(json_body[:services]).to eql([])
-  end
-end
-```
-
-The `cassette_group: 'application-services;list'` marker in this example forces the `VCR` cassettes to be placed into a
-directory structure of `application-services/list/{testname}.rec`.
-With this structure we can automatically evaluate the difference in the made requests for a specific operation.
-
-#### Recording
-
-Recording new VCR cassettes requires you to have an account at the platform that shall be recorded.
-The credentials must be specified in the `config/.credentials` file.
-
-The file is ignored and shall _never_ be committed. It must use the following syntax:
-
-```
-heroku:
-  user:     'my_heroku_username'
-  password: 'my_heroku_usernames_password'
-```
-
-A complete .credentials file could then look like:
-
-```yaml
-heroku:
-  id:       'my_heroku_user_id'
-  user:     'my_heroku_username'
-  password: 'my_heroku_usernames_password'
-
-bluemix-eu-gb:
-  user:     'my_bluemix_username'
-  password: 'my_bluemix_usernames_password'
-  username: 'my_bluemix_username_with_encoded_umlauts'
-
-cloudcontrol:
-  user:     'my_cc_email'
-  password: 'my_cc_usernames_password'
-  username: 'my_cc_username'
-
-openshift-online:
-  user:     'my_os_email'
-  password: 'my_os_usernames_password'
-  id:       'my_os_user_id'
-```
-
-To record the interactions, you only have to call the Rake `record` task, eg. by calling:
-
-```
-bundle exec rake record`
-```
-
-**Notes:**
-* You must be allowed to create at least 3 additional applications with your account, otherwise the quota restrictions will invalidate the test results.
-* A complete recording of a single vendor usually takes 5 up to 15 minutes. Openshift currently takes more than 30 minutes...
-If you only require certain functionality to be tested (during development), make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
-* cloudControl requires you to change the application names if the previous recording was made within the last 2 days, otherwise if fails because the name is still locked.
-Change the name in the `spec/adapter/v1/cloud_control_spec.rb`.
-
-##### Missing or invalid VCR recording
-
-If the recorded cassette is invalid due to a recent change, the test that use this cassette are going to fail.
-
-##### Sensitive data
-
-Most of the requests contain sensitive data that we do not want to be included in the recorded cassettes.
-By implementation, the API tokens and **all** data that is specified in the `config/.credentials` file are filtered.
 
 ## Schema validation
 
@@ -829,3 +689,4 @@ which tests for code style violations and executes all tests.
 ## Further documentation
 
 [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
+[Adapter Tests](wiki/adapter_tests.md)
