@@ -688,5 +688,5 @@ which tests for code style violations and executes all tests.
 
 ## Further documentation
 
-[Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
-[Adapter Tests](wiki/adapter_tests.md)
+- [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
+- [Adapter Tests](wiki/adapter_tests.md)
