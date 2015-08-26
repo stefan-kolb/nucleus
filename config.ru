@@ -1,9 +1,6 @@
 #########################
 ### Setup Application ###
 #########################
-
-# Setup bundler compatibility, according to: http://bundler.io/v1.9/rationale.html
-require 'rubygems'
 require 'bundler/setup'
 
 # Load configuration
