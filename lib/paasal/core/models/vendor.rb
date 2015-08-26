@@ -8,7 +8,7 @@ module Paasal
   # @author Cedric Roeck (cedric.roeck@gmail.com)
   # @since 0.1.0
   class Vendor < Paasal::AbstractModel
-    attr_accessor :providers        # seq
+    attr_accessor :providers # seq
 
     def initialize(hash = nil)
       super(hash)

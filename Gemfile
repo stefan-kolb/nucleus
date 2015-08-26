@@ -5,7 +5,7 @@ gemspec
 
 group :test do
   gem 'airborne', '=0.1.15'
-  gem 'codeclimate-test-reporter', require: nil
+  gem 'codeclimate-test-reporter', require: false
   gem 'factory_girl'
   gem 'faker'
   gem 'memfs'

@@ -6,7 +6,7 @@ module Paasal
       class ApiVersion < AbstractEntity
         expose :name, documentation: { type: String, desc: 'API version, e.g. v1 or v2' }
 
-        expose :resources,  documentation: {
+        expose :resources, documentation: {
           type: 'Paasal::API::Models::VersionResource', is_array: true,
            desc: 'Resources of the API version'
         }, using: ApiVersionResource, unless: { collection: true }

@@ -12,7 +12,7 @@ module Paasal
     include Kwalify::Util::HashLike
 
     attr_accessor :vendor
-    attr_accessor :endpoints        # seq
+    attr_accessor :endpoints # seq
 
     def initialize(hash = nil)
       super(hash)

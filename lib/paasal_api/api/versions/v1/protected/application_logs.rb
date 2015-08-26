@@ -9,7 +9,7 @@ module Paasal
         params do
           use :application_context
         end
-        resource 'endpoints/:endpoint_id/applications/:application_id/logs',  desc: 'Application logs',
+        resource 'endpoints/:endpoint_id/applications/:application_id/logs', desc: 'Application logs',
                  swagger: { nested: false, name: 'application-logs' } do
           desc 'List all application log files' do
             success Models::Logs

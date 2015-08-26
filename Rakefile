@@ -33,8 +33,8 @@ task :doc_toc do
       forbidden_words = ['Table of contents', 'define', 'pragma']
       next if !line.start_with?('#') || forbidden_words.any? { |w| line =~ /#{w}/ }
 
-      title = line.gsub('#', '').strip
-      href = title.gsub(' ', '-').downcase
+      title = line.delete('#').strip
+      href = title.tr(' ', '-').downcase
       puts '  ' * (line.count('#') - 1) + "* [#{title}](\##{href})"
     end
   end
@@ -81,12 +81,12 @@ begin
   DOC_FILES = %w(lib/**/*.rb)
 
   YARD::Rake::YardocTask.new(:doc) do |t|
-    t.files   = DOC_FILES
+    t.files = DOC_FILES
   end
 
   namespace :doc do
     YARD::Rake::YardocTask.new(:pages) do |t|
-      t.files   = DOC_FILES
+      t.files = DOC_FILES
       t.options = ['-o', '../paasal.doc/docs', '--title', "PaaSal #{Paasal::VERSION} Documentation"]
     end
 

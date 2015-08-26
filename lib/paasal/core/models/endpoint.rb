@@ -14,9 +14,9 @@ module Paasal
     include Kwalify::Util::HashLike
 
     attr_accessor :provider
-    attr_accessor :url              # str
-    attr_accessor :app_domain       # str
-    attr_accessor :trust            # bool
+    attr_accessor :url # str
+    attr_accessor :app_domain # str
+    attr_accessor :trust # bool
 
     def initialize(hash = nil)
       super(hash)

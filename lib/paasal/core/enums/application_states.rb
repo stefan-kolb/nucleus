@@ -6,13 +6,13 @@ module Paasal
       CREATED = :created
       # Application crashed, none of the instances is running.
       # here was an error while starting or running the application-
-      CRASHED  = :crashed
+      CRASHED = :crashed
       # All instances of the application were idled by the platform.
       IDLE = :idle
       # At least one instance of the application is running.
-      RUNNING  = :running
+      RUNNING = :running
       # All instances of the already deployed application are stopped.
-      STOPPED  = :stopped
+      STOPPED = :stopped
       # The application data has been deployed, but the application was not started yet. No instance is running.
       DEPLOYED = :deployed
 

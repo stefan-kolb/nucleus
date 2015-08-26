@@ -7,7 +7,7 @@ module Paasal
         params do
           use :application_context
         end
-        resource 'endpoints/:endpoint_id/applications/:application_id/data',  desc: 'Application data',
+        resource 'endpoints/:endpoint_id/applications/:application_id/data', desc: 'Application data',
                  swagger: { nested: false, name: 'application-data' } do
           desc 'Deploy the application' do
             failure [[204, 'Application data deployed']].concat ErrorResponses.standard_responses

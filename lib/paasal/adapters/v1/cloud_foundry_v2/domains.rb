@@ -131,8 +131,8 @@ module Paasal
             created_route = cf_route(created_domain[:metadata][:guid], domain_host)
             unless created_route
               # route does not exist, create!
-              route_request_body =  { domain_guid: created_domain[:metadata][:guid],
-                                      host: domain_host, space_guid: user_space_guid }
+              route_request_body = { domain_guid: created_domain[:metadata][:guid],
+                                     host: domain_host, space_guid: user_space_guid }
               created_route = post('/v2/routes', body: route_request_body).body
             end
 

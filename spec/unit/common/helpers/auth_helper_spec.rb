@@ -23,7 +23,7 @@ describe Paasal::Adapters::AuthenticationRetryWrapper do
     context 'when cache is outdated' do
       before do
         counted = 0
-        expect   = 1
+        expect  = 1
         allow(calculator).to receive(:calc) do
           fail(Paasal::Errors::EndpointAuthenticationError.new('error', auth_client)) if (counted += 1) <= expect
           1
