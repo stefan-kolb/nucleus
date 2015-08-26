@@ -668,15 +668,7 @@ wiki # Further documentation files
 
 ## Contributing
 
-Everyone is welcome to contribute via
-
-- Forks & Pull Requests
-- Issues
-- Emails
-- Anything that comes into your mind ;-)
-
-Please make sure that all contributions pass the `bundle exec rake` command,
-which tests for code style violations and executes all tests.
+We love contributions from everyone! See our [contribution guidelines](CONTRIBUTING.md) for details.
 
 ## Further documentation
 
