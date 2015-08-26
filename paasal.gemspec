@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.executables   = 'paasal'
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 1.9.3'
+  spec.required_ruby_version = '>= 2.0'
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
   spec.files         = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|

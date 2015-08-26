@@ -55,17 +55,8 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 
 ## Ruby Interpreter Compatibility
 
-PaaSal has been tested on the following ruby interpreters:
-
-- MRI 1.9.3
-- MRI 2.0.0
-- MRI 2.1.3
-- MRI 2.2.1
-
-The CI tests cover all above versions.
-Additionally, manual tests were executed on Windows and MAC OS X using MRI 2.1.3
-
-**PaaSal currently won't work on JRuby**
+PaaSal is supposed to run on Ruby >= 2.0.
+**It currently won't work on JRuby.**
 
 ## Supported Vendors
 
@@ -124,7 +115,7 @@ Do NOT use the latest version!
 $ gem install eventmachine -- --with-ssl-dir=XYC
 ```
 
-*The above steps are verified to work on Windows 7 with Ruby 1.9.3 and 2.2.0*
+*The above steps are verified to work on Windows 7 with Ruby 2.2.0*
 
 ### Use in your application
 
