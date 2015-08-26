@@ -49,16 +49,15 @@ end
 
 namespace :record do
   FileList['spec/adapter/v1/**'].each do |file|
-    if File.directory?(file)
-      adapter = File.basename(file)
+    next unless File.directory?(file)
+    adapter = File.basename(file)
 
-      desc "Record #{adapter} adapter tests"
-      RSpec::Core::RakeTask.new(adapter) do |t|
-        ENV['VCR_RECORD_MODE'] = 'all'
-        t.pattern = "spec/adapter/v1/#{adapter}/*_spec.rb"
-        t.verbose = false
-        t.fail_on_error = false
-      end
+    desc "Record #{adapter} adapter tests"
+    RSpec::Core::RakeTask.new(adapter) do |t|
+      ENV['VCR_RECORD_MODE'] = 'all'
+      t.pattern = "spec/adapter/v1/#{adapter}/*_spec.rb"
+      t.verbose = false
+      t.fail_on_error = false
     end
   end
 end
