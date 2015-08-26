@@ -17,9 +17,9 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 
 ## Table of Contents
 
-* [Ruby Interpreter Compatibility](#ruby-interpreter-compatibility)
 * [Supported Vendors](#supported-vendors)
 * [Usage](#usage)
+  * [Ruby Interpreter Compatibility](#ruby-interpreter-compatibility)
   * [Use in your application](#use-in-your-application)
   * [Use the API](#use-the-api)
     * [Start the server](#start-the-server)
@@ -53,11 +53,6 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 * [Contributing](#contributing)
 * [Further documentation](#further-documentation)
 
-## Ruby Interpreter Compatibility
-
-PaaSal is supposed to run on Ruby >= 2.0.
-**It currently won't work on JRuby.**
-
 ## Supported Vendors
 
 - [Heroku](https://heroku.com)
@@ -71,6 +66,11 @@ More information on the vendors and the associated adapter can be found in the [
 
 PaaSal can either be used as standalone application/service, or as part of another ruby application.
 Please make sure to obey the following installation instructions before starting to use PaaSal.
+
+### Ruby Interpreter Compatibility
+
+PaaSal is supposed to run on Ruby >= 2.0.
+**It currently won't work on JRuby.**
 
 ### Installation instructions
 
