@@ -56,7 +56,7 @@ module Paasal
 
             def send_lines(lines, log_to_poll, stream)
               # now sort by time
-              lines.sort! { |line_1, line_2| line_1[:time].to_f <=> line_2[:time].to_f }
+              lines.sort_by! { |line| line[:time].to_f }
               @last_log_entry[log_to_poll] = lines.last[:time] if lines
               lines.each do |line|
                 line[:paasal_origin] = log_to_poll

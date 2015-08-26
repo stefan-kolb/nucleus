@@ -15,9 +15,9 @@ module Paasal
 
           # @see Stub#service_plans
           def service_plans(service_id)
-            load_plans(service_id).collect { |plan| to_paasal_plan(plan) }.sort do |plan_1, plan_2|
+            load_plans(service_id).collect { |plan| to_paasal_plan(plan) }.sort_by do |plan|
               # only compare the first cost, covers most cases and sorting for all costs would be far too complex
-              plan_1[:costs][0][:price].first[:amount].to_f <=> plan_2[:costs][0][:price].first[:amount].to_f
+              plan[:costs][0][:price].first[:amount].to_f
             end
           end
 

@@ -249,7 +249,7 @@ This list is auto-generated and can be shown via:
 $ bundle exec rake evaluation:compatibility:markdown
 ```
 
-**State: April, 22nd 2015**
+**State: 8/26/2015**
 
 Method / Vendor|cloudControl|Cloud Foundry v2|Heroku|Openshift v2
 :--|:-:|:-:|:-:|:-:

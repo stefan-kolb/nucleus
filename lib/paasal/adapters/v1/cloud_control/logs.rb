@@ -60,7 +60,7 @@ module Paasal
                   fetched_lines.push(line)
                 end
               end
-              fetched_lines.sort! { |line_1, line_2| line_1[:time] <=> line_2[:time] }
+              fetched_lines.sort_by! { |line| line[:time] }
               fetched_lines.collect { |line| format_log_entry(line[:paasal_origin], line) }
             else
               cc_log_entries(application_name, log_id).collect { |line| format_log_entry(log_id, line) }

@@ -35,7 +35,7 @@ namespace :evaluation do
           @vendor_results[vendor_name] = adaper_results
         end
 
-        @all_tests = @vendor_results.collect { |_name, tests| tests.keys }.flatten.uniq
+        @all_tests = @vendor_results.flat_map { |_name, tests| tests.keys }.uniq
       end
 
       task markdown: :load do
