@@ -5,12 +5,12 @@ require 'paasal/version'
 Gem::Specification.new do |spec|
   spec.name          = 'paasal'
   spec.version       = Paasal::VERSION
-  spec.authors       = ['Cedric Roeck']
-  spec.email         = ['paasal@roecky.net']
+  spec.authors       = ['Stefan Kolb', 'Cedric Röck']
+  spec.email         = ['stfnklb@gmail.com']
   spec.summary       = 'PaaSal is an abstraction layer for the deployment and management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
-  spec.homepage      = 'https://github.com/croeck/paasal'
+  spec.homepage      = 'https://github.com/stefan-kolb/paasal'
   spec.license       = 'MIT'
   spec.executables   = 'paasal'
   spec.require_paths = ['lib']
