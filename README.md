@@ -1,7 +1,7 @@
-[![Build Status](https://magnum.travis-ci.com/croeck/paasal.svg?token=4rnK13d2FLuvMVhBBFCH&branch=master)](https://magnum.travis-ci.com/croeck/paasal)
-[![Dependency Status](https://gemnasium.com/847585fdbecac653f6cfbd0a301b2f0f.svg)](https://gemnasium.com/croeck/paasal)
-[![Code Climate](https://codeclimate.com/repos/54af9232695680520400157d/badges/d9c8c6bf17955025db7a/gpa.svg)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
-[![Test Coverage](https://codeclimate.com/repos/54af9232695680520400157d/badges/d9c8c6bf17955025db7a/coverage.svg)](https://codeclimate.com/repos/54af9232695680520400157d/feed)
+[![Build Status](https://magnum.travis-ci.com/stefan-kolb/paasal.svg?token=VEm1aJ8ydBNAfhASH8xN&branch=master)](https://magnum.travis-ci.com/stefan-kolb/paasal)
+[![Dependency Status](https://gemnasium.com/4ae6979b87f7b5dc47956b2842e1166b.svg)](https://gemnasium.com/stefan-kolb/paasal)
+[![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
+[![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
 
 
 ![PaaSal](icons/paasal_200w.png "Platform as a Service abstraction layer")
