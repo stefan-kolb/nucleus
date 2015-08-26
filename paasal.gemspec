@@ -51,7 +51,8 @@ Gem::Specification.new do |spec|
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
   # Openshift logging access and direct Git SSH requests
-  spec.add_runtime_dependency 'net-ssh'
+  # TODO: remove if dl/fiddle fix is released inside new full version
+  spec.add_runtime_dependency 'net-ssh', '~> 2.10.1.rc1'
   # Used for JSON / Hash conversion and test cassette serialization (is way faster than other JSON libs)
   spec.add_runtime_dependency 'oj', '~> 2.12'
   # Required for Cloud Foundry log messages

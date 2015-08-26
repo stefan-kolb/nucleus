@@ -126,14 +126,6 @@ $ gem install eventmachine -- --with-ssl-dir=XYC
 
 *The above steps are verified to work on Windows 7 with Ruby 1.9.3 and 2.2.0*
 
-**net-ssh gem**:
-
-If the startup fails with `require': cannot load such file -- dl/import (LoadError)`, then using the latest beta fixes this issue.
-
-1) Explicitely set dependency in `paasal.gemspec` to `spec.add_runtime_dependency 'net-ssh', '~> 2.10.0.beta2'`
-
-2) Run `bundle update` to install the pre-release version
-
 ### Use in your application
 
 #### Require paasal and mark as dependency
