@@ -75,6 +75,12 @@ To record the interactions, you only have to call the Rake `record` task:
 bundle exec rake record
 ```
 
+To only record interactions for a specific adapter, simply append the adapter name to the record namespace:
+
+```
+bundle exec rake record:heroku
+```
+
 **Notes:**
 * You must be allowed to create at least 3 additional applications with your account, otherwise the quota restrictions will invalidate the test results.
 * A complete recording of a single vendor usually takes 5 up to 15 minutes. Openshift currently takes more than 30 minutes.
