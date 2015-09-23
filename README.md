@@ -1,11 +1,9 @@
+![PaaSal](icons/paasal_200w.png "Platform as a Service abstraction layer")
+
 [![Build Status](https://magnum.travis-ci.com/stefan-kolb/paasal.svg?token=VEm1aJ8ydBNAfhASH8xN&branch=master)](https://magnum.travis-ci.com/stefan-kolb/paasal)
 [![Dependency Status](https://gemnasium.com/4ae6979b87f7b5dc47956b2842e1166b.svg)](https://gemnasium.com/stefan-kolb/paasal)
 [![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
 [![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
-
-
-![PaaSal](icons/paasal_200w.png "Platform as a Service abstraction layer")
-
 
 _PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions of Platform-as-a-Service (PaaS) providers.  
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
@@ -424,7 +422,7 @@ Providers: [Heroku](http://heroku.com)
 
 ### Cloud Foundry v2
 
-Providers: [Cloud Foundry V2](http://cloudfoundry.org), [IBM Bluemix](https://console.ng.bluemix.net), [Stackato 3.4](http://www.activestate.com/stackato)
+Providers: [Cloud Foundry V2](http://cloudfoundry.org), [IBM Bluemix](https://console.ng.bluemix.net)
 
 #### Issues
 
