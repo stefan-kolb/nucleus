@@ -1,3 +1,5 @@
+require 'uri'
+
 require 'spec/adapter/helpers/vcr_oj_serializer'
 
 ########################
@@ -10,7 +12,7 @@ end
 
 VCR.configure do |c|
   # save cassettes here
-  c.cassette_library_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'recordings'))
+  c.cassette_library_dir = File.join(__dir__, '..', 'recordings')
   # Hooks into: Net::HTTP, HTTPClient, Patron, Curb (Curl::Easy, but not Curl::Multi) EM HTTP Request,
   # Typhoeus (Typhoeus::Hydra, but not Typhoeus::Easy or Typhoeus::Multi) and Excon
   c.hook_into :webmock
@@ -103,7 +105,7 @@ VCR.configure do |c|
   end
 
   # only filter these fields when we are recording, otherwise the tests take more than 2x as long
-  unless vcr_record_mode == :none
+  if vcr_record_mode != :none
     %w(token).each { |key| filter_query(c, key) }
     %w(Authorization).each { |key| filter_header(c, key) }
     %w(api_key token refresh_token access_token).each do |key|
@@ -129,6 +131,8 @@ VCR.configure do |c|
     Paasal::Spec::Config.credentials.sensitive_data.each do |replacement, replace|
       # enforce ASCII encoding to prevent VCR from crashing when credentials include umlauts or other characters
       c.filter_sensitive_data("__#{replacement}__") { |_i| replace.unpack('U*').map(&:chr).join }
+      # filter url encoded data
+      c.filter_sensitive_data("__#{replacement}__") { |_i| URI.encode_www_form_component(replace) }
     end
   end
 

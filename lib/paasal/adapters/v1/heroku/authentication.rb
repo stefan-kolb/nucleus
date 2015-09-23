@@ -1,3 +1,5 @@
+require 'uri'
+
 module Paasal
   module Adapters
     module V1
@@ -8,8 +10,8 @@ module Paasal
           def auth_client
             log.debug "Authenticate @ #{@endpoint_url}"
             TokenAuthClient.new @check_certificates do |verify_ssl, username, password|
-              response = Excon.new("#{@endpoint_url}/login?username=#{username}&password=#{password}",
-                                   ssl_verify_peer: verify_ssl).post
+              response = Excon.post("#{@endpoint_url}/login", query: { username: username, password: password },
+                                   ssl_verify_peer: verify_ssl)
               # Heroku returns 404 for invalid credentials, then we do not return an API token
               if response.status == 404
                 nil
