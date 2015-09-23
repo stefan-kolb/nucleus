@@ -1,5 +1,3 @@
-require 'uri'
-
 module Paasal
   module Adapters
     module V1
