@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :test do
-  gem 'airborne', '=0.1.15'
+  gem 'airborne', '~> 0.1'
   gem 'codeclimate-test-reporter', require: false
   gem 'factory_girl'
   gem 'faker'
