@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'paasal'
   spec.version       = Paasal::VERSION
   spec.authors       = ['Stefan Kolb', 'Cedric Röck']
-  spec.email         = ['stfnklb@gmail.com']
+  spec.email         = ['stefan.kolb@uni-bamberg.de']
   spec.summary       = 'PaaSal is an abstraction layer for the deployment and management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
@@ -51,8 +51,7 @@ Gem::Specification.new do |spec|
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
   # Openshift logging access and direct Git SSH requests
-  # TODO: remove if dl/fiddle fix is released inside new full version
-  spec.add_runtime_dependency 'net-ssh', '~> 2.10.1.rc1'
+  spec.add_runtime_dependency 'net-ssh', '~> 3.0'
   # Used for JSON / Hash conversion and test cassette serialization (is way faster than other JSON libs)
   spec.add_runtime_dependency 'oj', '~> 2.12'
   # Required for Cloud Foundry log messages
@@ -82,7 +81,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard-yard'
   spec.add_development_dependency 'inch', '~> 0.6.2'
   spec.add_development_dependency 'rake', '~> 10.4'
-  spec.add_development_dependency 'rubocop', '~> 0.33.0'
+  spec.add_development_dependency 'rubocop', '~> 0.34'
   spec.add_development_dependency 'vcr', '~> 2.9'
   spec.add_development_dependency 'webmock', '~> 1.20'
   spec.add_development_dependency 'yard', '~> 0.8'
