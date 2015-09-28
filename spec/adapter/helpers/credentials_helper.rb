@@ -9,11 +9,11 @@ module Paasal
         def initialize
           # block is executed each time a key is not-present
 
-          # TODO: raise error if no credentials are found
           @hash = Hash.new do |hash, adapter|
             if hash.key?(adapter.to_s)
               hash[adapter] = hash[adapter.to_s]
             else
+              # TODO: raise error if no credentials are found
               hash[adapter] = {
                 'user' => 'faked_user',
                 'password' => 'faked_password',

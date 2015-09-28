@@ -53,9 +53,10 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 
 ## Supported Vendors
 
-- [Heroku](https://heroku.com)
-- [Cloud Foundry (API version 2)](http://cloudfoundry.org)
-- [Openshift (version 2, except logging)](https://openshift.com)
+- [Heroku](https://www.heroku.com)
+- [Cloud Foundry (v2)](https://www.cloudfoundry.org/)
+  - Bluemix, Pivotal, Anynines
+- [Openshift (v2)](https://www.openshift.com/)
 - [cloudControl](https://www.cloudcontrol.com)
 
 More information on the vendors and the associated adapter can be found in the [adapters section](#adapters). 
@@ -323,7 +324,7 @@ Please refer to the swagger-ui documentation for additional information about th
 ### Authentication
 
 Authentication against the endpoint is managed by PaaSal.
-The credentials must be provided as `Basic authentication` header **within each single request**.
+The credentials must be provided as [Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) header **within each single request**.
 
 ```
 Authorization: Basic thebase64encodedcredentialsstring
@@ -362,7 +363,7 @@ curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{a
 ### Custom API calls (experimental)
 
 You can also execute custom API calls against the endpoint's API by using PaaSal.
-This feature is included as experimental functionality and **does not returned unified objects or errors**.
+This feature is included as experimental functionality and **does not return unified objects or errors**.
 The response of the API is passed 1:1 to the REST client.
 
 The custom calls can be made either against the endpoint or against an application.
@@ -463,8 +464,7 @@ further configuration are not supported as of now.
 
 **Performance**
 
-It ... takes ... ages ... to ... record ...
-Even worse, actions quite often fail with Openshift internal timeouts :(
+Recording is really slow. Even worse, actions quite often fail with Openshift internal timeouts.
 
 **Logging**
 

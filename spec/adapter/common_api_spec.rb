@@ -6,7 +6,7 @@ describe 'The PaaSal API' do
     it 'has status 200' do
       expect_status 200
     end
-    it 'show the swagger-ui application title' do
+    it 'shows the swagger-ui application title' do
       expect(body).to include('<title>Swagger UI</title>')
     end
     it 'shows the swagger-ui application body' do

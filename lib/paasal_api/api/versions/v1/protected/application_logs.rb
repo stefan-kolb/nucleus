@@ -94,7 +94,7 @@ module Paasal
             end
             params do
               optional :file_format, desc: 'File format to use for the returned logfile, '\
-                'one of: \'log\', \'zip\', \'tar.gz\'. Defaults to \'txt\'.',
+                'one of: \'log\', \'zip\', \'tar.gz\'. Defaults to \'log\'.',
                        values: Paasal::API::Enums::LogDownloadFormats.all,
                        default: Paasal::API::Enums::LogDownloadFormats::LOG
             end
