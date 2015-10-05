@@ -584,9 +584,7 @@ All errors are returned in a common schema:
 ### Language specific clients
 
 As of now, there is no language specific API client available.
-As a reward of providing swagger-compatible API docs, clients can be generated for several languages:
-`Scala`, `Flash`, `Java`, `Objc`, `PHP`, `Python`, `Python3`, `Ruby`
-
+As a reward of providing swagger-compatible API docs, clients can be generated for several languages.
 For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
 
 ## Tests
