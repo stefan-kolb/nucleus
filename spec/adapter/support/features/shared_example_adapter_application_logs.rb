@@ -37,11 +37,12 @@ shared_examples 'valid:applications:logs:download' do
     describe 'succeeds' do
       describe 'for type request as .log', :as_cassette do
         before do
-          # TODO: at the time of writing this test, we assume that each platform provides a request log.
-          # If this should not be the case, replace the request log with the first element in a queried log list
-          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request", request_headers
+          # get an existing log file
+          logs = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
+          log_id = json_body[:logs][0][:id]
+          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}", request_headers
           @show_response = response
-          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request/download?file_format=log",
+          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}/download?file_format=log",
               request_headers
           @download_response = response
         end
@@ -61,11 +62,12 @@ shared_examples 'valid:applications:logs:download' do
 
       describe 'for type request log as .zip', :as_cassette do
         before do
-          # TODO: at the time of writing this test, we assume that each platform provides a request log.
-          # If this should not be the case, replace the request log with the first element in a queried log list
-          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request", request_headers
+          # get an existing log file
+          logs = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
+          log_id = json_body[:logs][0][:id]
+          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}", request_headers
           @show_response = response
-          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request/download?file_format=zip",
+          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}/download?file_format=zip",
               request_headers
           @download_response = response
         end
@@ -91,11 +93,12 @@ shared_examples 'valid:applications:logs:download' do
 
       describe 'for type request log as .tar.gz', :as_cassette do
         before do
-          # TODO: at the time of writing this test, we assume that each platform provides a request log.
-          # If this should not be the case, replace the request log with the first element in a queried log list
-          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request", request_headers
+          # get an existing log file
+          logs = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
+          log_id = json_body[:logs][0][:id]
+          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}", request_headers
           @show_response = response
-          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/request/"\
+          get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}/"\
             'download?file_format=tar.gz', request_headers
           @download_response = response
         end

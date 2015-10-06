@@ -10,10 +10,13 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
     @app_all = { original_name: 'paasaltestappallproperties',
                  updated_name: 'paasaltestappallproperties',
                  region: 'aws-us-east-1' }
-    # application update is not supported
-    # TODO: logging is not yet implemented
-    @unsupported = ['with valid credentials is compliant and application update',
-                    'with valid credentials is compliant and log',
+    @unsupported = [# application update is not supported
+                    'with valid credentials is compliant and application update',
+                    # log tailing not yet supported
+                    'with valid credentials is compliant and log tail',
+                    # no empty request log
+                    'with valid credentials is compliant and log get with empty results for type request',
+                    'with valid credentials is compliant and log get of type request',
                     # Openshift V2 does not quite use plans, therefore change is not yet implemented
                     'with valid credentials is compliant and application services change']
     # add mongodb with the default plan
