@@ -39,9 +39,9 @@ The credentials must be specified in the `config/.credentials` file.
 The file is ignored and must _never_ be committed. It must use the following syntax:
 
 ```
-heroku:
-  user:     'my_heroku_username'
-  password: 'my_heroku_usernames_password'
+endpoint-id:
+  user:     'my_username'
+  password: 'my_usernames_password'
 ```
 
 Additional attributes can be used to filter out personal data from the recordings that may be included in the HTTP interactions (see [Sensitive data](#sensitive-data)).

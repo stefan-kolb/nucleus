@@ -5,7 +5,7 @@ module Paasal
         # cloud control application's log management operations
         module Logs
           class LogPoller
-            # Initialize a new instace
+            # Initialize a new instance
             # @param [BaseAdapter] adapter the adapter that needs the {LogPoller}
             # @param [Hash] headers_to_use adapter headers, e.g. containing the authentication, that shall be used
             #   for requests when the headers can't be resolved line in deferred actions

@@ -24,5 +24,5 @@ end
 
 # make sure we have a logging directory
 unless paasal_config.logging.key?(:path)
-  paasal_config.logging.path = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'log'))
+  paasal_config.logging.path = File.join(__dir__, '..', '..', '..', 'log')
 end
