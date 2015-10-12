@@ -42,7 +42,8 @@ end
 
 desc 'Record all adapter tests'
 task :record do
-  ENV['VCR_RECORD_MODE'] = 'all'
+  # http://www.relishapp.com/vcr/vcr/v/2-9-3/docs/record-modes
+  ENV['VCR_RECORD_MODE'] = 'once'
   # recording only valid for adapter tests
   Rake::Task['spec:suite:adapters'].invoke
 end
@@ -54,10 +55,10 @@ namespace :record do
 
     desc "Record #{adapter} adapter tests"
     RSpec::Core::RakeTask.new(adapter) do |t|
-      ENV['VCR_RECORD_MODE'] = 'all'
+      # new_episodes
+      ENV['VCR_RECORD_MODE'] = 'once'
       t.pattern = "spec/adapter/v1/#{adapter}/*_spec.rb"
-      t.verbose = false
-      t.fail_on_error = false
+      t.verbose = true
     end
   end
 end

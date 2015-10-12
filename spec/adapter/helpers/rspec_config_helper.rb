@@ -45,12 +45,8 @@ RSpec.configure do |config|
     group_mock_fs = example_group_property(example.metadata, :mock_fs_on_replay)
     group_mock_websocket = example_group_property(example.metadata, :mock_websocket_on_replay)
     cassette_name = group_cassette ? vcr_cassette_name_for[group_cassette] : vcr_cassette_name_for[example.metadata]
-
-    # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
-    # Use exclusive option to prevent accidental matching requests in different application states
-    VCR.insert_cassette(cassette_name, exclusive: true, allow_unused_http_interactions: false,
-                        match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
-                        decode_compressed_response: true, serialize_with: :oj)
+    # insert vcr cassette for each test
+    VCR.insert_cassette(cassette_name)
 
     # fake UUIDs to have identical filenames in repetitive tests
     allow(SecureRandom).to receive(:uuid) do
@@ -91,7 +87,7 @@ RSpec.configure do |config|
         'PaaSal771096PaaSal'
       end
 
-      method_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata], 'method_cassettes')
+      method_path = File.join(__dir__, '..', 'recordings', vendor[example.metadata], 'method_cassettes')
       recorder = Paasal::MethodResponseRecorder.new(self, example, File.expand_path(method_path))
       recorder.setup(Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
       recorder.setup(Paasal::Adapters::GitRepoAnalyzer, [:any_branch?])
@@ -101,7 +97,7 @@ RSpec.configure do |config|
 
     if group_mock_websocket
       # enable faye websocket recording
-      records_path = File.join(File.dirname(__FILE__), '..', 'recordings', vendor[example.metadata])
+      records_path = File.join(__dir__, '..', 'recordings', vendor[example.metadata])
       Paasal::FayeWebsocketRecorder.new(self, File.expand_path(File.join(records_path, 'websocket_cassettes'))).enable
       Paasal::EmHttpStreamRecorder.new(self, File.expand_path(File.join(records_path, 'http_stream_cassettes'))).enable
     end

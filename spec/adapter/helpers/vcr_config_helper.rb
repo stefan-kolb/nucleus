@@ -15,13 +15,18 @@ VCR.configure do |c|
   c.cassette_library_dir = File.join(__dir__, '..', 'recordings')
   # Hooks into: Net::HTTP, HTTPClient, Patron, Curb (Curl::Easy, but not Curl::Multi) EM HTTP Request,
   # Typhoeus (Typhoeus::Hydra, but not Typhoeus::Easy or Typhoeus::Multi) and Excon
+  c.debug_logger = File.open(File.join(__dir__, '..', '..', '..', 'log/vcr.log'), 'w')
   c.hook_into :webmock
   c.hook_into :excon
   c.ignore_localhost = false
   # ignore host as requested by codeclimate
   c.ignore_hosts 'codeclimate.com'
   # record once, but do not make updates
-  c.default_cassette_options = { record: vcr_record_mode }
+  # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
+  # Use exclusive option to prevent accidental matching requests in different application states
+  c.default_cassette_options = { record: vcr_record_mode, exclusive: true, allow_unused_http_interactions: false,
+                                 match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
+                                 decode_compressed_response: true, serialize_with: :oj }
 
   c.preserve_exact_body_bytes do |http_message|
     http_message.body.encoding.name == 'ASCII-8BIT' || !http_message.body.valid_encoding?
@@ -120,6 +125,7 @@ VCR.configure do |c|
           "NO_HEROKU_USER_ID_IN_RESPONSE_BODY_TO_REPLACE_AS_OF_#{DateTime.now}"
         else
           response_body = Oj.load(i.response.body)
+          # FIXME: shows as nil replace for non heroku responses!
           response_body['id'] if response_body.is_a?(Hash) && /^\S+@users.heroku.com$/ =~ response_body['id']
         end
       rescue
@@ -131,11 +137,13 @@ VCR.configure do |c|
     Paasal::Spec::Config.credentials.sensitive_data.each do |replacement, replace|
       # enforce ASCII encoding to prevent VCR from crashing when credentials include umlauts or other characters
       c.filter_sensitive_data("__#{replacement}__") { |_i| replace.unpack('U*').map(&:chr).join }
-      # filter url encoded data
+      # filter potentially url encoded data
       c.filter_sensitive_data("__#{replacement}__") { |_i| URI.encode_www_form_component(replace) }
     end
   end
 
+  # TODO: if we do not match on any filtered data, we can make the filters above a one-way recording action,
+  # which should also speed up our tests again
   c.register_request_matcher :headers_no_auth do |request_1, request_2|
     # Anonymize header authentication
     headers_1 = request_1.headers
