@@ -4,7 +4,7 @@
 $0 = 'PaaSal'
 Process.setproctitle('PaaSal') if Process.respond_to?(:setproctitle)
 
-root_dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+root_dir = File.join(__dir__, '..')
 
 require 'optparse'
 require 'yaml'

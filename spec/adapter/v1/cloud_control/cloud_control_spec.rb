@@ -30,7 +30,7 @@ describe Paasal::Adapters::V1::CloudControl do
     @app_all = { original_name: "paasaltestappallproperties#{iteration}",
                          updated_name: "paasaltestappallproperties#{iteration}",
                          region: 'default' }
-    # add mysqls with the free plan, does not requier billing account whereas other free plans do !?
+    # add mysqls with the free plan, does not require billing account whereas other free plans do!?
     @service = { id: 'mysqls', plan_id: 'free' }
   end
   before do |example|

@@ -109,7 +109,7 @@ begin
 
     desc 'Check out gh-pages.'
     task :checkout do
-      dir = File.dirname(__FILE__) + '/../paasal.doc'
+      dir = File.join(__dir__, '..', 'paasal.doc')
       unless Dir.exist?(dir)
         Dir.mkdir(dir)
         Dir.chdir(dir) do
@@ -123,7 +123,7 @@ begin
 
     desc 'Generate and publish YARD docs to GitHub pages.'
     task publish: %w(doc:pages:checkout doc:pages) do
-      Dir.chdir(File.dirname(__FILE__) + '/../paasal.doc') do
+      Dir.chdir(File.join(__dir__, '..', 'paasal.doc')) do
         system('git checkout gh-pages')
         system('git add .')
         system('git add -u')

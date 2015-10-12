@@ -1,4 +1,4 @@
-$LOAD_PATH << File.join(File.dirname(__FILE__), '..')
+$LOAD_PATH << File.join(__dir__, '..')
 
 # figure out where we are being loaded from
 if $LOADED_FEATURES.grep(%r{spec\/spec_helper\.rb}).any?

@@ -14,8 +14,8 @@ begin
 
   # include the configuration of the project to overwrite the home dir config
   project_dir_config = '../../../config/paasal_config.rb'
-  if File.exist?(File.expand_path(project_dir_config, File.dirname(__FILE__)))
-    puts "Applying configuration from: #{File.expand_path(project_dir_config, File.dirname(__FILE__))}"
+  if File.exist?(File.expand_path(project_dir_config, __dir__))
+    puts "Applying configuration from: #{File.expand_path(project_dir_config, __dir__)}"
     require_relative project_dir_config
   end
 
