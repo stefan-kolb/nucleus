@@ -24,9 +24,11 @@ VCR.configure do |c|
   # record once, but do not make updates
   # Use complete request to raise errors and require new cassettes as soon as the request changes (!)
   # Use exclusive option to prevent accidental matching requests in different application states
-  c.default_cassette_options = { record: vcr_record_mode, exclusive: true, allow_unused_http_interactions: false,
-                                 match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
-                                 decode_compressed_response: true, serialize_with: :oj }
+  c.default_cassette_options = {
+    record: vcr_record_mode, exclusive: true, allow_unused_http_interactions: false,
+    match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
+    decode_compressed_response: true, serialize_with: :oj
+  }
 
   c.preserve_exact_body_bytes do |http_message|
     http_message.body.encoding.name == 'ASCII-8BIT' || !http_message.body.valid_encoding?
