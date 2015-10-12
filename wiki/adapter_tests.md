@@ -34,9 +34,10 @@ With this structure we can automatically evaluate request differences for a spec
 ## Recording
 
 Recording new VCR cassettes requires a valid user account at the platform that shall be recorded.
+The `endpoint-id` that will be used during the recording is hard-coded as `@endpoint` variable inside the main adapter test file, e.g. `spec/adapter/v1/heroku/heroku_spec.rb`.
 The credentials must be specified in the `config/.credentials` file.
 
-The file is ignored and must _never_ be committed. It must use the following syntax:
+The file is ignored by git and must _never_ be committed. It must use the following syntax:
 
 ```
 endpoint-id:
