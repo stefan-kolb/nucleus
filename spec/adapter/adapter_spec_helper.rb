@@ -80,14 +80,14 @@ ensure
 end
 
 # used to calculate the MD5 sums of all files in a received application download response
-def response_files_md5(response, downlaod_archive_format, sanitize = true)
-  response_file = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_response.#{downlaod_archive_format}")
+def response_files_md5(response, download_archive_format, sanitize = true)
+  response_file = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_response.#{download_archive_format}")
   # write response to disk
   File.open(response_file, 'wb') { |file| file.write response }
 
   # extract downloaded response and sanitize to allow a fair comparison
-  dir_download = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_downlaod")
-  Paasal::ArchiveExtractor.new.extract(response_file, dir_download, downlaod_archive_format)
+  dir_download = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_download")
+  Paasal::ArchiveExtractor.new.extract(response_file, dir_download, download_archive_format)
   Paasal::ApplicationRepoSanitizer.new.sanitize(dir_download) if sanitize
 
   # generate and return MD5 hashes of downloaded files
