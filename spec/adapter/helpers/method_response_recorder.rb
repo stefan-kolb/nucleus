@@ -153,6 +153,7 @@ module Paasal
       File.join(@data_dir, class_name.to_s.underscore, method_name_sanitized, hash)
     end
 
+    # FIXME: introduces matching problems with arguments like Hashes
     def args_hash(*args)
       # calculate hash and take care of IO objects, hashes, ...
       md5 = Digest::MD5.new

@@ -14,7 +14,7 @@ module Paasal
             uri = ssh_uri(app)
 
             with_ssh_key do
-              remote_log_files(uri, app)
+              remote_log_files(uri, app[:creation_time])
             end
           end
 
@@ -56,7 +56,7 @@ module Paasal
             URI.parse(application[:ssh_url])
           end
 
-          def remote_log_files(uri, app)
+          def remote_log_files(uri, app_creation_time)
             available_log_files = []
             # ssh into main instance
             Net::SSH.start(uri.host, uri.user, keys: [paasal_config.ssh.handler.key_file]) do |ssh|
@@ -69,7 +69,7 @@ module Paasal
                 # TODO: no unified naming among cartridges: ApplicationLogfileType::APPLICATION by default.
                 available_log_files.push(id: File.basename(file, '.*'), name: file,
                                          type: Enums::ApplicationLogfileType::APPLICATION,
-                                         created_at: app[:creation_time], updated_at: updated_at)
+                                         created_at: app_creation_time, updated_at: updated_at)
               end
             end
             available_log_files
