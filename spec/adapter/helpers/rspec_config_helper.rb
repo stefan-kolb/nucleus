@@ -93,6 +93,7 @@ RSpec.configure do |config|
       recorder.setup(Paasal::Adapters::GitRepoAnalyzer, [:any_branch?])
       recorder.setup(Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
       recorder.setup(Paasal::Adapters::ArchiveConverter, [:convert])
+      recorder.setup(Paasal::Adapters::V1::OpenshiftV2, [:remote_log_files, :remote_log_file?, :remote_log_entries])
     end
 
     if group_mock_websocket
