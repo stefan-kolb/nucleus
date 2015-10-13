@@ -59,7 +59,7 @@ module Paasal
           def remote_log_files(uri, app)
             available_log_files = []
             # ssh into main instance
-            Net::SSH.start(uri.host, uri.user, keys: [ paasal_config.ssh.handler.key_file ]) do |ssh|
+            Net::SSH.start(uri.host, uri.user, keys: [paasal_config.ssh.handler.key_file]) do |ssh|
               # https://developers.openshift.com/en/managing-log-files.html#log-location
               log_files = ssh.exec!('ls $OPENSHIFT_LOG_DIR')
 
@@ -76,13 +76,13 @@ module Paasal
           end
 
           def remote_log_file?(uri)
-            Net::SSH.start(uri.host, uri.user, keys: [ paasal_config.ssh.handler.key_file ]) do |ssh|
+            Net::SSH.start(uri.host, uri.user, keys: [paasal_config.ssh.handler.key_file]) do |ssh|
               remote_file_exists?(ssh, "#{log_id}.log")
             end
           end
 
           def remote_log_entries(uri, app_id, log_id)
-            Net::SSH.start(uri.host, uri.user, keys: [ paasal_config.ssh.handler.key_file ]) do |ssh|
+            Net::SSH.start(uri.host, uri.user, keys: [paasal_config.ssh.handler.key_file]) do |ssh|
               # log exists?
               unless remote_file_exists?(ssh, "#{log_id}.log")
                 fail Errors::AdapterResourceNotFoundError,

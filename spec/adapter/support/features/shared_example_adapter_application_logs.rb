@@ -38,7 +38,7 @@ shared_examples 'valid:applications:logs:download' do
       describe 'for type request as .log', :as_cassette do
         before do
           # get an existing log file
-          logs = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
+          get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
           log_id = json_body[:logs][0][:id]
           get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}", request_headers
           @show_response = response
@@ -63,7 +63,7 @@ shared_examples 'valid:applications:logs:download' do
       describe 'for type request log as .zip', :as_cassette do
         before do
           # get an existing log file
-          logs = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
+          get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
           log_id = json_body[:logs][0][:id]
           get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}", request_headers
           @show_response = response
@@ -94,7 +94,7 @@ shared_examples 'valid:applications:logs:download' do
       describe 'for type request log as .tar.gz', :as_cassette do
         before do
           # get an existing log file
-          logs = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
+          get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs", request_headers)
           log_id = json_body[:logs][0][:id]
           get "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/logs/#{log_id}", request_headers
           @show_response = response
