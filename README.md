@@ -95,7 +95,6 @@ PuTTY is supposed to (maybe anyone knows how to fix this?) not work due to the l
 
 Eventmachine sometimes fails with the error `Encryption not available on this event-machine`.
 A fix is available, but requires a few steps:
-*Thanks to Iron Foundry for the solution at [https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c](https://groups.google.com/forum/#!topic/ironfoundry/1IzdAG1DM1c)
 
 1) Uninstall the gem
 
@@ -106,15 +105,13 @@ $ gem uninstall eventmachine
 2) Download the OpenSSL package from [http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma](http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma)
 Do NOT use the latest version!
 
-3) Extract it to the desired location, say XYC
+3) Extract it to the desired location
 
-4) Re-install the gem and point to the OpenSSL installation directory (XYC)
+4) Re-install the gem and point to the OpenSSL installation directory. Escape backslashes or use forward slashed.
 
 ```shell
-$ gem install eventmachine -- --with-ssl-dir=XYC
+$ gem install eventmachine -- --with-ssl-dir=C:/SSL
 ```
-
-*The above steps are verified to work on Windows 7 with Ruby 2.2.0*
 
 ### Use in your application
 
@@ -248,7 +245,7 @@ This list is auto-generated and can be shown via:
 $ bundle exec rake evaluation:compatibility:markdown
 ```
 
-**State: 8/26/2015**
+**State: 10/14/2015**
 
 Method / Vendor|cloudControl|Cloud Foundry v2|Heroku|Openshift v2
 :--|:-:|:-:|:-:|:-:
@@ -276,9 +273,9 @@ deploy|&#10003;|&#10003;|&#10003;|&#10003;
 rebuild|&#10003;|&#10003;|&#10003;|&#10003;
 download|&#10003;|&#10003;|&#10003;|&#10003;
 scale|&#10003;|&#10003;|&#10003;|&#10003;
-log?|&#10003;|&#10003;|&#10003;|&#10007;
-logs|&#10003;|&#10003;|&#10003;|&#10007;
-log_entries|&#10003;|&#10003;|&#10003;|&#10007;
+log?|&#10003;|&#10003;|&#10003;|&#10003;
+logs|&#10003;|&#10003;|&#10003;|&#10003;
+log_entries|&#10003;|&#10003;|&#10003;|&#10003;
 tail|&#10003;|&#10003;|&#10003;|&#10007;
 services|&#10003;|&#10003;|&#10003;|&#10003;
 service|&#10003;|&#10003;|&#10003;|&#10003;
@@ -465,10 +462,6 @@ further configuration are not supported as of now.
 **Performance**
 
 Recording is really slow. Even worse, actions quite often fail with Openshift internal timeouts.
-
-**Logging**
-
-Logging is not implemented yet
 
 ### cloudControl
 
