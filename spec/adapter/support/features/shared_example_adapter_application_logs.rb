@@ -193,13 +193,13 @@ shared_examples 'valid:applications:logs:download:all' do
           @shown_responses.each do |id, shown_log|
             shown_md5[id] = Digest::MD5.hexdigest(shown_log.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
           end
-          downlaod_md5 = response_files_md5(@download_response.body, 'zip', false)
+          download_md5 = response_files_md5(@download_response.body, 'zip', false)
 
           # must contain at max the number of shown logs, empty log files will not be included in the download
-          expect(downlaod_md5.length).to be <= shown_md5.length
+          expect(download_md5.length).to be <= shown_md5.length
 
           # now compare file hashes
-          downlaod_md5.each do |_key, value|
+          download_md5.each do |_key, value|
             expect(shown_md5.values).to include(value)
           end
         end
@@ -331,7 +331,7 @@ end
 
 shared_examples 'valid:applications:logs:tail' do
   describe 'log tail', :em_reactor, cassette_group: 'app-logs;tail' do
-    # This test fails sometimes with no received message and is caused by the fixed timeouts
+    # TODO: This test fails sometimes with no received message and is caused by the fixed timeouts
     # and delays in the platforms logging system.
     describe 'request', :as_cassette, :mock_websocket_on_replay do
       # all tests must be merged into one test, otherwise

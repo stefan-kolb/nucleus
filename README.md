@@ -89,7 +89,7 @@ PaaSal is verified to work with [msysGit](https://msysgit.github.io/) and the in
 We did not verify other alternatives, e.g. PuTTY's `plink.exe`.
 PuTTY is supposed to (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options that allow to connect any git repository without confirmation of the host's identity.
 
-###### Known issues
+###### Troubleshooting
 
 **Eventmachine**:
 
