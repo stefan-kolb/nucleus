@@ -136,11 +136,17 @@ VCR.configure do |c|
     end
 
     # filter all sensitive data stored in the credentials config
-    Paasal::Spec::Config.credentials.sensitive_data.each do |replacement, replace|
-      # enforce ASCII encoding to prevent VCR from crashing when credentials include umlauts or other characters
-      c.filter_sensitive_data("__#{replacement}__") { |_i| replace.unpack('U*').map(&:chr).join }
-      # filter potentially url encoded data
-      c.filter_sensitive_data("__#{replacement}__") { |_i| URI.encode_www_form_component(replace) }
+    Paasal::Spec::Config.credentials.sensitive_data.each do |endpoint, data|
+      # FIXME: replaces wrong stuff too  https://api.10.244.0.34.xip.io/v2/apps?q=never_exists_0__somevendor:password__9
+      data.each do |key, value|
+        replacement = "#{endpoint}:#{key}"
+        # only apply filtering of credentials to matching provider
+        tag = endpoint.to_sym
+        # enforce ASCII encoding to prevent VCR from crashing when credentials include umlauts or other characters
+        c.filter_sensitive_data("__#{replacement}__", tag) { |_i| value.unpack('U*').map(&:chr).join }
+        # filter potentially url encoded data
+        c.filter_sensitive_data("__#{replacement}__", tag) { |_i| URI.encode_www_form_component(value) }
+      end
     end
   end
 

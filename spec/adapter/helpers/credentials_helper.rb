@@ -8,12 +8,11 @@ module Paasal
 
         def initialize
           # block is executed each time a key is not-present
-
           @hash = Hash.new do |hash, adapter|
             if hash.key?(adapter.to_s)
               hash[adapter] = hash[adapter.to_s]
             else
-              # TODO: raise error if no credentials are found
+              # FIXME: raise error if no credentials are found
               hash[adapter] = {
                 'user' => 'faked_user',
                 'password' => 'faked_password',
@@ -62,16 +61,10 @@ module Paasal
           [@hash[endpoint_id]['user'], @hash[endpoint_id]['password']]
         end
 
-        # Get all sensitive values that shall not be included in the VCR logs.
-        # @return[Hash<String,String>>] key value pairs, key is replacement for the value that shall be replaced
+        # Get all sensitive credential values
+        # @return[Hash<String,Hash<String, String>>] hash of endpoint_ids with sensitive key value pairs
         def sensitive_data
-          response = {}
-          @hash.each do |endpoint, data|
-            data.each do |name, value|
-              response["#{endpoint}:#{name}"] = value
-            end
-          end
-          response
+          @hash
         end
 
         private

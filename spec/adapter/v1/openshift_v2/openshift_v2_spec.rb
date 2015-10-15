@@ -20,6 +20,7 @@ describe Paasal::Adapters::V1::OpenshiftV2 do
     # add mongodb with the default plan
     @service = { id: 'mongodb-2.4', plan_id: 'default' }
   end
+
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)
       skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Openshift V2")

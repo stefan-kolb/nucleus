@@ -46,7 +46,12 @@ RSpec.configure do |config|
     group_mock_websocket = example_group_property(example.metadata, :mock_websocket_on_replay)
     cassette_name = group_cassette ? vcr_cassette_name_for[group_cassette] : vcr_cassette_name_for[example.metadata]
     # insert vcr cassette for each test
-    VCR.insert_cassette(cassette_name)
+    # use tags so only credentials from this endpoint_id will be filtered
+    if @endpoint
+      VCR.insert_cassette(cassette_name, tag: @endpoint.to_sym)
+    else
+      VCR.insert_cassette(cassette_name)
+    end
 
     # fake UUIDs to have identical filenames in repetitive tests
     allow(SecureRandom).to receive(:uuid) do
