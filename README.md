@@ -124,11 +124,10 @@ $ gem uninstall eventmachine
 ```
 
 2) Download the OpenSSL package from [http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma](http://packages.openknapsack.org/openssl/openssl-1.0.0k-x86-windows.tar.lzma)
-Do NOT use the latest version!
 
-3) Extract it to the desired location
+3) Extract it to a desired location
 
-4) Re-install the gem and point to the OpenSSL installation directory. Escape backslashes or use forward slashed.
+4) Re-install the gem and point to the OpenSSL installation directory. Escape backslashes or use forward slashes.
 
 ```shell
 $ gem install eventmachine -- --with-ssl-dir=C:/SSL
@@ -183,7 +182,7 @@ Paasal::VersionDetector.api_versions
 resolver = Paasal::AdapterResolver.new('v1')
 ```
 
-4) Show all adapters that are supported by PaaSal on this specific API version:
+4) Show all adapters that are supported by PaaSal by this specific API version:
 
 ```ruby
 resolver.adapters
@@ -193,15 +192,15 @@ resolver.adapters
 {"cloudcontrol"=>Paasal::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Paasal::Adapters::V1::CloudFoundryV2, "heroku"=>Paasal::Adapters::V1::Heroku, "openshift_v2"=>Paasal::Adapters::V1::OpenshiftV2}
 ```
 
-5) Create the adapter that you with to use, here we load the cloudControl adapter:
+5) Load your desired adapter implementation:
 
 ```ruby
 adapter = resolver.load('cloudcontrol', 'api.cloudcontrol.com', 'your_username', 'your_password')
 ```
 
 By default, the adapter will be populated with the default configuration options that are defined in the vendor's configuration for the selected endpoint_url.
-If you are using a custom installation, e.g. of *Openshift* or *Cloud Foundry*, make sure to pass the option that describe the `app_domain`.
-Otherwise the `web_url` links created by PaaSal will be malformed.
+If you are using a custom installation, e.g. of *Openshift* or *Cloud Foundry*, make sure to pass the option that describe the `app_domain` for deployed applications.
+Otherwise, the `web_url` links created by PaaSal will be malformed.
 
 ```ruby
 adapter = resolver.load('cloud_foundry_v2', 'api.example.org', 'your_username', 'your_password', app_domain: 'apps.example.org', check_ssl: false)
@@ -214,7 +213,7 @@ adapter = resolver.load('cloud_foundry_v2', 'api.example.org', 'your_username', 
 adapter.regions
 # Create our first application
 app = adapter.create_application(region: 'default', name: 'myusersfirstapplication', runtimes: ['nodejs'])
-# And delete the application again ;-)
+# And delete the application again
 adapter.delete_application(app[:id])
 ```
 
@@ -224,7 +223,7 @@ including which fields are required and those that are only optional.
 
 ### Use the API
 
-Besides including the abstraction layer in your application, PaaSal can also be started and serve the RESTful API:
+Besides including the abstraction layer in your application, PaaSal can also be started and serve a RESTful API:
 For detailed usage information go to the section [API client(s)](#api-clients).
 
 #### Start the server
@@ -242,7 +241,7 @@ However, you can also start the API using the [thin](http://code.macournoyer.com
 $ rackup -s thin config.ru
 ```
 
-Due to limitations in the log tailing process, currently PaaSal requires `thin` and does not work on other Rack servers.
+Due to limitations in the log tailing process, PaaSal currently requires `thin` and does not work on other Rack servers.
 In theory, it should be possible to make other Rack servers work that also utilize [eventmachine](https://github.com/eventmachine/eventmachine).
 
 #### HTTPS
@@ -254,8 +253,8 @@ To enforce this policy, PaaSal will automatically redirect all connections on pl
 
 #### API endpoints
 
-The API of PaaSal is documented by the use of [swagger](http://swagger.io).
-After your started a server instance, you can access an interactive [swagger-ui](https://github.com/swagger-api/swagger-ui) at the `/docs` path.
+The API of PaaSal is documented via [swagger](http://swagger.io).
+After you started a server instance, you can access an interactive [swagger-ui](https://github.com/swagger-api/swagger-ui) at the `/docs` path.
 
 ## Functionality
 
@@ -311,24 +310,24 @@ remove_service|&#10003;|&#10003;|&#10003;|&#10003;
 ### Core constructs
 
 PaaSal could support any constellation of PaaS offers that are currently available.
-In order to do so, we differentiate between 3 types:
+In order to do so, we differentiate between three types:
 
 The **vendor**, or the PaaS platform, which determines the functionality,
 a **provider** that runs the vendor's platform and offers it to its customers and finally
 the **endpoint** of the provider's offer.
 
 For most scenarios the *endpoint* is identical to the *provider*, but in some cases,
-for instance on [IBM Bluemix](https://console.ng.bluemix.net), *endpoints* distinguish different deployment regions.
+for instance on [IBM Bluemix][bluemix], *endpoints* distinguish different deployment regions.
 
-If running PaaSal as webservice, all changes made to these entities at runtime will be discarded,
+If running PaaSal as web service, all changes made to these entities at runtime will be discarded,
 unless you enable the functionality in the configuration and specify a location where to persist the data to.
 
 #### Vendors
 
-You can use the API of PaaSal to show a list of all currently supported vendors.
-This request if publicly available and does not require any authentication.
+You can use the API of PaaSal to show a list of all supported vendors.
+This request is publicly available and does not require any authentication.
 
-However, you can't create, delete or update a vendor at runtime because they represent the logic to communicate with their platform.
+However, you can't create, delete or update a vendor at runtime because it represents the logic to communicate with the associated platform.
 All developers that want to have more information on how to add a new vendor can take a look at the instructions: [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
 
 #### Providers and Endpoints
@@ -336,7 +335,7 @@ All developers that want to have more information on how to add a new vendor can
 Providers and Endpoints can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
 
 A new entity can be registered at runtime by sending a `POST` request.
-Whereas the Provider only requires a `name`, the endpoint also needs a further attribute, the `url`.
+Whereas a provider only requires a `name`, an endpoint also needs a further attribute, the `url`.
 Please refer to the swagger-ui documentation for additional information about the requests.
 
 ### Authentication
@@ -344,13 +343,11 @@ Please refer to the swagger-ui documentation for additional information about th
 Authentication against the endpoint is managed by PaaSal.
 The credentials must be provided as [Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) header **within each single request**.
 
-```
-Authorization: Basic thebase64encodedcredentialsstring
-```
+    Authorization: Basic thebase64encodedcredentialsstring
 
-#### Special characters (umlauts, ....)
+#### Special characters (umlauts, ...)
 
-The usage of special characters, for instance the german umlauts as ä, ö and ü may cause issues with some platforms.
+The usage of special characters, for instance german umlauts as ä, ö and ü may cause issues with some platforms.
 Please make sure to select the correct encoding for your credentials before encoding them with base64:
 
 * Stackato 3.4.2
@@ -380,7 +377,8 @@ curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{a
 
 ### Custom API calls (experimental)
 
-You can also execute custom API calls against the endpoint's API by using PaaSal.
+Sometimes you might want to call proprietary functionality that goes beyond PaaSal's unified API approach.
+You can also execute such custom API calls against the endpoint's API with PaaSal.
 This feature is included as experimental functionality and **does not return unified objects or errors**.
 The response of the API is passed 1:1 to the REST client.
 
@@ -389,12 +387,12 @@ Allowed HTTP methods are `GET`, `POST`,`PATCH`, `PUT` and `DELETE`.
 Data embedded in a requests body is used 1:1 in the API call, header information are going to be discarded.
 
 Please be aware that you must also include the API version in the path if required by the platform.
-For instance Cloud Foundry requests would have to look like: `.../call/v2/app_usage_events`
+For instance, Cloud Foundry requests would have to look like: `.../call/v2/app_usage_events`
 
 ##### Execute a custom API call against the endpoint
 
-In this example we want to get the current user's account information.
-we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
+In this example, we want to get the current user's account information.
+Therefore, we append the `call` action to the endpoint, followed by the API's native path to the resource: `account`
 
 ```
 GET /api/endpoints/heroku/call/account
@@ -419,7 +417,7 @@ GET /api/endpoints/heroku/call/account
 ##### Execute a custom API call against an endpoint's application
 
 In this example we try to list the builds of an Heroku application.
-Therefore we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
+Therefore, we append the `call` action to the application at the endpoint, followed by the API's native path to the resource: `builds`
 
 ```
 GET /api/endpoints/heroku/applications/the_application_name/call/builds
@@ -448,15 +446,15 @@ Providers: [AppFog][appfog], [Anynines][anynines], [IBM Bluemix][bluemix], [Pivo
 **Logs**
 
 CF stopped to provide the `stdout` and `stderr` files in the `logs` directory.
-Currently we do not know of an approach to fetch recent log entries without registering an additional service on the application.
+Currently, we do not know of an approach to fetch recent log entries without registering an additional service on the application.
 
 Moreover, logs can only be retrieved as long as at least once instance of the CF application is running, hence the application state is `running`.
-If there are no logs that can be retrieved, the log list will be empty and the direct call of a log file will result in an 404 error.
+If there are no logs that can be retrieved, the log list will be empty and the request for a particular log file will result in an 404 error.
 
 **Services**
 
-- As of now we focus only allow bindable services and create a new instance of the service to add
-- Therefrore services must be `active` and `bindable`
+- As of now, we only allow bindable services and create a new instance of the service to add
+- Therefore, services must be `active` and `bindable`
 - Only one instance of the same service can be bound to the application
 
 ### Openshift v2
@@ -477,7 +475,7 @@ Applications not created with PaaSal can't be scaled if they were created with t
 
 - Services can be added to the application, but scaling (gears, memory allocation, ...) and
 further configuration are not supported as of now.
-- We focus on the `embedded` cartridges and leave out the `standalone` services such as *Jenkins*.
+- We focus on the `embedded` cartridges and omit `standalone` services such as *Jenkins*.
 - With no service plans and therefore nothing to change, the *change service* function is not implemented.
 
 **Performance**
@@ -497,8 +495,8 @@ An application can't be updated, the `name` and `runtimes` can't be changed once
 **Application lifecycle**
 
 Applications on cloudControl can't be explicitly stopped or restarted.
-They start after the successful build of the application, which is therefore postponed up to the first invocation of the start operation.
-Application only stop once the corresponding _deployment_ has been deleted.
+They start after a successful build of the application, which is therefore postponed to the first invocation of the start operation.
+Applications only stop once the corresponding _deployment_ has been deleted.
 
 **Logs**
 
@@ -517,12 +515,11 @@ They are described with increasing importance, meaning that the last option over
 #### Database backend
 
 The database backend can be specified in the `config/paasal_config.rb` configuration file.
-It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems
-and [LMDB](https://github.com/minad/lmdb) on Windows.
+It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems and [LMDB](https://github.com/minad/lmdb) on Windows.
 
 Note: *[Daybreak](https://github.com/propublica/daybreak) does not run on Windows*
 
-### Vendors, Providers and Endpoints
+### Vendors, Providers, and Endpoints
 
 A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or via `.yaml` configuration files.
 These adapter configuration files are located in the project directory at `config/adapters`.
@@ -534,7 +531,7 @@ For more explanations of the fields, or if the platform is not listed, please re
 
 Next, add your provider and its endpoint(s) to the configuration file.
 
-###### Example adapter configuration, here: Openshift 2
+###### Example adapter configuration
 
 ```yaml
   ---
@@ -595,9 +592,9 @@ All errors are returned in a common schema:
 }
 ```
 
-### Language specific clients
+### Language-specific clients
 
-As of now, there is no language specific API client available.
+As of now, there is no language-specific API client available.
 As a reward of providing swagger-compatible API docs, clients can be generated for several languages.
 For detailed information, please have a look at the [swagger-codegen project](https://github.com/swagger-api/swagger-codegen).
 
@@ -636,11 +633,12 @@ As described in the [HTTPS](#https) section, we strongly encourage you to only r
 
 PaaSal uses the SSH key authentication for Git deployments.
 The private (!) key that will be used is located at `config/paasal_git_key.pem`.
-Using the pre-generated key mitigates issues with the key usage / generation on various platforms.
+Using the pre-generated key mitigates issues with the key usage/generation on various platforms.
 To prevent abuse we register the key before each command and immediately remove the key once the command has been executed.
 
 **To improve the security of your deployment, you can use your own custom private key.
-To do so, set the `paasal_config.ssh.custom_key` option in the [common configuration](config/paasal_config.rb) to the location of the private key file.**
+To do so, set the `paasal_config.ssh.custom_key` option in the [common configuration](#configuration) to the location of the private key file.
+For reasons of automation, the key must not be password encrypted.**
 
 ## Project structure
 
