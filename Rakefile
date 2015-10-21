@@ -114,7 +114,7 @@ begin
         Dir.mkdir(dir)
         Dir.chdir(dir) do
           system('git init')
-          system('git remote add origin git@github.com:croeck/paasal.git')
+          system('git remote add origin git@github.com:stefan-kolb/paasal.git')
           system('git pull')
           system('git checkout gh-pages')
         end

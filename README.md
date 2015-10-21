@@ -5,19 +5,20 @@
 [![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
 [![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
 
-_PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions of Platform-as-a-Service (PaaS) providers.  
+_PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions for Platform-as-a-Service (PaaS) providers.  
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
 It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
-PaaSal differentiates between Vendor, Providers and Endpoints.
-A *Vendor* is the organziation that developed the platform.
-The *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
+PaaSal differentiates between Vendors, Providers and Endpoints.
+A *Vendor* is the organziation that developed the platform software.
+A *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
 
 ## Table of Contents
 
 * [Supported Vendors](#supported-vendors)
 * [Usage](#usage)
   * [Ruby Interpreter Compatibility](#ruby-interpreter-compatibility)
+  * [Installation instructions](#installation-instructions)
   * [Use in your application](#use-in-your-application)
   * [Use the API](#use-the-api)
     * [Start the server](#start-the-server)
@@ -53,13 +54,33 @@ The *Provider* runs the platform, which always has at least one *Endpoint*, but 
 
 ## Supported Vendors
 
-- [Heroku](https://www.heroku.com)
-- [Cloud Foundry (v2)](https://www.cloudfoundry.org/)
-  - Bluemix, Pivotal, Anynines
-- [Openshift (v2)](https://www.openshift.com/)
-- [cloudControl](https://www.cloudcontrol.com)
+- [Heroku][heroku]
+- [Cloud Foundry][cloud_foundry] (v2)
+  - [AppFog][appfog], [Anynines][anynines], [IBM Bluemix][bluemix], [Pivotal Web Services][pivotal_ws], [HP Helion][hp_helion]
+- [Openshift][openshift_v2] (v2)
+  - [OpenShift Online][openshift_online], [getup Cloud][getup]
+- [cloudControl][cloudcontrol]
+  - [dotCloud][dotcloud], [Cloud&Heat App Elevator][cloud&heat], [exoscale Apps][exoscale]
 
-More information on the vendors and the associated adapter can be found in the [adapters section](#adapters). 
+[heroku]: https://www.heroku.com
+
+[cloud_foundry]: https://www.cloudfoundry.org/
+[appfog]: https://www.ctl.io/appfog/
+[anynines]: http://www.anynines.com/
+[bluemix]: https://console.ng.bluemix.net/
+[pivotal_ws]: https://run.pivotal.io/
+[hp_helion]: http://www8.hp.com/de/de/cloud/helion-devplatform-overview.html
+
+[openshift_v2]: https://www.openshift.com/
+[openshift_online]: https://www.openshift.com/features/index.html
+[getup]: https://getupcloud.com/index_en.html
+
+[cloudcontrol]: https://www.cloudcontrol.com
+[dotcloud]: https://www.dotcloud.com/
+[cloud&heat]: https://www.cloudandheat.com/de/paas.html
+[exoscale]: https://www.exoscale.ch/add-on/apps/
+
+More information on the vendors and the associated adapter can be found in the [adapters section](#adapters).
 
 ## Usage
 
@@ -134,7 +155,7 @@ Of course you could also install the gem yourself as:
 ```shell
 $ gem install paasal
 ```
-    
+
 Finally require the gem in your application
 
 ```ruby
@@ -227,7 +248,7 @@ In theory, it should be possible to make other Rack servers work that also utili
 #### HTTPS
 
 We highly encourage you to **only use https connections** when your application is running in production or used outside of your local computer.
-This is due to the fact that all passwords are passed via the HTTP basic authentication, which does not encrypt your data so that any 3rd party could log and identify your credentials.
+This is due to the fact that all passwords are passed via the HTTP basic authentication, which does not encrypt your data so that any third party could log and identify your credentials.
 
 To enforce this policy, PaaSal will automatically redirect all connections on plain HTTP to HTTPS connections if it is running in production (detected via *RACK_ENV*).
 
@@ -420,7 +441,7 @@ Providers: [Heroku](http://heroku.com)
 
 ### Cloud Foundry v2
 
-Providers: [Cloud Foundry V2](http://cloudfoundry.org), [IBM Bluemix](https://console.ng.bluemix.net)
+Providers: [AppFog][appfog], [Anynines][anynines], [IBM Bluemix][bluemix], [Pivotal Web Services][pivotal_ws], [HP Helion][hp_helion]
 
 #### Issues
 
@@ -440,7 +461,7 @@ If there are no logs that can be retrieved, the log list will be empty and the d
 
 ### Openshift v2
 
-Providers: [Openshift V2](https://openshift.com)
+Providers: [OpenShift Online][openshift_online], [getup Cloud][getup]
 
 #### Issues
 
@@ -465,7 +486,7 @@ Recording is really slow. Even worse, actions quite often fail with Openshift in
 
 ### cloudControl
 
-Providers: [cloudControl](http://cloudcontrol.com), [Cloud&Heat](https://www.cloudandheat.com/de/appelevator), [dotCloud](https://next.dotcloud.com), [exoscale](https://www.exoscale.ch)
+Providers: [cloudControl][cloudcontrol], [dotCloud][dotcloud], [Cloud&Heat App Elevator][cloud&heat], [exoscale Apps][exoscale]
 
 #### Issues
 
@@ -618,8 +639,8 @@ The private (!) key that will be used is located at `config/paasal_git_key.pem`.
 Using the pre-generated key mitigates issues with the key usage / generation on various platforms.
 To prevent abuse we register the key before each command and immediately remove the key once the command has been executed.
 
-**To improve the security of your deployment, you can tell PaaSal to use a custom private key.
-To do so, set the `paasal_config.ssh.custom_key` option in the common configuration to the private key file's location**
+**To improve the security of your deployment, you can use your own custom private key.
+To do so, set the `paasal_config.ssh.custom_key` option in the [common configuration](config/paasal_config.rb) to the location of the private key file.**
 
 ## Project structure
 
