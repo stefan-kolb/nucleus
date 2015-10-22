@@ -48,7 +48,7 @@ module Paasal
           private
 
           def cc_vars(application_id)
-            cc_vars_response = get("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon/config.free")
+            cc_vars_response = get("app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon/config.free")
             cc_vars_response.body[:settings][:CONFIG_VARS]
           end
 
@@ -64,7 +64,7 @@ module Paasal
             else
               settings = "{\"#{key}\":\"#{value}\"}"
             end
-            response = put("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon/config.free",
+            response = put("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon/config.free",
                            body: { addon: 'config.free',
                                    settings: settings,
                                    force: true })

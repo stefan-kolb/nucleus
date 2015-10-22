@@ -14,7 +14,7 @@ module Paasal
             name = "paasal.app.repo.cloudControl.deploy.#{application_id}.#{SecureRandom.uuid}"
             # push to the deployment branch, here: paasal
             with_ssh_key do
-              deployer = GitDeployer.new(name, deployment[:branch], user[:email], PAASAL_DEPLOYMENT)
+              deployer = GitDeployer.new(name, deployment[:branch], user[:email], NUCLEUS_DEPLOYMENT)
               deployer.deploy(file, compression_format)
             end
 
@@ -23,7 +23,7 @@ module Paasal
 
             # Deploy via the API, use version identifier -1 to refer a new build,
             # but ONLY (!) if the application is not in the CREATED or DEPLOYED state
-            put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
+            put("app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}", body: { version: '-1' })
           end
 
           # @see Stub#download
@@ -37,7 +37,7 @@ module Paasal
             # compress files to archive but exclude the .git repo
             name = "paasal.app.repo.cloudControl.download.#{application_id}.#{SecureRandom.uuid}"
             with_ssh_key do
-              GitDeployer.new(name, deployment[:branch], nil, PAASAL_DEPLOYMENT).download(compression_format, true)
+              GitDeployer.new(name, deployment[:branch], nil, NUCLEUS_DEPLOYMENT).download(compression_format, true)
             end
           end
 
@@ -53,11 +53,11 @@ module Paasal
             name = "paasal.app.repo.cloudControl.rebuild.#{application_id}.#{SecureRandom.uuid}"
 
             with_ssh_key do
-              GitDeployer.new(name, deployment[:branch], user[:email], PAASAL_DEPLOYMENT).trigger_build
+              GitDeployer.new(name, deployment[:branch], user[:email], NUCLEUS_DEPLOYMENT).trigger_build
             end
 
             # now deploy via the API, use version identifier -1 to refer a new build
-            put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
+            put("app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}", body: { version: '-1' })
 
             # return with updated application
             application(application_id)

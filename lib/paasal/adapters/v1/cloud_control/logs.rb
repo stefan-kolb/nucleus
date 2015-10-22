@@ -74,10 +74,10 @@ module Paasal
             # Hack, do not create fresh headers (which would fail) when in a deferred action
             headers_to_use = headers unless headers_to_use
             if time
-              get("/app/#{app_name}/deployment/#{PAASAL_DEPLOYMENT}/log/#{log_name}?timestamp=#{time}",
+              get("/app/#{app_name}/deployment/#{NUCLEUS_DEPLOYMENT}/log/#{log_name}?timestamp=#{time}",
                   headers: headers_to_use).body
             else
-              get("/app/#{app_name}/deployment/#{PAASAL_DEPLOYMENT}/log/#{log_name}", headers: headers_to_use).body
+              get("/app/#{app_name}/deployment/#{NUCLEUS_DEPLOYMENT}/log/#{log_name}", headers: headers_to_use).body
             end
           end
 

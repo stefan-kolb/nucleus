@@ -19,7 +19,7 @@ module Paasal
         include Paasal::Adapters::V1::CloudControl::Vars
 
         # The default deployment name of cloud control applications that is used by PaaSal
-        PAASAL_DEPLOYMENT = 'paasal'
+        NUCLEUS_DEPLOYMENT = 'paasal'
         # Error messages of semantic errors that are platform specific
         CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS = ['cannot use this name', 'may only contain', 'this field has no more than']
         # Error messages of common semantic errors
@@ -110,7 +110,7 @@ module Paasal
 
         def default_deployment(application_id)
           # get and return paasal deployment, but catch arising 404 errors
-          return get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}").body
+          return get("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}").body
         rescue Errors::AdapterResourceNotFoundError
           # if 404, list all deployments
           all_deployments = get("/app/#{application_id}/deployment").body

@@ -14,7 +14,7 @@ module Paasal
             # if no cloudControl deployment has been made, trigger it
             if deployment[:version] == '-1'
               # deploy via the API, use version identifier -1 to refer a new build
-              put("app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}", body: { version: '-1' })
+              put("app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}", body: { version: '-1' })
             end
 
             # return the application object

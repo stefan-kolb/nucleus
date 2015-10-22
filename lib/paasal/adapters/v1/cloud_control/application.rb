@@ -44,7 +44,7 @@ module Paasal
             created_deployment = post("/app/#{create_app_response[:name]}/deployment", body: { name: 'paasal' }).body
 
             # activate the variables addon. However, the activation explicitly requires an initial key value pair...
-            post("/app/#{create_app_response[:name]}/deployment/#{PAASAL_DEPLOYMENT}/addon",
+            post("/app/#{create_app_response[:name]}/deployment/#{NUCLEUS_DEPLOYMENT}/addon",
                  body: { addon: 'config.free', options: "{\"paasal-initialized\": \"true\"}" }).body
             # ...now delete the initial key value pair to have the desired clean setup
             delete_env_var(create_app_response[:name], 'paasal-initialized')

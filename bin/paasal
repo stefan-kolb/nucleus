@@ -10,9 +10,9 @@ require 'optparse'
 require 'yaml'
 require 'thin'
 
-PAASAL_CONFIG_LOCATION = File.join(root_dir, 'config', 'paasal_config.rb')
+NUCLEUS_CONFIG_LOCATION = File.join(root_dir, 'config', 'paasal_config.rb')
 
-options = { env: 'development', logdir: File.join(root_dir, 'log'), config: File.expand_path(PAASAL_CONFIG_LOCATION) }
+options = { env: 'development', logdir: File.join(root_dir, 'log'), config: File.expand_path(NUCLEUS_CONFIG_LOCATION) }
 optparse = OptionParser.new do |opts|
   opts.banner = <<BANNER
 Usage:
@@ -20,10 +20,10 @@ paasal [options]
 
 Options:
 BANNER
-  opts.on('-r', '--hostname HOSTNAME', 'Bind to HOST address (default: localhost)') { |host| ENV['PAASAL_API_HOST'] = host }
-  opts.on('-p', '--port PORT', 'Use PORT (default: 9292)') { |port| ENV['PAASAL_API_PORT'] = port }
+  opts.on('-r', '--hostname HOSTNAME', 'Bind to HOST address (default: localhost)') { |host| ENV['NUCLEUS_API_HOST'] = host }
+  opts.on('-p', '--port PORT', 'Use PORT (default: 9292)') { |port| ENV['NUCLEUS_API_PORT'] = port }
   opts.on('-e', '--env ENV', 'Environment (default: "development")') { |env| options[:env] = env }
-  opts.on('-t', '--timeout TIMEOUT', 'Timeout for single request (default: 30)') { |timeout| ENV['PAASAL_API_TIMEOUT'] = timeout }
+  opts.on('-t', '--timeout TIMEOUT', 'Timeout for single request (default: 30)') { |timeout| ENV['NUCLEUS_API_TIMEOUT'] = timeout }
   opts.on('-h', '--help', '') { options[:help] = true }
   opts.separator <<EOS
 
@@ -66,16 +66,16 @@ if options[:ssl]
   end
 end
 
-ENV['PAASAL_API_HOST'] = 'localhost' unless ENV['PAASAL_API_HOST']
-ENV['PAASAL_API_PORT'] = '9292' unless ENV['PAASAL_API_PORT']
+ENV['NUCLEUS_API_HOST'] = 'localhost' unless ENV['NUCLEUS_API_HOST']
+ENV['NUCLEUS_API_PORT'] = '9292' unless ENV['NUCLEUS_API_PORT']
 
 argv_opts = ARGV.clone
 argv_opts << ['start'] unless Thin::Runner.commands.include?(options[0])
-argv_opts << ['--address', ENV['PAASAL_API_HOST'] ]
-argv_opts << ['--port', ENV['PAASAL_API_PORT'] ]
+argv_opts << ['--address', ENV['NUCLEUS_API_HOST'] ]
+argv_opts << ['--port', ENV['NUCLEUS_API_PORT'] ]
 argv_opts << ['--rackup', File.join(root_dir, 'config.ru') ]
 argv_opts << ['-e', options[:env] ]
-argv_opts << ['--timeout', ENV['PAASAL_API_TIMEOUT'] || '60']
+argv_opts << ['--timeout', ENV['NUCLEUS_API_TIMEOUT'] || '60']
 argv_opts << ['--ssl', '--ssl-key-file', options[:ssl_key], '--ssl-cert-file', options[:ssl_cert]] if options[:ssl]
 
 if options[:daemon]
@@ -83,7 +83,7 @@ if options[:daemon]
   argv_opts << [ '--daemonize', '--user', options[:user] || 'nobody', '--tag', 'PaaSal on Thin']
   argv_opts << [ '--pid', options[:pid]] if options[:pid]
   argv_opts << [ '--group', options[:group] || 'nobody' ]
-  argv_opts << [ '--log', File.join(options[:logdir], 'paasal_daemon.log')] unless ENV['PAASAL_API_LOG']
+  argv_opts << [ '--log', File.join(options[:logdir], 'paasal_daemon.log')] unless ENV['NUCLEUS_API_LOG']
 end
 argv_opts.flatten!
 

@@ -44,7 +44,7 @@ module Paasal
           def installed_service(application_id, service_name)
             # we also require the installed plan to retrieve the service, the list does not include all properties :(
             plan_name = active_plan(application_id, service_name)
-            assignment = get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon/#{plan_name}").body
+            assignment = get("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon/#{plan_name}").body
             installed_service = service(parse_service_name(assignment[:addon_option][:name]))
             to_paasal_installed_service(installed_service, assignment)
           end
@@ -52,7 +52,7 @@ module Paasal
           # @see Stub#add_service
           def add_service(application_id, service_entity, plan_entity)
             plan_name = plan_name?(plan_entity[:id]) ? plan_entity[:id] : "#{service_entity[:id]}.#{plan_entity[:id]}"
-            created = post("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon",
+            created = post("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon",
                            body: { addon: plan_name }).body
             to_paasal_installed_service(service(service_entity[:id]), created)
           end
@@ -64,7 +64,7 @@ module Paasal
                  "Plan '#{plan_entity[:id]}' is already active for service '#{service_id}' of application "\
                  "'#{application_id}'" if plan_name == plan_entity[:id]
 
-            updated = put("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon/#{plan_name}",
+            updated = put("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon/#{plan_name}",
                           body: { addon: plan_entity[:id] }).body
             to_paasal_installed_service(service(service_id), updated)
           end
@@ -72,7 +72,7 @@ module Paasal
           # @see Stub#remove_service
           def remove_service(application_id, service_id)
             plan_name = active_plan(application_id, service_id)
-            delete("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon/#{plan_name}")
+            delete("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon/#{plan_name}")
           end
 
           private
@@ -91,7 +91,7 @@ module Paasal
           end
 
           def load_installed_addons(application_id)
-            get("/app/#{application_id}/deployment/#{PAASAL_DEPLOYMENT}/addon").body
+            get("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon").body
           end
 
           def active_plan(application_id, service_id)
