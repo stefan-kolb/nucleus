@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = ''
   spec.homepage      = 'https://github.com/stefan-kolb/paasal'
   spec.license       = 'MIT'
-  spec.executables   = 'paasal'
+  spec.executables   = 'nucleus'
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.0'
 
