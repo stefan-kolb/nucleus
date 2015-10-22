@@ -52,12 +52,12 @@ else
     add_group 'Core', 'lib/paasal/core'
     add_group 'Persistence', 'lib/paasal/persistence'
     add_group 'Lib ext.', 'lib/paasal/ext'
-    add_group 'API versions', 'lib/paasal_api/api/versions'
-    add_group 'API entities', 'lib/paasal_api/api/entities'
-    add_group 'API helpers', 'lib/paasal_api/api/helpers'
-    add_group 'API Middleware', 'lib/paasal_api/rack_middleware'
-    add_group 'API Models', 'lib/paasal_api/models'
-    add_group 'API Lib ext.', 'lib/paasal_api/ext'
+    add_group 'API versions', 'lib/nucleus_api/api/versions'
+    add_group 'API entities', 'lib/nucleus_api/api/entities'
+    add_group 'API helpers', 'lib/nucleus_api/api/helpers'
+    add_group 'API Middleware', 'lib/nucleus_api/rack_middleware'
+    add_group 'API Models', 'lib/nucleus_api/models'
+    add_group 'API Lib ext.', 'lib/nucleus_api/ext'
   end
 end
 
@@ -72,7 +72,7 @@ nucleus_config.db.delete_on_shutdown = true
 nucleus_config.db.override = true
 
 # require our app
-require 'paasal_api/scripts/load_api'
+require 'nucleus_api/scripts/load_api'
 
 # load the certificate to use for the tests only
 nucleus_config.ssh.custom_key = File.expand_path(File.join('spec', 'nucleus_git_key.pem'))
@@ -80,7 +80,7 @@ nucleus_config.ssh.custom_key = File.expand_path(File.join('spec', 'nucleus_git_
 # initialize db, versions and auth strategy
 require 'paasal/scripts/initialize_config_defaults'
 # initialize the api config
-require 'paasal_api/scripts/initialize_api_customizations'
+require 'nucleus_api/scripts/initialize_api_customizations'
 
 require 'spec/factories/models'
 

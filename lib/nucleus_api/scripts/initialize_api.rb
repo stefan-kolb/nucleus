@@ -1,6 +1,6 @@
 begin
   # Shutdown hook to cleanup the API
-  require 'paasal_api/scripts/shutdown_api'
+  require 'nucleus_api/scripts/shutdown_api'
 
   require 'paasal/scripts/initialize'
 
@@ -22,9 +22,9 @@ begin
   # now load the configuration values
   require 'paasal/scripts/initialize_config_defaults'
 
-  require 'paasal_api/scripts/initialize_api_customizations'
+  require 'nucleus_api/scripts/initialize_api_customizations'
 
-  require 'paasal_api/scripts/initialize_daos'
+  require 'nucleus_api/scripts/initialize_daos'
 
   # finalize so that the configuration is locked
   require 'paasal/scripts/finalize'

@@ -652,12 +652,12 @@ lib/paasal/adapters # The adapter implementations to communicate with the vendor
 lib/paasal/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
 lib/paasal/ext # Monkey patched classed and extensions
 lib/paasal/scripts # Initialization scripts, bootstrapping and shutdown hooks
-lib/paasal_api/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
-lib/paasal_api/ext # Monkey patched classed and extensions related only to the API
-lib/paasal_api/import # Import management of the adapter configuration files
-lib/paasal_api/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
-lib/paasal_api/rack_middleware # Rack middleware layers for authentication, request ids and logging
-lib/paasal_api/scripts # Initialization scripts, bootstrapping, rackup and shutdown hooks of the API
+lib/nucleus_api/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
+lib/nucleus_api/ext # Monkey patched classed and extensions related only to the API
+lib/nucleus_api/import # Import management of the adapter configuration files
+lib/nucleus_api/persistence # The persistence layer, including the DAOs and the entity's models (Vendor, Provider, Endpoint, ...)
+lib/nucleus_api/rack_middleware # Rack middleware layers for authentication, request ids and logging
+lib/nucleus_api/scripts # Initialization scripts, bootstrapping, rackup and shutdown hooks of the API
 public # public directory for rack, hosts the swagger-ui files for the live API documentation
 schemas # Kwalify schemas, used to parse the configuration and load new vendors at startup
 spec # All rspec test suites

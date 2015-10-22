@@ -16,7 +16,7 @@ require 'rack/stream'
 #
 
 # Root directory convenience module
-require 'paasal_api/api_root_dir'
+require 'nucleus_api/api_root_dir'
 
 # require all patched classes for the API
 require_rel '../ext'
@@ -34,7 +34,7 @@ require_rel '../api/common'
 require_rel '../rack_middleware'
 
 # api
-require 'paasal_api/api/error_responses'
+require 'nucleus_api/api/error_responses'
 require_rel '../api/enums'
 require_rel '../api/entities'
 require_rel '../api/helpers'

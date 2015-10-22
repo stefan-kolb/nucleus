@@ -3,8 +3,8 @@ require 'rspec/wait'
 
 # load the app packages
 require 'paasal/scripts/shutdown'
-require 'paasal_api/scripts/shutdown_api'
-require 'paasal_api/scripts/rack_application'
+require 'nucleus_api/scripts/shutdown_api'
+require 'nucleus_api/scripts/rack_application'
 
 # patch rspec so that all tests run in an EM reactor, as provided by the used Thin server
 require 'spec/adapter/helpers/rspec_eventmachine_patch'
