@@ -64,8 +64,8 @@ module Nucleus
         end
 
         def request_id(env)
-          if Thread.current[:paasal_request_id]
-            Thread.current[:paasal_request_id]
+          if Thread.current[:nucleus_request_id]
+            Thread.current[:nucleus_request_id]
           elsif env.key?('HTTP_X_REQUEST_ID')
             env['HTTP_X_REQUEST_ID']
           else

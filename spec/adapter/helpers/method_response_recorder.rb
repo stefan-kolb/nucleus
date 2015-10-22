@@ -172,14 +172,8 @@ module Nucleus
         end
       end
       # update with the test name, so that failing tests do not influence others
-      # old hex
-      old = md5.dup
-      old.update(@example_group_name.gsub "Nucleus", "Paasal")
-      # new hex
       md5.update(@example_group_name)
       md5.hexdigest
-
-      [md5.hexdigest, old.hexdigest]
     end
 
     def digest_io_update(digest, io)

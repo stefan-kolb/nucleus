@@ -1,7 +1,7 @@
 # set the temporary db file if is has not been specified via the config
 unless nucleus_config.db.key?(:path)
   puts 'No custom DB store specified, generating temporary store filename'
-  nucleus_config.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.paasal.store"
+  nucleus_config.db.path = "#{Dir.tmpdir}/#{SecureRandom.uuid}.nucleus.store"
 end
 
 log.info "DB store assigned to #{nucleus_config.db.path}"

@@ -1,4 +1,4 @@
-require 'paasal/core/common/url_converter'
+require 'nucleus/core/common/url_converter'
 
 module Nucleus
   module API

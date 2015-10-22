@@ -74,7 +74,7 @@ RSpec.configure do |config|
         end
         # random part of equal length (!) so that the message length is always equal
         random_part = (0...16).map { (65 + rand(26)).chr }.join
-        "#{prefix}-paasal-created-tempfile-#{random_part}#{suffix}"
+        "#{prefix}-nucleus-created-tempfile-#{random_part}#{suffix}"
       end
 
       # fake random filename generation for tmpfiles if using Ruby < 2.1
@@ -89,7 +89,7 @@ RSpec.configure do |config|
 
       # force a static boundary
       allow_any_instance_of(RestClient::Payload::Multipart).to receive(:boundary) do
-        'PaaSal771096PaaSal'
+        'Nucleus771096Nucleus'
       end
 
       method_path = File.join(__dir__, '..', 'recordings', vendor[example.metadata], 'method_cassettes')

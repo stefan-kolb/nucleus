@@ -4,7 +4,7 @@
 require 'bundler/setup'
 
 # Load configuration
-require 'paasal/scripts/setup_config'
+require 'nucleus/scripts/setup_config'
 # Load application
 require 'nucleus_api/scripts/load_api'
 # Initialize the application

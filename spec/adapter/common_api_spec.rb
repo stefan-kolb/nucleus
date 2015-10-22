@@ -1,6 +1,6 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe 'The PaaSal API' do
+describe 'The Nucleus API' do
   describe 'has the swagger-ui documentation interface which can be accessed at /docs and a GET request' do
     before { get('/docs/index.html') }
     it 'has status 200' do

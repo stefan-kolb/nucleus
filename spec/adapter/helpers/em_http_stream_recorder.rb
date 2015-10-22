@@ -82,7 +82,7 @@ module Nucleus
     def setup_http_connection_mock
       # fake successful http connection
       @test.allow(EventMachine).to @test.receive(:bind_connect) do |*args, &block|
-        @connection = STUB.new("paasal.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
+        @connection = STUB.new("nucleus.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
         # ignore timeouts that are being applied
         @test.allow(@connection).to @test.receive(:pending_connect_timeout=) {}
         @test.allow(@connection).to @test.receive(:comm_inactivity_timeout=) {}

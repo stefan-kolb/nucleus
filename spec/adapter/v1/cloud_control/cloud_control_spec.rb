@@ -24,11 +24,11 @@ describe Nucleus::Adapters::V1::CloudControl do
     # we must use these stupid names given that cloud control prohibits special characters and (!)
     # deleted application names are locked for about 48 hours :(
     iteration = 87
-    @app_min = { original_name: "paasaltestappminproperties#{iteration}",
-                         updated_name: "paasaltestappminproperties#{iteration}",
+    @app_min = { original_name: "nucleustestappminproperties#{iteration}",
+                         updated_name: "nucleustestappminproperties#{iteration}",
                          region: 'default' }
-    @app_all = { original_name: "paasaltestappallproperties#{iteration}",
-                         updated_name: "paasaltestappallproperties#{iteration}",
+    @app_all = { original_name: "nucleustestappallproperties#{iteration}",
+                         updated_name: "nucleustestappallproperties#{iteration}",
                          region: 'default' }
     # add mysqls with the free plan, does not require billing account whereas other free plans do!?
     @service = { id: 'mysqls', plan_id: 'free' }

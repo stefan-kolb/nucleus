@@ -41,7 +41,7 @@ module Nucleus
           entity = env['api.endpoint'].build_error_entity(ErrorMessages::BAD_REQUEST_VALIDATION, e.message)
         elsif e.is_a?(Grape::Exceptions::InvalidAcceptHeader)
           entity = env['api.endpoint'].build_error_entity(ErrorMessages::INVALID_ACCEPT_HEADER, e.message, e.headers)
-          env['paasal.invalid.accept.header'] = true
+          env['nucleus.invalid.accept.header'] = true
         else
           entity = env['api.endpoint'].build_error_entity(
             ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
@@ -82,11 +82,11 @@ module Nucleus
       # BE PUT AT THE VERY END OF YOUR API
 
       route :any, '*path' do
-        if env['paasal.invalid.accept.header']
+        if env['nucleus.invalid.accept.header']
           # Internally the error has been cascaded but no route has been found.
           # Now we do want to raise this error instead of a 404, which rack would generate
           to_error(ErrorMessages::INVALID_ACCEPT_HEADER, 'The Accept header does not match to any route. '\
-          'Please make sure the vendor is set to \'paasal\' and check the version!')
+          'Please make sure the vendor is set to \'nucleus\' and check the version!')
         else
           # raise 404
           to_error(ErrorMessages::NOT_FOUND, 'Please refer to the API documentation and compare your call '\

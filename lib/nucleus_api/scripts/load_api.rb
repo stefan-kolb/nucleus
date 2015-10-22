@@ -1,5 +1,5 @@
 # First load the Nucleus core gem
-require 'paasal'
+require 'nucleus'
 
 # then load the HTTP API extension
 #

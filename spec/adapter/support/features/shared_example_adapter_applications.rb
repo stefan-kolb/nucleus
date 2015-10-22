@@ -67,7 +67,7 @@ shared_examples 'valid:applications:create' do
         describe 'runtimes property', :as_cassette do
           before do
             post "/endpoints/#{@endpoint}/applications",
-                 { application: { name: 'paasaltestcreatewithmissingruntimes' } }, request_headers
+                 { application: { name: 'nucleustestcreatewithmissingruntimes' } }, request_headers
           end
           include_examples 'a bad request'
         end
@@ -76,7 +76,7 @@ shared_examples 'valid:applications:create' do
         describe 'region', :as_cassette do
           before do
             application = {
-              application: { name: 'paasaltestcreateinvalidregion', runtimes: ['nodejs'], region: 'anyinvalidregion' }
+              application: { name: 'nucleustestcreateinvalidregion', runtimes: ['nodejs'], region: 'anyinvalidregion' }
             }
             post "/endpoints/#{@endpoint}/applications", application, request_headers
           end
@@ -89,7 +89,7 @@ shared_examples 'valid:applications:create' do
           describe 'by bad URL and unknown name', :as_cassette do
             before do
               application = {
-                application: { name: 'paasaltestcreatebadruntimename', runtimes: ['youdontknowmert'] }
+                application: { name: 'nucleustestcreatebadruntimename', runtimes: ['youdontknowmert'] }
               }
               post "/endpoints/#{@endpoint}/applications", application, request_headers
             end

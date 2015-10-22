@@ -7,7 +7,7 @@ module Nucleus
         @store_type = store_type
         @api_version = api_version
         @db = open_db
-        @restricted_index_key = "paasal.store.index.for.api.#{api_version}.and.type.#{store_type}"
+        @restricted_index_key = "nucleus.store.index.for.api.#{api_version}.and.type.#{store_type}"
         # make sure DB gets closed
         at_exit do
           log.debug "Closing DB for #{store_type} and #{api_version}"

@@ -86,7 +86,7 @@ module Nucleus
           CONN.const_set(:EM_CONNECTION_CLASS, Class.new(EventMachine::Connection) { include CONN })
         end
 
-        @connection = CONN::EM_CONNECTION_CLASS.new("paasal.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
+        @connection = CONN::EM_CONNECTION_CLASS.new("nucleus.test.conn.to.#{args[2]}.#{SecureRandom.uuid}", args)
         # ignore timeouts that are being applied
         @test.allow(@connection).to @test.receive(:pending_connect_timeout=) {}
         @test.allow(@connection).to @test.receive(:comm_inactivity_timeout=) {}

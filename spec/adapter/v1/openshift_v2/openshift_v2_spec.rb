@@ -4,11 +4,11 @@ describe Nucleus::Adapters::V1::OpenshiftV2 do
   before :all do
     @endpoint = 'openshift-online'
     @api_version = 'v1'
-    @app_min = { original_name: 'paasaltestappminproperties',
-                 updated_name: 'paasaltestappminproperties',
+    @app_min = { original_name: 'nucleustestappminproperties',
+                 updated_name: 'nucleustestappminproperties',
                  region: 'aws-us-east-1' }
-    @app_all = { original_name: 'paasaltestappallproperties',
-                 updated_name: 'paasaltestappallproperties',
+    @app_all = { original_name: 'nucleustestappallproperties',
+                 updated_name: 'nucleustestappallproperties',
                  region: 'aws-us-east-1' }
     @unsupported = ['with valid credentials is compliant and application update', # application update is not supported
                     'with valid credentials is compliant and log tail', # log tailing not yet supported

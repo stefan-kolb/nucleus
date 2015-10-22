@@ -2,7 +2,7 @@ begin
   # Shutdown hook to cleanup the API
   require 'nucleus_api/scripts/shutdown_api'
 
-  require 'paasal/scripts/initialize'
+  require 'nucleus/scripts/initialize'
 
   # Apply the default API descriptions
   nucleus_config.api.title = 'Nucleus - Platform as a Service abstraction layer API'
@@ -20,14 +20,14 @@ begin
   end
 
   # now load the configuration values
-  require 'paasal/scripts/initialize_config_defaults'
+  require 'nucleus/scripts/initialize_config_defaults'
 
   require 'nucleus_api/scripts/initialize_api_customizations'
 
   require 'nucleus_api/scripts/initialize_daos'
 
   # finalize so that the configuration is locked
-  require 'paasal/scripts/finalize'
+  require 'nucleus/scripts/finalize'
 rescue Nucleus::StartupError => e
   log.error "Nucleus API startup failed (#{e.exit_code}), exit now"
   exit e.exit_code

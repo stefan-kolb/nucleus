@@ -2,7 +2,7 @@ require 'spec/integration/integration_spec_helper'
 
 describe 'Swagger schema' do
   context 'with an invalid version can not access' do
-    let!(:header) { { 'HTTP_ACCEPT' => 'application/vnd.paasal-invalidversion' } }
+    let!(:header) { { 'HTTP_ACCEPT' => 'application/vnd.nucleus-invalidversion' } }
 
     context 'GET apis' do
       before { get '/schema', header }
@@ -23,7 +23,7 @@ describe 'Swagger schema' do
   end
 
   describe 'with a version can access' do
-    let!(:header) { { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' } }
+    let!(:header) { { 'HTTP_ACCEPT' => 'application/vnd.nucleus-v1' } }
 
     context 'GET apis schema' do
       before { get '/schema', header }

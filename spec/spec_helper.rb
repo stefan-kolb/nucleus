@@ -45,13 +45,13 @@ else
   SimpleCov.merge_timeout 3600
   SimpleCov.start do
     add_filter 'spec/'
-    add_filter 'lib/paasal/scripts/'
+    add_filter 'lib/nucleus/scripts/'
     add_filter 'config/'
 
-    add_group 'Adapters', 'lib/paasal/adapters'
-    add_group 'Core', 'lib/paasal/core'
-    add_group 'Persistence', 'lib/paasal/persistence'
-    add_group 'Lib ext.', 'lib/paasal/ext'
+    add_group 'Adapters', 'lib/nucleus/adapters'
+    add_group 'Core', 'lib/nucleus/core'
+    add_group 'Persistence', 'lib/nucleus/persistence'
+    add_group 'Lib ext.', 'lib/nucleus/ext'
     add_group 'API versions', 'lib/nucleus_api/api/versions'
     add_group 'API entities', 'lib/nucleus_api/api/entities'
     add_group 'API helpers', 'lib/nucleus_api/api/helpers'
@@ -62,12 +62,12 @@ else
 end
 
 # load configuration for integration tests
-require 'paasal/scripts/setup_config'
+require 'nucleus/scripts/setup_config'
 # disable logging
 # TODO: disable logging via proper config option
 nucleus_config.logging.level = Logger::Severity::FATAL
 # force tmp database
-nucleus_config.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.paasal.test.store")
+nucleus_config.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.nucleus.test.store")
 nucleus_config.db.delete_on_shutdown = true
 nucleus_config.db.override = true
 
@@ -78,7 +78,7 @@ require 'nucleus_api/scripts/load_api'
 nucleus_config.ssh.custom_key = File.expand_path(File.join('spec', 'nucleus_git_key.pem'))
 
 # initialize db, versions and auth strategy
-require 'paasal/scripts/initialize_config_defaults'
+require 'nucleus/scripts/initialize_config_defaults'
 # initialize the api config
 require 'nucleus_api/scripts/initialize_api_customizations'
 

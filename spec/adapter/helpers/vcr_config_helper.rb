@@ -172,14 +172,14 @@ VCR.configure do |c|
     if headers_1.key?('Content-Type') && headers_1['Content-Type'][0].include?('boundary=')
       # harmonize random filename of tempfiles
       filename_1 = /filename="([-\.\w]+)"/i.match(request_1.body)
-      request_1.body.gsub!(filename_1[1], 'filename="multipart-uploaded-file-by-paasal-42"') if filename_1
+      request_1.body.gsub!(filename_1[1], 'filename="multipart-uploaded-file-by-nucleus-42"') if filename_1
     end
 
     headers_2 = request_2.headers
     if headers_2.key?('Content-Type') && headers_2['Content-Type'][0].include?('boundary=')
       # harmonize random filename of tempfiles
       filename_2 = /filename="([-\.\w]+)"/i.match(request_2.body)
-      request_2.body.gsub!(filename_2[1], 'filename="multipart-uploaded-file-by-paasal-42"') if filename_2
+      request_2.body.gsub!(filename_2[1], 'filename="multipart-uploaded-file-by-nucleus-42"') if filename_2
     end
 
     # execute default comparison

@@ -1,6 +1,6 @@
 # Nucleus
 
-[![Build Status](https://magnum.travis-ci.com/stefan-kolb/paasal.svg?token=VEm1aJ8ydBNAfhASH8xN&branch=master)](https://magnum.travis-ci.com/stefan-kolb/nucleus)
+[![Build Status](https://magnum.travis-ci.com/stefan-kolb/nucleus.svg?token=VEm1aJ8ydBNAfhASH8xN&branch=master)](https://magnum.travis-ci.com/stefan-kolb/nucleus)
 [![Dependency Status](https://gemnasium.com/4ae6979b87f7b5dc47956b2842e1166b.svg)](https://gemnasium.com/stefan-kolb/nucleus)
 [![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
 [![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
@@ -135,12 +135,12 @@ $ gem install eventmachine -- --with-ssl-dir=C:/SSL
 
 ### Use in your application
 
-#### Require paasal and mark as dependency
+#### Require nucleus and mark as dependency
 
 Add a dependency on the Nucleus gem, for instance in your application's Gemfile,
 
 ```ruby
-gem 'paasal'
+gem 'nucleus'
 ```
 
 upon which you would update your bundle.
@@ -152,13 +152,13 @@ $ bundle install
 Of course you could also install the gem yourself as:
 
 ```shell
-$ gem install paasal
+$ gem install nucleus
 ```
 
 Finally require the gem in your application
 
 ```ruby
-require 'paasal'
+require 'nucleus'
 ```
 
 #### Communicate with an endpoint
@@ -232,7 +232,7 @@ A rack server can be started in multiple ways.
 The most convenient solution is to use the provided script:  
 
 ```shell
-$ ./bin/paasal
+$ ./bin/nucleus
 ```
 
 However, you can also start the API using the [thin](http://code.macournoyer.com/thin/) server:
@@ -509,7 +509,7 @@ Several parts of Nucleus can be configured, e.g. whether to persist your data or
 There are two different locations at which the configuration files can be placed.
 They are described with increasing importance, meaning that the last option overwrites keys that were also configured in the previous files:
 
-1. A file in user account's home directory. On UNIX systems this file must be placed at `~/.paasal/nucleus_config.rb`, whereas it is expected at `~/paasal/nucleus_config.rb` if running Windows.
+1. A file in user account's home directory. On UNIX systems this file must be placed at `~/.nucleus/nucleus_config.rb`, whereas it is expected at `~/nucleus/nucleus_config.rb` if running Windows.
 2. The `config/nucleus_config.rb` file in the project's directory
 
 #### Database backend
@@ -556,12 +556,12 @@ The API can be used with the REST client of your choice.
 
 Nucleus always uses the latest API version if no `Accept` header is specified.
 We therefore **strongly encourage** you to always specify the `Accept` header.
-The vendor thereby must be set to `paasal` and the version must be available.
+The vendor thereby must be set to `nucleus` and the version must be available.
 Otherwise an error with the HTTP status `406` is returned.
 A sample `Accept` header would be:
 
 ```
-Accept = application/vnd.paasal-v1
+Accept = application/vnd.nucleus-v1
 ```
 
 ### Error codes
@@ -647,11 +647,11 @@ bin # Binary startup files and GIT__SSH env. agents
 config # Configuration files for Nucleus and its adapters
 doc # Generated YARD documentation
 lib # The Nucleus application source code
-lib/paasal # Gem compatible directory of the core, includes the AdapterResolver class
-lib/paasal/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
-lib/paasal/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
-lib/paasal/ext # Monkey patched classed and extensions
-lib/paasal/scripts # Initialization scripts, bootstrapping and shutdown hooks
+lib/nucleus # Gem compatible directory of the core, includes the AdapterResolver class
+lib/nucleus/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
+lib/nucleus/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.
+lib/nucleus/ext # Monkey patched classed and extensions
+lib/nucleus/scripts # Initialization scripts, bootstrapping and shutdown hooks
 lib/nucleus_api/api # Everything that is directly related to the RESTful Grape API: entities, embedded helpers and the actual API version's definitions
 lib/nucleus_api/ext # Monkey patched classed and extensions related only to the API
 lib/nucleus_api/import # Import management of the adapter configuration files

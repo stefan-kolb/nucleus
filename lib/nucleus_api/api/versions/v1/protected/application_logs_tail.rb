@@ -43,7 +43,7 @@ module Nucleus
                 stream = StreamCallback.new(self)
                 after_connection_error do
                   # save request id to deferred thread for logging associations
-                  Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
+                  Thread.current[:nucleus_request_id] = env['HTTP_X_REQUEST_ID']
                   # tidy resource when the connection was terminated with an error
                   log.debug('Connection error reported by rack-stream')
                   stream.closed = true
@@ -52,7 +52,7 @@ module Nucleus
 
                 after_open do
                   # save request id to deferred thread for logging associations
-                  Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
+                  Thread.current[:nucleus_request_id] = env['HTTP_X_REQUEST_ID']
                   begin
                     # execute the actual request and stream the logging message
                     tail_polling = adapter.tail(params[:application_id], params[:log_id], stream)
@@ -73,7 +73,7 @@ module Nucleus
 
                 before_close do
                   # save request id to deferred thread for logging associations
-                  Thread.current[:paasal_request_id] = env['HTTP_X_REQUEST_ID']
+                  Thread.current[:nucleus_request_id] = env['HTTP_X_REQUEST_ID']
                   log.debug 'Closing API stream, stop tail updates...'
                   tail_polling.stop if tail_polling
                 end

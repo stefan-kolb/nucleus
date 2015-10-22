@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'spec/unit/unit_spec_helper'
-require 'paasal/ext/regexp'
+require 'nucleus/ext/regexp'
 
 describe 'Regexp::PERFECT_URL_PATTERN' do
   %w(

@@ -4,11 +4,11 @@ describe Nucleus::Adapters::V1::CloudFoundryV2 do
   before :all do
     @endpoint = 'cf-bosh-local'
     @api_version = 'v1'
-    @app_min = { original_name: 'paasal-test-app-min-properties',
-                 updated_name: 'paasal-test-app-min-updated',
+    @app_min = { original_name: 'nucleus-test-app-min-properties',
+                 updated_name: 'nucleus-test-app-min-updated',
                  region: 'default' }
-    @app_all = { original_name: 'paasal-test-app-all-properties',
-                 updated_name: 'paasal-test-app-all-updated',
+    @app_all = { original_name: 'nucleus-test-app-all-properties',
+                 updated_name: 'nucleus-test-app-all-updated',
                  region: 'default' }
     @application_params = { memory: 256.to_i }
     @service = { id: 'mongodb', plan_id: 'default' }

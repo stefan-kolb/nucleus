@@ -6,12 +6,12 @@ describe Nucleus::Logging::Formatter do
   let(:prog) { 'progname' }
   let(:msg) { 'This output shall be included in the log' }
 
-  # make sure paasal_request_id is always reset
-  before(:each) { Thread.current[:paasal_request_id] = nil }
+  # make sure nucleus_request_id is always reset
+  before(:each) { Thread.current[:nucleus_request_id] = nil }
 
-  context 'with paasal_request_id assigned to the current thread' do
+  context 'with nucleus_request_id assigned to the current thread' do
     before do
-      Thread.current[:paasal_request_id] = request_id
+      Thread.current[:nucleus_request_id] = request_id
       @response = subject.call(severity, time, prog, msg)
     end
 
@@ -29,7 +29,7 @@ describe Nucleus::Logging::Formatter do
     end
   end
 
-  context 'paasal_request_id unassigned' do
+  context 'nucleus_request_id unassigned' do
     let(:dateformat) { '%Y-%m-%d' }
     before do
       subject.datetime_format = dateformat
@@ -53,7 +53,7 @@ describe Nucleus::Logging::Formatter do
     end
   end
 
-  context 'paasal_request_id unassigned' do
+  context 'nucleus_request_id unassigned' do
     before { @response = subject.call(severity, time, prog, msg) }
 
     it 'does not include the request_id' do

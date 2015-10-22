@@ -8,11 +8,11 @@ describe Nucleus::Adapters::V1::Heroku do
                     'with valid credentials is compliant and scaling succeeds with scale-out']
     @endpoint = 'heroku'
     @api_version = 'v1'
-    @app_min = { original_name: 'paasal-test-app-min-properties',
-                 updated_name: 'paasal-test-app-min-updated',
+    @app_min = { original_name: 'nucleus-test-app-min-properties',
+                 updated_name: 'nucleus-test-app-min-updated',
                  region: 'US' }
-    @app_all = { original_name: 'paasal-test-app-all-properties',
-                 updated_name: 'paasal-test-app-all-updated',
+    @app_all = { original_name: 'nucleus-test-app-all-properties',
+                 updated_name: 'nucleus-test-app-all-updated',
                  region: 'US' }
     # add mongodb with the free plan (sandbox)
     @service = { id: 'mongolab', plan_id: 'sandbox' }

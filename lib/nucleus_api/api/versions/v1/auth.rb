@@ -5,7 +5,7 @@ module Nucleus
         helpers SharedParamsHelper
 
         # defines the authentication for all subsequently mounted routes
-        http_basic(realm: 'PaaSal API Authorization @ %{endpoint_id}',
+        http_basic(realm: 'Nucleus API Authorization @ %{endpoint_id}',
                    realm_replace: [:endpoint_id]) do |username, password, params, env|
           if username.nil? || username.empty? || password.nil? || password.empty?
             # never allow empty username and / or password

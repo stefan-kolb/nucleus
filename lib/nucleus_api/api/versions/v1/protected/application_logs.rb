@@ -31,7 +31,7 @@ module Nucleus
           get '/download' do
             # returns an array of log entries
             logs = adapter.logs(params[:application_id])
-            archive_filename = "paasal.app.generic.logs.download.#{params[:application_id]}"\
+            archive_filename = "nucleus.app.generic.logs.download.#{params[:application_id]}"\
               ".#{SecureRandom.uuid}.#{params[:archive_format]}"
             tmp_dir = File.join(Dir.tmpdir, archive_filename)
 

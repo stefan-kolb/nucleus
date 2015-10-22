@@ -83,7 +83,7 @@ if options[:daemon]
   argv_opts << [ '--daemonize', '--user', options[:user] || 'nobody', '--tag', 'Nucleus on Thin']
   argv_opts << [ '--pid', options[:pid]] if options[:pid]
   argv_opts << [ '--group', options[:group] || 'nobody' ]
-  argv_opts << [ '--log', File.join(options[:logdir], 'paasal_daemon.log')] unless ENV['NUCLEUS_API_LOG']
+  argv_opts << [ '--log', File.join(options[:logdir], 'nucleus_daemon.log')] unless ENV['NUCLEUS_API_LOG']
 end
 argv_opts.flatten!
 

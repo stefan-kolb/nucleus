@@ -44,8 +44,8 @@ describe Nucleus::Adapters::GitDeployer do
         end
       end
 
-      context 'with paasal branch' do
-        let(:repo_branch) { 'paasal' }
+      context 'with nucleus branch' do
+        let(:repo_branch) { 'nucleus' }
         subject { Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, repo_branch) }
         it 'returns archived repository' do
           branch_mock = double(Git::Branch)
@@ -97,15 +97,15 @@ describe Nucleus::Adapters::GitDeployer do
         subject.trigger_build
       end
 
-      it 'succeeds for paasal branch' do
-        subject = Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, 'paasal')
+      it 'succeeds for nucleus branch' do
+        subject = Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, 'nucleus')
         expect(repo).to receive(:add).with(all: true).once
         expect(repo).to receive(:commit).with(kind_of(String)).once
         expect(repo).to receive(:repack).with(no_args).once
-        expect(repo).to receive(:push).with(kind_of(String), 'paasal', force: true).once
+        expect(repo).to receive(:push).with(kind_of(String), 'nucleus', force: true).once
 
         branch_mock = double(Git::Branch)
-        expect(repo).to receive(:branch).with('paasal').once { branch_mock }
+        expect(repo).to receive(:branch).with('nucleus').once { branch_mock }
         expect(repo).to receive(:checkout).with(branch_mock).once { repo }
 
         # there shall be the attempt to write a file to the repository
@@ -198,8 +198,8 @@ describe Nucleus::Adapters::GitDeployer do
         end
       end
 
-      context 'with paasal branch' do
-        let(:repo_branch) { 'paasal' }
+      context 'with nucleus branch' do
+        let(:repo_branch) { 'nucleus' }
         subject { Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, repo_branch) }
         it 'succeeds' do
           expect(repo).to receive(:add).with(all: true).once

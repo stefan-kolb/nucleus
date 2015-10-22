@@ -6,7 +6,7 @@ module Nucleus
       # The {Base} class of API version 1 includes all routes, endpoints and the swagger documentation to be build.
       class Base < Grape::API
         # specify the version for all mounted endpoints
-        version 'v1', using: :header, vendor: 'paasal', format: :json
+        version 'v1', using: :header, vendor: 'nucleus', format: :json
 
         before do
           # allow no declared version for api root
@@ -18,7 +18,7 @@ module Nucleus
             else
               # Without a version Nucleus can't work properly, fail fast (!)
               to_error(ErrorMessages::INVALID_ACCEPT_HEADER,
-                       'Make sure you provided a valid Accept Header, eg: \'application/vnd.paasal-v1+json\'')
+                       'Make sure you provided a valid Accept Header, eg: \'application/vnd.nucleus-v1+json\'')
             end
           end
         end

@@ -9,7 +9,7 @@ SimpleCov.command_name 'spec:suite:integration'
 
 Airborne.configure do |config|
   config.rack_app = Nucleus::API::Rack.app
-  config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
+  config.headers = { 'HTTP_ACCEPT' => 'application/vnd.nucleus-v1' }
 end
 
 RSpec.configure do |config|

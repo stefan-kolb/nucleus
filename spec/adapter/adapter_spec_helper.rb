@@ -2,7 +2,7 @@ require 'airborne'
 require 'rspec/wait'
 
 # load the app packages
-require 'paasal/scripts/shutdown'
+require 'nucleus/scripts/shutdown'
 require 'nucleus_api/scripts/shutdown_api'
 require 'nucleus_api/scripts/rack_application'
 
@@ -33,7 +33,7 @@ SimpleCov.command_name 'spec:suite:adapters'
 # Setup the rack application, use API v1
 Airborne.configure do |config|
   config.rack_app = Nucleus::API::Rack.app
-  config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
+  config.headers = { 'HTTP_ACCEPT' => 'application/vnd.nucleus-v1' }
 end
 
 def load_adapter(endpoint_id, api_version)
@@ -70,7 +70,7 @@ end
 # used to calculate the MD5 sums of all files in a deployed application archive
 def deployed_files_md5(deployed_archive, deployed_archive_format)
   # extract deployed archive and sanitize to allow a fair comparison
-  dir_deployed = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_deployed")
+  dir_deployed = File.join(Dir.tmpdir, "nucleus.test.#{SecureRandom.uuid}_deployed")
   Nucleus::ArchiveExtractor.new.extract(deployed_archive, dir_deployed, deployed_archive_format)
   Nucleus::ApplicationRepoSanitizer.new.sanitize(dir_deployed)
   # generate and return MD5 hashes of deployed files
@@ -81,12 +81,12 @@ end
 
 # used to calculate the MD5 sums of all files in a received application download response
 def response_files_md5(response, download_archive_format, sanitize = true)
-  response_file = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_response.#{download_archive_format}")
+  response_file = File.join(Dir.tmpdir, "nucleus.test.#{SecureRandom.uuid}_response.#{download_archive_format}")
   # write response to disk
   File.open(response_file, 'wb') { |file| file.write response }
 
   # extract downloaded response and sanitize to allow a fair comparison
-  dir_download = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_download")
+  dir_download = File.join(Dir.tmpdir, "nucleus.test.#{SecureRandom.uuid}_download")
   Nucleus::ArchiveExtractor.new.extract(response_file, dir_download, download_archive_format)
   Nucleus::ApplicationRepoSanitizer.new.sanitize(dir_download) if sanitize
 

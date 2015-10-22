@@ -16,4 +16,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Initial development release of the Platform as a Service abstraction layer - [@croeck](https://github.com/croeck)
 
 
-[0.1.0]: https://github.com/stefan-kolb/paasal/releases/tag/0.1.0
+[0.1.0]: https://github.com/stefan-kolb/nucleus/releases/tag/0.1.0

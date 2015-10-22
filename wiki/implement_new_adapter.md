@@ -79,11 +79,11 @@ describe Nucleus::Adapters::{API_VERSION}::{VENDOR_CLASS} do
     @unsupported = []
     @endpoint = '{ENDPOINT_ID}'
     @api_version = '{API_VERSION}'
-    @app_min = { original_name: 'paasaltestappminproperties',
-                         updated_name: 'paasaltestappminproperties',
+    @app_min = { original_name: 'nucleustestappminproperties',
+                         updated_name: 'nucleustestappminproperties',
                          region: 'default' }
-    @app_all = { original_name: 'paasaltestappallupdated',
-                         updated_name: 'paasaltestappallupdated',
+    @app_all = { original_name: 'nucleustestappallupdated',
+                         updated_name: 'nucleustestappallupdated',
                          region: 'default' }
   end
   before do |example|

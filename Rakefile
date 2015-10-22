@@ -66,7 +66,7 @@ end
 task :environment do
   ENV['RACK_ENV'] ||= 'development'
   require 'configatron'
-  require 'paasal/scripts/setup_config'
+  require 'nucleus/scripts/setup_config'
   nucleus_config.logging.level = Logger::Severity::ERROR
   require 'nucleus_api/scripts/load_api'
   require 'nucleus_api/scripts/initialize_api'
@@ -104,17 +104,17 @@ begin
   namespace :doc do
     YARD::Rake::YardocTask.new(:pages) do |t|
       t.files = DOC_FILES
-      t.options = ['-o', '../paasal.doc/docs', '--title', "Nucleus #{Nucleus::VERSION} Documentation"]
+      t.options = ['-o', '../nucleus.doc/docs', '--title', "Nucleus #{Nucleus::VERSION} Documentation"]
     end
 
     desc 'Check out gh-pages.'
     task :checkout do
-      dir = File.join(__dir__, '..', 'paasal.doc')
+      dir = File.join(__dir__, '..', 'nucleus.doc')
       unless Dir.exist?(dir)
         Dir.mkdir(dir)
         Dir.chdir(dir) do
           system('git init')
-          system('git remote add origin git@github.com:stefan-kolb/paasal.git')
+          system('git remote add origin git@github.com:stefan-kolb/nucleus.git')
           system('git pull')
           system('git checkout gh-pages')
         end
@@ -123,7 +123,7 @@ begin
 
     desc 'Generate and publish YARD docs to GitHub pages.'
     task publish: %w(doc:pages:checkout doc:pages) do
-      Dir.chdir(File.join(__dir__, '..', 'paasal.doc')) do
+      Dir.chdir(File.join(__dir__, '..', 'nucleus.doc')) do
         system('git checkout gh-pages')
         system('git add .')
         system('git add -u')

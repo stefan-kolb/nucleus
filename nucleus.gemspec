@@ -1,16 +1,16 @@
 # coding: utf-8
 $LOAD_PATH.push File.expand_path('../lib', __FILE__)
-require 'paasal/version'
+require 'nucleus/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'paasal'
+  spec.name          = 'nucleus'
   spec.version       = Nucleus::VERSION
   spec.authors       = ['Stefan Kolb', 'Cedric Röck']
   spec.email         = ['stefan.kolb@uni-bamberg.de']
   spec.summary       = 'Nucleus is an abstraction layer for the deployment and management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
-  spec.homepage      = 'https://github.com/stefan-kolb/paasal'
+  spec.homepage      = 'https://github.com/stefan-kolb/nucleus'
   spec.license       = 'MIT'
   spec.executables   = 'nucleus'
   spec.require_paths = ['lib']

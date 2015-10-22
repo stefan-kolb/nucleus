@@ -3,7 +3,7 @@ require 'spec/integration/integration_spec_helper'
 describe 'API Error schema' do
   context 'GET with invalid accept header' do
     context 'version invalid' do
-      let!(:header) { { 'HTTP_ACCEPT' => 'application/vnd.paasal-invalidversion' } }
+      let!(:header) { { 'HTTP_ACCEPT' => 'application/vnd.nucleus-invalidversion' } }
 
       context 'for valid endpoint' do
         before { get '/vendors', header }
@@ -29,7 +29,7 @@ describe 'API Error schema' do
       end
     end
     context 'content type invalid' do
-      before { get '/vendors', 'HTTP_ACCEPT' => 'application/vnd.paasal-v1+application/xml' }
+      before { get '/vendors', 'HTTP_ACCEPT' => 'application/vnd.nucleus-v1+application/xml' }
       include_examples 'a not accepted request'
     end
   end
