@@ -73,7 +73,7 @@ task :environment do
 end
 
 task routes: :environment do
-  Paasal::API::RootAPI.routes.each do |route|
+  Nucleus::API::RootAPI.routes.each do |route|
     next if route.nil? || route.route_method.nil?
     method = route.route_method.ljust(10)
     path = route.route_path
@@ -85,7 +85,7 @@ end
 
 task schema_v1: :environment do
   require 'json'
-  response = Paasal::API::RootAPI.call(
+  response = Nucleus::API::RootAPI.call(
     'REQUEST_METHOD' => 'GET',
     'PATH_INFO' => '/schema',
     'rack.input' => StringIO.new)[2].body[0]
@@ -104,7 +104,7 @@ begin
   namespace :doc do
     YARD::Rake::YardocTask.new(:pages) do |t|
       t.files = DOC_FILES
-      t.options = ['-o', '../paasal.doc/docs', '--title', "Nucleus #{Paasal::VERSION} Documentation"]
+      t.options = ['-o', '../paasal.doc/docs', '--title', "Nucleus #{Nucleus::VERSION} Documentation"]
     end
 
     desc 'Check out gh-pages.'
@@ -127,7 +127,7 @@ begin
         system('git checkout gh-pages')
         system('git add .')
         system('git add -u')
-        system("git commit -m 'Generating docs for version #{Paasal::VERSION}.'")
+        system("git commit -m 'Generating docs for version #{Nucleus::VERSION}.'")
         system('git push origin gh-pages')
       end
     end

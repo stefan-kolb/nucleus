@@ -1,15 +1,15 @@
-module Paasal
+module Nucleus
   module Adapters
     # The AuthenticationRetryWrapper module can be used to invoke commands in a block that repeats its execution in case
-    # the first attempt raises an {Paasal::Errors::EndpointAuthenticationError}.
+    # the first attempt raises an {Nucleus::Errors::EndpointAuthenticationError}.
     module AuthenticationRetryWrapper
-      extend Paasal::Logging
+      extend Nucleus::Logging
 
       # Executes a block, which should be an adapter call, using the authentication information.
       # If the first call fails due to cached authentication information, the cache is going to get evicted,
       # authentication repeated and finally the call will be executed again.
       #
-      # @param [Paasal::Adapters::BaseAdapter] adapter adapter that is used for the ongoing request
+      # @param [Nucleus::Adapters::BaseAdapter] adapter adapter that is used for the ongoing request
       # @param [Hash<String, String>] env Rack environment, shall contain HTTP authentication information
       # @return [Hash, void] result of the yield block execution, usually a Hash matching the Grape::Entity to represent
       def self.with_authentication(adapter, env)
@@ -39,8 +39,8 @@ module Paasal
       # that appear to be outdated.<br>
       # If the refresh fails, a complete re-authentication will be forced.
       #
-      # @param [Paasal::Adapters::AuthClient] auth_client platform specific version of the authentication client
-      # @raise [Paasal::Errors::EndpointAuthenticationError] if both, refresh and authentication fail
+      # @param [Nucleus::Adapters::AuthClient] auth_client platform specific version of the authentication client
+      # @raise [Nucleus::Errors::EndpointAuthenticationError] if both, refresh and authentication fail
       # @return [void]
       def self.refresh_token(auth_client)
         # we first try to renew our token before invalidating the cache
@@ -53,9 +53,9 @@ module Paasal
       # The method shall only be invoked when there are cached authentication information that appear to be outdated.
       # It calls the authentication for the current user to override the cached authentication headers.
       #
-      # @param [Paasal::Adapters::BaseAdapter] adapter adapter that is used for the ongoing request
+      # @param [Nucleus::Adapters::BaseAdapter] adapter adapter that is used for the ongoing request
       # @param [Hash<String, String>] env Rack environment, shall contain HTTP authentication information
-      # @raise [Paasal::Errors::EndpointAuthenticationError] if authentication at the endpoint fails
+      # @raise [Nucleus::Errors::EndpointAuthenticationError] if authentication at the endpoint fails
       # @return [void]
       def self.re_authenticate(adapter, env)
         log.debug('Invoked re-authentication')

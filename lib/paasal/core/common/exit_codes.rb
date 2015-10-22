@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   # ExitCodes describe why the application failed and was stopped.
   #
   # Codes beginning with ___ stand for ___:

@@ -1,11 +1,11 @@
-module Paasal
+module Nucleus
   # The {AdapterAuthenticationInductor} patches adapter classes so that each method that is defined in the AdapterStub
-  # of the current API version is wrapped with the {Paasal::Adapters::AuthenticationRetryWrapper}.
+  # of the current API version is wrapped with the {Nucleus::Adapters::AuthenticationRetryWrapper}.
   module AdapterAuthenticationInductor
-    include Paasal::Logging
+    include Nucleus::Logging
 
     # Patch the adapter instance and use the authentication information of the environment.
-    # @param [Paasal::Adapters::BaseAdapter] adapter_instance the adapter implementation instance to patch
+    # @param [Nucleus::Adapters::BaseAdapter] adapter_instance the adapter implementation instance to patch
     # @param [Hash<String, String>] env environment which includes the HTTP authentication header
     # @return [void]
     def self.patch(adapter_instance, env)
@@ -21,7 +21,7 @@ module Paasal
     # The method shall than be able to update the authentication token if the initial authentication expired.<br>
     # Only major authentication issues, e.g. if the credentials are repeatedly rejected,
     # will be thrown to the adapter caller.
-    # @param [Paasal::Adapters::BaseAdapter] adapter the adapter implementation to patch
+    # @param [Nucleus::Adapters::BaseAdapter] adapter the adapter implementation to patch
     # @param [Symbol] method_to_wrap method that shall be patched
     # @param [Hash<String, String>] env environment which includes the HTTP authentication header
     # @return [void]
@@ -37,7 +37,7 @@ module Paasal
       adapter.class.send :define_method, with_wrapper do |*args, &block|
         log.debug "Calling adapter method '#{method_to_wrap}' against #{endpoint_url}"
         # use the AuthenticationRetryWrapper to retry calls if tokens expired, ...
-        Paasal::Adapters::AuthenticationRetryWrapper.with_authentication(adapter, env) do
+        Nucleus::Adapters::AuthenticationRetryWrapper.with_authentication(adapter, env) do
           return send without_wrapper, *args, &block
         end
       end

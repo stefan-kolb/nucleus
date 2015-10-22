@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     module V1
       # The {CloudFoundryV2} adapter is designed to support the Cloud Foundry API and uses only commands
@@ -9,20 +9,20 @@ module Paasal
       # The Nucleus API is fully supported, there are no known issues.
       # @see http://apidocs.cloudfoundry.org The latest Cloud Foundry API documentation
       class CloudFoundryV2 < Stub
-        include Paasal::Logging
-        include Paasal::Adapters::V1::CloudFoundryV2::Authentication
-        include Paasal::Adapters::V1::CloudFoundryV2::AppStates
-        include Paasal::Adapters::V1::CloudFoundryV2::Buildpacks
-        include Paasal::Adapters::V1::CloudFoundryV2::Application
-        include Paasal::Adapters::V1::CloudFoundryV2::Domains
-        include Paasal::Adapters::V1::CloudFoundryV2::Data
-        include Paasal::Adapters::V1::CloudFoundryV2::Lifecycle
-        include Paasal::Adapters::V1::CloudFoundryV2::Logs
-        include Paasal::Adapters::V1::CloudFoundryV2::Regions
-        include Paasal::Adapters::V1::CloudFoundryV2::Scaling
-        include Paasal::Adapters::V1::CloudFoundryV2::SemanticErrors
-        include Paasal::Adapters::V1::CloudFoundryV2::Services
-        include Paasal::Adapters::V1::CloudFoundryV2::Vars
+        include Nucleus::Logging
+        include Nucleus::Adapters::V1::CloudFoundryV2::Authentication
+        include Nucleus::Adapters::V1::CloudFoundryV2::AppStates
+        include Nucleus::Adapters::V1::CloudFoundryV2::Buildpacks
+        include Nucleus::Adapters::V1::CloudFoundryV2::Application
+        include Nucleus::Adapters::V1::CloudFoundryV2::Domains
+        include Nucleus::Adapters::V1::CloudFoundryV2::Data
+        include Nucleus::Adapters::V1::CloudFoundryV2::Lifecycle
+        include Nucleus::Adapters::V1::CloudFoundryV2::Logs
+        include Nucleus::Adapters::V1::CloudFoundryV2::Regions
+        include Nucleus::Adapters::V1::CloudFoundryV2::Scaling
+        include Nucleus::Adapters::V1::CloudFoundryV2::SemanticErrors
+        include Nucleus::Adapters::V1::CloudFoundryV2::Services
+        include Nucleus::Adapters::V1::CloudFoundryV2::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class Providers < Grape::API
@@ -49,8 +49,8 @@ module Paasal
             # require the keys of the endpoint in the json object 'endpoint'
             requires :endpoint, type: Hash do
               # both are optional
-              optional :all, using: Paasal::API::Models::Endpoint.documentation.slice(:app_domain, :trust)
-              requires :all, using: Paasal::API::Models::Endpoint.documentation
+              optional :all, using: Nucleus::API::Models::Endpoint.documentation.slice(:app_domain, :trust)
+              requires :all, using: Nucleus::API::Models::Endpoint.documentation
                 .except(:id, :app_domain, :trust, :applications, :created_at, :updated_at, :_links)
             end
           end
@@ -78,7 +78,7 @@ module Paasal
           params do
             use :provider_id
             requires :provider, type: Hash do
-              optional :all, using: Paasal::API::Models::Provider.documentation
+              optional :all, using: Nucleus::API::Models::Provider.documentation
                 .except(:id, :endpoints, :vendor, :created_at, :updated_at, :_links)
             end
           end

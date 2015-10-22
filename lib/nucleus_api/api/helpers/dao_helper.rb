@@ -1,37 +1,37 @@
-module Paasal
+module Nucleus
   module API
     module DaoHelper
       extend Grape::API::Helpers
-      include Paasal::Logging
+      include Nucleus::Logging
 
-      # Get a {Paasal::API::DB::VendorDao} instance
-      # @return [Paasal::API::DB::VendorDao] DAO instance
+      # Get a {Nucleus::API::DB::VendorDao} instance
+      # @return [Nucleus::API::DB::VendorDao] DAO instance
       def vendor_dao
-        create_dao(Paasal::API::DB::VendorDao)
+        create_dao(Nucleus::API::DB::VendorDao)
       end
 
-      # Get a {Paasal::API::DB::ProviderDao} instance
-      # @return [Paasal::API::DB::ProviderDao] DAO instance
+      # Get a {Nucleus::API::DB::ProviderDao} instance
+      # @return [Nucleus::API::DB::ProviderDao] DAO instance
       def provider_dao
-        create_dao(Paasal::API::DB::ProviderDao)
+        create_dao(Nucleus::API::DB::ProviderDao)
       end
 
-      # Get a {Paasal::API::DB::EndpointDao} instance
-      # @return [Paasal::API::DB::EndpointDao] DAO instance
+      # Get a {Nucleus::API::DB::EndpointDao} instance
+      # @return [Nucleus::API::DB::EndpointDao] DAO instance
       def endpoint_dao
-        create_dao(Paasal::API::DB::EndpointDao)
+        create_dao(Nucleus::API::DB::EndpointDao)
       end
 
-      # Get a {Paasal::API::DB::AdapterDao} instance
-      # @return [Paasal::API::DB::AdapterDao] DAO instance
+      # Get a {Nucleus::API::DB::AdapterDao} instance
+      # @return [Nucleus::API::DB::AdapterDao] DAO instance
       def adapter_dao
-        create_dao(Paasal::API::DB::AdapterDao)
+        create_dao(Nucleus::API::DB::AdapterDao)
       end
 
-      # Get a {Paasal::API::DB::CacheDao} instance
-      # @return [Paasal::API::DB::CacheDao] DAO instance
+      # Get a {Nucleus::API::DB::CacheDao} instance
+      # @return [Nucleus::API::DB::CacheDao] DAO instance
       def request_cache
-        create_dao(Paasal::API::DB::CacheDao)
+        create_dao(Nucleus::API::DB::CacheDao)
       end
 
       def load_endpoint(loading_params = params)
@@ -48,14 +48,14 @@ module Paasal
 
       # Load an entity's instance from the store
       #
-      # @param [Paasal::Store] dao the DAO to use for loading
+      # @param [Nucleus::Store] dao the DAO to use for loading
       # @param [Symbol] id symbol where the entities id can be found in the params
       # @param [String] name entities name for error output
       # @param [Hash] loading_params parameters required when called from auth block
-      # @return [Paasal::AbstractModel] loaded entity's instance
+      # @return [Nucleus::AbstractModel] loaded entity's instance
       def load_entity(dao, id, name, loading_params = params)
         unless dao.key? loading_params[id]
-          to_error(Paasal::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'")
+          to_error(Nucleus::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'")
         end
         dao.get loading_params[id]
       end

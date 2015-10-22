@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class ApplicationLogsTail < Grape::API
@@ -35,7 +35,7 @@ module Paasal
 
                 # we need to check file existence before, otherwise we would have returned status 200 already
                 unless adapter.log?(params[:application_id], params[:log_id])
-                  fail Paasal::Errors::AdapterResourceNotFoundError, "Invalid log file '#{params[:log_id]}', "\
+                  fail Nucleus::Errors::AdapterResourceNotFoundError, "Invalid log file '#{params[:log_id]}', "\
                     "not available for application '#{params[:application_id]}'"
                 end
 

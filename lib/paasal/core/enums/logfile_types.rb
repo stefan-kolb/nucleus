@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Enums
     # All types of logs that are distinguished by Nucleus.
     module ApplicationLogfileType

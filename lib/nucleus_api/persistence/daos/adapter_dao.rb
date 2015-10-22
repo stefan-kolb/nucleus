@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module DB
       module AdapterDao
@@ -9,9 +9,9 @@ module Paasal
         end
       end
 
-      class VersionDependantAdapterDao < Paasal::DB::Store
-        include Paasal::Logging
-        include Paasal::UrlConverter
+      class VersionDependantAdapterDao < Nucleus::DB::Store
+        include Nucleus::Logging
+        include Nucleus::UrlConverter
 
         def initialize(api_version)
           log.debug "Creating new VersionDependantAdapterDao for version #{api_version}"

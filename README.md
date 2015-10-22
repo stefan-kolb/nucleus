@@ -173,13 +173,13 @@ For more information have a look at the [configuration](#configuration) section.
 2) Show all currently available API versions:
 
 ```ruby
-Paasal::VersionDetector.api_versions
+Nucleus::VersionDetector.api_versions
 ```
 
 3) Instantiate the AdapterResolver for the desired API version:
 
 ```ruby
-resolver = Paasal::AdapterResolver.new('v1')
+resolver = Nucleus::AdapterResolver.new('v1')
 ```
 
 4) Show all adapters that are supported by Nucleus by this specific API version:
@@ -189,7 +189,7 @@ resolver.adapters
 ```
 
 ```ruby
-{"cloudcontrol"=>Paasal::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Paasal::Adapters::V1::CloudFoundryV2, "heroku"=>Paasal::Adapters::V1::Heroku, "openshift_v2"=>Paasal::Adapters::V1::OpenshiftV2}
+{"cloudcontrol"=>Nucleus::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2}
 ```
 
 5) Load your desired adapter implementation:
@@ -217,7 +217,7 @@ app = adapter.create_application(region: 'default', name: 'myusersfirstapplicati
 adapter.delete_application(app[:id])
 ```
 
-Check the **documentation** of the `Paasal::Adapters::V1::Stub` adapter (or any other API version) for a complete list of the supported actions.
+Check the **documentation** of the `Nucleus::Adapters::V1::Stub` adapter (or any other API version) for a complete list of the supported actions.
 You can also refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands,
 including which fields are required and those that are only optional.
 
@@ -554,7 +554,7 @@ The API can be used with the REST client of your choice.
 
 ### Accept Header
 
-Paasal always uses the latest API version if no `Accept` header is specified.
+Nucleus always uses the latest API version if no `Accept` header is specified.
 We therefore **strongly encourage** you to always specify the `Accept` header.
 The vendor thereby must be set to `paasal` and the version must be available.
 Otherwise an error with the HTTP status `406` is returned.

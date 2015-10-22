@@ -1,12 +1,12 @@
-module Paasal
+module Nucleus
   class SSHHandler
-    include Paasal::Logging
+    include Nucleus::Logging
 
     attr_reader :key_file
 
     # Setup the SSHHandler.
     # @param [String] custom_ssh_key_file path to the key file
-    # @return [Paasal::SSHHandler] the created instance
+    # @return [Nucleus::SSHHandler] the created instance
     def initialize(custom_ssh_key_file = nil)
       @custom_ssh_key_file = custom_ssh_key_file
       @key_file = @custom_ssh_key_file
@@ -102,7 +102,7 @@ module Paasal
     rescue
       msg = "Invalid custom SSH key '#{@key_file}', must be of type ssh-rsa."
       STDERR.puts msg
-      raise Paasal::StartupError.new(msg, Paasal::ExitCodes::INVALID_SSH_KEY)
+      raise Nucleus::StartupError.new(msg, Nucleus::ExitCodes::INVALID_SSH_KEY)
     end
   end
 end

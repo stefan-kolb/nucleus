@@ -1,11 +1,11 @@
-module Paasal
+module Nucleus
   module Adapters
     module FileManager
-      extend Paasal::Logging
+      extend Nucleus::Logging
 
       # Load the contents of the file.
       # @param [String] file absolute path of the file to read
-      # @raise [Paasal::FileExistenceError] if the file does not exist
+      # @raise [Nucleus::FileExistenceError] if the file does not exist
       # @return [StringIO] binary contents of the file, rewinded
       def self.load_file(file)
         io = StringIO.new('')
@@ -28,7 +28,7 @@ module Paasal
       # @param [Boolean] force if true file is replaced, else write fails
       # @param [String] expected_file_md5_hex MD5 hexdigest of the expected file to be replaced.
       # If nil, file is not replaced as long as force == false
-      # @raise [Paasal::FileExistenceError] if the file already existed
+      # @raise [Nucleus::FileExistenceError] if the file already existed
       # @raise [ArgumentError] if expected_file_md5_hex did not match the MD5 hexdigest of the current file
       # in the repository
       # @return [void]
@@ -36,7 +36,7 @@ module Paasal
         if File.exist? file
           unless force
             # fail if file exists, but shall not be replaced
-            fail Paasal::FileExistenceError, 'File already exists' if expected_file_md5_hex.nil?
+            fail Nucleus::FileExistenceError, 'File already exists' if expected_file_md5_hex.nil?
 
             # do only replace if file is as expected
             actual_hex = Digest::MD5.file(file).hexdigest

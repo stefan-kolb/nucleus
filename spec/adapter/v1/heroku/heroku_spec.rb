@@ -1,6 +1,6 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::Heroku do
+describe Nucleus::Adapters::V1::Heroku do
   before :all do
     # skip these example groups / tests for this adapter
     # Heroku does support the change, but we do not want to change into a payed plan just for testing

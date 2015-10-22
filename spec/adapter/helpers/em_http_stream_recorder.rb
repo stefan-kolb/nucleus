@@ -3,7 +3,7 @@ require 'digest/md5'
 # for serialization to replace the default marshaller
 require 'oj'
 
-module Paasal
+module Nucleus
   # The {EmHttpStreamRecorder class} can be used to record and replay the interactions of a EM http request stream
   # during rspec tests. <br>
   # When interactions are to be recorded (determined via {VCR}), the received messages are saved to individual files

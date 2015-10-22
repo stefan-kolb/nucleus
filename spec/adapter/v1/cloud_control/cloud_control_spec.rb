@@ -1,6 +1,6 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::CloudControl do
+describe Nucleus::Adapters::V1::CloudControl do
   before :all do
     # skip these example groups / tests for this adapter, both,
     # application update and lifecycle actions are not supported

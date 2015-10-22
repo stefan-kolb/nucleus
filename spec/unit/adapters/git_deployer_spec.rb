@@ -1,6 +1,6 @@
 require 'spec/unit/unit_spec_helper'
 
-describe Paasal::Adapters::GitDeployer do
+describe Nucleus::Adapters::GitDeployer do
   let(:repo_name) { 'my_repository' }
   let(:repo_url) { 'http://repo.example.org' }
   let(:user_email) { 'myuser@example.org' }
@@ -9,13 +9,13 @@ describe Paasal::Adapters::GitDeployer do
   let(:file) { File.join('random', 'file', 'path') }
 
   it '#deploy fails early with invalid format' do
-    subject = Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email)
-    extractor = double(Paasal::ArchiveExtractor)
-    expect(Paasal::ArchiveExtractor).to receive(:new).with(any_args).once { extractor }
+    subject = Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email)
+    extractor = double(Nucleus::ArchiveExtractor)
+    expect(Nucleus::ArchiveExtractor).to receive(:new).with(any_args).once { extractor }
     # we assume format is supported
     expect(extractor).to receive(:supports?).with(kind_of(String)).once { false }
     # call should fail
-    expect { subject.deploy(nil, 'xyz') }.to raise_error(Paasal::Errors::AdapterRequestError)
+    expect { subject.deploy(nil, 'xyz') }.to raise_error(Nucleus::Errors::AdapterRequestError)
   end
 
   describe 'repository actions' do
@@ -30,12 +30,12 @@ describe Paasal::Adapters::GitDeployer do
       let!(:exclude_git) { true }
 
       context 'with master branch' do
-        subject { Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email) }
+        subject { Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email) }
         let(:repo_branch) { 'master' }
         it 'returns archived repository' do
           # verify archiver is called to return the response
-          archiver = double(Paasal::Archiver)
-          expect(Paasal::Archiver).to receive(:new).with(exclude_git) { archiver }
+          archiver = double(Nucleus::Archiver)
+          expect(Nucleus::Archiver).to receive(:new).with(exclude_git) { archiver }
           expect(archiver).to receive(:compress).with(kind_of(String), zip).once { 'response' }
 
           # execute the call
@@ -46,15 +46,15 @@ describe Paasal::Adapters::GitDeployer do
 
       context 'with paasal branch' do
         let(:repo_branch) { 'paasal' }
-        subject { Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email, repo_branch) }
+        subject { Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, repo_branch) }
         it 'returns archived repository' do
           branch_mock = double(Git::Branch)
           expect(repo).to receive(:branch).with(repo_branch).once { branch_mock }
           expect(repo).to receive(:checkout).with(branch_mock).once { repo }
 
           # verify archiver is called to return the response
-          archiver = double(Paasal::Archiver)
-          expect(Paasal::Archiver).to receive(:new).with(exclude_git) { archiver }
+          archiver = double(Nucleus::Archiver)
+          expect(Nucleus::Archiver).to receive(:new).with(exclude_git) { archiver }
           expect(archiver).to receive(:compress).with(kind_of(String), zip).once { 'response' }
 
           # execute the call
@@ -69,8 +69,8 @@ describe Paasal::Adapters::GitDeployer do
           expect(repo).to receive(:checkout).with(repo_branch, new_branch: true).once { repo }
 
           # verify archiver is called to return the response
-          archiver = double(Paasal::Archiver)
-          expect(Paasal::Archiver).to receive(:new).with(exclude_git) { archiver }
+          archiver = double(Nucleus::Archiver)
+          expect(Nucleus::Archiver).to receive(:new).with(exclude_git) { archiver }
           expect(archiver).to receive(:compress).with(kind_of(String), zip).once { 'response' }
 
           # execute the call
@@ -85,20 +85,20 @@ describe Paasal::Adapters::GitDeployer do
       before { expect(repo).to receive(:config).with(kind_of(String), kind_of(String)).twice }
 
       it 'succeeds for master branch' do
-        subject = Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email)
+        subject = Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email)
         expect(repo).to receive(:add).with(all: true).once
         expect(repo).to receive(:commit).with(kind_of(String)).once
         expect(repo).to receive(:repack).with(no_args).once
         expect(repo).to receive(:push).with(kind_of(String), 'master', force: true).once
 
         # there shall be the attempt to write a file to the repository
-        expect(Paasal::Adapters::FileManager).to receive(:save_file_from_data).with(any_args).once
+        expect(Nucleus::Adapters::FileManager).to receive(:save_file_from_data).with(any_args).once
         # trigger the method
         subject.trigger_build
       end
 
       it 'succeeds for paasal branch' do
-        subject = Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email, 'paasal')
+        subject = Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, 'paasal')
         expect(repo).to receive(:add).with(all: true).once
         expect(repo).to receive(:commit).with(kind_of(String)).once
         expect(repo).to receive(:repack).with(no_args).once
@@ -109,7 +109,7 @@ describe Paasal::Adapters::GitDeployer do
         expect(repo).to receive(:checkout).with(branch_mock).once { repo }
 
         # there shall be the attempt to write a file to the repository
-        expect(Paasal::Adapters::FileManager).to receive(:save_file_from_data)
+        expect(Nucleus::Adapters::FileManager).to receive(:save_file_from_data)
         # trigger the method
         subject.trigger_build
       end
@@ -119,12 +119,12 @@ describe Paasal::Adapters::GitDeployer do
       before { expect(repo).to receive(:config).with(kind_of(String), kind_of(String)).twice }
       context 'with master branch' do
         let(:repo_branch) { 'master' }
-        subject { Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email) }
+        subject { Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email) }
 
         describe 'fails' do
           it 'if no files were extracted' do
-            extractor = double(Paasal::ArchiveExtractor)
-            expect(Paasal::ArchiveExtractor).to receive(:new).once { extractor }
+            extractor = double(Nucleus::ArchiveExtractor)
+            expect(Nucleus::ArchiveExtractor).to receive(:new).once { extractor }
             # we assume format is supported
             expect(extractor).to receive(:supports?).with(kind_of(String)).once { true }
             # assumes number of extracted files
@@ -141,7 +141,7 @@ describe Paasal::Adapters::GitDeployer do
             expect(File.directory?(git_dir)).to eql(true)
 
             # call should fail
-            expect { subject.deploy(file, zip) }.to raise_error(Paasal::Errors::AdapterRequestError)
+            expect { subject.deploy(file, zip) }.to raise_error(Nucleus::Errors::AdapterRequestError)
           end
         end
 
@@ -151,8 +151,8 @@ describe Paasal::Adapters::GitDeployer do
           expect(repo).to receive(:repack).with(no_args).once
           expect(repo).to receive(:push).with(kind_of(String), repo_branch, force: true).once
 
-          extractor = double(Paasal::ArchiveExtractor)
-          expect(Paasal::ArchiveExtractor).to receive(:new).once { extractor }
+          extractor = double(Nucleus::ArchiveExtractor)
+          expect(Nucleus::ArchiveExtractor).to receive(:new).once { extractor }
           # we assume format is supported
           expect(extractor).to receive(:supports?).with(kind_of(String)).once { true }
           # assumes number of extracted files
@@ -179,8 +179,8 @@ describe Paasal::Adapters::GitDeployer do
           expect(FileUtils).to receive(:rm_rf).with(other_dir).once.and_call_original
           expect(FileUtils).to receive(:rm_f).with(File.join(repo_dir, 'file_1.txt')).once.and_call_original
 
-          sanitizer = double(Paasal::ApplicationRepoSanitizer)
-          expect(Paasal::ApplicationRepoSanitizer).to receive(:new).once { sanitizer }
+          sanitizer = double(Nucleus::ApplicationRepoSanitizer)
+          expect(Nucleus::ApplicationRepoSanitizer).to receive(:new).once { sanitizer }
           # we assume format is supported
           expect(sanitizer).to receive(:sanitize).with(kind_of(String)).once
 
@@ -200,7 +200,7 @@ describe Paasal::Adapters::GitDeployer do
 
       context 'with paasal branch' do
         let(:repo_branch) { 'paasal' }
-        subject { Paasal::Adapters::GitDeployer.new(repo_name, repo_url, user_email, repo_branch) }
+        subject { Nucleus::Adapters::GitDeployer.new(repo_name, repo_url, user_email, repo_branch) }
         it 'succeeds' do
           expect(repo).to receive(:add).with(all: true).once
           expect(repo).to receive(:commit).with(kind_of(String)).once
@@ -211,8 +211,8 @@ describe Paasal::Adapters::GitDeployer do
           expect(repo).to receive(:branch).with(repo_branch).once { branch_mock }
           expect(repo).to receive(:checkout).with(branch_mock).once { repo }
 
-          extractor = double(Paasal::ArchiveExtractor)
-          expect(Paasal::ArchiveExtractor).to receive(:new).once { extractor }
+          extractor = double(Nucleus::ArchiveExtractor)
+          expect(Nucleus::ArchiveExtractor).to receive(:new).once { extractor }
           # we assume format is supported
           expect(extractor).to receive(:supports?).with(kind_of(String)).once { true }
           # assumes number of extracted files
@@ -239,8 +239,8 @@ describe Paasal::Adapters::GitDeployer do
           expect(FileUtils).to receive(:rm_rf).with(other_dir).once.and_call_original
           expect(FileUtils).to receive(:rm_f).with(File.join(repo_dir, 'file_1.txt')).once.and_call_original
 
-          sanitizer = double(Paasal::ApplicationRepoSanitizer)
-          expect(Paasal::ApplicationRepoSanitizer).to receive(:new).once { sanitizer }
+          sanitizer = double(Nucleus::ApplicationRepoSanitizer)
+          expect(Nucleus::ApplicationRepoSanitizer).to receive(:new).once { sanitizer }
           # we assume format is supported
           expect(sanitizer).to receive(:sanitize).with(kind_of(String)).once
 

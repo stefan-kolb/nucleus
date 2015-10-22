@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       # The {CollectionEntity} is a Grape::Entity model for API references to match HATEOAS.
@@ -9,7 +9,7 @@ module Paasal
         # Exposes the list of items and meta information, e.g. the size of the collection.
         # @param [String] key key to be used in the api as entry
         # @param [String] full_name full name of the entity, used for the collection's description
-        # @param [Paasal::API::Models::AbstractEntity] model class of the entities contained in the collection
+        # @param [Nucleus::API::Models::AbstractEntity] model class of the entities contained in the collection
         # @return [void]
         def self.item_collection(key, full_name, model)
           present_collection true

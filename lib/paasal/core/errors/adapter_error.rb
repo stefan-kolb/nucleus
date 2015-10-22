@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     class AdapterError < StandardError
       # error constant to use when exiting the application due to this error

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module VersionDetector
     # Get all API versions that are included in the project.
     # The API versions are identified by the presence of a directory below 'api/versions'.
@@ -10,7 +10,7 @@ module Paasal
     def self.api_versions
       return @api_versions if @api_versions
       # TODO: adapt when core and API are separated
-      api_versions_dir = "#{Paasal.root}/lib/nucleus_api/api/versions/*"
+      api_versions_dir = "#{Nucleus.root}/lib/nucleus_api/api/versions/*"
       @api_versions = Dir.glob(api_versions_dir).map do |f|
         File.basename(f) if File.directory?(f)
       end.compact

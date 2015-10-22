@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Enums
     # All states that an application can obtain according to the lifecycle of Nucleus apps.
     module ApplicationStates

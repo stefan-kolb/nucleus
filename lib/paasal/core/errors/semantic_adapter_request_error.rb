@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     # The {SemanticAdapterRequestError} shall be thrown if the user request could not be executed due to logical errors.
     # <br>

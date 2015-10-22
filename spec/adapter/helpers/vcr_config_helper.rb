@@ -136,7 +136,7 @@ VCR.configure do |c|
     end
 
     # filter all sensitive data stored in the credentials config
-    Paasal::Spec::Config.credentials.sensitive_data.each do |endpoint, data|
+    Nucleus::Spec::Config.credentials.sensitive_data.each do |endpoint, data|
       # FIXME: replaces wrong stuff too  https://api.10.244.0.34.xip.io/v2/apps?q=never_exists_0__somevendor:password__9
       data.each do |key, value|
         replacement = "#{endpoint}:#{key}"

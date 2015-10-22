@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     class AdapterResourceNotFoundError < AdapterError
       # initialize with default error to be 404, endpoint resource not found

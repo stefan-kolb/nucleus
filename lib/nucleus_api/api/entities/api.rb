@@ -1,10 +1,10 @@
-module Paasal
+module Nucleus
   module API
     module Models
       # The Api is the root node of our API.
       class Api < AbstractEntity
         expose :versions, documentation: {
-          type: 'Paasal::API::Version', is_array: true,
+          type: 'Nucleus::API::Version', is_array: true,
           desc: 'List of available API versions'
         }, using: ApiVersion
 

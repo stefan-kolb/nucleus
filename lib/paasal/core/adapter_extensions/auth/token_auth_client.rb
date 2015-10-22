@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     class TokenAuthClient < AuthClient
       attr_reader :api_token

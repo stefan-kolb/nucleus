@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       # The Link describes a reference inside the API that can

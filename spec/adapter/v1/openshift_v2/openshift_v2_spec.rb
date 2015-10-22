@@ -1,6 +1,6 @@
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::V1::OpenshiftV2 do
+describe Nucleus::Adapters::V1::OpenshiftV2 do
   before :all do
     @endpoint = 'openshift-online'
     @api_version = 'v1'

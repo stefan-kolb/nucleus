@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     class AuthClient
       attr_reader :verify_ssl
@@ -13,10 +13,10 @@ module Paasal
       # Perform authentication with the given username and password at the desired endpoint.
       # @param[String] username username to use for authentication
       # @param[String] password password to the username, which is to be used for authentication
-      # @raise[Paasal::Errors::EndpointAuthenticationError] if authentication failed
-      # @raise[Paasal::Errors::UnknownAdapterCallError] if the generic AuthClient did expect the endpoint
+      # @raise[Nucleus::Errors::EndpointAuthenticationError] if authentication failed
+      # @raise[Nucleus::Errors::UnknownAdapterCallError] if the generic AuthClient did expect the endpoint
       # to behave differently, usually indicates implementation issues
-      # @return[Paasal::Adapters::AuthClient] current AuthClient instance
+      # @return[Nucleus::Adapters::AuthClient] current AuthClient instance
       def authenticate(username, password)
         fail Errors::EndpointAuthenticationError, 'Authentication client does not support authentication'
       end
@@ -24,7 +24,7 @@ module Paasal
       # Get the authentication header for the current AuthClient instance that must be used to execute requests
       # against the endpoint.<br>
       # If the authentication is known to be expired, a refresh will be made first.
-      # @raise[Paasal::Errors::EndpointAuthenticationError] if the refresh failed
+      # @raise[Nucleus::Errors::EndpointAuthenticationError] if the refresh failed
       # @return[Hash<String, String>] authentication header that enables requests against the endpoint
       def auth_header
         fail Errors::EndpointAuthenticationError,
@@ -34,8 +34,8 @@ module Paasal
       # Refresh a rejected authentication and generate a new authentication header.<br>
       # Should be called if the authentication is known to be expired, or when a request is rejected with an
       # authentication header that used to be accepted.
-      # @raise [Paasal::Errors::EndpointAuthenticationError] if token refresh failed or authentication never succeeded
-      # @return [Paasal::Adapters::AuthClient] current AuthClient instance
+      # @raise [Nucleus::Errors::EndpointAuthenticationError] if token refresh failed or authentication never succeeded
+      # @return [Nucleus::Adapters::AuthClient] current AuthClient instance
       def refresh
         fail Errors::EndpointAuthenticationError, 'Authentication client does not support refresh'
       end

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module StreamingHelper
       extend Grape::API::Helpers

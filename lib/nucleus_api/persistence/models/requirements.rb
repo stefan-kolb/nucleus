@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     # Requirements of an API version.<br>
     # The required methods are collected from the +requirements.yaml+ file of an API version and their presence
@@ -17,13 +17,13 @@ module Paasal
       # Initialize the API Requirement.
       # @param [Hash] hash the options to create the Requirement
       # @option hash [String] :version The API version
-      # @option hash [Array<Paasal::RequiredMethod>] :methods methods that are required to comply with the API version
+      # @option hash [Array<Nucleus::RequiredMethod>] :methods methods that are required to comply with the API version
       def initialize(hash = nil)
         return if hash.nil?
         @version = hash['version']
         v = hash['methods']
         if v
-          @methods = v.map! { |e| e.is_a?(Paasal::API::RequiredMethod) ? e : Paasal::API::RequiredMethod.new(e) }
+          @methods = v.map! { |e| e.is_a?(Nucleus::API::RequiredMethod) ? e : Nucleus::API::RequiredMethod.new(e) }
         else
           @methods = v
         end

@@ -1,22 +1,22 @@
 require 'net/ssh'
 
-module Paasal
+module Nucleus
   module Adapters
     module V1
       class CloudControl < Stub
-        include Paasal::Logging
-        include Paasal::Adapters::V1::CloudControl::Authentication
-        include Paasal::Adapters::V1::CloudControl::Application
-        include Paasal::Adapters::V1::CloudControl::Buildpacks
-        include Paasal::Adapters::V1::CloudControl::Domains
-        include Paasal::Adapters::V1::CloudControl::Data
-        include Paasal::Adapters::V1::CloudControl::Lifecycle
-        include Paasal::Adapters::V1::CloudControl::Logs
-        include Paasal::Adapters::V1::CloudControl::Regions
-        include Paasal::Adapters::V1::CloudControl::Scaling
-        include Paasal::Adapters::V1::CloudControl::SemanticErrors
-        include Paasal::Adapters::V1::CloudControl::Services
-        include Paasal::Adapters::V1::CloudControl::Vars
+        include Nucleus::Logging
+        include Nucleus::Adapters::V1::CloudControl::Authentication
+        include Nucleus::Adapters::V1::CloudControl::Application
+        include Nucleus::Adapters::V1::CloudControl::Buildpacks
+        include Nucleus::Adapters::V1::CloudControl::Domains
+        include Nucleus::Adapters::V1::CloudControl::Data
+        include Nucleus::Adapters::V1::CloudControl::Lifecycle
+        include Nucleus::Adapters::V1::CloudControl::Logs
+        include Nucleus::Adapters::V1::CloudControl::Regions
+        include Nucleus::Adapters::V1::CloudControl::Scaling
+        include Nucleus::Adapters::V1::CloudControl::SemanticErrors
+        include Nucleus::Adapters::V1::CloudControl::Services
+        include Nucleus::Adapters::V1::CloudControl::Vars
 
         # The default deployment name of cloud control applications that is used by Nucleus
         NUCLEUS_DEPLOYMENT = 'paasal'

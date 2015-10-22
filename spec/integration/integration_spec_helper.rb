@@ -8,17 +8,17 @@ require 'airborne'
 SimpleCov.command_name 'spec:suite:integration'
 
 Airborne.configure do |config|
-  config.rack_app = Paasal::API::Rack.app
+  config.rack_app = Nucleus::API::Rack.app
   config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
 end
 
 RSpec.configure do |config|
   config.before(:suite) do
-    Paasal::TestDataGenerator.clean
+    Nucleus::TestDataGenerator.clean
   end
 
   config.after(:suite) do
-    Paasal::TestDataGenerator.clean
+    Nucleus::TestDataGenerator.clean
   end
 
   config.after(:each) do

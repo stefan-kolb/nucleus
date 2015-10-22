@@ -1,15 +1,15 @@
-module Paasal
+module Nucleus
   module API
     # Load and parse the requirement specification for the API version.
     # The requirements must be specified in a 'requirements.yml' file of the API version's directory,
     # e.g. 'app/api/versions/v3/requirements.yml'.
     #
     # @param [String] api_version API version to collect the requirements for
-    # @return [Paasal::API::Requirements] requirements of adapters to comply with this API version
+    # @return [Nucleus::API::Requirements] requirements of adapters to comply with this API version
     def self.requirements(api_version)
       return @requirements[api_version] unless @requirements.nil? || @requirements[api_version].nil?
       # this is not the schema, but the requirements file (!)
-      api_requirements_file = "#{Paasal::API.src}/api/versions/#{api_version}/requirements.yml"
+      api_requirements_file = "#{Nucleus::API.src}/api/versions/#{api_version}/requirements.yml"
       schema_file = 'schemas/api.requirements.schema.yml'
       schema = Kwalify::Yaml.load_file(schema_file, untabify: true, preceding_alias: true)
       validator = Kwalify::Validator.new(schema)

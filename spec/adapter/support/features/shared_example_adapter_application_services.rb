@@ -1,15 +1,15 @@
 shared_examples 'installed service list schema' do
   it 'complies with the installed service list schema' do
-    expect_json_keys(Paasal::API::Models::InstalledServices.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::InstalledServices.documentation.keys)
   end
 end
 
 shared_examples 'installed service entity schema' do
   it 'installed service entity schema is compliant' do
-    expect_json_keys(Paasal::API::Models::InstalledService.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::InstalledService.documentation.keys)
   end
   it 'installed service entity schema for nested properties property is compliant for each array entry' do
-    property_keys = Paasal::API::Models::InstalledServiceProperty.documentation.keys
+    property_keys = Nucleus::API::Models::InstalledServiceProperty.documentation.keys
     json_body[:properties].each do |property|
       expect(property.keys).to include(*property_keys)
     end

@@ -1,12 +1,12 @@
 shared_examples 'region list schema' do
   it 'complies with the region list schema' do
-    expect_json_keys(Paasal::API::Models::Regions.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Regions.documentation.keys)
   end
 end
 
 shared_examples 'region entity schema' do
   it 'complies with the region entity schema' do
-    expect_json_keys(Paasal::API::Models::Region.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Region.documentation.keys)
   end
 end
 

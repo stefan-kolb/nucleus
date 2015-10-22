@@ -1,7 +1,7 @@
 require 'time'
 require 'net/ssh'
 
-module Paasal
+module Nucleus
   module Adapters
     module V1
       class OpenshiftV2 < Stub

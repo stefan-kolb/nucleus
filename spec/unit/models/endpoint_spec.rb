@@ -1,6 +1,6 @@
 require 'spec/unit/unit_spec_helper'
 
-describe Paasal::Endpoint do
+describe Nucleus::Endpoint do
   let(:id) { 'a123av6172812' }
   let(:name) { 'fake endpoint name' }
   let(:created_at) { Time.now }
@@ -12,7 +12,7 @@ describe Paasal::Endpoint do
   describe 'can be initialized with' do
     context 'an empty hash and' do
       before do
-        @endpoint = Paasal::Endpoint.new({})
+        @endpoint = Nucleus::Endpoint.new({})
       end
       it 'fields are empty' do
         expect(@endpoint.id).to be_nil
@@ -32,7 +32,7 @@ describe Paasal::Endpoint do
 
     context 'nil and' do
       before do
-        @endpoint = Paasal::Endpoint.new
+        @endpoint = Nucleus::Endpoint.new
       end
       it 'fields are empty' do
         expect(@endpoint.id).to be_nil
@@ -52,7 +52,7 @@ describe Paasal::Endpoint do
 
     context 'hash properties' do
       before do
-        @endpoint = Paasal::Endpoint.new('id' => id, 'name' => name, 'created_at' => created_at,
+        @endpoint = Nucleus::Endpoint.new('id' => id, 'name' => name, 'created_at' => created_at,
                                          'updated_at' => updated_at, 'trust' => trust, 'app_domain' => app_domain,
                                          'url' => url)
       end

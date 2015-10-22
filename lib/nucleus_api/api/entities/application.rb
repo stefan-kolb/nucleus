@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       class Application < PersistedEntity
@@ -57,7 +57,7 @@ module Paasal
         # read-only
         expose :state, documentation: {
           type: String, desc: 'The application\'s state',
-          values: Paasal::Enums::ApplicationStates.all,
+          values: Nucleus::Enums::ApplicationStates.all,
           required: true
         }
 
@@ -67,7 +67,7 @@ module Paasal
           required: true
         }
 
-        expose :_links, using: Paasal::API::Models::ApplicationReferences, documentation: {
+        expose :_links, using: Nucleus::API::Models::ApplicationReferences, documentation: {
           type: 'ApplicationReferences', desc: 'Resource links', required: true } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],

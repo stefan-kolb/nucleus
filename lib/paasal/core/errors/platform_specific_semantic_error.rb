@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     class PlatformSpecificSemanticError < AdapterError
       # initialize with default error to be 422

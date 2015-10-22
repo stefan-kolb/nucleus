@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class ServicePlans < Grape::API

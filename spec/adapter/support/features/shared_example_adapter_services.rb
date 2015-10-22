@@ -1,12 +1,12 @@
 shared_examples 'service list schema' do
   it 'complies with the service list schema' do
-    expect_json_keys(Paasal::API::Models::Services.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Services.documentation.keys)
   end
 end
 
 shared_examples 'service entity schema' do
   it 'complies with the service entity schema' do
-    expect_json_keys(Paasal::API::Models::Service.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Service.documentation.keys)
   end
 end
 

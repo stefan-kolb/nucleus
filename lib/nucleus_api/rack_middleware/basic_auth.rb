@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module API
     module Middleware
-      # The {Paasal::Middleware::BasicAuth} is a layer to handle HTTP Basic authentication in a similar style
+      # The {Nucleus::Middleware::BasicAuth} is a layer to handle HTTP Basic authentication in a similar style
       # than Rack itself does. The evaluation returns rack compatible error messages if either credentials are
       # missing (400) or could not be verified (401).<br>
       # The actual verification of the credentials is performed by the authentication block that is passed when
@@ -11,8 +11,8 @@ module Paasal
       # @author Cedric Roeck (cedric.roeck@gmail.com)
       # @since 0.1.0
       class BasicAuth
-        include Paasal::API::ErrorBuilder
-        include Paasal::Logging
+        include Nucleus::API::ErrorBuilder
+        include Nucleus::Logging
 
         # Initialize a new instance of the authentication middleware layer.
         # @param [Object] app the rack app to call
@@ -44,7 +44,7 @@ module Paasal
               return @app.call(env)
             end
             unauthorized('Invalid credentials', env)
-          rescue Paasal::Errors::EndpointAuthenticationError => e
+          rescue Nucleus::Errors::EndpointAuthenticationError => e
             log.debug 'Authentication attempt failed'
             send_response(e.ui_error, e.message, env)
           end
@@ -53,12 +53,12 @@ module Paasal
         private
 
         def unauthorized(dev_msg, env)
-          send_response(Paasal::ErrorMessages::AUTH_UNAUTHORIZED, dev_msg, env,
+          send_response(Nucleus::ErrorMessages::AUTH_UNAUTHORIZED, dev_msg, env,
                         'WWW-Authenticate' => challenge.to_s)
         end
 
         def bad_request(dev_msg, env)
-          send_response(Paasal::ErrorMessages::AUTH_BAD_REQUEST, dev_msg, env)
+          send_response(Nucleus::ErrorMessages::AUTH_BAD_REQUEST, dev_msg, env)
         end
 
         def send_response(error_msg, dev_msg, env, additional_headers = {})

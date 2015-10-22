@@ -2,7 +2,7 @@
 
 shared_examples 'log list schema' do
   it 'complies with the log list schema' do
-    expect_json_keys(Paasal::API::Models::Logs.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Logs.documentation.keys)
   end
 end
 shared_examples 'a valid log encoding' do
@@ -21,7 +21,7 @@ shared_examples 'valid:applications:logs:list' do
         expect(json_body[:logs]).not_to eql([])
       end
       it 'contained logfile complies with log entity schema' do
-        expect(json_body[:logs][0].keys).to eql(Paasal::API::Models::Log.documentation.keys)
+        expect(json_body[:logs][0].keys).to eql(Nucleus::API::Models::Log.documentation.keys)
       end
     end
 

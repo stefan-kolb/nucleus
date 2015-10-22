@@ -1,5 +1,5 @@
 type: map
-class: Paasal::Vendor
+class: Nucleus::Vendor
 desc:  vendor class
 required: yes
 mapping:
@@ -10,7 +10,7 @@ mapping:
     required: yes
     sequence:
       - type: map
-        class: Paasal::Provider
+        class: Nucleus::Provider
         desc:  provider class
         required: yes
         mapping:
@@ -21,7 +21,7 @@ mapping:
             required: yes
             sequence:
               - type: map
-                class: Paasal::Endpoint
+                class: Nucleus::Endpoint
                 desc:  endpoint class
                 mapping:
                   "id": { type: text, required: yes, unique: yes }

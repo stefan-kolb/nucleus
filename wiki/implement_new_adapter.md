@@ -51,7 +51,7 @@ Please make sure that the `{vendor_id}` actually is equal to the **ID** that was
 Open the new adapter file and change the namespace so that it matches the chosen naming and inherits from the `Stub`.
 
 ```ruby
-module Paasal
+module Nucleus
   module Adapters
     module {API_VERSION}
       class {VENDOR_ID} < Stub
@@ -72,7 +72,7 @@ In this test file, you can use this basic template:
 ```ruby
 require 'spec/adapter/adapter_spec_helper'
 
-describe Paasal::Adapters::{API_VERSION}::{VENDOR_CLASS} do
+describe Nucleus::Adapters::{API_VERSION}::{VENDOR_CLASS} do
   before :all do
     # skip these example groups / tests for this adapter. E.g.:
     # @unsupported = ['with valid credentials is compliant and application update']

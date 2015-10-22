@@ -1,6 +1,6 @@
-module Paasal
+module Nucleus
   class StreamCallback
-    include Paasal::Logging
+    include Nucleus::Logging
 
     attr_accessor :closed
 

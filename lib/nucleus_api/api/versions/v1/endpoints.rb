@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class Endpoints < Grape::API
@@ -24,7 +24,7 @@ module Paasal
           params do
             use :endpoint_id
             requires :endpoint, type: Hash do
-              optional :all, using: Paasal::API::Models::Endpoint.documentation
+              optional :all, using: Nucleus::API::Models::Endpoint.documentation
                 .except(:id, :applications, :created_at, :updated_at, :_links)
             end
           end

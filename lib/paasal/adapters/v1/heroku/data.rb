@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     module V1
       class Heroku < Stub

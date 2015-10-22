@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     module GitRepoAnalyzer
       # Is the repository having any branch?

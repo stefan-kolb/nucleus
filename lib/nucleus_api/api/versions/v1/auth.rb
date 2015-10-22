@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class Auth < Grape::API
@@ -47,33 +47,33 @@ module Paasal
         ##################################
 
         # enable native endpoint calls, no param checks, no uniform responses (!)
-        mount Paasal::API::V1::Calls
+        mount Nucleus::API::V1::Calls
 
         # regions list
-        mount Paasal::API::V1::Regions
+        mount Nucleus::API::V1::Regions
 
         # application operations
-        mount Paasal::API::V1::Applications
+        mount Nucleus::API::V1::Applications
         # application - data operations
-        mount Paasal::API::V1::ApplicationData
+        mount Nucleus::API::V1::ApplicationData
         # application - domain operations
-        mount Paasal::API::V1::ApplicationDomains
+        mount Nucleus::API::V1::ApplicationDomains
         # application - environment variables
-        mount Paasal::API::V1::ApplicationEnvVars
+        mount Nucleus::API::V1::ApplicationEnvVars
         # application - lifecycle operations
-        mount Paasal::API::V1::ApplicationLifecycle
+        mount Nucleus::API::V1::ApplicationLifecycle
         # application - logging operations
-        mount Paasal::API::V1::ApplicationLogs
-        mount Paasal::API::V1::ApplicationLogsTail
+        mount Nucleus::API::V1::ApplicationLogs
+        mount Nucleus::API::V1::ApplicationLogsTail
         # application - scaling operations
-        mount Paasal::API::V1::ApplicationScaling
+        mount Nucleus::API::V1::ApplicationScaling
         # application - services
-        mount Paasal::API::V1::ApplicationServices
+        mount Nucleus::API::V1::ApplicationServices
 
         # service operations
-        mount Paasal::API::V1::Services
+        mount Nucleus::API::V1::Services
         # service plan operations
-        mount Paasal::API::V1::ServicePlans
+        mount Nucleus::API::V1::ServicePlans
       end
     end
   end

@@ -1,8 +1,8 @@
-module Paasal
+module Nucleus
   module API
     module LogHelper
       extend Grape::API::Helpers
-      include Paasal::Logging
+      include Nucleus::Logging
     end
   end
 end

@@ -41,7 +41,7 @@ require_rel '../api/helpers'
 
 # This is a workaround to properly load all swagger-documentation:
 # Load each api version, but start with the protected controllers
-Paasal::VersionDetector.api_versions.each do |api_version|
+Nucleus::VersionDetector.api_versions.each do |api_version|
   require_rel "../api/versions/#{api_version}/protected"
   require_rel "../api/versions/#{api_version}"
 end

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     # This class represents a method that is required by an API version.<br>
     # The method name and the required arguments were listed and imported from the +requirements.yaml+ file.

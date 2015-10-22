@@ -1,22 +1,22 @@
-module Paasal
+module Nucleus
   module Adapters
     module V1
       # @see https://access.redhat.com/documentation/en-US/OpenShift/2.0/html/REST_API_Guide The Openshift V2
       #   API documentation
       class OpenshiftV2 < Stub
-        include Paasal::Logging
-        include Paasal::Adapters::V1::OpenshiftV2::Authentication
-        include Paasal::Adapters::V1::OpenshiftV2::Application
-        include Paasal::Adapters::V1::OpenshiftV2::AppStates
-        include Paasal::Adapters::V1::OpenshiftV2::Data
-        include Paasal::Adapters::V1::OpenshiftV2::Domains
-        include Paasal::Adapters::V1::OpenshiftV2::Lifecycle
-        include Paasal::Adapters::V1::OpenshiftV2::Logs
-        include Paasal::Adapters::V1::OpenshiftV2::Regions
-        include Paasal::Adapters::V1::OpenshiftV2::Scaling
-        include Paasal::Adapters::V1::OpenshiftV2::SemanticErrors
-        include Paasal::Adapters::V1::OpenshiftV2::Services
-        include Paasal::Adapters::V1::OpenshiftV2::Vars
+        include Nucleus::Logging
+        include Nucleus::Adapters::V1::OpenshiftV2::Authentication
+        include Nucleus::Adapters::V1::OpenshiftV2::Application
+        include Nucleus::Adapters::V1::OpenshiftV2::AppStates
+        include Nucleus::Adapters::V1::OpenshiftV2::Data
+        include Nucleus::Adapters::V1::OpenshiftV2::Domains
+        include Nucleus::Adapters::V1::OpenshiftV2::Lifecycle
+        include Nucleus::Adapters::V1::OpenshiftV2::Logs
+        include Nucleus::Adapters::V1::OpenshiftV2::Regions
+        include Nucleus::Adapters::V1::OpenshiftV2::Scaling
+        include Nucleus::Adapters::V1::OpenshiftV2::SemanticErrors
+        include Nucleus::Adapters::V1::OpenshiftV2::Services
+        include Nucleus::Adapters::V1::OpenshiftV2::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       # An ApiVersion belongs to the API of our application and offers
@@ -7,7 +7,7 @@ module Paasal
         expose :name, documentation: { type: String, desc: 'API version, e.g. v1 or v2' }
 
         expose :resources, documentation: {
-          type: 'Paasal::API::Models::VersionResource', is_array: true,
+          type: 'Nucleus::API::Models::VersionResource', is_array: true,
            desc: 'Resources of the API version'
         }, using: ApiVersionResource, unless: { collection: true }
 

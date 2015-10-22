@@ -1,6 +1,6 @@
 require 'spec/unit/unit_spec_helper'
 
-describe Paasal::Vendor do
+describe Nucleus::Vendor do
   let(:id) { '12345' }
   let(:name) { 'fake vendor name' }
   let(:created_at) { Time.now }
@@ -9,7 +9,7 @@ describe Paasal::Vendor do
   describe 'can be initialized with' do
     context 'an empty hash and' do
       before do
-        @vendor = Paasal::Vendor.new({})
+        @vendor = Nucleus::Vendor.new({})
       end
       it 'providers are empty' do
         expect(@vendor.providers).to eql([])
@@ -27,7 +27,7 @@ describe Paasal::Vendor do
 
     context 'nil and' do
       before do
-        @vendor = Paasal::Vendor.new
+        @vendor = Nucleus::Vendor.new
       end
       it 'providers are empty' do
         expect(@vendor.providers).to eql([])
@@ -45,9 +45,9 @@ describe Paasal::Vendor do
 
     context 'hash properties and provider double' do
       before do
-        provider = instance_double('Paasal::Provider', name: 'provider name')
-        allow(provider).to receive(:is_a?).with(Paasal::Provider).and_return(true)
-        @vendor = Paasal::Vendor.new('providers' => [provider], 'id' => id, 'name' => name,
+        provider = instance_double('Nucleus::Provider', name: 'provider name')
+        allow(provider).to receive(:is_a?).with(Nucleus::Provider).and_return(true)
+        @vendor = Nucleus::Vendor.new('providers' => [provider], 'id' => id, 'name' => name,
                                      'created_at' => created_at, 'updated_at' => updated_at)
       end
       it 'has one provider' do
@@ -73,7 +73,7 @@ describe Paasal::Vendor do
 
     context 'hash properties and provider hash' do
       before do
-        @vendor = Paasal::Vendor.new('providers' => [{ 'name' => 'provider name' }], 'id' => id, 'name' => name,
+        @vendor = Nucleus::Vendor.new('providers' => [{ 'name' => 'provider name' }], 'id' => id, 'name' => name,
                                      'created_at' => created_at, 'updated_at' => updated_at)
       end
       it 'has one provider' do

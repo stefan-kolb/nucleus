@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     module HttpClient
       # Executes a HEAD request to the given URL.
@@ -9,7 +9,7 @@ module Paasal
       # @option params [Hash] :headers request headers to use with the request
       # @option params [Boolean] :native_call if true the request is a native API call and shall return the
       # unprocessed response
-      # @raise [Paasal::Errors::AdapterError] if the call failed and did not return the expected code(s)
+      # @raise [Nucleus::Errors::AdapterError] if the call failed and did not return the expected code(s)
       def head(path, params = {})
         execute_request(:head, [200], path, params, params.delete(:native_call) { false })
       end
@@ -22,7 +22,7 @@ module Paasal
       # @option params [Hash] :headers request headers to use with the request
       # @option params [Boolean] :native_call if true the request is a native API call and shall return the
       # unprocessed response
-      # @raise [Paasal::Errors::AdapterError] if the call failed and did not return the expected code(s)
+      # @raise [Nucleus::Errors::AdapterError] if the call failed and did not return the expected code(s)
       def get(path, params = {})
         execute_request(:get, [200], path, params, params.delete(:native_call) { false })
       end
@@ -36,7 +36,7 @@ module Paasal
       # @option params [Hash] :headers request headers to use with the request
       # @option params [Boolean] :native_call if true the request is a native API call and shall return the
       # unprocessed response
-      # @raise [Paasal::Errors::AdapterError] if the call failed and did not return the expected code(s)
+      # @raise [Nucleus::Errors::AdapterError] if the call failed and did not return the expected code(s)
       def post(path, params = {})
         execute_request(:post, [200, 201], path, params, params.delete(:native_call) { false })
       end
@@ -50,7 +50,7 @@ module Paasal
       # @option params [Hash] :headers request headers to use with the request
       # @option params [Boolean] :native_call if true the request is a native API call and shall return the
       # unprocessed response
-      # @raise [Paasal::Errors::AdapterError] if the call failed and did not return the expected code(s)
+      # @raise [Nucleus::Errors::AdapterError] if the call failed and did not return the expected code(s)
       def patch(path, params = {})
         execute_request(:patch, [200, 201], path, params, params.delete(:native_call) { false })
       end
@@ -64,7 +64,7 @@ module Paasal
       # @option params [Hash] :headers request headers to use with the request
       # @option params [Boolean] :native_call if true the request is a native API call and shall return the
       # unprocessed response
-      # @raise [Paasal::Errors::AdapterError] if the call failed and did not return the expected code(s)
+      # @raise [Nucleus::Errors::AdapterError] if the call failed and did not return the expected code(s)
       def put(path, params = {})
         execute_request(:put, [200, 201], path, params, params.delete(:native_call) { false })
       end
@@ -77,7 +77,7 @@ module Paasal
       # @option params [Hash] :headers request headers to use with the request
       # @option params [Boolean] :native_call if true the request is a native API call and shall return the
       # unprocessed response
-      # @raise [Paasal::Errors::AdapterError] if the call failed and did not return the expected code(s)
+      # @raise [Nucleus::Errors::AdapterError] if the call failed and did not return the expected code(s)
       def delete(path, params = {})
         execute_request(:delete, [200, 204], path, params, params.delete(:native_call) { false })
       end

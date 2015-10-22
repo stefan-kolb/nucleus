@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   class LinkGenerator
     def initialize(env, api_version)
       @env = env
@@ -26,7 +26,7 @@ module Paasal
       root_url << '/api'
     end
 
-    # Get the root URL of the Paasal API (scheme + host)
+    # Get the root URL of the Nucleus API (scheme + host)
     def root_url
       "#{@env['rack.url_scheme']}://#{@env['HTTP_HOST']}"
     end

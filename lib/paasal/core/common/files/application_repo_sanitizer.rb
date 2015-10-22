@@ -1,6 +1,6 @@
-module Paasal
+module Nucleus
   class ApplicationRepoSanitizer
-    include Paasal::Logging
+    include Nucleus::Logging
 
     # Create a new instance of the object.
     # @param [Boolean] exclude_git if true the '.git' directory won't be moved up, but will be ignored.

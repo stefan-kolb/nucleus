@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   # Copied from the rack-stream project at https://github.com/intridea/rack-stream
   #
   # Copyright (c) 2012, Jerry Cheung

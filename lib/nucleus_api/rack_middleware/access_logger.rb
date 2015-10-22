@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module API
     module Middleware
-      # Paasal::Middleware::AccessLogger forwards every request to the given +app+, and
+      # Nucleus::Middleware::AccessLogger forwards every request to the given +app+, and
       # logs a line to the +logger+.
       #
       # @author Cedric Roeck (cedric.roeck@gmail.com)

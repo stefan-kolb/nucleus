@@ -1,13 +1,13 @@
-module Paasal
+module Nucleus
   module VendorParser
-    extend Paasal::Logging
+    extend Nucleus::Logging
 
     # Get a parsed vendor instance from the adapter_config file
     #
     # @param [File, String, Path] adapter_config path to the adapter configuration file to be parsed
-    # @return [Paasal::Vendor] the parsed Vendor instance
+    # @return [Nucleus::Vendor] the parsed Vendor instance
     def self.parse(adapter_config)
-      schema_file = "#{Paasal.root}/schemas/api.adapter.schema.yml"
+      schema_file = "#{Nucleus.root}/schemas/api.adapter.schema.yml"
       schema = Kwalify::Yaml.load_file(schema_file, untabify: true, preceding_alias: true)
       validator = Kwalify::Validator.new(schema)
       config_parser = Kwalify::Yaml::Parser.new(validator, data_binding: true, preceding_alias: true)

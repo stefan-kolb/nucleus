@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class Vendors < Grape::API
@@ -57,7 +57,7 @@ module Paasal
           params do
             use :vendor_id
             requires :provider, type: Hash do
-              requires :all, using: Paasal::API::Models::Provider.documentation
+              requires :all, using: Nucleus::API::Models::Provider.documentation
                 .except(:id, :endpoints, :created_at, :updated_at, :_links)
             end
           end

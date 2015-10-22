@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module DB
       module ProviderDao
@@ -9,8 +9,8 @@ module Paasal
         end
       end
 
-      class VersionDependantProviderDao < Paasal::DB::Store
-        include Paasal::Logging
+      class VersionDependantProviderDao < Nucleus::DB::Store
+        include Nucleus::Logging
 
         def initialize(api_version)
           log.debug "Creating new VersionDependantProviderDao for version #{api_version}"

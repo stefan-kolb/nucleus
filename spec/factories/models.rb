@@ -3,13 +3,13 @@ FactoryGirl.define do
     SecureRandom.uuid
   end
 
-  factory :adapter, class: Paasal::AdapterIndexEntry do
+  factory :adapter, class: Nucleus::AdapterIndexEntry do
     url { Faker::Internet.url }
     id nil
     adapter_clazz nil
   end
 
-  factory :endpoint, class: Paasal::Endpoint do
+  factory :endpoint, class: Nucleus::Endpoint do
     id { generate(:uuid) }
     name { Faker::Internet.slug }
     url { Faker::Internet.url }
@@ -21,7 +21,7 @@ FactoryGirl.define do
       # associate with provider
       unless endpoint.provider.nil?
         # TODO: find a solution how to test when multiple API versions are to be supported
-        dao = Paasal::API::DB::ProviderDao.instance('v1')
+        dao = Nucleus::API::DB::ProviderDao.instance('v1')
         provider = dao.get endpoint.provider
         provider.endpoints = [] if provider.endpoints.nil?
         provider.endpoints << endpoint.id
@@ -31,7 +31,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :provider, class: Paasal::Provider do
+  factory :provider, class: Nucleus::Provider do
     id { generate(:uuid) }
     name { Faker::App.name }
     created_at { (Faker::Date.between(180.days.ago, 90.days.ago)).iso8601 }
@@ -42,7 +42,7 @@ FactoryGirl.define do
       # associate with vendor
       unless provider.vendor.nil?
         # TODO: find a solution how to test when multiple API versions are to be supported
-        dao = Paasal::API::DB::VendorDao.instance('v1')
+        dao = Nucleus::API::DB::VendorDao.instance('v1')
         vendor = dao.get provider.vendor
         vendor.providers = [] if vendor.providers.nil?
         vendor.providers << provider.id
@@ -52,7 +52,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :vendor, class: Paasal::Vendor do
+  factory :vendor, class: Nucleus::Vendor do
     id { generate(:uuid) }
     name { Faker::App.name }
     created_at { (Faker::Date.between(180.days.ago, 90.days.ago)).iso8601 }

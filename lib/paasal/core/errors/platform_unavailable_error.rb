@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     class PlatformUnavailableError < AdapterError
       # initialize with default error to be 503

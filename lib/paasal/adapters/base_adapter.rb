@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   # The {Adapters} module combines all application logic to communicate with the different vendor platforms
   # and created the unified API.
   module Adapters
@@ -27,7 +27,7 @@ module Paasal
 
       # Cache the auth information.
       # @param [String] key cache key
-      # @param [Paasal::Adapters::AuthClient] auth_object authentication client to be cached
+      # @param [Nucleus::Adapters::AuthClient] auth_object authentication client to be cached
       # @return [void]
       def cache(key, auth_object)
         auth_objects_cache[key] = auth_object
@@ -42,7 +42,7 @@ module Paasal
 
       # Get the currently cached authentication object.
       # @param [String] key cache key
-      # @return [Hash<String,String>, Paasal::Adapters::AuthClient] cached authentication client
+      # @return [Hash<String,String>, Nucleus::Adapters::AuthClient] cached authentication client
       def cached(key)
         return nil unless cache?(key)
         auth_objects_cache[key]

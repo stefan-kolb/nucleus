@@ -4,7 +4,7 @@
 
 RSpec.configure do |config|
   vendor = lambda do |meta|
-    meta[:described_class].to_s.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, '')
+    meta[:described_class].to_s.gsub(/Nucleus::Adapters::/, '').underscore.downcase.gsub(/_adapter/, '')
   end
 
   # Build the cassette name. If no :cassette_group is set the name will be resolved recursively to:
@@ -21,12 +21,12 @@ RSpec.configure do |config|
       return File.join(vcr_cassette_name_for[example_group], description)
     end
     # modify adapter name and split by API version
-    File.join(description.gsub(/Paasal::Adapters::/, '').underscore.downcase.gsub(/_adapter/, ''), 'vcr_cassettes')
+    File.join(description.gsub(/Nucleus::Adapters::/, '').underscore.downcase.gsub(/_adapter/, ''), 'vcr_cassettes')
   end
 
   config.before(:suite) do
     # do a full application start, load entities and put them into the db stores
-    Paasal::API::AdapterImporter.new.import
+    Nucleus::API::AdapterImporter.new.import
     Excon.defaults[:mock] = false
   end
 
@@ -38,7 +38,7 @@ RSpec.configure do |config|
 
   config.before(:each) do |test|
     # clear authentication cache
-    Paasal::Adapters::BaseAdapter.auth_objects_cache.clear
+    Nucleus::Adapters::BaseAdapter.auth_objects_cache.clear
 
     example = test.respond_to?(:metadata) ? test : test.example
     group_cassette = example_group_property(example.metadata, :as_cassette)
@@ -93,19 +93,19 @@ RSpec.configure do |config|
       end
 
       method_path = File.join(__dir__, '..', 'recordings', vendor[example.metadata], 'method_cassettes')
-      recorder = Paasal::MethodResponseRecorder.new(self, example, File.expand_path(method_path))
-      recorder.setup(Paasal::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
-      recorder.setup(Paasal::Adapters::GitRepoAnalyzer, [:any_branch?])
-      recorder.setup(Paasal::Adapters::FileManager, [:save_file_from_data, :load_file])
-      recorder.setup(Paasal::Adapters::ArchiveConverter, [:convert])
-      recorder.setup(Paasal::Adapters::V1::OpenshiftV2, [:remote_log_files, :remote_log_file?, :remote_log_entries])
+      recorder = Nucleus::MethodResponseRecorder.new(self, example, File.expand_path(method_path))
+      recorder.setup(Nucleus::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
+      recorder.setup(Nucleus::Adapters::GitRepoAnalyzer, [:any_branch?])
+      recorder.setup(Nucleus::Adapters::FileManager, [:save_file_from_data, :load_file])
+      recorder.setup(Nucleus::Adapters::ArchiveConverter, [:convert])
+      recorder.setup(Nucleus::Adapters::V1::OpenshiftV2, [:remote_log_files, :remote_log_file?, :remote_log_entries])
     end
 
     if group_mock_websocket
       # enable faye websocket recording
       records_path = File.join(__dir__, '..', 'recordings', vendor[example.metadata])
-      Paasal::FayeWebsocketRecorder.new(self, File.expand_path(File.join(records_path, 'websocket_cassettes'))).enable
-      Paasal::EmHttpStreamRecorder.new(self, File.expand_path(File.join(records_path, 'http_stream_cassettes'))).enable
+      Nucleus::FayeWebsocketRecorder.new(self, File.expand_path(File.join(records_path, 'websocket_cassettes'))).enable
+      Nucleus::EmHttpStreamRecorder.new(self, File.expand_path(File.join(records_path, 'http_stream_cassettes'))).enable
     end
   end
 

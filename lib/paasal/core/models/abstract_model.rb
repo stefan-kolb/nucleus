@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   #
   # @author Cedric Roeck (cedric.roeck@gmail.com)
   # @since 0.1.0

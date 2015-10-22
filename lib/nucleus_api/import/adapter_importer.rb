@@ -1,22 +1,22 @@
 require 'paasal/core/common/url_converter'
 
-module Paasal
+module Nucleus
   module API
     class AdapterImporter
-      include Paasal::Logging
-      include Paasal::UrlConverter
+      include Nucleus::Logging
+      include Nucleus::UrlConverter
 
       # Import all API adapters that are described in the adapter configurations.
       #
-      # @raise [Paasal::AmbiguousAdapterError] if more than one adapter was found for an adapter configuration
+      # @raise [Nucleus::AmbiguousAdapterError] if more than one adapter was found for an adapter configuration
       def import
         log.debug 'Loading API versions...'
-        api_versions = Paasal::VersionDetector.api_versions
+        api_versions = Nucleus::VersionDetector.api_versions
 
         log.debug 'Loading adapter files...'
         api_versions.each do |api_version|
           log.debug "Loading adapters for API #{api_version}..."
-          Paasal::Adapters.configuration_files.each do |adapter_config|
+          Nucleus::Adapters.configuration_files.each do |adapter_config|
             import_adapter(adapter_config, api_version)
           end
         end
@@ -27,10 +27,10 @@ module Paasal
 
       def import_adapter(adapter_config, api_version)
         log.debug "... processing #{adapter_config}"
-        vendor = Paasal::VendorParser.parse(adapter_config)
+        vendor = Nucleus::VendorParser.parse(adapter_config)
         return if vendor.nil?
 
-        adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, api_version)
+        adapter_clazz = Nucleus::Adapters.adapter_clazz(adapter_config, api_version)
         return if adapter_clazz.nil?
 
         # persist the vendor, but only if a valid adapter was found for this version
@@ -40,7 +40,7 @@ module Paasal
       def save_vendor(vendor, api_version, adapter_clazz)
         log.debug "... persisting vendor: #{vendor.name}"
         # instantiate DAOs for this API version
-        vendor_dao = Paasal::API::DB::VendorDao.instance api_version
+        vendor_dao = Nucleus::API::DB::VendorDao.instance api_version
 
         save_providers(vendor, api_version, adapter_clazz) unless vendor.providers.nil?
         # finally save the vendor after all nested entities got their IDs if not yet included or shall be overriden
@@ -50,7 +50,7 @@ module Paasal
       end
 
       def save_providers(vendor, api_version, adapter_clazz)
-        provider_dao = Paasal::API::DB::ProviderDao.instance api_version
+        provider_dao = Nucleus::API::DB::ProviderDao.instance api_version
 
         # finally persist recursively
         vendor.providers.each do |provider|
@@ -67,8 +67,8 @@ module Paasal
       end
 
       def save_endpoints(provider, api_version, adapter_clazz)
-        endpoint_dao = Paasal::API::DB::EndpointDao.instance api_version
-        adapter_dao = Paasal::API::DB::AdapterDao.instance api_version
+        endpoint_dao = Nucleus::API::DB::EndpointDao.instance api_version
+        adapter_dao = Nucleus::API::DB::AdapterDao.instance api_version
 
         provider.endpoints.each do |endpoint|
           log.debug "... persisting endpoint: #{endpoint.name}"

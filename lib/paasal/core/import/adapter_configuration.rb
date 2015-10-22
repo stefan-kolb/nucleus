@@ -1,6 +1,6 @@
-module Paasal
+module Nucleus
   module Adapters
-    extend Paasal::Logging
+    extend Nucleus::Logging
 
     # Get all adapter configuration files that are included in the application.
     # The config files must be located at the +config/adapters+ directory.
@@ -8,7 +8,7 @@ module Paasal
     # @return [Array<File>] all adapter configuration files
     def self.configuration_files
       return @configuration_files if @configuration_files
-      adapter_dir = "#{Paasal.root}/config/adapters"
+      adapter_dir = "#{Nucleus.root}/config/adapters"
       files = Dir[File.join(adapter_dir, '*.yml')] | Dir[File.join(adapter_dir, '*.yaml')]
       files = files.flatten.compact
       files.collect! { |file| File.expand_path(file) }
@@ -26,7 +26,7 @@ module Paasal
       adapter_file = adapter_file(adapter_config, api_version)
       return if adapter_file.nil?
       # transform path to clazz and load an instance
-      adapter_clazz = "Paasal::Adapters::#{api_version.upcase}::#{File.basename(adapter_file, '.rb').capitalize}"
+      adapter_clazz = "Nucleus::Adapters::#{api_version.upcase}::#{File.basename(adapter_file, '.rb').capitalize}"
       adapter_clazz.camelize.split('::').inject(Object) { |a, e| a.const_get e }
     end
 
@@ -36,12 +36,12 @@ module Paasal
     #
     # @param [String] adapter_config adapter configuration that indicates the adapter's name
     # @param [String] api_version API version to load the adapter for
-    # @raise [Paasal::AmbiguousAdapterError] if more than one adapter was found for an adapter configuration
+    # @raise [Nucleus::AmbiguousAdapterError] if more than one adapter was found for an adapter configuration
     # @return [String] path to the adapter's class file
     def self.adapter_file(adapter_config, api_version)
       log.debug "... trying to resolve adapter for config #{adapter_config} and API #{api_version}..."
       adapter_name = File.basename(adapter_config).sub(/.[^.]+\z/, '.rb')
-      file_search_path = "#{Paasal.root}/lib/paasal/adapters/#{api_version}/*/#{adapter_name}"
+      file_search_path = "#{Nucleus.root}/lib/paasal/adapters/#{api_version}/*/#{adapter_name}"
       adapter_file = Dir.glob(file_search_path)
       fail AmbiguousAdapterError, "More than 1 adapter file found for #{adapter_name}" unless adapter_file.size <= 1
 

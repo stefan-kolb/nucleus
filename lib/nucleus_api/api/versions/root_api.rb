@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   # The API of Nucleus allows to run multiple versions at the same time.
   # Each API version is accessible by using matching accept headers.<br>
   # Nucleus follows the [Semantic Versioning](http://semver.org/) standard.
@@ -34,7 +34,7 @@ module Paasal
         env['api.endpoint'].log.debug e.to_s
         e.backtrace.each { |line| env['api.endpoint'].log.debug line }
 
-        if e.is_a?(Errors::ApiError) || e.is_a?(Paasal::Errors::AdapterError)
+        if e.is_a?(Errors::ApiError) || e.is_a?(Nucleus::Errors::AdapterError)
           # willingly sent error, no need for stacktrace
           entity = env['api.endpoint'].build_error_entity(e.ui_error, e.message)
         elsif e.is_a?(Grape::Exceptions::ValidationErrors) || e.is_a?(Grape::Exceptions::InvalidMessageBody)
@@ -57,13 +57,13 @@ module Paasal
       # BE SORTED STARTING WITH THE HIGHEST VERSION
 
       # include proof-of-concept API, version 2
-      # mount Paasal::API::V2::Base
+      # mount Nucleus::API::V2::Base
 
       # include basic API, version 1
-      mount Paasal::API::V1::Base
+      mount Nucleus::API::V1::Base
 
       desc 'Return list of all currently available API versions (root)' do
-        success Paasal::API::Models::Api
+        success Nucleus::API::Models::Api
         failure ErrorResponses.standard_responses
         named 'List API versions'
       end
@@ -75,7 +75,7 @@ module Paasal
         end
 
         api = { versions: api_versions }
-        present api, with: Paasal::API::Models::Api
+        present api, with: Nucleus::API::Models::Api
       end
 
       # ATTENTION (!) BE AWARE THAT THIS ROUTE MUST ALWAYS

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     module V1
       # The {Heroku} adapter is designed to support the Heroku platform API.<br>
@@ -6,20 +6,20 @@ module Paasal
       # The Nucleus API is fully supported, there are no known issues.
       # @see https://devcenter.heroku.com/articles/platform-api-reference Heroku Platform API
       class Heroku < Stub
-        include Paasal::Logging
-        include Paasal::Adapters::V1::Heroku::Authentication
-        include Paasal::Adapters::V1::Heroku::Application
-        include Paasal::Adapters::V1::Heroku::AppStates
-        include Paasal::Adapters::V1::Heroku::Buildpacks
-        include Paasal::Adapters::V1::Heroku::Data
-        include Paasal::Adapters::V1::Heroku::Domains
-        include Paasal::Adapters::V1::Heroku::Logs
-        include Paasal::Adapters::V1::Heroku::Lifecycle
-        include Paasal::Adapters::V1::Heroku::Regions
-        include Paasal::Adapters::V1::Heroku::Scaling
-        include Paasal::Adapters::V1::Heroku::Services
-        include Paasal::Adapters::V1::Heroku::SemanticErrors
-        include Paasal::Adapters::V1::Heroku::Vars
+        include Nucleus::Logging
+        include Nucleus::Adapters::V1::Heroku::Authentication
+        include Nucleus::Adapters::V1::Heroku::Application
+        include Nucleus::Adapters::V1::Heroku::AppStates
+        include Nucleus::Adapters::V1::Heroku::Buildpacks
+        include Nucleus::Adapters::V1::Heroku::Data
+        include Nucleus::Adapters::V1::Heroku::Domains
+        include Nucleus::Adapters::V1::Heroku::Logs
+        include Nucleus::Adapters::V1::Heroku::Lifecycle
+        include Nucleus::Adapters::V1::Heroku::Regions
+        include Nucleus::Adapters::V1::Heroku::Scaling
+        include Nucleus::Adapters::V1::Heroku::Services
+        include Nucleus::Adapters::V1::Heroku::SemanticErrors
+        include Nucleus::Adapters::V1::Heroku::Vars
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)

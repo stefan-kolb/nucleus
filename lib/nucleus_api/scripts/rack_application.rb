@@ -5,7 +5,7 @@ require 'rack/response'
 require 'rack/auth/basic'
 require 'rack/ssl-enforcer'
 
-module Paasal
+module Nucleus
   module API
     module Rack
       def self.app
@@ -31,13 +31,13 @@ module Paasal
           use RequestStore::Middleware
 
           # X-Request-ID
-          use Paasal::API::Middleware::RequestId
+          use Nucleus::API::Middleware::RequestId
 
           # Apply request logger, which includes the X-Request-ID
-          use Paasal::API::Middleware::AccessLogger, logger
+          use Nucleus::API::Middleware::AccessLogger, logger
 
           # log error stacktraces to a dedicated file
-          use Paasal::API::Middleware::ErrorRequestLogger, File.join(log_dir, 'error.log')
+          use Nucleus::API::Middleware::ErrorRequestLogger, File.join(log_dir, 'error.log')
 
           # redirect to the documentation, but do NOT call the index directly
           use ::Rack::Static, urls: { '/docs' => 'redirect.html' }, root: 'public/swagger-ui'
@@ -46,8 +46,8 @@ module Paasal
 
           run ::Rack::URLMap.new(
             # serve the dynamic API
-            '/' => Paasal::API::RootAPI.new,
-            '/api' => Paasal::API::RootAPI.new,
+            '/' => Nucleus::API::RootAPI.new,
+            '/api' => Nucleus::API::RootAPI.new,
             # serves the swagger-ui
             '/docs' => ::Rack::Directory.new('public/swagger-ui')
           )

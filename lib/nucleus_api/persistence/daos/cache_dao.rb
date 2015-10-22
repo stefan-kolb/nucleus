@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module DB
       module CacheDao
@@ -9,9 +9,9 @@ module Paasal
         end
       end
 
-      class VersionDependantCacheDao < Paasal::DB::CacheStore
-        include Paasal::Logging
-        include Paasal::UrlConverter
+      class VersionDependantCacheDao < Nucleus::DB::CacheStore
+        include Nucleus::Logging
+        include Nucleus::UrlConverter
 
         def initialize(api_version)
           log.debug "Creating new VersionDependantCacheDao for version #{api_version}"

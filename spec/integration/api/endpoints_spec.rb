@@ -1,8 +1,8 @@
 require 'spec/spec_helper'
 require 'spec/integration/integration_spec_helper'
 
-describe Paasal::API::V1::Endpoints do
-  after { Paasal::TestDataGenerator.clean }
+describe Nucleus::API::V1::Endpoints do
+  after { Nucleus::TestDataGenerator.clean }
 
   let!(:vendor) { create(:vendor) }
   let!(:provider) { create(:provider, vendor: vendor.id) }
@@ -17,7 +17,7 @@ describe Paasal::API::V1::Endpoints do
     end
     # # TODO contains all required fields
     # it 'contains all required fields as highlighted in the documentation' do
-    #   expect_json_keys('endpoints.0', Paasal::API::Models::Endpoints.documentation[:items]
+    #   expect_json_keys('endpoints.0', Nucleus::API::Models::Endpoints.documentation[:items]
     #     .find { |k, v| !!v[:required] } )
     # end
     it 'shows the retrieved number of endpoints' do

@@ -1,16 +1,16 @@
-module Paasal
+module Nucleus
   # The {AdapterResolver} can be used within Ruby applications to retrieve a Nucleus adapter.
   # Returned adapters are patched so that each call enforces authentication and retries a call when a token was expired.
   class AdapterResolver
-    include Paasal::UrlConverter
+    include Nucleus::UrlConverter
 
     def initialize(requested_version)
-      fail 'No such version supported' unless Paasal::VersionDetector.api_versions.include?(requested_version)
+      fail 'No such version supported' unless Nucleus::VersionDetector.api_versions.include?(requested_version)
       @api_version = requested_version
     end
 
     # Get a list of all adapters that are currently supported.
-    # @return [Hash<String, Hash<String, Paasal::Adapters::BaseAdapter>>] currently supported adapters
+    # @return [Hash<String, Hash<String, Nucleus::Adapters::BaseAdapter>>] currently supported adapters
     def adapters
       setup
       @adapters
@@ -30,7 +30,7 @@ module Paasal
     # @option options [String] :api_url URL of the endpoint's API that shall be used.
     #   Must be specified if there are multiple endpoints available and will be forced to https://
     # @raise [StandardError] if the vendor is unknown / not supported or no unique API endpoint could be identified
-    # @return [Paasal::Adapters::BaseAdapter] loaded adapter implementation
+    # @return [Nucleus::Adapters::BaseAdapter] loaded adapter implementation
     def load(vendor, username, password, options = {})
       setup
       fail StandardError, "Could not find adapter for vendor '#{vendor}'" unless @adapters.key?(vendor)
@@ -94,10 +94,10 @@ module Paasal
 
       @adapters = {}
       @configurations = {}
-      Paasal::Adapters.configuration_files.each do |adapter_config|
-        vendor = Paasal::VendorParser.parse(adapter_config)
+      Nucleus::Adapters.configuration_files.each do |adapter_config|
+        vendor = Nucleus::VendorParser.parse(adapter_config)
         next unless vendor
-        adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, @api_version)
+        adapter_clazz = Nucleus::Adapters.adapter_clazz(adapter_config, @api_version)
         next unless adapter_clazz
         @adapters[vendor.id] = adapter_clazz
         @configurations[vendor.id] = {}

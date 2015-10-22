@@ -1,23 +1,23 @@
 shared_examples 'service plan list schema' do
   it 'complies with the service plan list schema' do
-    expect_json_keys(Paasal::API::Models::ServicePlans.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::ServicePlans.documentation.keys)
   end
 end
 
 shared_examples 'service plan entity schema' do
   it 'service plan entity schema is compliant' do
-    expect_json_keys(Paasal::API::Models::ServicePlan.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::ServicePlan.documentation.keys)
   end
   it 'service plan entity schema for each nested costs property is compliant' do
     json_body[:costs].each do |cost|
-      expect(cost.keys).to include(*Paasal::API::Models::ServiceCosts.documentation.keys)
+      expect(cost.keys).to include(*Nucleus::API::Models::ServiceCosts.documentation.keys)
     end
   end
   it 'service plan entity schema for nested costs/prices property and each price is schema compliant' do
     # each price must be conform to the schema
     json_body[:costs].each do |cost|
       cost[:price].each do |price|
-        expect(price.keys).to include(*Paasal::API::Models::ServiceCostsPrice.documentation.keys)
+        expect(price.keys).to include(*Nucleus::API::Models::ServiceCostsPrice.documentation.keys)
       end
     end
   end

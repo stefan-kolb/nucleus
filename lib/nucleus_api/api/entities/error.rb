@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       # The Error class has to be thrown each time an error occurs when using the API.

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Enums
       # Compression formats define which archives can be extracted and packed by Nucleus.

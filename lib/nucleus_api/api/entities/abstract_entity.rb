@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       # The AbstractEntity is designed as super-class for all entities that shall be exposed via the API.
@@ -80,7 +80,7 @@ module Paasal
           elsif !options[:version].nil?
             version = options[:version]
           end
-          @link_generator = Paasal::LinkGenerator.new(options[:env], version)
+          @link_generator = Nucleus::LinkGenerator.new(options[:env], version)
           @link_generator
         end
       end

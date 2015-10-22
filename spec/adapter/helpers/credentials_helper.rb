@@ -1,6 +1,6 @@
 require 'singleton'
 
-module Paasal
+module Nucleus
   module Spec
     module Config
       class CredentialsHelper
@@ -76,7 +76,7 @@ module Paasal
       end
 
       # Get the spec credential configuration
-      # @return [Paasal::Spec::Config::CredentialsHelper] Instance of the CredentialsHelper
+      # @return [Nucleus::Spec::Config::CredentialsHelper] Instance of the CredentialsHelper
       def self.credentials
         CredentialsHelper.instance
       end

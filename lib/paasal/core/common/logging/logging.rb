@@ -1,7 +1,7 @@
-module Paasal
-  # Logging module for Paasal.
+module Nucleus
+  # Logging module for Nucleus.
   # Include via
-  #     include Paasal::Logging
+  #     include Nucleus::Logging
   # and then log your messages:
   #    log.info('This is a test log message')
   #
@@ -32,7 +32,7 @@ module Paasal
         file_log = Logger.new(log_file, 'daily', 7)
 
         # include custom log format that includes the request id
-        formatter = Paasal::Logging::Formatter.new
+        formatter = Nucleus::Logging::Formatter.new
 
         [file_log, std_log].each do |logger|
           # apply format

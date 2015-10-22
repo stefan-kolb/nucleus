@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class ApplicationData < Grape::API
@@ -21,7 +21,7 @@ module Paasal
             name_match = /^.+\.(zip|tar|tgz|tar.gz)$/.match(params[:file][:filename])
             content_type_match = %w(application/zip application/gzip application/x-gzip).include? params[:file][:type]
 
-            fail Paasal::Errors::AdapterRequestError,
+            fail Nucleus::Errors::AdapterRequestError,
                  "Invalid 'file'. Must contain the archive format" unless name_match || content_type_match
 
             # convert content type to compression format when name was not matched
@@ -59,8 +59,8 @@ module Paasal
           params do
             optional :archive_format, desc: 'Compression format to use for the returned application archive, '\
                      'one of: \'zip\', \'tar.gz\'. Defaults to \'zip\'.',
-                     values: Paasal::API::Enums::CompressionFormats.all,
-                     default: Paasal::API::Enums::CompressionFormats::ZIP
+                     values: Nucleus::API::Enums::CompressionFormats.all,
+                     default: Nucleus::API::Enums::CompressionFormats::ZIP
           end
           get '/download' do
             compression_format = params[:archive_format]

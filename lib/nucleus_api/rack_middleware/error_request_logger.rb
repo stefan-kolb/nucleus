@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module API
     module Middleware
-      # The {Paasal::Middleware::ErrorRequestLogger} is assigned to redirect the
+      # The {Nucleus::Middleware::ErrorRequestLogger} is assigned to redirect the
       # default 'rack.errors' output not only to the console, but also to a log file.
       # This file then includes all error stacktraces.
       #

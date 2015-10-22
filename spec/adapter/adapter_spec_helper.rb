@@ -32,21 +32,21 @@ SimpleCov.command_name 'spec:suite:adapters'
 # TODO: implement multi-version support for tests
 # Setup the rack application, use API v1
 Airborne.configure do |config|
-  config.rack_app = Paasal::API::Rack.app
+  config.rack_app = Nucleus::API::Rack.app
   config.headers = { 'HTTP_ACCEPT' => 'application/vnd.paasal-v1' }
 end
 
 def load_adapter(endpoint_id, api_version)
-  Paasal::Spec::Config::AdapterHelper.instance.load_adapter(endpoint_id, api_version)
+  Nucleus::Spec::Config::AdapterHelper.instance.load_adapter(endpoint_id, api_version)
 end
 
 def credentials(endpoint_id, valid = true)
-  return Paasal::Spec::Config.credentials.valid endpoint_id if valid
-  Paasal::Spec::Config.credentials.invalid
+  return Nucleus::Spec::Config.credentials.valid endpoint_id if valid
+  Nucleus::Spec::Config.credentials.invalid
 end
 
 def username_password(endpoint_id)
-  Paasal::Spec::Config.credentials.username_password endpoint_id
+  Nucleus::Spec::Config.credentials.username_password endpoint_id
 end
 
 def skip_example?(described_class, current_test, to_skip)
@@ -71,8 +71,8 @@ end
 def deployed_files_md5(deployed_archive, deployed_archive_format)
   # extract deployed archive and sanitize to allow a fair comparison
   dir_deployed = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_deployed")
-  Paasal::ArchiveExtractor.new.extract(deployed_archive, dir_deployed, deployed_archive_format)
-  Paasal::ApplicationRepoSanitizer.new.sanitize(dir_deployed)
+  Nucleus::ArchiveExtractor.new.extract(deployed_archive, dir_deployed, deployed_archive_format)
+  Nucleus::ApplicationRepoSanitizer.new.sanitize(dir_deployed)
   # generate and return MD5 hashes of deployed files
   os_neutral_dir_file_md5_hashes(dir_deployed)
 ensure
@@ -87,8 +87,8 @@ def response_files_md5(response, download_archive_format, sanitize = true)
 
   # extract downloaded response and sanitize to allow a fair comparison
   dir_download = File.join(Dir.tmpdir, "paasal.test.#{SecureRandom.uuid}_download")
-  Paasal::ArchiveExtractor.new.extract(response_file, dir_download, download_archive_format)
-  Paasal::ApplicationRepoSanitizer.new.sanitize(dir_download) if sanitize
+  Nucleus::ArchiveExtractor.new.extract(response_file, dir_download, download_archive_format)
+  Nucleus::ApplicationRepoSanitizer.new.sanitize(dir_download) if sanitize
 
   # generate and return MD5 hashes of downloaded files
   os_neutral_dir_file_md5_hashes(dir_download)

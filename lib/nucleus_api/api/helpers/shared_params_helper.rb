@@ -1,5 +1,5 @@
 # noinspection ALL
-module Paasal
+module Nucleus
   module API
     module SharedParamsHelper
       extend Grape::API::Helpers

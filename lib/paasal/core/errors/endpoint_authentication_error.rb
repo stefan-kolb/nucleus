@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     class EndpointAuthenticationError < AdapterError
       # initialize with default error to be 401, authentication failed

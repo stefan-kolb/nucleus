@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class ApplicationEnvVars < Grape::API
@@ -27,7 +27,7 @@ module Paasal
           params do
             requires :variable, type: Hash do
               # we only need the key and the value
-              requires :all, using: Paasal::API::Models::EnvironmentVariable.documentation.slice(:key, :value)
+              requires :all, using: Nucleus::API::Models::EnvironmentVariable.documentation.slice(:key, :value)
             end
           end
           post '/' do
@@ -58,7 +58,7 @@ module Paasal
             params do
               requires :variable, type: Hash do
                 # we only need the updated value
-                requires :all, using: Paasal::API::Models::EnvironmentVariable.documentation.slice(:value)
+                requires :all, using: Nucleus::API::Models::EnvironmentVariable.documentation.slice(:value)
               end
             end
             patch '/' do

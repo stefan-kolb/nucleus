@@ -3,7 +3,7 @@ require 'digest/md5'
 # for serialization to replace the default marshaller
 require 'oj'
 
-module Paasal
+module Nucleus
   class MethodResponseRecorder
     def initialize(test, example, data_dir)
       @example_group_name = example.metadata[:example_group][:full_description]
@@ -61,6 +61,10 @@ module Paasal
 
     def playback(class_name, method_name, *args)
       param_hash = args_hash(*args)
+      # rename dir
+      File.rename(File.join(cassette_dir(class_name, method_name, param_hash[1])).to_s, File.join(cassette_dir(class_name, method_name, param_hash[0])).to_s)
+      param_hash = param_hash[0]
+
       return play_io(class_name, method_name, param_hash) if play_io?(class_name, method_name, param_hash)
       return play_tempfile(class_name, method_name, param_hash) if play_tempfile?(class_name, method_name, param_hash)
       play(class_name, method_name, param_hash)
@@ -168,8 +172,14 @@ module Paasal
         end
       end
       # update with the test name, so that failing tests do not influence others
+      # old hex
+      old = md5.dup
+      old.update(@example_group_name.gsub "Nucleus", "Paasal")
+      # new hex
       md5.update(@example_group_name)
       md5.hexdigest
+
+      [md5.hexdigest, old.hexdigest]
     end
 
     def digest_io_update(digest, io)

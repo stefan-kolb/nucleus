@@ -4,7 +4,7 @@ require 'paasal/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'paasal'
-  spec.version       = Paasal::VERSION
+  spec.version       = Nucleus::VERSION
   spec.authors       = ['Stefan Kolb', 'Cedric Röck']
   spec.email         = ['stefan.kolb@uni-bamberg.de']
   spec.summary       = 'Nucleus is an abstraction layer for the deployment and management functions of '\

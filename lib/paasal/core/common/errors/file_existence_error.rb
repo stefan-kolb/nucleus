@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   class FileExistenceError < StandardError
     def initialize(message)
       super(message)

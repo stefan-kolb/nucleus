@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       class Log < PersistedEntity
@@ -21,7 +21,7 @@ module Paasal
 
         expose :type, documentation: {
           type: String, desc: 'Logfile type',
-          values: Paasal::Enums::ApplicationLogfileType.all,
+          values: Nucleus::Enums::ApplicationLogfileType.all,
           required: true
         }
 

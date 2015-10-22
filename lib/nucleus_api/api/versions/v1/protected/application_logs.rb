@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class ApplicationLogs < Grape::API
@@ -25,8 +25,8 @@ module Paasal
           params do
             optional :archive_format, desc: 'Compression format to use for the returned application archive, '\
                      'one of: \'zip\', \'tar.gz\'. Defaults to \'zip\'.',
-                     values: Paasal::API::Enums::CompressionFormats.all,
-                     default: Paasal::API::Enums::CompressionFormats::ZIP
+                     values: Nucleus::API::Enums::CompressionFormats.all,
+                     default: Nucleus::API::Enums::CompressionFormats::ZIP
           end
           get '/download' do
             # returns an array of log entries
@@ -59,12 +59,12 @@ module Paasal
 
               if valid_logfiles == 0
                 # no logs with entries found? fail!
-                fail Paasal::Errors::AdapterResourceNotFoundError,
+                fail Nucleus::Errors::AdapterResourceNotFoundError,
                      "No non-empty log available for application '#{params[:application_id]}'"
               end
 
               # when all log files were written to disk, pack them and return the data
-              Paasal::Archiver.new.compress(tmp_dir, params[:archive_format]).set_encoding('ASCII-8BIT').read
+              Nucleus::Archiver.new.compress(tmp_dir, params[:archive_format]).set_encoding('ASCII-8BIT').read
             ensure
               # make sure tmp directory is deleted again
               FileUtils.rm_rf(tmp_dir)
@@ -95,8 +95,8 @@ module Paasal
             params do
               optional :file_format, desc: 'File format to use for the returned logfile, '\
                 'one of: \'log\', \'zip\', \'tar.gz\'. Defaults to \'log\'.',
-                       values: Paasal::API::Enums::LogDownloadFormats.all,
-                       default: Paasal::API::Enums::LogDownloadFormats::LOG
+                       values: Nucleus::API::Enums::LogDownloadFormats.all,
+                       default: Nucleus::API::Enums::LogDownloadFormats::LOG
             end
             get '/download' do
               # returns an array of log entries
@@ -121,7 +121,7 @@ module Paasal
                   # write file to disk
                   FileUtils.mkdir_p(tmp_dir)
                   File.open(File.join(tmp_dir, raw_filename), 'wb') { |f| f.print data.read }
-                  archiver = Paasal::Archiver.new
+                  archiver = Nucleus::Archiver.new
                   # pack and return the data
                   return archiver.compress(tmp_dir, params[:file_format]).set_encoding('ASCII-8BIT').read
                 ensure

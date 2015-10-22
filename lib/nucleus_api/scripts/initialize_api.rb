@@ -28,7 +28,7 @@ begin
 
   # finalize so that the configuration is locked
   require 'paasal/scripts/finalize'
-rescue Paasal::StartupError => e
+rescue Nucleus::StartupError => e
   log.error "Nucleus API startup failed (#{e.exit_code}), exit now"
   exit e.exit_code
 end

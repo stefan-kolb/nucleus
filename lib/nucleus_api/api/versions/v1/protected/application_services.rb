@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class ApplicationServices < Grape::API
@@ -26,11 +26,11 @@ module Paasal
           params do
             requires :service, type: Hash do
               # we only need the service id
-              requires :all, using: Paasal::API::Models::Service.documentation.slice(:id)
+              requires :all, using: Nucleus::API::Models::Service.documentation.slice(:id)
             end
             requires :plan, type: Hash do
               # and the ID of the chosen plan
-              requires :all, using: Paasal::API::Models::ServicePlan.documentation.slice(:id)
+              requires :all, using: Nucleus::API::Models::ServicePlan.documentation.slice(:id)
             end
           end
           post '/' do
@@ -69,7 +69,7 @@ module Paasal
             params do
               requires :plan, type: Hash do
                 # the ID of the chosen plan
-                requires :all, using: Paasal::API::Models::ServicePlan.documentation.slice(:id)
+                requires :all, using: Nucleus::API::Models::ServicePlan.documentation.slice(:id)
               end
             end
             patch '/' do

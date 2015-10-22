@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module V1
       class Applications < Grape::API
@@ -49,10 +49,10 @@ module Paasal
             # require the keys of the application in the json object 'application'
             requires :application, type: Hash do
               # name is required, but we must use :all to get the presence validator. Name is selected via :using
-              requires :all, using: Paasal::API::Models::Application.documentation.slice(:name)
-              requires :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
+              requires :all, using: Nucleus::API::Models::Application.documentation.slice(:name)
+              requires :runtimes, Nucleus::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
               # everything else is optional
-              optional :all, using: Paasal::API::Models::Application.documentation.slice(:region, :autoscaled)
+              optional :all, using: Nucleus::API::Models::Application.documentation.slice(:region, :autoscaled)
             end
           end
           post '/' do
@@ -72,8 +72,8 @@ module Paasal
             use :application_context
             # require the keys of the application in the json object 'application'
             requires :application, type: Hash do
-              optional :name, Paasal::API::Models::Application.documentation[:name]
-              optional :runtimes, Paasal::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
+              optional :name, Nucleus::API::Models::Application.documentation[:name]
+              optional :runtimes, Nucleus::API::Models::Application.documentation[:runtimes].merge(type: Array[String])
             end
           end
           patch '/:application_id' do

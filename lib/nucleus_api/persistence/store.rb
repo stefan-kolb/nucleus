@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module DB
     class Store
-      include Paasal::Logging
+      include Nucleus::Logging
 
       def initialize(api_version, store_type)
         @store_type = store_type

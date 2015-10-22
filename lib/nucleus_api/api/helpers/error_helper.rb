@@ -1,10 +1,10 @@
-module Paasal
+module Nucleus
   module API
     # The ErrorHelper class extends +Grape::API::Helpers+ (Grape's Helpers) and provides
     # common methods for the API to raise errors.
     module ErrorHelper
       extend Grape::API::Helpers
-      include Paasal::Logging
+      include Nucleus::Logging
       include ErrorBuilder
 
       # Calling this method ends the user's request and raises an error response.

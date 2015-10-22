@@ -7,13 +7,13 @@ end
 
 shared_examples 'application list schema' do
   it 'complies with the application list schema' do
-    expect_json_keys(Paasal::API::Models::Applications.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Applications.documentation.keys)
   end
 end
 
 shared_examples 'application entity schema' do
   it 'complies with the application entity schema' do
-    expect_json_keys(Paasal::API::Models::Application.documentation.keys)
+    expect_json_keys(Nucleus::API::Models::Application.documentation.keys)
   end
 end
 

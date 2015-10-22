@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       class ServiceCosts < Grape::Entity

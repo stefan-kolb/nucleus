@@ -1,9 +1,9 @@
-module Paasal
+module Nucleus
   module Adapters
     module V1
       class Heroku < Stub
         module Buildpacks
-          include Paasal::Adapters::BuildpackTranslator
+          include Nucleus::Adapters::BuildpackTranslator
 
           # @see BuildpackTranslator#vendor_specific_runtimes
           def vendor_specific_runtimes

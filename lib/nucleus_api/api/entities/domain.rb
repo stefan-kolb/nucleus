@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Models
       class Domain < PersistedEntity
@@ -12,7 +12,7 @@ module Paasal
           required: true
         }
 
-        expose :_links, using: Paasal::API::Models::BasicReferences, documentation: {
+        expose :_links, using: Nucleus::API::Models::BasicReferences, documentation: {
           type: 'BasicReferences', desc: 'Resource links', required: true } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],

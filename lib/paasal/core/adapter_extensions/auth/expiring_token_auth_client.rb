@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     class ExpiringTokenAuthClient < TokenAuthClient
       # Create a new instance of an {ExpiringTokenAuthClient}. An expiring token knows when it starts to be invalid,

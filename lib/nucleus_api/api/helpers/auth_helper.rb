@@ -1,8 +1,8 @@
-module Paasal
+module Nucleus
   module API
     module AuthHelper
       extend Grape::API::Helpers
-      include Paasal::Logging
+      include Nucleus::Logging
 
       # Executes a block, which should be an adapter call, using the authentication information.
       # If the first call fails due to cached authentication information, the cache is going to get evicted,

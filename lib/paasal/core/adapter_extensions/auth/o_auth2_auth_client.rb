@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module Adapters
     class OAuth2AuthClient < AuthClient
-      include Paasal::Logging
+      include Nucleus::Logging
 
       # Create a new instance of an {OAuth2AuthClient}, which uses the standardized OAuth2 authentication method.
       # @param [Boolean] check_certificates true if SSL certificates are to be validated,

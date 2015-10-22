@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     # The {BuildpackTranslator} provides convenience methods for the user to handle the installation
     # of application runtimes. Common runtime names can be applied and are automatically translated to a

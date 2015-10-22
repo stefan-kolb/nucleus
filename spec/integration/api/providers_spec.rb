@@ -1,7 +1,7 @@
 require 'spec/integration/integration_spec_helper'
 
-describe Paasal::API::V1::Providers do
-  after { Paasal::TestDataGenerator.clean }
+describe Nucleus::API::V1::Providers do
+  after { Nucleus::TestDataGenerator.clean }
 
   let!(:vendor) { create(:vendor) }
   let!(:provider_a) { create(:provider, vendor: vendor.id) }

@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module Adapters
     class GitDeployer
-      include Paasal::Logging
+      include Nucleus::Logging
 
       # Initialize a new instance of the GitDeployer
       # @param [String] user_email email address of the user, used as author of commits
@@ -36,7 +36,7 @@ module Paasal
       # @param [String] file_compression_format compression format of the application archive, e.g. 'zip' or 'tar.gz'
       # @return [void]
       def deploy(file, file_compression_format)
-        extractor = Paasal::ArchiveExtractor.new
+        extractor = Nucleus::ArchiveExtractor.new
         fail Errors::AdapterRequestError,
              'Unsupported format of the application archive' unless extractor.supports? file_compression_format
 
@@ -53,7 +53,7 @@ module Paasal
           fail Errors::AdapterRequestError, 'Invalid application: Archive did not contain any files' if extracted == 0
 
           # if the application was wrapped within a directory, move all 1st level files and dirs to the root
-          sanitizer = Paasal::ApplicationRepoSanitizer.new
+          sanitizer = Nucleus::ApplicationRepoSanitizer.new
           sanitizer.sanitize(repo_dir)
         end
         nil
@@ -66,7 +66,7 @@ module Paasal
         with_repository do |repo_dir|
           # TODO: maybe we can do this directly via SSH and prevent the disk writes?
           # download files temporarily from the repo
-          Paasal::Archiver.new(exclude_git).compress(repo_dir, format)
+          Nucleus::Archiver.new(exclude_git).compress(repo_dir, format)
         end
       end
 

@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Adapters
     # Implementation of the AuthClient that works with the HTTP basic authentication.
     class HttpBasicAuthClient < AuthClient

@@ -1,6 +1,6 @@
 require 'spec/unit/unit_spec_helper'
 
-describe Paasal::Provider do
+describe Nucleus::Provider do
   let(:id) { '67890' }
   let(:name) { 'fake provider name' }
   let(:created_at) { Time.now }
@@ -9,7 +9,7 @@ describe Paasal::Provider do
   describe 'can be initialized with' do
     context 'an empty hash and' do
       before do
-        @provider = Paasal::Provider.new({})
+        @provider = Nucleus::Provider.new({})
       end
       it 'endpoints are empty' do
         expect(@provider.endpoints).to eql([])
@@ -27,7 +27,7 @@ describe Paasal::Provider do
 
     context 'nil and' do
       before do
-        @provider = Paasal::Provider.new
+        @provider = Nucleus::Provider.new
       end
       it 'providers are empty' do
         expect(@provider.endpoints).to eql([])
@@ -45,9 +45,9 @@ describe Paasal::Provider do
 
     context 'hash properties and endpoint double' do
       before do
-        endpoint = instance_double('Paasal::Endpoint', name: 'endpoint name')
-        allow(endpoint).to receive(:is_a?).with(Paasal::Endpoint).and_return(true)
-        @provider = Paasal::Provider.new('endpoints' => [endpoint], 'id' => id, 'name' => name,
+        endpoint = instance_double('Nucleus::Endpoint', name: 'endpoint name')
+        allow(endpoint).to receive(:is_a?).with(Nucleus::Endpoint).and_return(true)
+        @provider = Nucleus::Provider.new('endpoints' => [endpoint], 'id' => id, 'name' => name,
                                          'created_at' => created_at, 'updated_at' => updated_at)
       end
       it 'has one endpoint' do
@@ -74,7 +74,7 @@ describe Paasal::Provider do
 
     context 'hash properties and endpoint hash' do
       before do
-        @provider = Paasal::Provider.new('endpoints' => [{ 'name' => 'endpoint name' }], 'id' => id, 'name' => name,
+        @provider = Nucleus::Provider.new('endpoints' => [{ 'name' => 'endpoint name' }], 'id' => id, 'name' => name,
                                      'created_at' => created_at, 'updated_at' => updated_at)
       end
       it 'has one endpoint' do

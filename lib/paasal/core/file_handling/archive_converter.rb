@@ -1,9 +1,9 @@
-module Paasal
+module Nucleus
   module Adapters
     # The {ArchiveConverter} shall be used within the adapters to prepare application containers for deployment
     # on the endpoint, by converting archives, e.g. from +tar.gz+ to +zip+, to match the endpoint APIs requirements.
     module ArchiveConverter
-      extend Paasal::Logging
+      extend Nucleus::Logging
 
       # Convert an archived application, the +file+, from the +current_format+ to the +destination_format+.
       # @param [IO] file archive file that shall be converted

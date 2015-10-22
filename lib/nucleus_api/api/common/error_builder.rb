@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module ErrorBuilder
       # This method builds an error entity that complies to our defined exception schema:
@@ -11,7 +11,7 @@ module Paasal
       #      "documentation": link_to_error_documentation
       #    }
       #
-      # For more information see the {Paasal::API::Models::Error Error class}.
+      # For more information see the {Nucleus::API::Models::Error Error class}.
       #
       # @param [Hash] error Constant that includes a default message, the status and error code
       # @param [String] dev_message The developer message with a technical explanation why the error has been raised
@@ -25,7 +25,7 @@ module Paasal
           # headers to append to the rack response
           headers: headers,
           # always use this entity to comply with the error schema
-          with: Paasal::API::Models::Error
+          with: Nucleus::API::Models::Error
         }
       end
     end

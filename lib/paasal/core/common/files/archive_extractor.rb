@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   class ArchiveExtractor
     def initialize(exclude_git = true)
       @exclude_git = exclude_git

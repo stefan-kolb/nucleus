@@ -1,16 +1,16 @@
-module Paasal
+module Nucleus
   # The {Endpoint} model will initially be imported from +.yaml+ description files and shall be persisted
-  # in the {Paasal::DB::Store store}. The endpoint has the following properties:<br>
+  # in the {Nucleus::DB::Store store}. The endpoint has the following properties:<br>
   # * id (String)
   # * name (String)
-  # * provider (Paasal::Provider)
+  # * provider (Nucleus::Provider)
   # * url (String)
   # * app_domain (String)
   # * trust (Boolean)
   #
   # @author Cedric Roeck (cedric.roeck@gmail.com)
   # @since 0.1.0
-  class Endpoint < Paasal::AbstractModel
+  class Endpoint < Nucleus::AbstractModel
     include Kwalify::Util::HashLike
 
     attr_accessor :provider

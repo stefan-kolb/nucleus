@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module Errors
     # The {AdapterMissingImplementationError} shall be thrown when the API requests an adapter to execute an action,
     # e.g. update an application, but the adapter does not (yet) support this functionality.

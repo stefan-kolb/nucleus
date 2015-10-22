@@ -1,9 +1,9 @@
-module Paasal
+module Nucleus
   module Adapters
     # The TailStopper can be used to cancel a timer or an ongoing HTTP request,
     # e.g. when the underlying connection was terminated.
     class TailStopper
-      include Paasal::Logging
+      include Nucleus::Logging
 
       def initialize(polling, method_to_stop)
         @polling = polling

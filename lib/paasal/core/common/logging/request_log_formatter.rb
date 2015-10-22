@@ -1,6 +1,6 @@
 require 'English'
 
-module Paasal
+module Nucleus
   module Logging
     class Formatter
       FORMAT = "%s, %38s [%s#%d] %5s -- %s: %s\n"

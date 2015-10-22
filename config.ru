@@ -15,4 +15,4 @@ require 'nucleus_api/scripts/initialize_api'
 require 'nucleus_api/scripts/rack_application'
 
 # finally start the application
-run Paasal::API::Rack.app
+run Nucleus::API::Rack.app

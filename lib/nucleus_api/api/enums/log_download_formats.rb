@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     module Enums
       # {LogDownloadFormats} define the filetypes that can be requested for logs to be downloaded with.

@@ -1,22 +1,22 @@
 require 'singleton'
 
-module Paasal
+module Nucleus
   module Spec
     module Config
       class AdapterHelper
         include Singleton
-        include Paasal::UrlConverter
+        include Nucleus::UrlConverter
 
         def initialize
           # save them in hash via adapter clazz as key
           @version_based_adapters = {}
           @version_based_endpoints = {}
-          Paasal::VersionDetector.api_versions.each do |api_version|
+          Nucleus::VersionDetector.api_versions.each do |api_version|
             adapters = {}
             endpoints = {}
-            Paasal::Adapters.configuration_files.each do |adapter_config|
-              vendor = Paasal::VendorParser.parse(adapter_config)
-              adapter_clazz = Paasal::Adapters.adapter_clazz(adapter_config, api_version)
+            Nucleus::Adapters.configuration_files.each do |adapter_config|
+              vendor = Nucleus::VendorParser.parse(adapter_config)
+              adapter_clazz = Nucleus::Adapters.adapter_clazz(adapter_config, api_version)
               vendor.providers.each do |provider|
                 provider.endpoints.each do |endpoint|
                   endpoint.url = secure_url(endpoint.url)
@@ -43,7 +43,7 @@ module Paasal
       end
 
       # Get the spec adapter configuration
-      # @return [Paasal::Spec::Config::AdapterHelper] Instance of the AdapterHelper
+      # @return [Nucleus::Spec::Config::AdapterHelper] Instance of the AdapterHelper
       def self.adapters
         AdapterHelper.instance
       end

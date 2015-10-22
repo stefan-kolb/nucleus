@@ -1,11 +1,11 @@
-module Paasal
+module Nucleus
   module Adapters
     module HttpTailClient
       # Executes a request to the given URL and expects a streaming response.<br>
       # Each new chunk (usually lines) will be forwarded to the client via the api_stream.
       #
       # @param [String] url url to call
-      # @param [Paasal::API::StreamCallback] api_stream stream to which new chunks will be forwarded
+      # @param [Nucleus::API::StreamCallback] api_stream stream to which new chunks will be forwarded
       # @param [Symbol] http_method HTTP method to use
       def tail_http_response(url, api_stream, http_method = :get)
         http_connection = EventMachine::HttpRequest.new(url, inactivity_timeout: 0)

@@ -2,7 +2,7 @@ require 'paasal/version'
 
 # _Nucleus_ is a RESTful abstraction layer to achieve unified deployment and management functions
 # of Platform-as-a-Service (PaaS) providers.<br>
-module Paasal
+module Nucleus
   # Load the default configuration
   require 'paasal/scripts/setup_config'
   # Load the actual application and its dependencies

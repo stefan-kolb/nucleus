@@ -1,4 +1,4 @@
-module Paasal
+module Nucleus
   module API
     # Return the project's root directory.
     # @return [Path] project's root directory
@@ -9,7 +9,7 @@ module Paasal
     # Return the project's main source code directory 'lib/nucleus_api''.
     # @return [Path] project's main source code directory
     def self.src
-      File.join(Paasal::API.root, '/lib/nucleus_api')
+      File.join(Nucleus::API.root, '/lib/nucleus_api')
     end
   end
 end

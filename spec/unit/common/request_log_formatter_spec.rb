@@ -1,5 +1,5 @@
-describe Paasal::Logging::Formatter do
-  subject { Paasal::Logging::Formatter.new }
+describe Nucleus::Logging::Formatter do
+  subject { Nucleus::Logging::Formatter.new }
   let(:request_id) { SecureRandom.uuid }
   let(:severity) { Logger::Severity::WARN.to_s }
   let(:time) { Time.now }

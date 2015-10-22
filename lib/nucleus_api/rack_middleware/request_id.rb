@@ -1,7 +1,7 @@
-module Paasal
+module Nucleus
   module API
     module Middleware
-      # Paasal::Middleware::RequestId, a rack compatible middleware class, assigns the 'HTTP_X_REQUEST_ID'
+      # Nucleus::Middleware::RequestId, a rack compatible middleware class, assigns the 'HTTP_X_REQUEST_ID'
       # to the current Thread or generates a request ID in the form of
       # a UUID of no request ID was delivered in the request header.
       # The 'X-Request-ID' will also be included in the response header.
