@@ -632,7 +632,7 @@ As described in the [HTTPS](#https) section, we strongly encourage you to only r
 ### Public key registration
 
 Nucleus uses the SSH key authentication for Git deployments.
-The private (!) key that will be used is located at `config/paasal_git_key.pem`.
+The private (!) key that will be used is located at `config/nucleus_git_key.pem`.
 Using the pre-generated key mitigates issues with the key usage/generation on various platforms.
 To prevent abuse we register the key before each command and immediately remove the key once the command has been executed.
 

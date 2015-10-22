@@ -75,7 +75,7 @@ nucleus_config.db.override = true
 require 'paasal_api/scripts/load_api'
 
 # load the certificate to use for the tests only
-nucleus_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
+nucleus_config.ssh.custom_key = File.expand_path(File.join('spec', 'nucleus_git_key.pem'))
 
 # initialize db, versions and auth strategy
 require 'paasal/scripts/initialize_config_defaults'

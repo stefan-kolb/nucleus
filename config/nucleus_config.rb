@@ -31,7 +31,7 @@
 
 # [optional] Specify the location of a private key (ssh-rsa, OpenSSH) that shall be used for Git actions.
 # E.g. /home/myusername/.ssh/id_rsa
-# If set to false, Nucleus will use its own private key (config/paasal_git_key.pem) to authenticate all Git actions.
+# If set to false, Nucleus will use its own private key (config/nucleus_git_key.pem) to authenticate all Git actions.
 # Defaults to: nil
 # nucleus_config.ssh.custom_key = nil
 
