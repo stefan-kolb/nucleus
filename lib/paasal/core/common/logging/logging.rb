@@ -22,7 +22,7 @@ module Paasal
 
       def configure_logger_for(classname)
         # prepare logging dir
-        log_dir = paasal_config.logging.path
+        log_dir = nucleus_config.logging.path
         log_file = File.join(log_dir, 'paasal.log')
         # prepare path and create missing directories
         FileUtils.mkdir_p(log_dir) unless File.directory?(log_dir)
@@ -43,7 +43,7 @@ module Paasal
 
         # apply the log level from the app. configuration
         multi_logger = MultiLogger.new(
-          level: paasal_config.logging.key?(:level) ? paasal_config.logging.level : Logger::Severity::WARN,
+          level: nucleus_config.logging.key?(:level) ? nucleus_config.logging.level : Logger::Severity::WARN,
           loggers: [std_log, file_log])
         multi_logger
       end

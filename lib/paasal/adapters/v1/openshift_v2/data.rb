@@ -75,7 +75,7 @@ module Paasal
             # - 121: Given public key is already in use. Use different key or delete conflicting key and retry.
 
             # load ssh key into Openshift
-            matches = paasal_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
+            matches = nucleus_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
             key_name = register_key(matches[1], matches[2])
             return yield
           ensure

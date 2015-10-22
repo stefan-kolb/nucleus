@@ -140,7 +140,7 @@ module Paasal
         def with_ssh_key
           user = username
           # load ssh key into cloud control
-          matches = paasal_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
+          matches = nucleus_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
           key_id = register_key(user, matches[1], matches[2])
           return yield
         ensure

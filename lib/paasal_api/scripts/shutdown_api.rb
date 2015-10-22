@@ -3,11 +3,11 @@ at_exit do
   puts '-----------------------------------------------', ''
   puts 'Cleaning up the API...'
 
-  if !paasal_config.db.key?(:delete_on_shutdown) || paasal_config.db.delete_on_shutdown
-    if File.exist?(paasal_config.db.path) && File.directory?(paasal_config.db.path)
-      FileUtils.rm_rf(paasal_config.db.path)
+  if !nucleus_config.db.key?(:delete_on_shutdown) || nucleus_config.db.delete_on_shutdown
+    if File.exist?(nucleus_config.db.path) && File.directory?(nucleus_config.db.path)
+      FileUtils.rm_rf(nucleus_config.db.path)
     end
-    puts '... DB store successfully deleted' unless File.exist?(paasal_config.db.path)
+    puts '... DB store successfully deleted' unless File.exist?(nucleus_config.db.path)
   end
   puts '... done!'
 end

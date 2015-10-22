@@ -31,8 +31,8 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    if File.exist?(paasal_config.db.path) && File.directory?(paasal_config.db.path)
-      FileUtils.rm_rf(paasal_config.db.path)
+    if File.exist?(nucleus_config.db.path) && File.directory?(nucleus_config.db.path)
+      FileUtils.rm_rf(nucleus_config.db.path)
     end
   end
 

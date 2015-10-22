@@ -1,12 +1,12 @@
 # Check the API versions once and make them available via configatron
-paasal_config.api.versions = Paasal::VersionDetector.api_versions
+nucleus_config.api.versions = Paasal::VersionDetector.api_versions
 
 # make sure the key is always set
 key_file = nil
-if paasal_config.ssh.key?(:custom_key) && !paasal_config.ssh.custom_key.nil?
-  puts "Loading custom SSH key #{paasal_config.ssh.custom_key}"
+if nucleus_config.ssh.key?(:custom_key) && !nucleus_config.ssh.custom_key.nil?
+  puts "Loading custom SSH key #{nucleus_config.ssh.custom_key}"
   # use the custom key file
-  key_file = paasal_config.ssh.custom_key
+  key_file = nucleus_config.ssh.custom_key
 
   # fail if file does not exist
   unless File.exist?(key_file)
@@ -23,4 +23,4 @@ if paasal_config.ssh.key?(:custom_key) && !paasal_config.ssh.custom_key.nil?
 end
 
 # now setup the SSHHandler
-paasal_config.ssh.handler = Paasal::SSHHandler.new(key_file)
+nucleus_config.ssh.handler = Paasal::SSHHandler.new(key_file)

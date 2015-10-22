@@ -10,7 +10,7 @@ require 'optparse'
 require 'yaml'
 require 'thin'
 
-NUCLEUS_CONFIG_LOCATION = File.join(root_dir, 'config', 'paasal_config.rb')
+NUCLEUS_CONFIG_LOCATION = File.join(root_dir, 'config', 'nucleus_config.rb')
 
 options = { env: 'development', logdir: File.join(root_dir, 'log'), config: File.expand_path(NUCLEUS_CONFIG_LOCATION) }
 optparse = OptionParser.new do |opts|

@@ -65,17 +65,17 @@ end
 require 'paasal/scripts/setup_config'
 # disable logging
 # TODO: disable logging via proper config option
-paasal_config.logging.level = Logger::Severity::FATAL
+nucleus_config.logging.level = Logger::Severity::FATAL
 # force tmp database
-paasal_config.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.paasal.test.store")
-paasal_config.db.delete_on_shutdown = true
-paasal_config.db.override = true
+nucleus_config.db.path = File.join(Dir.tmpdir, "#{SecureRandom.uuid}.paasal.test.store")
+nucleus_config.db.delete_on_shutdown = true
+nucleus_config.db.override = true
 
 # require our app
 require 'paasal_api/scripts/load_api'
 
 # load the certificate to use for the tests only
-paasal_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
+nucleus_config.ssh.custom_key = File.expand_path(File.join('spec', 'paasal_git_key.pem'))
 
 # initialize db, versions and auth strategy
 require 'paasal/scripts/initialize_config_defaults'

@@ -5,15 +5,15 @@ begin
   require 'paasal/scripts/initialize'
 
   # Apply the default API descriptions
-  paasal_config.api.title = 'Nucleus - Platform as a Service abstraction layer API'
-  paasal_config.api.description = 'Nucleus allows to manage multiple PaaS providers with just one API to be used'
-  paasal_config.api.contact = 'stefan.kolb@uni-bamberg.de'
-  paasal_config.api.license = 'MIT'
-  paasal_config.api.license_url = 'http://opensource.org/licenses/MIT'
-  paasal_config.api.terms_of_service_url = 'API still under development, no guarantees (!)'
+  nucleus_config.api.title = 'Nucleus - Platform as a Service abstraction layer API'
+  nucleus_config.api.description = 'Nucleus allows to manage multiple PaaS providers with just one API to be used'
+  nucleus_config.api.contact = 'stefan.kolb@uni-bamberg.de'
+  nucleus_config.api.license = 'MIT'
+  nucleus_config.api.license_url = 'http://opensource.org/licenses/MIT'
+  nucleus_config.api.terms_of_service_url = 'API still under development, no guarantees (!)'
 
   # include the configuration of the project to overwrite the home dir config
-  project_dir_config = '../../../config/paasal_config.rb'
+  project_dir_config = '../../../config/nucleus_config.rb'
   if File.exist?(File.expand_path(project_dir_config, __dir__))
     puts "Applying configuration from: #{File.expand_path(project_dir_config, __dir__)}"
     require_relative project_dir_config

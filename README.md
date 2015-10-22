@@ -165,7 +165,7 @@ require 'paasal'
 
 1) Configuration [optional]
 
-Adapt the configuration to your needs and adjust the values via `paasal_config`.
+Adapt the configuration to your needs and adjust the values via `nucleus_config`.
 The configuration *must* be changed before initializing the `AdapterResolver`, otherwise the configuration is locked and can't be changed anymore.
 
 For more information have a look at the [configuration](#configuration) section.
@@ -509,12 +509,12 @@ Several parts of Nucleus can be configured, e.g. whether to persist your data or
 There are two different locations at which the configuration files can be placed.
 They are described with increasing importance, meaning that the last option overwrites keys that were also configured in the previous files:
 
-1. A file in user account's home directory. On UNIX systems this file must be placed at `~/.paasal/paasal_config.rb`, whereas it is expected at `~/paasal/paasal_config.rb` if running Windows.
-2. The `config/paasal_config.rb` file in the project's directory
+1. A file in user account's home directory. On UNIX systems this file must be placed at `~/.paasal/nucleus_config.rb`, whereas it is expected at `~/paasal/nucleus_config.rb` if running Windows.
+2. The `config/nucleus_config.rb` file in the project's directory
 
 #### Database backend
 
-The database backend can be specified in the `config/paasal_config.rb` configuration file.
+The database backend can be specified in the `config/nucleus_config.rb` configuration file.
 It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems and [LMDB](https://github.com/minad/lmdb) on Windows.
 
 Note: *[Daybreak](https://github.com/propublica/daybreak) does not run on Windows*
@@ -637,7 +637,7 @@ Using the pre-generated key mitigates issues with the key usage/generation on va
 To prevent abuse we register the key before each command and immediately remove the key once the command has been executed.
 
 **To improve the security of your deployment, you can use your own custom private key.
-To do so, set the `paasal_config.ssh.custom_key` option in the [common configuration](#configuration) to the location of the private key file.
+To do so, set the `nucleus_config.ssh.custom_key` option in the [common configuration](#configuration) to the location of the private key file.
 For reasons of automation, the key must not be password encrypted.**
 
 ## Project structure

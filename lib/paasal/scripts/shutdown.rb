@@ -5,7 +5,7 @@ at_exit do
 
   # delete the SSHHandler generated files
   puts '... delete SSH files ...'
-  paasal_config.ssh.handler.cleanup if paasal_config.key?(:ssh) && paasal_config.ssh.key?(:handler)
+  nucleus_config.ssh.handler.cleanup if nucleus_config.key?(:ssh) && nucleus_config.ssh.key?(:handler)
 
   puts '... done!'
 end

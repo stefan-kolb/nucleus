@@ -67,7 +67,7 @@ task :environment do
   ENV['RACK_ENV'] ||= 'development'
   require 'configatron'
   require 'paasal/scripts/setup_config'
-  paasal_config.logging.level = Logger::Severity::ERROR
+  nucleus_config.logging.level = Logger::Severity::ERROR
   require 'paasal_api/scripts/load_api'
   require 'paasal_api/scripts/initialize_api'
 end

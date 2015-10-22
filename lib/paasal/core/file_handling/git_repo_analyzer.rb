@@ -9,7 +9,7 @@ module Paasal
       def self.any_branch?(repo_host, repo_name, username)
         detected_branch = false
         options = { forward_agent: true, auth_methods: ['publickey'],
-                    keys: [paasal_config.ssh.handler.key_file], keys_only: true }
+                    keys: [nucleus_config.ssh.handler.key_file], keys_only: true }
         Net::SSH.start(repo_host, username, options) do |ssh|
           ssh.exec! "git-upload-pack '/#{repo_name}.git'" do |ch, stream, data|
             detected_branch = (detected_branch || data != '0000') unless stream == :stderr
