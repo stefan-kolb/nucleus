@@ -38,7 +38,7 @@
 # [optional] Specify the public API description
 # paasal_config.api.title = 'PaaSal - Platform as a Service abstraction layer API'
 # paasal_config.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
-# paasal_config.api.contact = 'paasal@roecky.net'
+# paasal_config.api.contact = 'stefan.kolb@uni-bamberg.de'
 # # The name of the license.
 # paasal_config.api.license = 'TBD'
 # # The URL of the license.

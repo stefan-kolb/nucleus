@@ -1,16 +1,16 @@
-![PaaSal](icons/paasal_200w.png "Platform as a Service abstraction layer")
+# Nucleus
 
 [![Build Status](https://magnum.travis-ci.com/stefan-kolb/paasal.svg?token=VEm1aJ8ydBNAfhASH8xN&branch=master)](https://magnum.travis-ci.com/stefan-kolb/paasal)
 [![Dependency Status](https://gemnasium.com/4ae6979b87f7b5dc47956b2842e1166b.svg)](https://gemnasium.com/stefan-kolb/paasal)
 [![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
 [![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
 
-_PaaSal_ is a RESTful abstraction layer to achieve unified deployment and management functions for Platform-as-a-Service (PaaS) providers.  
+_PaaSal_ is a RESTful abstraction layer to unify core management functions of Platform-as-a-Service (PaaS) systems.
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
 It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
 PaaSal differentiates between Vendors, Providers and Endpoints.
-A *Vendor* is the organziation that developed the platform software.
+A *Vendor* is the organization that developed the platform software.
 A *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
 
 ## Table of Contents
