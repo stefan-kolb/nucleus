@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 # set the process name on ps, does not work on OS X due to system limitations
-$0 = 'PaaSal'
-Process.setproctitle('PaaSal') if Process.respond_to?(:setproctitle)
+$0 = 'Nucleus'
+Process.setproctitle('Nucleus') if Process.respond_to?(:setproctitle)
 
 root_dir = File.join(__dir__, '..')
 
@@ -80,7 +80,7 @@ argv_opts << ['--ssl', '--ssl-key-file', options[:ssl_key], '--ssl-cert-file', o
 
 if options[:daemon]
   options[:env] = 'production'
-  argv_opts << [ '--daemonize', '--user', options[:user] || 'nobody', '--tag', 'PaaSal on Thin']
+  argv_opts << [ '--daemonize', '--user', options[:user] || 'nobody', '--tag', 'Nucleus on Thin']
   argv_opts << [ '--pid', options[:pid]] if options[:pid]
   argv_opts << [ '--group', options[:group] || 'nobody' ]
   argv_opts << [ '--log', File.join(options[:logdir], 'paasal_daemon.log')] unless ENV['NUCLEUS_API_LOG']

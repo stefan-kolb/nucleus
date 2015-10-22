@@ -69,7 +69,7 @@ namespace :evaluation do
       all_lines << next_line
       all_lines << '  \\endhead'
       all_lines << '  \\rowcolor{white}'
-      all_lines << '  \\caption{List of methods that are supported by PaaSal per vendor}'\
+      all_lines << '  \\caption{List of methods that are supported by Nucleus per vendor}'\
         '\\label{table:evaluation_adapter_compatibility}%'
       all_lines << '  \\endlastfoot'
 

@@ -10,7 +10,7 @@ log.info "DB store assigned to #{paasal_config.db.path}"
 Paasal::API::AdapterImporter.new.import
 
 paasal_config.api.versions.each do |api_version|
-  puts '', "Bootstraping DAOs for PaaSal #{api_version}..."
+  puts '', "Bootstraping DAOs for Nucleus #{api_version}..."
   # Bootstrap DAOs for each API version
   Paasal::API::DB::VendorDao.instance api_version
   Paasal::API::DB::ProviderDao.instance api_version

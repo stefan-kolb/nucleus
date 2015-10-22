@@ -12,7 +12,7 @@ module Paasal
 
             user = get('/user').body[0]
             name = "paasal.app.repo.cloudControl.deploy.#{application_id}.#{SecureRandom.uuid}"
-            # push to the deployment branch, here: paasal
+            # push to the deployment branch, here: nucleus
             with_ssh_key do
               deployer = GitDeployer.new(name, deployment[:branch], user[:email], NUCLEUS_DEPLOYMENT)
               deployer.deploy(file, compression_format)

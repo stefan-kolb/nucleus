@@ -13,7 +13,7 @@ module Paasal
             # deploy by guid
             # deploy_response = put("/v2/apps/#{app_guid}/bits", body: { resources: [], application: file.read },
             #                       headers: { 'Content-Type' => 'multipart/form-data; '\
-            #                       'boundary=paasal-cloud-foundry-adapter-file-upload-boundary' })
+            #                       'boundary=nucleus-cloud-foundry-adapter-file-upload-boundary' })
 
             begin
               # convert all archives to .zip archives

@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = Paasal::VERSION
   spec.authors       = ['Stefan Kolb', 'Cedric Röck']
   spec.email         = ['stefan.kolb@uni-bamberg.de']
-  spec.summary       = 'PaaSal is an abstraction layer for the deployment and management functions of '\
+  spec.summary       = 'Nucleus is an abstraction layer for the deployment and management functions of '\
                         'Platform-as-a-Service (PaaS) providers.'
   spec.description   = ''
   spec.homepage      = 'https://github.com/stefan-kolb/paasal'

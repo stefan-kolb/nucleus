@@ -1,4 +1,4 @@
-# NOTE: use only 'paasal-test-app-all-updated' as valid app throughout all tests
+# NOTE: use only 'nucleus-test-app-all-updated' as valid app throughout all tests
 
 shared_examples 'domain list schema' do
   it 'complies with the domain list schema' do

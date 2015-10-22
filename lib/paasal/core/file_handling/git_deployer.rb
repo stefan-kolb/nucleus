@@ -16,7 +16,7 @@ module Paasal
       end
 
       # Force a build using the latest git commit.
-      # To enforce the new build, a file 'paasal-rebuild-trigger'
+      # To enforce the new build, a file 'nucleus-rebuild-trigger'
       # gets created or updated in the repository and the changes will be pushed.
       # @return [void]
       def trigger_build

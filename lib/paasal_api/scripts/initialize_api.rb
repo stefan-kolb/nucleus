@@ -5,8 +5,8 @@ begin
   require 'paasal/scripts/initialize'
 
   # Apply the default API descriptions
-  paasal_config.api.title = 'PaaSal - Platform as a Service abstraction layer API'
-  paasal_config.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
+  paasal_config.api.title = 'Nucleus - Platform as a Service abstraction layer API'
+  paasal_config.api.description = 'Nucleus allows to manage multiple PaaS providers with just one API to be used'
   paasal_config.api.contact = 'stefan.kolb@uni-bamberg.de'
   paasal_config.api.license = 'MIT'
   paasal_config.api.license_url = 'http://opensource.org/licenses/MIT'
@@ -29,6 +29,6 @@ begin
   # finalize so that the configuration is locked
   require 'paasal/scripts/finalize'
 rescue Paasal::StartupError => e
-  log.error "PaaSal API startup failed (#{e.exit_code}), exit now"
+  log.error "Nucleus API startup failed (#{e.exit_code}), exit now"
   exit e.exit_code
 end

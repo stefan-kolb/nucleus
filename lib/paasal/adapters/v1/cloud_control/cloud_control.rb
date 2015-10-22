@@ -109,7 +109,7 @@ module Paasal
         end
 
         def default_deployment(application_id)
-          # get and return paasal deployment, but catch arising 404 errors
+          # get and return nucleus deployment, but catch arising 404 errors
           return get("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}").body
         rescue Errors::AdapterResourceNotFoundError
           # if 404, list all deployments
@@ -125,11 +125,11 @@ module Paasal
           def_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].downcase == 'default' }
           return def_deployment if def_deployment
 
-          # return 'paasal' if more than 1 deployment, but no 'default' is included
+          # return 'nucleus' if more than 1 deployment, but no 'default' is included
           paasal_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].downcase == 'paasal' }
           return paasal_deployment if paasal_deployment
 
-          # fail 422 if no 'default', no 'paasal', and more than 1 deployment is available (could not identify default)
+          # fail 422 if no 'default', no 'nucleus', and more than 1 deployment is available (could not identify default)
           fail_with(:ambiguous_deployments)
         end
 

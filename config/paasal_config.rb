@@ -17,7 +17,7 @@
 
 # [optional] Please specify the DB directory if you plan to use a file storage.
 # Defaults to: a temporary directory.
-# paasal_config.db.path = '/Users/cmr/Documents/workspace-rubymine/paasal/store/'
+# paasal_config.db.path = '/Users/cmr/Documents/workspace-rubymine/nucleus/store/'
 
 # [optional] If true, the DB will be deleted when the server is being closed.
 # Defaults to: true

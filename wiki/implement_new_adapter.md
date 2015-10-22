@@ -143,7 +143,7 @@ With this approach, we could separate different parts of the application that ar
 
 ### Authentication
 
-PaaSal already offers quite some authentication approaches that could fit your needs.
+Nucleus already offers quite some authentication approaches that could fit your needs.
 You can find the authentication clients at `app/core/auth`.
 
 ### What if the platform does not support action X?

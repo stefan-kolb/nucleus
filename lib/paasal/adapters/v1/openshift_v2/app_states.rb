@@ -35,7 +35,7 @@ module Paasal
               end
               # if there is more than 1 deployment, state can't be :created
             else
-              # app was not created with paasal or has recently been modified :/
+              # app was not created with nucleus or has recently been modified :/
               diff = Time.parse(deployments[0][:created_at]).to_i - Time.parse(app[:creation_time]).to_i
               # we can analyse if the deployment was created within 15 seconds after the application,
               # then there can't possibly be an actual code deployment

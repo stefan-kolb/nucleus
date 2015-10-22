@@ -5,7 +5,7 @@ module Paasal
     File.join(__dir__, '..', '..')
   end
 
-  # Return the project's main source code directory 'lib/paasal''.
+  # Return the project's main source code directory 'lib/nucleus''.
   # @return [Path] project's main source code directory
   def self.src
     File.join(Paasal.root, '/lib/paasal')
