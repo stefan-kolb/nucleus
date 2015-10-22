@@ -1,4 +1,4 @@
-# First load the PaaSal core gem
+# First load the Nucleus core gem
 require 'paasal'
 
 # then load the HTTP API extension

@@ -56,7 +56,7 @@ module Paasal
           # @param [String] application_id id of the cloud control application
           # @param [Symbol] key variable key name
           # @param [String, Integer, Float, Double] value value to apply to the variable
-          # @return [Hash] PaaSal representation of the modified variable
+          # @return [Hash] Nucleus representation of the modified variable
           def set_var(application_id, key, value)
             if value.nil?
               # delete the var, set to 'null'

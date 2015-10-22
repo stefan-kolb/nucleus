@@ -18,7 +18,7 @@ module Paasal
         include Paasal::Adapters::V1::CloudControl::Services
         include Paasal::Adapters::V1::CloudControl::Vars
 
-        # The default deployment name of cloud control applications that is used by PaaSal
+        # The default deployment name of cloud control applications that is used by Nucleus
         NUCLEUS_DEPLOYMENT = 'paasal'
         # Error messages of semantic errors that are platform specific
         CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS = ['cannot use this name', 'may only contain', 'this field has no more than']
@@ -91,7 +91,7 @@ module Paasal
         end
 
         def application_state(deployment)
-          # With cloud control not supporting the PaaSal application lifecycle, only 3 actual states remain:<br>
+          # With cloud control not supporting the Nucleus application lifecycle, only 3 actual states remain:<br>
           # * created, when no data deployment (not to confuse with cloud control deployment object) has been made yet
           # * deployed, when only the data has been pushed into the repository (no build)
           # * running, if a data deployment was pushed

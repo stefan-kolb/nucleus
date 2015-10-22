@@ -1,5 +1,5 @@
 module Paasal
-  # The {AdapterResolver} can be used within Ruby applications to retrieve a PaaSal adapter.
+  # The {AdapterResolver} can be used within Ruby applications to retrieve a Nucleus adapter.
   # Returned adapters are patched so that each call enforces authentication and retries a call when a token was expired.
   class AdapterResolver
     include Paasal::UrlConverter

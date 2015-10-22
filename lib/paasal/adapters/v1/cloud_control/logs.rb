@@ -4,7 +4,7 @@ module Paasal
       class CloudControl < Stub
         # cloud control application's log management operations
         module Logs
-          # Cloud control log types. The +key+ and +id+ shall match the PaaSal definitions of log files,
+          # Cloud control log types. The +key+ and +id+ shall match the Nucleus definitions of log files,
           # whereas the +name+ shall match the cloud control log id.
           LOG_TYPES = {
             all: { id: 'all', name: 'all', type: Enums::ApplicationLogfileType::OTHER },

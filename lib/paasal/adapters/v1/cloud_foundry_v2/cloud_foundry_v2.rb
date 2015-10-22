@@ -6,7 +6,7 @@ module Paasal
       # <br>
       # Besides native Cloud Foundry installations, this adapter shall also work with forks, such as Stackato 3.4.2.<br>
       # <br>
-      # The PaaSal API is fully supported, there are no known issues.
+      # The Nucleus API is fully supported, there are no known issues.
       # @see http://apidocs.cloudfoundry.org The latest Cloud Foundry API documentation
       class CloudFoundryV2 < Stub
         include Paasal::Logging

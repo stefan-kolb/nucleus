@@ -1,6 +1,6 @@
 module Paasal
   module Enums
-    # All types of logs that are distinguished by PaaSal.
+    # All types of logs that are distinguished by Nucleus.
     module ApplicationLogfileType
       # The API log aggregates all messages that changed the application state, e.g. updating an application.
       API = :api

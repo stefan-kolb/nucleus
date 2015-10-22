@@ -31,13 +31,13 @@
 
 # [optional] Specify the location of a private key (ssh-rsa, OpenSSH) that shall be used for Git actions.
 # E.g. /home/myusername/.ssh/id_rsa
-# If set to false, PaaSal will use its own private key (config/paasal_git_key.pem) to authenticate all Git actions.
+# If set to false, Nucleus will use its own private key (config/paasal_git_key.pem) to authenticate all Git actions.
 # Defaults to: nil
 # paasal_config.ssh.custom_key = nil
 
 # [optional] Specify the public API description
-# paasal_config.api.title = 'PaaSal - Platform as a Service abstraction layer API'
-# paasal_config.api.description = 'PaaSal allows to manage multiple PaaS providers with just one API to be used'
+# paasal_config.api.title = 'Nucleus - Platform as a Service abstraction layer API'
+# paasal_config.api.description = 'Nucleus allows to manage multiple PaaS providers with just one API to be used'
 # paasal_config.api.contact = 'stefan.kolb@uni-bamberg.de'
 # # The name of the license.
 # paasal_config.api.license = 'TBD'

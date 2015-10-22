@@ -15,7 +15,7 @@ module Paasal
               GitDeployer.new(repo_name, app[:git_url], account[:email]).deploy(file, file_compression_format)
             end
 
-            # auto deployment could be active for applications not created with PaaSal
+            # auto deployment could be active for applications not created with Nucleus
             return if app[:auto_deploy]
 
             build_deployment(app_id)

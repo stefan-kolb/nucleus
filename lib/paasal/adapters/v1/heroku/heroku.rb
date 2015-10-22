@@ -3,7 +3,7 @@ module Paasal
     module V1
       # The {Heroku} adapter is designed to support the Heroku platform API.<br>
       # <br>
-      # The PaaSal API is fully supported, there are no known issues.
+      # The Nucleus API is fully supported, there are no known issues.
       # @see https://devcenter.heroku.com/articles/platform-api-reference Heroku Platform API
       class Heroku < Stub
         include Paasal::Logging

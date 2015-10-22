@@ -5,11 +5,11 @@
 [![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
 [![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
 
-_PaaSal_ is a RESTful abstraction layer to unify core management functions of Platform-as-a-Service (PaaS) systems.
+_Nucleus_ is a RESTful abstraction layer to unify core management functions of Platform-as-a-Service (PaaS) systems.
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
 It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
 
-PaaSal differentiates between Vendors, Providers and Endpoints.
+Nucleus differentiates between Vendors, Providers and Endpoints.
 A *Vendor* is the organization that developed the platform software.
 A *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
 
@@ -84,12 +84,12 @@ More information on the vendors and the associated adapter can be found in the [
 
 ## Usage
 
-PaaSal can either be used as standalone application/service, or as part of another ruby application.
-Please make sure to obey the following installation instructions before starting to use PaaSal.
+Nucleus can either be used as standalone application/service, or as part of another ruby application.
+Please make sure to obey the following installation instructions before starting to use Nucleus.
 
 ### Ruby Interpreter Compatibility
 
-PaaSal is supposed to run on Ruby >= 2.0.
+Nucleus is supposed to run on Ruby >= 2.0.
 **It currently won't work on JRuby.**
 
 ### Installation instructions
@@ -106,7 +106,7 @@ Unix systems should run fine out of the box, whereas Windows systems might need 
 ##### Windows
 
 Both files should be located in the `Git/bin` installation directory of [msysGit](https://msysgit.github.io/).
-PaaSal is verified to work with [msysGit](https://msysgit.github.io/) and the included version of `OpenSSH`.
+Nucleus is verified to work with [msysGit](https://msysgit.github.io/) and the included version of `OpenSSH`.
 We did not verify other alternatives, e.g. PuTTY's `plink.exe`.
 PuTTY is supposed to (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options that allow to connect any git repository without confirmation of the host's identity.
 
@@ -137,7 +137,7 @@ $ gem install eventmachine -- --with-ssl-dir=C:/SSL
 
 #### Require paasal and mark as dependency
 
-Add a dependency on the PaaSal gem, for instance in your application's Gemfile,
+Add a dependency on the Nucleus gem, for instance in your application's Gemfile,
 
 ```ruby
 gem 'paasal'
@@ -182,7 +182,7 @@ Paasal::VersionDetector.api_versions
 resolver = Paasal::AdapterResolver.new('v1')
 ```
 
-4) Show all adapters that are supported by PaaSal by this specific API version:
+4) Show all adapters that are supported by Nucleus by this specific API version:
 
 ```ruby
 resolver.adapters
@@ -200,7 +200,7 @@ adapter = resolver.load('cloudcontrol', 'api.cloudcontrol.com', 'your_username',
 
 By default, the adapter will be populated with the default configuration options that are defined in the vendor's configuration for the selected endpoint_url.
 If you are using a custom installation, e.g. of *Openshift* or *Cloud Foundry*, make sure to pass the option that describe the `app_domain` for deployed applications.
-Otherwise, the `web_url` links created by PaaSal will be malformed.
+Otherwise, the `web_url` links created by Nucleus will be malformed.
 
 ```ruby
 adapter = resolver.load('cloud_foundry_v2', 'api.example.org', 'your_username', 'your_password', app_domain: 'apps.example.org', check_ssl: false)
@@ -223,7 +223,7 @@ including which fields are required and those that are only optional.
 
 ### Use the API
 
-Besides including the abstraction layer in your application, PaaSal can also be started and serve a RESTful API:
+Besides including the abstraction layer in your application, Nucleus can also be started and serve a RESTful API:
 For detailed usage information go to the section [API client(s)](#api-clients).
 
 #### Start the server
@@ -241,7 +241,7 @@ However, you can also start the API using the [thin](http://code.macournoyer.com
 $ rackup -s thin config.ru
 ```
 
-Due to limitations in the log tailing process, PaaSal currently requires `thin` and does not work on other Rack servers.
+Due to limitations in the log tailing process, Nucleus currently requires `thin` and does not work on other Rack servers.
 In theory, it should be possible to make other Rack servers work that also utilize [eventmachine](https://github.com/eventmachine/eventmachine).
 
 #### HTTPS
@@ -249,11 +249,11 @@ In theory, it should be possible to make other Rack servers work that also utili
 We highly encourage you to **only use https connections** when your application is running in production or used outside of your local computer.
 This is due to the fact that all passwords are passed via the HTTP basic authentication, which does not encrypt your data so that any third party could log and identify your credentials.
 
-To enforce this policy, PaaSal will automatically redirect all connections on plain HTTP to HTTPS connections if it is running in production (detected via *RACK_ENV*).
+To enforce this policy, Nucleus will automatically redirect all connections on plain HTTP to HTTPS connections if it is running in production (detected via *RACK_ENV*).
 
 #### API endpoints
 
-The API of PaaSal is documented via [swagger](http://swagger.io).
+The API of Nucleus is documented via [swagger](http://swagger.io).
 After you started a server instance, you can access an interactive [swagger-ui](https://github.com/swagger-api/swagger-ui) at the `/docs` path.
 
 ## Functionality
@@ -309,7 +309,7 @@ remove_service|&#10003;|&#10003;|&#10003;|&#10003;
 
 ### Core constructs
 
-PaaSal could support any constellation of PaaS offers that are currently available.
+Nucleus could support any constellation of PaaS offers that are currently available.
 In order to do so, we differentiate between three types:
 
 The **vendor**, or the PaaS platform, which determines the functionality,
@@ -319,12 +319,12 @@ the **endpoint** of the provider's offer.
 For most scenarios the *endpoint* is identical to the *provider*, but in some cases,
 for instance on [IBM Bluemix][bluemix], *endpoints* distinguish different deployment regions.
 
-If running PaaSal as web service, all changes made to these entities at runtime will be discarded,
+If running Nucleus as web service, all changes made to these entities at runtime will be discarded,
 unless you enable the functionality in the configuration and specify a location where to persist the data to.
 
 #### Vendors
 
-You can use the API of PaaSal to show a list of all supported vendors.
+You can use the API of Nucleus to show a list of all supported vendors.
 This request is publicly available and does not require any authentication.
 
 However, you can't create, delete or update a vendor at runtime because it represents the logic to communicate with the associated platform.
@@ -340,7 +340,7 @@ Please refer to the swagger-ui documentation for additional information about th
 
 ### Authentication
 
-Authentication against the endpoint is managed by PaaSal.
+Authentication against the endpoint is managed by Nucleus.
 The credentials must be provided as [Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) header **within each single request**.
 
     Authorization: Basic thebase64encodedcredentialsstring
@@ -377,8 +377,8 @@ curl -X "GET" "http://localhost:9292/api/endpoints/cf-bosh-local/applications/{a
 
 ### Custom API calls (experimental)
 
-Sometimes you might want to call proprietary functionality that goes beyond PaaSal's unified API approach.
-You can also execute such custom API calls against the endpoint's API with PaaSal.
+Sometimes you might want to call proprietary functionality that goes beyond Nucleus' unified API approach.
+You can also execute such custom API calls against the endpoint's API with Nucleus.
 This feature is included as experimental functionality and **does not return unified objects or errors**.
 The response of the API is passed 1:1 to the REST client.
 
@@ -428,7 +428,7 @@ The response is the unprocessed response of the Heroku API as shown in the previ
 ## Adapters
 
 The functionality to communicate with different platforms is implemented in so called *adapters*.
-However, not each adapter can fully support the abstract PaaSal definitions.
+However, not each adapter can fully support the abstract Nucleus definitions.
 Please refer to the [functionality section](#functionality) for more information about the supported features.
 
 ### Heroku
@@ -469,7 +469,7 @@ An application can't be updated, the `name` and `runtimes` can't be changed once
 
 **Application scaling**
 
-Applications not created with PaaSal can't be scaled if they were created with the attribute `scalable = false`
+Applications not created with Nucleus can't be scaled if they were created with the attribute `scalable = false`
 
 **Services**
 
@@ -505,7 +505,7 @@ It may take some seconds or even minutes for them to show up.
 
 ## Configuration
 
-Several parts of PaaSal can be configured, e.g. whether to persist your data or always start with a clean instance.
+Several parts of Nucleus can be configured, e.g. whether to persist your data or always start with a clean instance.
 There are two different locations at which the configuration files can be placed.
 They are described with increasing importance, meaning that the last option overwrites keys that were also configured in the previous files:
 
@@ -617,8 +617,8 @@ Please have a look at the [swagger-codegen project](https://github.com/swagger-a
 
 ## Versioning
 
-PaaSal follows the [Semantic Versioning](http://semver.org/) standard.
-Therefore, PaaSal also allows to serve multiple versions of the API and provide legacy support.
+Nucleus follows the [Semantic Versioning](http://semver.org/) standard.
+Therefore, Nucleus also allows to serve multiple versions of the API and provide legacy support.
 
 However, be aware that
 __each non-backward compatible change of the application must result in an increase of the major version.__
@@ -627,11 +627,11 @@ Until the first release (v1), the initial version is: `0.1.0`.
 
 ## Security
 
-As described in the [HTTPS](#https) section, we strongly encourage you to only run PaaSal with HTTPS.
+As described in the [HTTPS](#https) section, we strongly encourage you to only run Nucleus with HTTPS.
 
 ### Public key registration
 
-PaaSal uses the SSH key authentication for Git deployments.
+Nucleus uses the SSH key authentication for Git deployments.
 The private (!) key that will be used is located at `config/paasal_git_key.pem`.
 Using the pre-generated key mitigates issues with the key usage/generation on various platforms.
 To prevent abuse we register the key before each command and immediately remove the key once the command has been executed.
@@ -644,9 +644,9 @@ For reasons of automation, the key must not be password encrypted.**
 
 ```
 bin # Binary startup files and GIT__SSH env. agents
-config # Configuration files for PaaSal and its adapters
+config # Configuration files for Nucleus and its adapters
 doc # Generated YARD documentation
-lib # The PaaSal application source code
+lib # The Nucleus application source code
 lib/paasal # Gem compatible directory of the core, includes the AdapterResolver class
 lib/paasal/adapters # The adapter implementations to communicate with the vendor's platforms, grouped by API version.
 lib/paasal/core # All other functionality used throughout the application, but rather unrelated to the Grape API: http requests, authentication, errors, etc.

@@ -1,7 +1,7 @@
 module Paasal
-  # The API of PaaSal allows to run multiple versions at the same time.
+  # The API of Nucleus allows to run multiple versions at the same time.
   # Each API version is accessible by using matching accept headers.<br>
-  # PaaSal follows the [Semantic Versioning](http://semver.org/) standard.
+  # Nucleus follows the [Semantic Versioning](http://semver.org/) standard.
   # Each not backwards compatible API change must result in a new API version to be released.
   module API
     # The {RootAPI} is the core part of the API, mounting all API versions and including the commonly used features,

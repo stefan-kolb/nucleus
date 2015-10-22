@@ -1,6 +1,6 @@
 module Paasal
   module API
-    # API {V1} is the first API version of PaaSal to be released.
+    # API {V1} is the first API version of Nucleus to be released.
     # Please have a look at the README file or the {Paasal::Adapters::V1::Stub} adapter for a detailed list of features.
     module V1
       # The {Base} class of API version 1 includes all routes, endpoints and the swagger documentation to be build.
@@ -16,7 +16,7 @@ module Paasal
               # try to use the accept-version header.
               env['api.version'] = env['HTTP_ACCEPT_VERSION']
             else
-              # Without a version PaaSal can't work properly, fail fast (!)
+              # Without a version Nucleus can't work properly, fail fast (!)
               to_error(ErrorMessages::INVALID_ACCEPT_HEADER,
                        'Make sure you provided a valid Accept Header, eg: \'application/vnd.paasal-v1+json\'')
             end

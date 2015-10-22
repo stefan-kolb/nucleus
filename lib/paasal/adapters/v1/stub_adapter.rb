@@ -1,6 +1,6 @@
 module Paasal
   module Adapters
-    # Version 1, or the first release of the PaaSal API.<br>
+    # Version 1, or the first release of the Nucleus API.<br>
     # It provides basic management functionality to handle:<br>
     # * applications
     # * domains
@@ -9,7 +9,7 @@ module Paasal
     # * deployment
     # * scaling (horizontal and vertical)
     module V1
-      # Stub adapter for PaaSal API version 1.<br>
+      # Stub adapter for Nucleus API version 1.<br>
       # The stub provides all methods that an actual adapter should implement.<br>
       # It also contains the documentation that describes the expected method behaviour,
       # which must be matched by the adapters.<br>

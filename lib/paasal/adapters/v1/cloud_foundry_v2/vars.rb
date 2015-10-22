@@ -56,7 +56,7 @@ module Paasal
           # @param [String] app_guid GUID of the CF application
           # @param [Symbol] key variable key name
           # @param [String, Integer, Float, Double] value value to apply to the variable
-          # @return [Hash] PaaSal representation of the modified variable
+          # @return [Hash] Nucleus representation of the modified variable
           def set_var(app_guid, key, value)
             request_body = get("/v2/apps/#{app_guid}/env").body[:environment_json]
             request_body[key] = value

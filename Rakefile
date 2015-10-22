@@ -104,7 +104,7 @@ begin
   namespace :doc do
     YARD::Rake::YardocTask.new(:pages) do |t|
       t.files = DOC_FILES
-      t.options = ['-o', '../paasal.doc/docs', '--title', "PaaSal #{Paasal::VERSION} Documentation"]
+      t.options = ['-o', '../paasal.doc/docs', '--title', "Nucleus #{Paasal::VERSION} Documentation"]
     end
 
     desc 'Check out gh-pages.'

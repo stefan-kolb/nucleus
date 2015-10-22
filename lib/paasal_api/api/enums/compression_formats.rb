@@ -1,7 +1,7 @@
 module Paasal
   module API
     module Enums
-      # Compression formats define which archives can be extracted and packed by PaaSal.
+      # Compression formats define which archives can be extracted and packed by Nucleus.
       # Users can upload data, or download them in any of the defined formats.
       module CompressionFormats
         # tar.gz, mime type application/gzip or application/x-gzip

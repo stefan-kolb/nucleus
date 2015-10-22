@@ -1,6 +1,6 @@
 module Paasal
   module Enums
-    # All states that an application can obtain according to the lifecycle of PaaSal apps.
+    # All states that an application can obtain according to the lifecycle of Nucleus apps.
     module ApplicationStates
       # Application is created, no data has been deployed yet to any of the instances.
       CREATED = :created

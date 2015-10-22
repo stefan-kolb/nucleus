@@ -4,7 +4,7 @@ module Paasal
     # The required methods are collected from the +requirements.yaml+ file of an API version and their presence
     # can be verified with unit tests.<br>
     # An adapter of the API version the must implement all the methods with the correct arity to be accepted
-    # as PaaSal compliant adapter.
+    # as Nucleus compliant adapter.
     #
     # @author Cedric Roeck (cedric.roeck@gmail.com)
     # @since 0.1.0

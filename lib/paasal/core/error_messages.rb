@@ -1,6 +1,6 @@
 module Paasal
   # The {ErrorMessages} module groups all error definitions that can be returned by the RESTful API.
-  # With its constants, it provides the skeleton to create error messages that comply with the error schema of PaaSal.
+  # With its constants, it provides the skeleton to create error messages that comply with the error schema of Nucleus.
   module ErrorMessages
     #################
     # CLIENT ERRORS #
