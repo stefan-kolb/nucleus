@@ -73,7 +73,7 @@ module Nucleus
             # TODO: if a different plan than 'default' is chosen, we can't use it yet :/
             # However, only 'standalone' cartridges showed different plans as of April, 15th 2015
             to_nucleus_installed_service(post("/application/#{app_id}/cartridges",
-                                             body: { cartridge: service_entity[:id] }).body[:data])
+                                              body: { cartridge: service_entity[:id] }).body[:data])
           end
 
           # @see Stub#remove_service

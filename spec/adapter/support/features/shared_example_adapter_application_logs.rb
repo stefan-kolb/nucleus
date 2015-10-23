@@ -85,9 +85,9 @@ shared_examples 'valid:applications:logs:download' do
           expect(@download_response.headers['Content-Type']).to eql('application/zip')
         end
         it 'unzipped content equals log content of the show request' do
-          downlaod_md5 = response_files_md5(@download_response.body, 'zip', false)
+          download_md5 = response_files_md5(@download_response.body, 'zip', false)
           show_md5 = Digest::MD5.hexdigest(@show_response.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
-          expect(downlaod_md5.values[0]).to eq(show_md5)
+          expect(download_md5.values[0]).to eq(show_md5)
         end
       end
 
@@ -116,9 +116,9 @@ shared_examples 'valid:applications:logs:download' do
           expect(@download_response.headers['Content-Type']).to eql('application/gzip')
         end
         it 'unzipped content equals log content of the show request' do
-          downlaod_md5 = response_files_md5(@download_response.body, 'tar.gz', false)
+          download_md5 = response_files_md5(@download_response.body, 'tar.gz', false)
           show_md5 = Digest::MD5.hexdigest(@show_response.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
-          expect(downlaod_md5.values[0]).to eq(show_md5)
+          expect(download_md5.values[0]).to eq(show_md5)
         end
       end
     end
@@ -241,13 +241,13 @@ shared_examples 'valid:applications:logs:download:all' do
           @shown_responses.each do |id, shown_log|
             shown_md5[id] = Digest::MD5.hexdigest(shown_log.body.gsub(/\r\n/, 'NL').gsub(/\r/, 'NL').gsub(/\n/, 'NL'))
           end
-          downlaod_md5 = response_files_md5(@download_response.body, 'tar.gz', false)
+          download_md5 = response_files_md5(@download_response.body, 'tar.gz', false)
 
           # must contain at max the number of shown logs, empty log files will not be included in the download
-          expect(downlaod_md5.length).to be <= shown_md5.length
+          expect(download_md5.length).to be <= shown_md5.length
 
           # now compare file hashes
-          downlaod_md5.each do |_key, value|
+          download_md5.each do |_key, value|
             expect(shown_md5.values).to include(value)
           end
         end

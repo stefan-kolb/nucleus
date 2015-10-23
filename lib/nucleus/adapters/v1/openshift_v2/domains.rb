@@ -17,7 +17,7 @@ module Nucleus
           # @see Stub#create_domain
           def create_domain(application_id, domain_entity)
             to_nucleus_domain post("/application/#{app_id_by_name(application_id)}/aliases",
-                                  body: { id: domain_entity[:name] }).body[:data]
+                                   body: { id: domain_entity[:name] }).body[:data]
           end
 
           # @see Stub#delete_domain

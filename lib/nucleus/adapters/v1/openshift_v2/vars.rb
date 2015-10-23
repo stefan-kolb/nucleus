@@ -18,13 +18,13 @@ module Nucleus
           # @see Stub#create_env_var
           def create_env_var(application_id, env_var)
             to_nucleus_var(post("/application/#{app_id_by_name(application_id)}/environment-variables",
-                               body: { name: env_var[:key], value: env_var[:value] }).body[:data])
+                                body: { name: env_var[:key], value: env_var[:value] }).body[:data])
           end
 
           # @see Stub#update_env_var
           def update_env_var(application_id, env_var_key, env_var)
             to_nucleus_var(put("/application/#{app_id_by_name(application_id)}/environment-variable/#{env_var_key}",
-                              body: { value: env_var[:value] }).body[:data])
+                               body: { value: env_var[:value] }).body[:data])
           end
 
           # @see Stub#delete_env_var
