@@ -58,7 +58,7 @@ module Nucleus
             else
               download_location = download_response.headers[:Location]
               # if IBM f*cked with the download URL, fix the address
-              download_location.gsub!(/objectstorage.service.networklayer.com/, 'objectstorage.softlayer.net')
+              download_location = download_location.gsub(/objectstorage.service.networklayer.com/, 'objectstorage.softlayer.net')
               data = Excon.get(download_location).body
             end
 
