@@ -3,6 +3,8 @@
 ################
 
 RSpec.configure do |config|
+  config.fail_fast = true
+
   vendor = lambda do |meta|
     meta[:described_class].to_s.gsub(/Nucleus::Adapters::/, '').underscore.downcase.gsub(/_adapter/, '')
   end

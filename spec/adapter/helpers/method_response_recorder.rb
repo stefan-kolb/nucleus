@@ -61,10 +61,6 @@ module Nucleus
 
     def playback(class_name, method_name, *args)
       param_hash = args_hash(*args)
-      # rename dir
-      File.rename(File.join(cassette_dir(class_name, method_name, param_hash[1])).to_s, File.join(cassette_dir(class_name, method_name, param_hash[0])).to_s)
-      param_hash = param_hash[0]
-
       return play_io(class_name, method_name, param_hash) if play_io?(class_name, method_name, param_hash)
       return play_tempfile(class_name, method_name, param_hash) if play_tempfile?(class_name, method_name, param_hash)
       play(class_name, method_name, param_hash)
