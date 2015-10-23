@@ -59,7 +59,8 @@ module Nucleus
               download_location = download_response.headers[:Location]
               # if IBM f*cked with the download URL, fix the address
               download_location = download_location.gsub(/objectstorage.service.networklayer.com/, 'objectstorage.softlayer.net')
-              data = Excon.get(download_location).body
+              # omit_default_port: https://github.com/excon/excon/issues/475
+              data = Excon.new(download_location, omit_default_port: true).get.body
             end
 
             # write data to tmpfile so that it can be converted
