@@ -1,9 +1,9 @@
 # Nucleus
 
-[![Build Status](https://magnum.travis-ci.com/stefan-kolb/nucleus.svg?token=VEm1aJ8ydBNAfhASH8xN&branch=master)](https://magnum.travis-ci.com/stefan-kolb/nucleus)
-[![Dependency Status](https://gemnasium.com/4ae6979b87f7b5dc47956b2842e1166b.svg)](https://gemnasium.com/stefan-kolb/nucleus)
-[![Code Climate](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/gpa.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/feed)
-[![Test Coverage](https://codeclimate.com/repos/55dd8cda695680629e01442a/badges/f5259f91f03175f6ee36/coverage.svg)](https://codeclimate.com/repos/55dd8cda695680629e01442a/coverage)
+[![Build Status](https://travis-ci.org/stefan-kolb/nucleus.svg)](https://travis-ci.org/stefan-kolb/nucleus)
+[![Dependency Status](https://gemnasium.com/stefan-kolb/nucleus.svg)](https://gemnasium.com/stefan-kolb/nucleus)
+[![Code Climate](https://codeclimate.com/github/stefan-kolb/nucleus/badges/gpa.svg)](https://codeclimate.com/github/stefan-kolb/nucleus)
+[![Test Coverage](https://codeclimate.com/github/stefan-kolb/nucleus/badges/coverage.svg)](https://codeclimate.com/github/stefan-kolb/nucleus/coverage)
 
 _Nucleus_ is a RESTful abstraction layer to unify core management functions of Platform-as-a-Service (PaaS) systems.
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
