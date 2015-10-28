@@ -4,6 +4,7 @@
 [![Dependency Status](https://gemnasium.com/stefan-kolb/nucleus.svg)](https://gemnasium.com/stefan-kolb/nucleus)
 [![Code Climate](https://codeclimate.com/github/stefan-kolb/nucleus/badges/gpa.svg)](https://codeclimate.com/github/stefan-kolb/nucleus)
 [![Test Coverage](https://codeclimate.com/github/stefan-kolb/nucleus/badges/coverage.svg)](https://codeclimate.com/github/stefan-kolb/nucleus/coverage)
+[![Gem Version](https://badge.fury.io/rb/nucleus.svg)](https://badge.fury.io/rb/nucleus)
 
 _Nucleus_ is a RESTful abstraction layer to unify core management functions of Platform-as-a-Service (PaaS) systems.
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
