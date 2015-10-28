@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.version       = Nucleus::VERSION
   spec.authors       = ['Stefan Kolb', 'Cedric Röck']
   spec.email         = ['stefan.kolb@uni-bamberg.de']
-  spec.summary       = 'Nucleus is an abstraction layer for the deployment and management functions of '\
-                        'Platform-as-a-Service (PaaS) providers.'
-  spec.description   = ''
+  spec.summary       = 'Nucleus unifies core management functions of Platform-as-a-Service (PaaS) systems.'
+  spec.description   = 'Nucleus is a unified API for deployment and management of '\
+                        'Platform-as-a-Service (PaaS) systems.'
   spec.homepage      = 'https://github.com/stefan-kolb/nucleus'
   spec.license       = 'MIT'
   spec.executables   = 'nucleus'
@@ -57,7 +57,7 @@ Gem::Specification.new do |spec|
   # Required for Cloud Foundry log messages
   spec.add_runtime_dependency 'protobuf', '~> 3.4'
   # To make sure HTTPS is used instead of HTTP
-  spec.add_runtime_dependency 'rack-ssl-enforcer', '>= 0.2.8'
+  spec.add_runtime_dependency 'rack-ssl-enforcer', '~> 0.2', '>= 0.2.8'
   # TODO: Should be removed as soon as excon supports multipart requests
   spec.add_runtime_dependency 'rest-client', '~> 1.8'
   # Used to build a streaming API for the log tail action
