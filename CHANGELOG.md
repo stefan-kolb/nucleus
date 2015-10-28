@@ -4,15 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased - Next
 
-### Added / Features
-* Add your contribution here
+### Added
+* Add basic logging functionality for OpenShift v2
+* Add more providers and endpoints to the default configuration
 
-### Changed / Fixes
-* Add your contribution here
+### Fixed
+* Correctly URL-encode credentials for Heroku authentication
 
 ## [0.1.0] - 2015-08-04
 
-### Added / Features
+### Added
 * Initial development release of the Platform as a Service abstraction layer - [@croeck](https://github.com/croeck)
 
 

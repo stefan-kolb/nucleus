@@ -165,7 +165,7 @@ require 'nucleus'
 
 1) Configuration [optional]
 
-Adapt the configuration to your needs and adjust the values via `nucleus_config`.
+Adapt the configuration to your needs and adjust the values via the global `nucleus_config` variable.
 The configuration *must* be changed before initializing the `AdapterResolver`, otherwise the configuration is locked and can't be changed anymore.
 
 For more information have a look at the [configuration](#configuration) section.
@@ -203,6 +203,7 @@ If you are using a custom installation, e.g. of *Openshift* or *Cloud Foundry*, 
 Otherwise, the `web_url` links created by Nucleus will be malformed.
 
 ```ruby
+minimal = resolver.load('heroku', 'your_username', 'your_password')
 adapter = resolver.load('cloud_foundry_v2', 'api.example.org', 'your_username', 'your_password', app_domain: 'apps.example.org', check_ssl: false)
 ```
 
