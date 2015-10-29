@@ -1,4 +1,5 @@
 require 'singleton'
+require 'vcr'
 
 module Nucleus
   module Spec
@@ -9,10 +10,13 @@ module Nucleus
         def initialize
           # block is executed each time a key is not-present
           @hash = Hash.new do |hash, adapter|
+            # TODO: this would only happen for a mixed string symbol hash, do we really need this?
             if hash.key?(adapter.to_s)
               hash[adapter] = hash[adapter.to_s]
             else
-              # FIXME: raise error if no credentials are found
+              # raise error if recording and no credentials are found
+              fail StandardError, "No credentials found for #{adapter}" if vcr_recording?
+
               hash[adapter] = {
                 'user' => 'faked_user',
                 'password' => 'faked_password',
@@ -72,6 +76,10 @@ module Nucleus
         def to_auth_header(username, password)
           # we must use the already translated header, ready for use in the Rack env
           { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
+        end
+
+        def vcr_recording?
+          VCR.current_cassette && VCR.current_cassette.recording?
         end
       end
 
