@@ -18,7 +18,7 @@ module Nucleus
 
     # Load the adapter to interact with the platform of the vendor that is offered at the endpoint_url.
     # @param [String] vendor The vendor / adapter name that shall be used to communicate with the endpoint.
-    #   Must be supported, otherwise a +StandardError+ will be thrown.
+    #   Must be provided, otherwise a +StandardError+ will be thrown.
     # @param [String] username The username that shall be used for authentication
     # @param [String] password The password that shall be used for authentication
     # @param [Hash<Symbol,?>] options Further options to apply when creating the adapter instance.

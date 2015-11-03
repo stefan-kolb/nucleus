@@ -6,13 +6,10 @@
 [![Test Coverage](https://codeclimate.com/github/stefan-kolb/nucleus/badges/coverage.svg)](https://codeclimate.com/github/stefan-kolb/nucleus/coverage)
 [![Gem Version](https://badge.fury.io/rb/nucleus.svg)](https://badge.fury.io/rb/nucleus)
 
-_Nucleus_ is a RESTful abstraction layer to unify core management functions of Platform-as-a-Service (PaaS) systems.
+_Nucleus_ is a RESTful abstraction layer and Ruby gem to unify core management functions of Platform-as-a-Service (PaaS) systems.
+
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
 It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
-
-Nucleus differentiates between Vendors, Providers and Endpoints.
-A *Vendor* is the organization that developed the platform software.
-A *Provider* runs the platform, which always has at least one *Endpoint*, but can also have multiple endpoints for different regions.
 
 ## Table of Contents
 
@@ -91,14 +88,13 @@ Please make sure to obey the following installation instructions before starting
 ### Ruby Interpreter Compatibility
 
 Nucleus is supposed to run on Ruby >= 2.0.
-**It currently won't work on JRuby.**
+Due to native gem dependencies, it currently won't work on JRuby.
 
 ### Installation instructions
 
-1) The following (executable) files must be available on the system's *PATH*:
+1) The following executables must be available on the system's *PATH*:
 
-- git
-- ssh
+    git, ssh
 
 #### Platform-specific notes
 
@@ -106,10 +102,10 @@ Unix systems should run fine out of the box, whereas Windows systems might need 
 
 ##### Windows
 
-Both files should be located in the `Git/bin` installation directory of [msysGit](https://msysgit.github.io/).
+Both required executables should be located in the `Git/bin` installation directory of [msysGit](https://msysgit.github.io/).
 Nucleus is verified to work with [msysGit](https://msysgit.github.io/) and the included version of `OpenSSH`.
 We did not verify other alternatives, e.g. PuTTY's `plink.exe`.
-PuTTY is supposed to (maybe anyone knows how to fix this?) not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options that allow to connect any git repository without confirmation of the host's identity.
+PuTTY is supposed to not work due to the lack of the `-o UserKnownHostsFile=NUL -o StrictHostKeyChecking=no` options that allow to connect any git repository without confirmation of the host's identity.
 
 ###### Troubleshooting
 
@@ -150,13 +146,13 @@ upon which you would update your bundle.
 $ bundle install
 ```
 
-Of course you could also install the gem yourself as:
+Or install the gem by yourself:
 
 ```shell
 $ gem install nucleus
 ```
 
-Finally require the gem in your application
+Finally, require the gem inside your application
 
 ```ruby
 require 'nucleus'
@@ -177,7 +173,7 @@ For more information have a look at the [configuration](#configuration) section.
 Nucleus::VersionDetector.api_versions
 ```
 
-3) Instantiate the AdapterResolver for the desired API version:
+3) Instantiate an `AdapterResolver` for the desired API version:
 
 ```ruby
 resolver = Nucleus::AdapterResolver.new('v1')
@@ -190,7 +186,9 @@ resolver.adapters
 ```
 
 ```ruby
-{"cloudcontrol"=>Nucleus::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2}
+{
+  "cloudcontrol"=>Nucleus::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2
+}
 ```
 
 5) Load your desired adapter implementation:
@@ -200,7 +198,7 @@ adapter = resolver.load('cloudcontrol', 'api.cloudcontrol.com', 'your_username',
 ```
 
 By default, the adapter will be populated with the default configuration options that are defined in the vendor's configuration for the selected endpoint_url.
-If you are using a custom installation, e.g. of *Openshift* or *Cloud Foundry*, make sure to pass the option that describe the `app_domain` for deployed applications.
+If you are using a custom installation, e.g. of *OpenShift* or *Cloud Foundry*, make sure to pass the option that describes the `app_domain` for deployed applications.
 Otherwise, the `web_url` links created by Nucleus will be malformed.
 
 ```ruby
@@ -219,7 +217,7 @@ app = adapter.create_application(region: 'default', name: 'myusersfirstapplicati
 adapter.delete_application(app[:id])
 ```
 
-Check the **documentation** of the `Nucleus::Adapters::V1::Stub` adapter (or any other API version) for a complete list of the supported actions.
+Check the **documentation** of the `Nucleus::Adapters::V1::Stub` adapter (or any other API version) for a complete list of supported actions.
 You can also refer to the documentation of the REST interface to get detailed information about the parameter options of `post` and `put` commands,
 including which fields are required and those that are only optional.
 
@@ -261,7 +259,7 @@ After you started a server instance, you can access an interactive [swagger-ui](
 ## Functionality
 
 The following list shows the degree to which the adapters implement the offered methods.
-This list is auto-generated and can be shown via:
+This list can be auto-generated via:
 
 ```
 $ bundle exec rake evaluation:compatibility:markdown
@@ -312,32 +310,30 @@ remove_service|&#10003;|&#10003;|&#10003;|&#10003;
 ### Core constructs
 
 Nucleus could support any constellation of PaaS offers that are currently available.
-In order to do so, we differentiate between three types:
+In order to do so, we differentiate between between vendors, providers, and endpoints:
 
-The **vendor**, or the PaaS platform, which determines the functionality,
-a **provider** that runs the vendor's platform and offers it to its customers and finally
-the **endpoint** of the provider's offer.
+A *vendor* is the organization that developed the platform software, which also determines the offered functionalities.
+A *provider* runs the platform, which always has at least one *endpoint*.
 
 For most scenarios the *endpoint* is identical to the *provider*, but in some cases,
 for instance on [IBM Bluemix][bluemix], *endpoints* distinguish different deployment regions.
 
-If running Nucleus as web service, all changes made to these entities at runtime will be discarded,
-unless you enable the functionality in the configuration and specify a location where to persist the data to.
+If running Nucleus as web service, all changes made to these entities at runtime will be discarded, unless you enable persistence functionality in the configuration and specify a location where to persist the data to.
 
 #### Vendors
 
 You can use the API of Nucleus to show a list of all supported vendors.
 This request is publicly available and does not require any authentication.
 
-However, you can't create, delete or update a vendor at runtime because it represents the logic to communicate with the associated platform.
-All developers that want to have more information on how to add a new vendor can take a look at the instructions: [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
+However, you cannot create, delete or update a vendor at runtime because it represents the logic to communicate with the associated platform.
+All developers that want to have more information on how to add a new vendor, please see the instructions: [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
 
 #### Providers and Endpoints
 
 Providers and Endpoints can be managed *without authentication* and support `GET`, `POST`, `PATCH`, `DELETE` requests.
 
 A new entity can be registered at runtime by sending a `POST` request.
-Whereas a provider only requires a `name`, an endpoint also needs a further attribute, the `url`.
+Whereas a provider only requires a `name`, an endpoint also needs the `url` as further attribute.
 Please refer to the swagger-ui documentation for additional information about the requests.
 
 ### Authentication
@@ -347,13 +343,12 @@ The credentials must be provided as [Basic authentication](https://en.wikipedia.
 
     Authorization: Basic thebase64encodedcredentialsstring
 
-#### Special characters (umlauts, ...)
+#### Special characters
 
-The usage of special characters, for instance german umlauts as ä, ö and ü may cause issues with some platforms.
-Please make sure to select the correct encoding for your credentials before encoding them with base64:
+The usage of special characters, for instance german umlauts may cause issues with some platforms.
+Please make sure to select the correct encoding for your credentials before encoding them with Base64:
 
-* Stackato 3.4.2
-  * Different encodings cause the requests to crash and return status 500
+* Stackato 3.4.2: Different encodings cause the requests to crash and return status 500
 
 ### Application logs
 

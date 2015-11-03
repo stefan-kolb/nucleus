@@ -21,8 +21,7 @@ describe Nucleus::Adapters::V1::CloudControl do
                     'with valid credentials is compliant and application services change succeeds']
     @endpoint = 'cloudcontrol'
     @api_version = 'v1'
-    # we must use these stupid names given that cloud control prohibits special characters and (!)
-    # deleted application names are locked for about 48 hours :(
+    # cloud control prohibits special characters and deleted application names are locked for about 48 hours
     iteration = 2
     @app_min = { original_name: "nucleusappminproperties#{iteration}",
                          updated_name: "nucleusappminproperties#{iteration}",
