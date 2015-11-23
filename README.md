@@ -186,9 +186,7 @@ resolver.adapters
 ```
 
 ```ruby
-{
-  "cloudcontrol"=>Nucleus::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2
-}
+{ "cloudcontrol"=>Nucleus::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2 }
 ```
 
 5) Load your desired adapter implementation:
