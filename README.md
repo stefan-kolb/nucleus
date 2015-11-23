@@ -6,7 +6,7 @@
 [![Test Coverage](https://codeclimate.com/github/stefan-kolb/nucleus/badges/coverage.svg)](https://codeclimate.com/github/stefan-kolb/nucleus/coverage)
 [![Gem Version](https://badge.fury.io/rb/nucleus.svg)](https://badge.fury.io/rb/nucleus)
 
-_Nucleus_ is a RESTful abstraction layer and Ruby gem to unify core management functions of Platform-as-a-Service (PaaS) systems.
+_Nucleus_ is a RESTful abstraction layer and Ruby gem to unify core management functions of Platform as a Service (PaaS) systems.
 
 The API is build using [Ruby](https://www.ruby-lang.org) and the [grape framework](https://github.com/intridea/grape).
 It provides fully compliant [swagger](http://swagger.io/) schemas that serve for documentation and client generation.
