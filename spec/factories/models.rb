@@ -1,3 +1,5 @@
+require 'active_support'
+
 FactoryGirl.define do
   sequence :uuid do |_|
     SecureRandom.uuid
