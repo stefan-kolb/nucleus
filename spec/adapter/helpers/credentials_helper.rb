@@ -75,7 +75,7 @@ module Nucleus
 
         def to_auth_header(username, password)
           # we must use the already translated header, ready for use in the Rack env
-          { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
+          { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').delete("\n") }
         end
 
         def vcr_recording?

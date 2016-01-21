@@ -4,7 +4,7 @@ SPEC_SUITES = [
   { id: :unit, title: 'unit tests', pattern: 'spec/unit/**/*_spec.rb' },
   { id: :adapters, title: 'adapter tests', pattern: 'spec/adapter/**/*_spec.rb' },
   { id: :integration, title: 'integration tests', pattern: 'spec/integration/**/*_spec.rb' }
-]
+].freeze
 
 namespace :spec do
   namespace :suite do

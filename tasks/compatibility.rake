@@ -48,7 +48,7 @@ namespace :evaluation do
       lines = []
       @vendor_results.each do |_vendor, results|
         results.each_with_index do |(method, supported), line|
-          lines[line] = "#{method}" unless lines[line]
+          lines[line] = method.to_s unless lines[line]
           lines[line] << "|#{supported ? '&#10003;' : '&#10007;'}"
         end
       end
@@ -76,19 +76,19 @@ namespace :evaluation do
       lines = []
       @vendor_results.each do |_vendor, results|
         results.each_with_index do |(method, supported), line|
-          lines[line] = "#{method}" unless lines[line]
+          lines[line] = method.to_s unless lines[line]
           lines[line] << " & #{supported ? '\\ding{51}' : '\\cellcolor{failedtablebg}\\ding{55}'}"
         end
       end
 
       # format and print all lines
       lines.each_with_index do |line, index|
-        if index != lines.length - 1
-          all_lines << "  #{line.gsub(/_/, '\_')} \\\\\\hline"
-        else
-          # special treatment for the last line
-          all_lines << "  #{line.gsub(/_/, '\_')} \\\\\\hhline{|=|#{'=|' * @vendor_results.length}}"
-        end
+        all_lines << if index != lines.length - 1
+                       "  #{line.gsub(/_/, '\_')} \\\\\\hline"
+                     else
+                       # special treatment for the last line
+                       "  #{line.gsub(/_/, '\_')} \\\\\\hhline{|=|#{'=|' * @vendor_results.length}}"
+                     end
       end
 
       # print general statistics

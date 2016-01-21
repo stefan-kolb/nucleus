@@ -46,7 +46,7 @@ module Nucleus
         'sphinx' => 'https://github.com/kennethreitz/sphinx-buildpack',
         'test' => 'https://github.com/ddollar/buildpack-test',
         'testing' => 'https://github.com/ryanbrainard/heroku-buildpack-testrunner'
-      }
+      }.freeze
 
       # Search the list of known buildpacks, both vendor specific and public, to match the desires runtime name.
       # @param [String] name of the runtime to look out for

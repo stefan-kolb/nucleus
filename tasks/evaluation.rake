@@ -19,7 +19,7 @@ namespace :evaluation do
           vendor_name = vendor_dao.get(provider_dao.get(endpoint_dao.get(adapter_index_entry.id).provider).vendor).name
           # from camel to sneak case
           adapter_file_name = vendor_name.gsub(/\s/, '_').gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                              .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+                                         .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
           next if @vendor_results.key?(vendor_name)
           adaper_results = {}
 
@@ -50,7 +50,7 @@ namespace :evaluation do
         lines = []
         @all_tests.sort.each_with_index do |test_name, line|
           @vendor_results.each do |_vendor, results|
-            lines[line] = "#{test_name}" unless lines[line]
+            lines[line] = test_name.to_s unless lines[line]
             lines[line] << "|#{results[test_name]}"
           end
         end
@@ -68,7 +68,7 @@ namespace :evaluation do
           tests.map { |_key, value| value }.sum
         end.join('|')}"
         puts "Avg. vendor API requests per tested method|#{@vendor_results.collect do |_name, tests|
-          ((tests.map { |_key, value| value }.sum) / tests.length.to_f).round(2)
+          (tests.map { |_key, value| value }.sum / tests.length.to_f).round(2)
         end.join('|')}"
       end
 
@@ -104,7 +104,7 @@ namespace :evaluation do
         @all_tests.sort.each_with_index do |t_name, line|
           @vendor_results.each do |v, results|
             unless lines[line]
-              lines[line] = "#{t_name}"
+              lines[line] = t_name.to_s
               if tests_with_wait.any? { |name| t_name.start_with?(name) }
                 ignore_tests_with_wait += 1
                 lines[line] = "\\rowcolor{failedtablebg}#{lines[line]}"
@@ -117,12 +117,12 @@ namespace :evaluation do
 
         # format and print all lines
         lines.each_with_index do |line, index|
-          if index != lines.length - 1
-            table << "  #{line.gsub(/_/, '\_')} \\\\\\hline"
-          else
-            # special treatment for the last line
-            table << "  #{line.gsub(/_/, '\_')} \\\\\\hhline{|=|#{'=|' * @vendor_results.length}}"
-          end
+          table << if index != lines.length - 1
+                     "  #{line.gsub(/_/, '\_')} \\\\\\hline"
+                   else
+                     # special treatment for the last line
+                     "  #{line.gsub(/_/, '\_')} \\\\\\hhline{|=|#{'=|' * @vendor_results.length}}"
+                   end
         end
 
         # print general statistics
@@ -131,7 +131,7 @@ namespace :evaluation do
           tests.map { |_key, value| value }.sum
         end.join(' & ')} \\\\\\hline"
         table << "  Avg. vendor API requests per tested method & #{@vendor_results.collect do |_name, tests|
-          ((tests.map { |_key, value| value }.sum) / tests.length.to_f).round(2)
+          (tests.map { |_key, value| value }.sum / tests.length.to_f).round(2)
         end.join(' & ')} \\\\\\hhline{|=|#{'=|' * @vendor_results.length}}"
 
         # sanitize stats, exclude methods with rspec wait repetitions

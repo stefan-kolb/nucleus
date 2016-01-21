@@ -127,7 +127,6 @@ module Nucleus
                 latest_version_id = release[:id]
               end
             end
-            latest_version_id
           else
             latest_version = 0
             latest_version_id = nil
@@ -137,8 +136,9 @@ module Nucleus
                 latest_version_id = dyno[:release][:id]
               end
             end
-            latest_version_id
           end
+
+          latest_version_id
         end
       end
     end

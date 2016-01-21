@@ -12,7 +12,7 @@ module Nucleus
             application: { id: 'application', name: 'error', type: Enums::ApplicationLogfileType::APPLICATION },
             api: { id: 'api', name: 'deploy', type: Enums::ApplicationLogfileType::API },
             system: { id: 'system', name: 'worker', type: Enums::ApplicationLogfileType::SYSTEM }
-          }
+          }.freeze
 
           # @see Stub#logs
           def logs(application_name)

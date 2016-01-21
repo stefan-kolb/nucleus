@@ -22,11 +22,11 @@ module Nucleus
         return if hash.nil?
         @version = hash['version']
         v = hash['methods']
-        if v
-          @methods = v.map! { |e| e.is_a?(Nucleus::API::RequiredMethod) ? e : Nucleus::API::RequiredMethod.new(e) }
-        else
-          @methods = v
-        end
+        @methods = if v
+                     v.map! { |e| e.is_a?(Nucleus::API::RequiredMethod) ? e : Nucleus::API::RequiredMethod.new(e) }
+                   else
+                     v
+                   end
       end
     end
   end

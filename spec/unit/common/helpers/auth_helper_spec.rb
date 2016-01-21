@@ -6,7 +6,7 @@ describe Nucleus::Adapters::AuthenticationRetryWrapper do
   let!(:calculator) { double('calculator') }
   let!(:user) { 'my fictionary user' }
   let!(:pass) { 'my fictionary password' }
-  let!(:fake_env) { { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{user}:#{pass}"].pack('m*').gsub(/\n/, '') } }
+  let!(:fake_env) { { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{user}:#{pass}"].pack('m*').delete("\n") } }
   before do
     cache_key = 'a unique cache key!'
     cache_dao = double(Nucleus::API::DB::CacheDao)

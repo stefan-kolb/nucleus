@@ -7,7 +7,7 @@ module Nucleus
           # @see Stub#auth_client
           def auth_client
             Token.new @check_certificates do |_verify_ssl, username, password|
-              auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
+              auth_headers = { 'Authorization' => 'Basic ' + ["#{username}:#{password}"].pack('m*').delete("\n") }
               begin
                 # ssl verification is implemented by the HttpClient itself
                 response = post('/token', headers: auth_headers)

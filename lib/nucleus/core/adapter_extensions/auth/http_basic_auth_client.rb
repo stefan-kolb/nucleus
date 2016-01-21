@@ -18,7 +18,7 @@ module Nucleus
 
       # @see AuthClient#authenticate
       def authenticate(username, password)
-        packed_credentials = ["#{username}:#{password}"].pack('m*').gsub(/\n/, '')
+        packed_credentials = ["#{username}:#{password}"].pack('m*').delete("\n")
         valid = @verification.call(verify_ssl, 'Authorization' => "Basic #{packed_credentials}")
         fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless valid
         # verification passed, credentials are valid

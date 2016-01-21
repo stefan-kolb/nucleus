@@ -58,12 +58,12 @@ module Nucleus
           # @param [String, Integer, Float, Double] value value to apply to the variable
           # @return [Hash] Nucleus representation of the modified variable
           def set_var(application_id, key, value)
-            if value.nil?
-              # delete the var, set to 'null'
-              settings = "{\"#{key}\":null}"
-            else
-              settings = "{\"#{key}\":\"#{value}\"}"
-            end
+            settings = if value.nil?
+                         # delete the var, set to 'null'
+                         "{\"#{key}\":null}"
+                       else
+                         "{\"#{key}\":\"#{value}\"}"
+                       end
             response = put("/app/#{application_id}/deployment/#{NUCLEUS_DEPLOYMENT}/addon/config.free",
                            body: { addon: 'config.free',
                                    settings: settings,

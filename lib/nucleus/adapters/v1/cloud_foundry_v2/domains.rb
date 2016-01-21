@@ -86,17 +86,17 @@ module Nucleus
             route_metadata = route_resource[:metadata]
             assigned_domain = get(route_entity[:domain_url]).body
             domain = { id: route_metadata[:guid], created_at: route_metadata[:created_at] }
-            if route_metadata[:updated_at].to_s == ''
-              domain[:updated_at] = route_metadata[:created_at]
-            else
-              domain[:updated_at] = route_metadata[:updated_at]
-            end
+            domain[:updated_at] = if route_metadata[:updated_at].to_s == ''
+                                    route_metadata[:created_at]
+                                  else
+                                    route_metadata[:updated_at]
+                                  end
 
-            if route_entity[:host].to_s == ''
-              domain[:name] = assigned_domain[:entity][:name]
-            else
-              domain[:name] = "#{route_entity[:host]}.#{assigned_domain[:entity][:name]}"
-            end
+            domain[:name] = if route_entity[:host].to_s == ''
+                              assigned_domain[:entity][:name]
+                            else
+                              "#{route_entity[:host]}.#{assigned_domain[:entity][:name]}"
+                            end
             domain
           end
 

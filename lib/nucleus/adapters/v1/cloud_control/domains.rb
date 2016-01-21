@@ -5,7 +5,7 @@ module Nucleus
         # cloud control, CRUD operations for the application's domain object
         module Domains
           # cloud control URLs that are automatically assigned to applications as domain but can't be managed
-          CC_URLS = %w(cloudcontrolapp.com cloudcontrolled.com)
+          CC_URLS = %w(cloudcontrolapp.com cloudcontrolled.com).freeze
 
           # @see Stub#domains
           def domains(application_id)

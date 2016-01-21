@@ -46,8 +46,8 @@ module Nucleus
             @db.delete(entity_id)
             # update the index
             remove_key_from_index(entity_id)
-          else
-            fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'." if id.nil?
+          elsif id.nil?
+            fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'."
           end
         end
       end
@@ -122,11 +122,11 @@ module Nucleus
                "Invalid database backend '#{db_backend}'. Please choose one of: #{allowed_backends.keys}"
         end
 
-        if nucleus_config.db.key?(:backend_options)
-          backend_options = allowed_backends[db_backend].merge(nucleus_config.db.backend_options)
-        else
-          backend_options = allowed_backends[db_backend]
-        end
+        backend_options = if nucleus_config.db.key?(:backend_options)
+                            allowed_backends[db_backend].merge(nucleus_config.db.backend_options)
+                          else
+                            allowed_backends[db_backend]
+                          end
 
         # Create the path if we use directories or files
         if backend_options.key?(:file)

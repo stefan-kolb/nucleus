@@ -214,12 +214,12 @@ module Nucleus
             service = apply_metadata(service, cf_service)
             service[:name] = service.delete(:label)
             service[:release] = service.delete(:version)
-            if cf_service[:entity].key?(:service_plans)
-              # use preloaded plans if available
-              service[:free_plan] = free_plan?(service[:id], cf_service[:entity][:service_plans])
-            else
-              service[:free_plan] = free_plan?(service[:id])
-            end
+            service[:free_plan] = if cf_service[:entity].key?(:service_plans)
+                                    # use preloaded plans if available
+                                    free_plan?(service[:id], cf_service[:entity][:service_plans])
+                                  else
+                                    free_plan?(service[:id])
+                                  end
             # CF does not have service dependencies
             service[:required_services] = service.delete(:requires)
             # description and documentation_url should already be set

@@ -6,7 +6,7 @@ describe Nucleus::Adapters::OAuth2AuthClient do
       url = 'theurl'
       check_certs = false
       client = Nucleus::Adapters::OAuth2AuthClient.new url, check_certs
-      expect(client.instance_variable_get :@auth_url).to be url
+      expect(client.instance_variable_get(:@auth_url)).to be url
       expect(client.verify_ssl).to be check_certs
     end
   end

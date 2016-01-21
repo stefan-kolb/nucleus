@@ -47,7 +47,7 @@ module Nucleus
       check_ssl = options.key?(:check_ssl) ? options[:check_ssl] : true
       adapter = @adapters[vendor].new(endpoint_url, options[:app_domain], check_ssl)
 
-      fake_env = { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').gsub(/\n/, '') }
+      fake_env = { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').delete("\n") }
       # patch the adapter so that calls are wrapped and expect valid authentication
       AdapterAuthenticationInductor.patch(adapter, fake_env)
 

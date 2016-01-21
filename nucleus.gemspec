@@ -17,11 +17,11 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.0'
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
-  spec.files         = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|
+  spec.files = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|
     f[%r{^(lib/nucleus_api|spec/adapter|icons)/}]
   end
   # again only unit and integration, but no adapter test files
-  spec.test_files    = spec.files.grep(%r{^(spec)/})
+  spec.test_files = spec.files.grep(%r{^(spec)/})
 
   # used as global configuration
   spec.add_runtime_dependency 'configatron', '~> 4.5'
@@ -81,7 +81,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard-yard'
   spec.add_development_dependency 'inch', '~> 0.7'
   spec.add_development_dependency 'rake', '~> 10.4'
-  spec.add_development_dependency 'rubocop', '~> 0.34'
+  spec.add_development_dependency 'rubocop', '~> 0.36.0'
   spec.add_development_dependency 'vcr', '~> 3.0'
   spec.add_development_dependency 'webmock', '~> 1.20'
   spec.add_development_dependency 'yard', '~> 0.8'

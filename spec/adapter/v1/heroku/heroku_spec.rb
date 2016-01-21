@@ -47,7 +47,7 @@ describe Nucleus::Adapters::V1::Heroku do
   end
 
   describe 'with empty credentials' do
-    let!(:request_headers) { { 'HTTP_AUTHORIZATION' => 'Basic ' + [':'].pack('m*').gsub(/\n/, '') } }
+    let!(:request_headers) { { 'HTTP_AUTHORIZATION' => 'Basic ' + [':'].pack('m*').delete("\n") } }
     include_examples 'compliant adapter with invalid credentials'
   end
 

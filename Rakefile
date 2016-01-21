@@ -95,7 +95,7 @@ end
 
 begin
   require 'yard'
-  DOC_FILES = %w(lib/**/*.rb)
+  DOC_FILES = %w(lib/**/*.rb).freeze
 
   YARD::Rake::YardocTask.new(:doc) do |t|
     t.files = DOC_FILES

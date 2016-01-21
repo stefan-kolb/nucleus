@@ -36,7 +36,7 @@ module Nucleus
     private
 
     def compression_format_method_name(compression_format)
-      "un_#{compression_format.downcase.gsub(/\./, '_').underscore}".to_sym
+      "un_#{compression_format.downcase.tr('.', '_').underscore}".to_sym
     end
 
     def un_zip(file, destination_path)
@@ -92,10 +92,10 @@ module Nucleus
         end
       end
     end
-    alias_method :un_tgz, :un_tar_gz
+    alias un_tgz un_tar_gz
 
     def tar_git_entry?(full_name)
-      @exclude_git && (full_name.start_with?('._.git') || full_name.start_with?('.git'))
+      @exclude_git && full_name.start_with?('._.git', '.git')
     end
 
     def write_tar_file_entry(entry, dest)

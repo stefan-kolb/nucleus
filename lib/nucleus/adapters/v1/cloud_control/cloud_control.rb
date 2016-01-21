@@ -19,13 +19,13 @@ module Nucleus
         include Nucleus::Adapters::V1::CloudControl::Vars
 
         # The default deployment name of cloud control applications that is used by Nucleus
-        NUCLEUS_DEPLOYMENT = 'nucleus'
+        NUCLEUS_DEPLOYMENT = 'nucleus'.freeze
         # Error messages of semantic errors that are platform specific
-        CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS = ['cannot use this name', 'may only contain', 'this field has no more than']
+        CC_EXCLUSIVE_SEMANTIC_ERROR_MSGS = ['cannot use this name', 'may only contain', 'this field has no more than'].freeze
         # Error messages of common semantic errors
         CC_SEMANTIC_ERROR_MSGS = ['must be unique', 'already exists',
-                                  'not a valid addon name', 'not a valid addon option']
-        CC_CONFLICT_ERROR_MSGS = ['Addon already exists']
+                                  'not a valid addon name', 'not a valid addon option'].freeze
+        CC_CONFLICT_ERROR_MSGS = ['Addon already exists'].freeze
 
         def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
           super(endpoint_url, endpoint_app_domain, check_certificates)
@@ -122,11 +122,11 @@ module Nucleus
           return all_deployments[0] if all_deployments.length == 1
 
           # return 'default' if more than 1 deployment and 'default' is included
-          def_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].downcase == 'default' }
+          def_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].casecmp('default') }
           return def_deployment if def_deployment
 
           # return 'nucleus' if more than 1 deployment, but no 'default' is included
-          nucleus_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].downcase == 'nucleus' }
+          nucleus_deployment = all_deployments.find { |d| d[:name].split(%r{/})[1].casecmp('nucleus') }
           return nucleus_deployment if nucleus_deployment
 
           # fail 422 if no 'default', no 'nucleus', and more than 1 deployment is available (could not identify default)

@@ -8,7 +8,7 @@ module VCR
       # @see Oj
       module Oj
         # @private
-        ENCODING_ERRORS = [ArgumentError]
+        ENCODING_ERRORS = [ArgumentError].freeze
 
         # The file extension to use for this serializer.
         #
@@ -37,8 +37,6 @@ module VCR
           end
         end
 
-        private
-
         def self.handle_encoding_errors
           yield
         rescue *self::ENCODING_ERRORS => e
@@ -46,6 +44,8 @@ module VCR
             'in the future.'
           raise
         end
+
+        private_class_method :handle_encoding_errors
       end
     end
   end

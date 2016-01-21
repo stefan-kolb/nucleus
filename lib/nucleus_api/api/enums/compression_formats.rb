@@ -5,9 +5,9 @@ module Nucleus
       # Users can upload data, or download them in any of the defined formats.
       module CompressionFormats
         # tar.gz, mime type application/gzip or application/x-gzip
-        TAR_GZ = 'tar.gz'
+        TAR_GZ = 'tar.gz'.freeze
         # zip, mime type application/zip
-        ZIP = 'zip'
+        ZIP = 'zip'.freeze
 
         # List all available compression formats.
         # @return [Array<String>] compression format as file extensions

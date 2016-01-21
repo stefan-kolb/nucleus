@@ -8,7 +8,7 @@ module Nucleus
       # @since 0.1.0
       class AccessLogger
         # the log format
-        FORMAT = %({%s [%36s] - %s [%s] "%s %s%s %s" %d %s %0.4f\n})
+        FORMAT = %({%s [%36s] - %s [%s] "%s %s%s %s" %d %s %0.4f\n}).freeze
 
         def initialize(app, logger = nil)
           @app = app

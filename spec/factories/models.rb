@@ -13,8 +13,8 @@ FactoryGirl.define do
     id { generate(:uuid) }
     name { Faker::Internet.slug }
     url { Faker::Internet.url }
-    created_at { (Faker::Date.between(180.days.ago, 90.days.ago)).iso8601 }
-    updated_at { (Faker::Date.between(90.days.ago, Date.today)).iso8601 }
+    created_at { Faker::Date.between(180.days.ago, 90.days.ago).iso8601 }
+    updated_at { Faker::Date.between(90.days.ago, Date.today).iso8601 }
     provider nil
 
     after(:create) do |endpoint|
@@ -34,8 +34,8 @@ FactoryGirl.define do
   factory :provider, class: Nucleus::Provider do
     id { generate(:uuid) }
     name { Faker::App.name }
-    created_at { (Faker::Date.between(180.days.ago, 90.days.ago)).iso8601 }
-    updated_at { (Faker::Date.between(90.days.ago, Date.today)).iso8601 }
+    created_at { Faker::Date.between(180.days.ago, 90.days.ago).iso8601 }
+    updated_at { Faker::Date.between(90.days.ago, Date.today).iso8601 }
     vendor nil
 
     after(:create) do |provider|
@@ -55,7 +55,7 @@ FactoryGirl.define do
   factory :vendor, class: Nucleus::Vendor do
     id { generate(:uuid) }
     name { Faker::App.name }
-    created_at { (Faker::Date.between(180.days.ago, 90.days.ago)).iso8601 }
-    updated_at { (Faker::Date.between(90.days.ago, Date.today)).iso8601 }
+    created_at { Faker::Date.between(180.days.ago, 90.days.ago).iso8601 }
+    updated_at { Faker::Date.between(90.days.ago, Date.today).iso8601 }
   end
 end

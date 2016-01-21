@@ -17,7 +17,7 @@ module Nucleus
     end
 
     def to_s
-      return name if self.respond_to?('name')
+      return name if respond_to?('name')
       return id if id
       super.to_s
     end

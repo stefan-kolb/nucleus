@@ -4,11 +4,11 @@ module Nucleus
       # {LogDownloadFormats} define the filetypes that can be requested for logs to be downloaded with.
       module LogDownloadFormats
         # log (raw/uncompressed), mime type usually is text/plain or text/html
-        LOG = 'log'
+        LOG = 'log'.freeze
         # tar.gz, mime type application/gzip or application/x-gzip
-        TAR_GZ = 'tar.gz'
+        TAR_GZ = 'tar.gz'.freeze
         # zip, mime type application/zip
-        ZIP = 'zip'
+        ZIP = 'zip'.freeze
 
         # List all available file formats.
         # @return [Array<String>] file format as file extensions

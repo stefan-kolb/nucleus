@@ -75,7 +75,7 @@ module Nucleus
         def link_generator
           return @link_generator unless @link_generator.nil?
           # Create a new generator instance
-          if self.is_a?(ApiVersion)
+          if is_a?(ApiVersion)
             version = object[:name]
           elsif !options[:version].nil?
             version = options[:version]

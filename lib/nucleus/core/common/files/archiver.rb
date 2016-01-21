@@ -11,9 +11,9 @@ module Nucleus
     # @raise [StandardError] if the compression_format is not supported and the directory can't be compressed
     # @return [StringIO] compressed data of the given input path
     def compress(path, compression_format)
-      compression_method = compression_format.downcase.gsub(/\./, '_').underscore.to_sym
+      compression_method = compression_format.downcase.tr('.', '_').underscore.to_sym
       fail StandardError,
-           "Unsupported compression format #{compression_format}" unless self.respond_to?(compression_method, true)
+           "Unsupported compression format #{compression_format}" unless respond_to?(compression_method, true)
       send(compression_method, path)
     end
 

@@ -6,10 +6,10 @@ module Nucleus
           LOGGREGATOR_TYPES = [Enums::ApplicationLogfileType::API,
                                Enums::ApplicationLogfileType::APPLICATION,
                                Enums::ApplicationLogfileType::REQUEST,
-                               Enums::ApplicationLogfileType::SYSTEM]
+                               Enums::ApplicationLogfileType::SYSTEM].freeze
           # Carriage return (newline in Mac OS) + line feed (newline in Unix) == CRLF (newline in Windows)
-          CRLF = "\r\n"
-          WSP  = "\s"
+          CRLF = "\r\n".freeze
+          WSP  = ' '.freeze
 
           # @see Stub#logs
           def logs(application_name_or_id)

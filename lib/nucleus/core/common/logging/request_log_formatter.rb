@@ -3,7 +3,7 @@ require 'English'
 module Nucleus
   module Logging
     class Formatter
-      FORMAT = "%s, %38s [%s#%d] %5s -- %s: %s\n"
+      FORMAT = "%s, %38s [%s#%d] %5s -- %s: %s\n".freeze
 
       attr_accessor :datetime_format
 
@@ -12,12 +12,12 @@ module Nucleus
       end
 
       def call(severity, time, progname, msg)
-        if Thread.current[:nucleus_request_id].nil?
-          # if there is no request id, then fill up the space
-          request_part = "[#{'*' * 36}]"
-        else
-          request_part = "[#{Thread.current[:nucleus_request_id]}]"
-        end
+        request_part = if Thread.current[:nucleus_request_id].nil?
+                         # if there is no request id, then fill up the space
+                         "[#{'*' * 36}]"
+                       else
+                         "[#{Thread.current[:nucleus_request_id]}]"
+                       end
 
         format(FORMAT, severity[0..0], request_part, format_datetime(time),
                $PID, severity, progname, msg2str(msg))

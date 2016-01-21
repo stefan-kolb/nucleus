@@ -5,11 +5,11 @@ require 'nucleus/ext/kernel'
 require 'nucleus/os'
 
 # import the configuration file that resides in the user's home directory as initial choice
-if OS.windows?
-  home_dir_config = File.expand_path(File.join(Dir.home, 'nucleus', 'nucleus_config.rb'))
-else
-  home_dir_config = File.expand_path(File.join(Dir.home, '.nucleus', 'nucleus_config.rb'))
-end
+home_dir_config = if OS.windows?
+                    File.expand_path(File.join(Dir.home, 'nucleus', 'nucleus_config.rb'))
+                  else
+                    File.expand_path(File.join(Dir.home, '.nucleus', 'nucleus_config.rb'))
+                  end
 if File.exist?(home_dir_config)
   puts "Applying configuration from: #{home_dir_config}"
   require home_dir_config

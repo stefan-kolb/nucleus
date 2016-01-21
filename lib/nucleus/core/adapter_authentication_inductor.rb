@@ -15,8 +15,6 @@ module Nucleus
       end
     end
 
-    private
-
     # Patch the actual method that is defined in an API version stub.
     # The method shall than be able to update the authentication token if the initial authentication expired.<br>
     # Only major authentication issues, e.g. if the credentials are repeatedly rejected,

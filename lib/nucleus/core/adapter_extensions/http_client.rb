@@ -136,12 +136,12 @@ module Nucleus
       def excon_connection_params(params)
         middleware = Excon.defaults[:middlewares].dup
 
-        if params[:follow_redirects] == false
-          middleware = [Excon::Middleware::ResponseParser, Excon::Middleware::Decompress].push(*middleware).uniq
-        else
-          middleware = [Excon::Middleware::ResponseParser, Excon::Middleware::RedirectFollower,
+        middleware = if params[:follow_redirects] == false
+                       [Excon::Middleware::ResponseParser, Excon::Middleware::Decompress].push(*middleware).uniq
+                     else
+                       [Excon::Middleware::ResponseParser, Excon::Middleware::RedirectFollower,
                         Excon::Middleware::Decompress].push(*middleware).uniq
-        end
+                     end
         { middlewares: middleware, ssl_verify_peer: @check_certificates }
       end
 
