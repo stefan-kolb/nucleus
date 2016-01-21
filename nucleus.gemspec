@@ -36,10 +36,10 @@ Gem::Specification.new do |spec|
   # Application data handling
   spec.add_runtime_dependency 'git', '~> 1.2'
   # Used to build the API
-  spec.add_runtime_dependency 'grape', '~> 0.12'
+  spec.add_runtime_dependency 'grape', '~> 0.13.0'
   spec.add_runtime_dependency 'grape-entity', '~> 0.4', '>= 0.4.5'
   # Used to document the API
-  spec.add_runtime_dependency 'grape-swagger', '~> 0.10', '>= 0.10.1'
+  spec.add_runtime_dependency 'grape-swagger', '~> 0.10.2', '>= 0.10.1'
   # Used to import the vendor, provider & adapter setup from configuration with schema validation
   spec.add_runtime_dependency 'kwalify', '~> 0.7'
   # DB store (2)
