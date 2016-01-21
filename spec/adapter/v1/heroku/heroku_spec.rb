@@ -7,7 +7,7 @@ describe Nucleus::Adapters::V1::Heroku do
     @unsupported = ['with valid credentials is compliant and application services change succeeds',
                     'with valid credentials is compliant and scaling succeeds with scale-out',
                     'with valid credentials is compliant and log tail request is valid chunked request with encoding and receives at least one new message', # FIXME: recheck
-                    'with valid credentials is compliant and create application fails with invalid runtimes by bad URL' # FIXME: recheck
+                    'with valid credentials is compliant and create application fails with invalid runtimes' # FIXME: recheck
                    ]
     @endpoint = 'heroku'
     @api_version = 'v1'
