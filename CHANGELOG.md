@@ -5,11 +5,24 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased - Next
 
 ### Added
+
+### Fixed
+
+
+### Removed
+
+
+## [0.2.0] - 2016-01-22
+
+### Added
 * Add basic logging functionality for OpenShift v2
 * Add more providers and endpoints to the default configuration
 
 ### Fixed
 * Correctly URL-encode credentials for Heroku authentication
+
+### Removed
+* LMDB is the only packaged data store from now on
 
 ## [0.1.0] - 2015-08-04
 
