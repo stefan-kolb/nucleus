@@ -25,8 +25,6 @@ Gem::Specification.new do |spec|
 
   # used as global configuration
   spec.add_runtime_dependency 'configatron', '~> 4.5'
-  # DB store (1)
-  spec.add_runtime_dependency 'daybreak', '~> 0.3'
   # Required for log tailing against HTTP endpoints
   spec.add_runtime_dependency 'em-http-request', '~> 1.1'
   # Used as main HTTP / REST client
@@ -42,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'grape-swagger', '~> 0.10.2', '>= 0.10.1'
   # Used to import the vendor, provider & adapter setup from configuration with schema validation
   spec.add_runtime_dependency 'kwalify', '~> 0.7'
-  # DB store (2)
+  # DB store
   spec.add_runtime_dependency 'lmdb', '~> 0.4'
   # Logging
   spec.add_runtime_dependency 'logger', '~> 1.2'

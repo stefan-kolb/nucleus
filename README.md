@@ -507,13 +507,6 @@ They are described with increasing importance, meaning that the last option over
 1. A file in user account's home directory. On UNIX systems this file must be placed at `~/.nucleus/nucleus_config.rb`, whereas it is expected at `~/nucleus/nucleus_config.rb` if running Windows.
 2. The `config/nucleus_config.rb` file in the project's directory
 
-#### Database backend
-
-The database backend can be specified in the `config/nucleus_config.rb` configuration file.
-It defaults to [Daybreak](https://github.com/propublica/daybreak) on Unix systems and [LMDB](https://github.com/minad/lmdb) on Windows.
-
-Note: *[Daybreak](https://github.com/propublica/daybreak) does not run on Windows*
-
 ### Vendors, Providers, and Endpoints
 
 A vendor is reflected by an adapter implementation, but the providers and their endpoints can either be changed at runtime or via `.yaml` configuration files.

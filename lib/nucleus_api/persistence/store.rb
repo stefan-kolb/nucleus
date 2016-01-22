@@ -92,14 +92,7 @@ module Nucleus
       end
 
       def allowed_backends
-        allowed = {
-          Daybreak: { file: File.join(path, @store_type) },
-          LMDB: { dir: path, db: @store_type }
-        }
-        # Daybreak does not run on windows, see: https://github.com/propublica/daybreak/issues/27
-        allowed.delete :Daybreak if OS.windows?
-        # return remaining backends
-        allowed
+        { LMDB: { dir: path, db: @store_type } }
       end
 
       private
@@ -110,8 +103,7 @@ module Nucleus
 
       def chosen_db_backend
         return nucleus_config.db.backend if nucleus_config.db.key?(:backend)
-        return :LMDB if OS.windows?
-        :Daybreak
+        :LMDB
       end
 
       def open_db

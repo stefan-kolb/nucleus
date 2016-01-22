@@ -9,7 +9,6 @@ require 'logger'
 
 # database
 require 'moneta'
-require 'daybreak'
 require 'lmdb'
 
 # schema

@@ -6,10 +6,6 @@
 # Defaults to: File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
 # nucleus_config.logging.path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
 
-# [optional] Database backend to use. Choose one of: [:Daybreak, :LMDB]
-# Defaults to: :Daybreak on Unix, :LMDB on windows systems.
-# nucleus_config.db.backend = :Daybreak
-
 # [optional] Options to start the backend.
 # See http://www.rubydoc.info/gems/moneta/Moneta/Adapters for valid options on the chosen adapter.
 # Defaults to: {}
