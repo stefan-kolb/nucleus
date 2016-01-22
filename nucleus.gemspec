@@ -47,13 +47,13 @@ Gem::Specification.new do |spec|
   # Logging
   spec.add_runtime_dependency 'logger', '~> 1.2'
   # Application archive handling, detect unsupported uploads
-  spec.add_runtime_dependency 'mime-types', '~> 2.4'
+  spec.add_runtime_dependency 'mime-types', '~> 2.6'
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
   # Openshift logging access and direct Git SSH requests
   spec.add_runtime_dependency 'net-ssh', '~> 3.0'
   # Used for JSON / Hash conversion and test cassette serialization (is way faster than other JSON libs)
-  spec.add_runtime_dependency 'oj', '~> 2.13.0'
+  spec.add_runtime_dependency 'oj', '~> 2.14'
   # Required for Cloud Foundry log messages
   spec.add_runtime_dependency 'protobuf', '~> 3.4'
   # To make sure HTTPS is used instead of HTTP
