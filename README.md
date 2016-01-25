@@ -58,7 +58,7 @@ It provides fully compliant [swagger](http://swagger.io/) schemas that serve for
 - [Openshift][openshift_v2] (v2)
   - [OpenShift Online][openshift_online], [getup Cloud][getup]
 - [cloudControl][cloudcontrol]
-  - [dotCloud][dotcloud], [Cloud&Heat App Elevator][cloud&heat], [exoscale Apps][exoscale]
+  - [Cloud&Heat App Elevator][cloud&heat], [exoscale Apps][exoscale]
 
 [heroku]: https://www.heroku.com
 
@@ -74,7 +74,6 @@ It provides fully compliant [swagger](http://swagger.io/) schemas that serve for
 [getup]: https://getupcloud.com/index_en.html
 
 [cloudcontrol]: https://www.cloudcontrol.com
-[dotcloud]: https://www.dotcloud.com/
 [cloud&heat]: https://www.cloudandheat.com/de/paas.html
 [exoscale]: https://www.exoscale.ch/add-on/apps/
 
