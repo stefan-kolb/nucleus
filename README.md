@@ -475,7 +475,7 @@ Recording is really slow. Even worse, actions quite often fail with Openshift in
 
 ### cloudControl
 
-Providers: [cloudControl][cloudcontrol], [dotCloud][dotcloud], [Cloud&Heat App Elevator][cloud&heat], [exoscale Apps][exoscale]
+Providers: [cloudControl][cloudcontrol]
 
 #### Issues
 

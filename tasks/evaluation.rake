@@ -17,7 +17,7 @@ namespace :evaluation do
 
         adapter_dao.all.each do |adapter_index_entry|
           vendor_name = vendor_dao.get(provider_dao.get(endpoint_dao.get(adapter_index_entry.id).provider).vendor).name
-          # from camel to sneak case
+          # from camel to snake case
           adapter_file_name = vendor_name.gsub(/\s/, '_').gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
                                          .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
           next if @vendor_results.key?(vendor_name)
