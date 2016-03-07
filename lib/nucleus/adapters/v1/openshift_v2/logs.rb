@@ -30,14 +30,6 @@ module Nucleus
             end
           end
 
-          # @see Stub#tail
-          def tail(application_id, log_id, stream)
-            # TODO: implement me
-            # remote_cmd = "tail#{options.opts ? ' --opts ' + Base64::encode64(options.opts).chomp : ''} #{file_glob}"
-            # ssh_cmd = "ssh -t #{uuid}@#{host} '#{remote_cmd}'"
-            raise NOT_IMPLEMENTED_ERROR
-          end
-
           # @see Stub#log_entries
           def log_entries(application_id, log_id)
             # fails with 404 if application is not available
