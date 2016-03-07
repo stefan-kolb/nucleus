@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
   spec.files = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|
-    f[%r{^(lib/nucleus_api|spec/adapter|icons)/}]
+    f[%r{^(lib/nucleus_api|spec/adapter|icons|docs)/}]
   end
   # again only unit and integration, but no adapter test files
   spec.test_files = spec.files.grep(%r{^(spec)/})
