@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+Removed cloudControl adapter due to bankruptcy of the vendor
 
 ## [0.2.0] - 2016-01-22
 

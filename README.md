@@ -34,7 +34,6 @@ It provides fully compliant [swagger](http://swagger.io/) schemas that serve for
   * [Heroku](#heroku)
   * [Cloud Foundry v2](#cloud-foundry-v2)
   * [Openshift v2](#openshift-v2)
-  * [cloudControl](#cloudcontrol)
 * [Configuration](#configuration)
   * [Vendors, Providers and Endpoints](#vendors-providers-and-endpoints)
   * [Application configuration](#application-configuration)
@@ -57,7 +56,6 @@ It provides fully compliant [swagger](http://swagger.io/) schemas that serve for
   - [AppFog][appfog], [Anynines][anynines], [IBM Bluemix][bluemix], [Pivotal Web Services][pivotal_ws], [HP Helion][hp_helion]
 - [Openshift][openshift_v2] (v2)
   - [OpenShift Online][openshift_online], [getup Cloud][getup]
-- [cloudControl][cloudcontrol]
 
 [heroku]: https://www.heroku.com
 
@@ -71,8 +69,6 @@ It provides fully compliant [swagger](http://swagger.io/) schemas that serve for
 [openshift_v2]: https://www.openshift.com/
 [openshift_online]: https://www.openshift.com/features/index.html
 [getup]: https://getupcloud.com/index_en.html
-
-[cloudcontrol]: https://www.cloudcontrol.com
 
 More information on the vendors and the associated adapter can be found in the [adapters section](#adapters).
 
@@ -182,13 +178,13 @@ resolver.adapters
 ```
 
 ```ruby
-{ "cloudcontrol"=>Nucleus::Adapters::V1::CloudControl, "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2 }
+{ "cloud_foundry_v2"=>Nucleus::Adapters::V1::CloudFoundryV2, "heroku"=>Nucleus::Adapters::V1::Heroku, "openshift_v2"=>Nucleus::Adapters::V1::OpenshiftV2 }
 ```
 
 5) Load your desired adapter implementation:
 
 ```ruby
-adapter = resolver.load('cloudcontrol', 'api.cloudcontrol.com', 'your_username', 'your_password')
+adapter = resolver.load('cloud_foundry_v2', 'api.pivotal.io', 'your_username', 'your_password')
 ```
 
 By default, the adapter will be populated with the default configuration options that are defined in the vendor's configuration for the selected endpoint_url.
@@ -259,47 +255,47 @@ This list can be auto-generated via:
 $ bundle exec rake evaluation:compatibility:markdown
 ```
 
-**State: 10/14/2015**
+**State: 3/7/2016**
 
-Method / Vendor|cloudControl|Cloud Foundry v2|Heroku|Openshift v2
-:--|:-:|:-:|:-:|:-:
-auth_client|&#10003;|&#10003;|&#10003;|&#10003;
-regions|&#10003;|&#10003;|&#10003;|&#10003;
-region|&#10003;|&#10003;|&#10003;|&#10003;
-applications|&#10003;|&#10003;|&#10003;|&#10003;
-application|&#10003;|&#10003;|&#10003;|&#10003;
-create_application|&#10003;|&#10003;|&#10003;|&#10003;
-update_application|&#10007;|&#10003;|&#10003;|&#10007;
-delete_application|&#10003;|&#10003;|&#10003;|&#10003;
-domains|&#10003;|&#10003;|&#10003;|&#10003;
-domain|&#10003;|&#10003;|&#10003;|&#10003;
-create_domain|&#10003;|&#10003;|&#10003;|&#10003;
-delete_domain|&#10003;|&#10003;|&#10003;|&#10003;
-env_vars|&#10003;|&#10003;|&#10003;|&#10003;
-env_var|&#10003;|&#10003;|&#10003;|&#10003;
-create_env_var|&#10003;|&#10003;|&#10003;|&#10003;
-update_env_var|&#10003;|&#10003;|&#10003;|&#10003;
-delete_env_var|&#10003;|&#10003;|&#10003;|&#10003;
-start|&#10003;|&#10003;|&#10003;|&#10003;
-stop|&#10007;|&#10003;|&#10003;|&#10003;
-restart|&#10007;|&#10003;|&#10003;|&#10003;
-deploy|&#10003;|&#10003;|&#10003;|&#10003;
-rebuild|&#10003;|&#10003;|&#10003;|&#10003;
-download|&#10003;|&#10003;|&#10003;|&#10003;
-scale|&#10003;|&#10003;|&#10003;|&#10003;
-log?|&#10003;|&#10003;|&#10003;|&#10003;
-logs|&#10003;|&#10003;|&#10003;|&#10003;
-log_entries|&#10003;|&#10003;|&#10003;|&#10003;
-tail|&#10003;|&#10003;|&#10003;|&#10007;
-services|&#10003;|&#10003;|&#10003;|&#10003;
-service|&#10003;|&#10003;|&#10003;|&#10003;
-service_plans|&#10003;|&#10003;|&#10003;|&#10003;
-service_plan|&#10003;|&#10003;|&#10003;|&#10003;
-installed_services|&#10003;|&#10003;|&#10003;|&#10003;
-installed_service|&#10003;|&#10003;|&#10003;|&#10003;
-add_service|&#10003;|&#10003;|&#10003;|&#10003;
-change_service|&#10003;|&#10003;|&#10003;|&#10007;
-remove_service|&#10003;|&#10003;|&#10003;|&#10003;
+Method / Vendor|Cloud Foundry v2|Heroku|Openshift v2
+:--|:-:|:-:|:-:
+auth_client|&#10003;|&#10003;|&#10003;
+regions|&#10003;|&#10003;|&#10003;
+region|&#10003;|&#10003;|&#10003;
+applications|&#10003;|&#10003;|&#10003;
+application|&#10003;|&#10003;|&#10003;
+create_application|&#10003;|&#10003;|&#10003;
+update_application|&#10003;|&#10003;|&#10007;
+delete_application|&#10003;|&#10003;|&#10003;
+domains|&#10003;|&#10003;|&#10003;
+domain|&#10003;|&#10003;|&#10003;
+create_domain|&#10003;|&#10003;|&#10003;
+delete_domain|&#10003;|&#10003;|&#10003;
+env_vars|&#10003;|&#10003;|&#10003;
+env_var|&#10003;|&#10003;|&#10003;
+create_env_var|&#10003;|&#10003;|&#10003;
+update_env_var|&#10003;|&#10003;|&#10003;
+delete_env_var|&#10003;|&#10003;|&#10003;
+start|&#10003;|&#10003;|&#10003;
+stop|&#10003;|&#10003;|&#10003;
+restart|&#10003;|&#10003;|&#10003;
+deploy|&#10003;|&#10003;|&#10003;
+rebuild|&#10003;|&#10003;|&#10003;
+download|&#10003;|&#10003;|&#10003;
+scale|&#10003;|&#10003;|&#10003;
+log?|&#10003;|&#10003;|&#10003;
+logs|&#10003;|&#10003;|&#10003;
+log_entries|&#10003;|&#10003;|&#10003;
+tail|&#10003;|&#10003;|&#10003;
+services|&#10003;|&#10003;|&#10003;
+service|&#10003;|&#10003;|&#10003;
+service_plans|&#10003;|&#10003;|&#10003;
+service_plan|&#10003;|&#10003;|&#10003;
+installed_services|&#10003;|&#10003;|&#10003;
+installed_service|&#10003;|&#10003;|&#10003;
+add_service|&#10003;|&#10003;|&#10003;
+change_service|&#10003;|&#10003;|&#10007;
+remove_service|&#10003;|&#10003;|&#10003;
 
 ### Core constructs
 
@@ -472,27 +468,6 @@ further configuration are not supported as of now.
 **Performance**
 
 Recording is really slow. Even worse, actions quite often fail with Openshift internal timeouts.
-
-### cloudControl
-
-Providers: [cloudControl][cloudcontrol]
-
-#### Issues
-
-**Application update**
-
-An application can't be updated, the `name` and `runtimes` can't be changed once created.
-
-**Application lifecycle**
-
-Applications on cloudControl can't be explicitly stopped or restarted.
-They start after a successful build of the application, which is therefore postponed to the first invocation of the start operation.
-Applications only stop once the corresponding _deployment_ has been deleted.
-
-**Logs**
-
-Log messages, for instance the request entries, do not appear instantly in the log.
-It may take some seconds or even minutes for them to show up.
 
 ## Configuration
 

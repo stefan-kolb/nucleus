@@ -88,7 +88,7 @@ describe Nucleus::Adapters::{API_VERSION}::{VENDOR_CLASS} do
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)
-      skip('This feature is currently not supported by CloudControl - 501')
+      skip('This feature is currently not supported by Heroku - 501')
     end
     # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)

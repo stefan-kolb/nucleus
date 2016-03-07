@@ -59,11 +59,6 @@ bluemix-eu-gb:
   password: 'my_bluemix_usernames_password'
   username: 'my_bluemix_username_with_encoded_umlauts'
 
-cloudcontrol:
-  user:     'my_cc_email'
-  password: 'my_cc_usernames_password'
-  username: 'my_cc_username'
-
 openshift-online:
   user:     'my_os_email'
   password: 'my_os_usernames_password'
@@ -86,8 +81,6 @@ bundle exec rake record:heroku
 * You must be allowed to create at least 3 additional applications with your account, otherwise the quota restrictions will invalidate the test results.
 * A complete recording of a single vendor usually takes 5 up to 15 minutes. Openshift currently takes more than 30 minutes.
 If you only require a certain functionality to be tested (during development), make sure to comment out irrelevant sections in the `spec/adapter/support/shared_example_adapters_valid.rb` file.
-* cloudControl requires you to change the application names if the previous recording was made within the last 2 days, otherwise if fails because the name is still locked.
-Change the name in the `spec/adapter/v1/cloud_control_spec.rb`.
 
 ### Missing or invalid VCR recording
 
