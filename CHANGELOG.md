@@ -8,10 +8,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-
 ### Removed
 
-Removed cloudControl adapter due to bankruptcy of the vendor
+
+## [0.3.0] - 2016-03-07
+
+### Removed
+* Removed cloudControl adapter due to bankruptcy of the vendor
 
 ## [0.2.0] - 2016-01-22
 
@@ -33,3 +36,4 @@ Removed cloudControl adapter due to bankruptcy of the vendor
 
 [0.1.0]: https://github.com/stefan-kolb/nucleus/releases/tag/0.1.0
 [0.2.0]: https://github.com/stefan-kolb/nucleus/releases/tag/0.2.0
+[0.3.0]: https://github.com/stefan-kolb/nucleus/releases/tag/0.3.0
