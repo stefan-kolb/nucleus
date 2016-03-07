@@ -35,7 +35,7 @@ module Nucleus
             # TODO: implement me
             # remote_cmd = "tail#{options.opts ? ' --opts ' + Base64::encode64(options.opts).chomp : ''} #{file_glob}"
             # ssh_cmd = "ssh -t #{uuid}@#{host} '#{remote_cmd}'"
-            fail NOT_IMPLEMENTED_ERROR
+            raise NOT_IMPLEMENTED_ERROR
           end
 
           # @see Stub#log_entries
@@ -85,8 +85,8 @@ module Nucleus
             Net::SSH.start(uri.host, uri.user, keys: [nucleus_config.ssh.handler.key_file]) do |ssh|
               # log exists?
               unless remote_file_exists?(ssh, "#{log_id}.log")
-                fail Errors::AdapterResourceNotFoundError,
-                     "Invalid log file '#{log_id}', not available for application '#{app_id}'"
+                raise Errors::AdapterResourceNotFoundError,
+                      "Invalid log file '#{log_id}', not available for application '#{app_id}'"
               end
               # process log
               log = ssh.exec!("cat $OPENSHIFT_LOG_DIR/#{log_id}.log")

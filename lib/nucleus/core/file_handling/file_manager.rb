@@ -36,12 +36,12 @@ module Nucleus
         if File.exist? file
           unless force
             # fail if file exists, but shall not be replaced
-            fail Nucleus::FileExistenceError, 'File already exists' if expected_file_md5_hex.nil?
+            raise Nucleus::FileExistenceError, 'File already exists' if expected_file_md5_hex.nil?
 
             # do only replace if file is as expected
             actual_hex = Digest::MD5.file(file).hexdigest
             unless actual_hex == expected_file_md5_hex
-              fail ArgumentError, "File to replace does exist, but hash sum is different than expected: #{actual_hex}"
+              raise ArgumentError, "File to replace does exist, but hash sum is different than expected: #{actual_hex}"
             end
           end
         end

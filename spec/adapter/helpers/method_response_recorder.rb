@@ -76,7 +76,7 @@ module Nucleus
 
     def play_io(class_name, method_name, param_hash)
       cassette = File.join(cassette_dir(class_name, method_name, param_hash), 'io_response')
-      fail StandardError, 'Invalid playback request. Could not find any cassette matching the '\
+      raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
         'class and argument combination' unless File.exist?(cassette)
 
       response = StringIO.new('')
@@ -91,7 +91,7 @@ module Nucleus
 
     def play_tempfile(class_name, method_name, param_hash)
       cassette = File.join(cassette_dir(class_name, method_name, param_hash), 'tempfile_response')
-      fail StandardError, 'Invalid playback request. Could not find any cassette matching the '\
+      raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
         "class and argument combination: #{cassette}" unless File.exist?(cassette)
 
       response = Tempfile.new([param_hash, '.zip'])
@@ -106,11 +106,11 @@ module Nucleus
 
     def play(class_name, method_name, param_hash)
       cassette = File.join(cassette_dir(class_name, method_name, param_hash), 'response')
-      fail StandardError, 'Invalid playback request. Could not find any cassette matching the '\
+      raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
         "class and argument combination: #{cassette}" unless File.exist?(cassette)
 
       response = Oj.load(File.read(cassette))
-      fail response if response.is_a? Exception
+      raise response if response.is_a? Exception
       response
     end
 
@@ -175,7 +175,7 @@ module Nucleus
     def digest_io_update(digest, io)
       io.binmode
       io.rewind if io.respond_to?(:rewind)
-      while (buf = io.read(4096)) && buf.length > 0
+      while (buf = io.read(4096)) && !buf.empty?
         digest.update(buf)
       end
       io.rewind if io.respond_to?(:rewind)

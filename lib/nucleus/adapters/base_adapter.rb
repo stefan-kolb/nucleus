@@ -16,7 +16,7 @@ module Nucleus
       attr_reader :endpoint_url
 
       def initialize(endpoint_url, endpoint_app_domain = nil, check_certificates = true)
-        fail ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
+        raise ArgumentError, "'endpoint_url' must be a valid URL" unless endpoint_url =~ /\A#{URI.regexp(['https'])}\z/
         @endpoint_url = endpoint_url
         @endpoint_app_domain = endpoint_app_domain
         @check_certificates = check_certificates
@@ -87,7 +87,7 @@ module Nucleus
         when :PATCH
           patch(path, native_call: true, body: params).body
         else
-          fail AdapterRequestError, 'Unsupported adapter call method. Allowed are: GET, POST, PATCH, PUT, DELETE'
+          raise AdapterRequestError, 'Unsupported adapter call method. Allowed are: GET, POST, PATCH, PUT, DELETE'
         end
       end
 
@@ -99,10 +99,10 @@ module Nucleus
       # @raise [Errors::PlatformSpecificSemanticError]
       def fail_with(error_name, params = nil)
         unless respond_to?(:semantic_error_messages)
-          fail StandardError 'Invalid adapter implementation, no :semantic_error_messages method provided'
+          raise StandardError 'Invalid adapter implementation, no :semantic_error_messages method provided'
         end
         error = semantic_error_messages[error_name]
-        fail Errors::PlatformSpecificSemanticError.new(error[:message] % params, error[:code])
+        raise Errors::PlatformSpecificSemanticError.new(error[:message] % params, error[:code])
       end
     end
   end

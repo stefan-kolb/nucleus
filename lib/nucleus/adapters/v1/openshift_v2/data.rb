@@ -31,7 +31,7 @@ module Nucleus
             # Only possible with git
             app = get("/application/#{app_id_by_name(application_id)}").body[:data]
             if application_state(app) == Enums::ApplicationStates::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
             # compress files to archive but exclude the .git repo
             repo_name = "nucleus.app.repo.openshift_v2.download.#{application_id}.#{SecureRandom.uuid}"
@@ -45,7 +45,7 @@ module Nucleus
             app_id = app_id_by_name(application_id)
             app = get("/application/#{app_id}").body[:data]
             if application_state(app) == Enums::ApplicationStates::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
             end
 
             account = get('/user').body[:data]

@@ -29,8 +29,8 @@ module Nucleus
           def create_domain(application_name_or_id, domain)
             domains(application_name_or_id).each do |existing_domain|
               if existing_domain[:name] == domain[:name]
-                fail Errors::SemanticAdapterRequestError,
-                     "Domain '#{domain[:name]}' is already assigned to the application"
+                raise Errors::SemanticAdapterRequestError,
+                      "Domain '#{domain[:name]}' is already assigned to the application"
               end
             end
 
@@ -51,12 +51,12 @@ module Nucleus
             if delete_response.status == 400
               cf_error = delete_response.body[:code]
               if cf_error == 1002
-                fail Errors::AdapterResourceNotFoundError, 'Domain not found. '\
+                raise Errors::AdapterResourceNotFoundError, 'Domain not found. '\
                   'CF context specific: Route does not exist or is not assigned with this application'
               else
                 # delete failed with 400, but not due to invalid domain
-                fail Errors::AdapterRequestError,
-                     "#{delete_response.body[:description]} (#{cf_error} - #{delete_response.body[:error_code]})"
+                raise Errors::AdapterRequestError,
+                      "#{delete_response.body[:description]} (#{cf_error} - #{delete_response.body[:error_code]})"
               end
             end
 

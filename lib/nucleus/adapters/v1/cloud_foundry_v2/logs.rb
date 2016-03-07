@@ -117,8 +117,8 @@ module Nucleus
               filter = nil
             else
               # invalid log requests --> 404
-              fail Errors::AdapterResourceNotFoundError,
-                   "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
+              raise Errors::AdapterResourceNotFoundError,
+                    "Invalid log file '#{log_id}', not available for application '#{app_guid}'"
             end
             filter
           end
@@ -146,8 +146,8 @@ module Nucleus
             log_files = get("/v2/apps/#{app_guid}/instances/0/files/#{file_path}",
                             follow_redirects: false, expects: expected_statuses, headers: headers_to_use)
             if log_files.status == 400 || log_files.status == 404
-              fail Errors::AdapterResourceNotFoundError,
-                   "Invalid log file: '#{file_path}' not available for application '#{app_guid}'"
+              raise Errors::AdapterResourceNotFoundError,
+                    "Invalid log file: '#{file_path}' not available for application '#{app_guid}'"
             end
             return log_files.body if log_files.status == 200
 
@@ -162,8 +162,8 @@ module Nucleus
             downloaded_logfile_response = connection.request(method: :get, expects: expected_statuses)
 
             if downloaded_logfile_response.status == 404
-              fail Errors::AdapterResourceNotFoundError,
-                   "Invalid log file: '#{file_path}' not available for application '#{app_guid}'"
+              raise Errors::AdapterResourceNotFoundError,
+                    "Invalid log file: '#{file_path}' not available for application '#{app_guid}'"
             end
             downloaded_logfile_response.body
           end

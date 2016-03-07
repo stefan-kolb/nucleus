@@ -20,7 +20,7 @@ module Nucleus
       def authenticate(username, password)
         packed_credentials = ["#{username}:#{password}"].pack('m*').delete("\n")
         valid = @verification.call(verify_ssl, 'Authorization' => "Basic #{packed_credentials}")
-        fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless valid
+        raise Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless valid
         # verification passed, credentials are valid
         @packed_credentials = packed_credentials
         self
@@ -28,8 +28,8 @@ module Nucleus
 
       # @see AuthClient#auth_header
       def auth_header
-        fail Errors::EndpointAuthenticationError,
-             'Authentication client was not authenticated yet' unless @packed_credentials
+        raise Errors::EndpointAuthenticationError,
+              'Authentication client was not authenticated yet' unless @packed_credentials
         { 'Authorization' => "Basic #{@packed_credentials}" }
       end
     end

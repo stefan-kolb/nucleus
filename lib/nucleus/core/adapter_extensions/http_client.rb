@@ -114,16 +114,16 @@ module Nucleus
         error_status = e.response.status
         # arriving here, error could not be processed --> use fallback errors
         if e.is_a? Excon::Errors::ServerError
-          fail Errors::UnknownAdapterCallError, e.message
+          raise Errors::UnknownAdapterCallError, e.message
         elsif error_status == 404
           log.error("Resource not found (404) at '#{url}', indicating an adapter issue")
-          fail Errors::UnknownAdapterCallError, 'Resource not found, probably the adapter must be updated'
+          raise Errors::UnknownAdapterCallError, 'Resource not found, probably the adapter must be updated'
         elsif error_status == 401
-          fail Errors::EndpointAuthenticationError,
-               'Auth. failed, probably cache is outdated or permissions were revoked?'
+          raise Errors::EndpointAuthenticationError,
+                'Auth. failed, probably cache is outdated or permissions were revoked?'
         else
           log.error("Fallback error handling (#{error_status}) at '#{url}', indicating an adapter issue")
-          fail Errors::UnknownAdapterCallError, e.message
+          raise Errors::UnknownAdapterCallError, e.message
         end
       end
 

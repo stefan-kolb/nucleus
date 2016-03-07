@@ -24,7 +24,7 @@ module Nucleus
             # Only possible with git, not with HTTP builds
             app = get("/apps/#{application_id}").body
             if application_state(app) == Enums::ApplicationStates::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
             # compress files to archive but exclude the .git repo
             repo_name = "nucleus.app.repo.heroku.download.#{application_id}.#{SecureRandom.uuid}"
@@ -37,7 +37,7 @@ module Nucleus
           def rebuild(application_id)
             app = get("/apps/#{application_id}").body
             if application_state(app) == Enums::ApplicationStates::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
             end
 
             account = get('/account').body

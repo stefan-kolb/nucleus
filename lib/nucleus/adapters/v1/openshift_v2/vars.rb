@@ -32,7 +32,7 @@ module Nucleus
             id = app_id_by_name(application_id)
             # Openshift returns 204 even if the key did not exist
             if get("/application/#{id}/environment-variable/#{env_var_key}", expects: [200, 404]).status == 404
-              fail Errors::AdapterResourceNotFoundError, "Env. var key '#{env_var_key}' does not exist"
+              raise Errors::AdapterResourceNotFoundError, "Env. var key '#{env_var_key}' does not exist"
             end
             delete("/application/#{id}/environment-variable/#{env_var_key}")
           end

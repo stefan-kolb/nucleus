@@ -33,9 +33,9 @@ module Nucleus
 
         def load_adapter(endpoint_name, api_version)
           # fail if no such api version actually is available
-          fail ArgumentError unless @version_based_adapters.key? api_version
+          raise ArgumentError unless @version_based_adapters.key? api_version
           # fail if no such adapter actually is available
-          fail ArgumentError unless @version_based_adapters[api_version].key? endpoint_name
+          raise ArgumentError unless @version_based_adapters[api_version].key? endpoint_name
           adapter = @version_based_adapters[api_version][endpoint_name]
           endpoint = @version_based_endpoints[api_version][endpoint_name]
           adapter.new(endpoint.url, endpoint.app_domain, !endpoint.trust)

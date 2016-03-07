@@ -21,8 +21,8 @@ module Nucleus
             name_match = /^.+\.(zip|tar|tgz|tar.gz)$/.match(params[:file][:filename])
             content_type_match = %w(application/zip application/gzip application/x-gzip).include? params[:file][:type]
 
-            fail Nucleus::Errors::AdapterRequestError,
-                 "Invalid 'file'. Must contain the archive format" unless name_match || content_type_match
+            raise Nucleus::Errors::AdapterRequestError,
+                  "Invalid 'file'. Must contain the archive format" unless name_match || content_type_match
 
             # convert content type to compression format when name was not matched
             if name_match

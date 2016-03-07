@@ -23,7 +23,7 @@ module Nucleus
       # @see AuthClient#authenticate
       def authenticate(username, password)
         token, expiration_time = @token_expiration_parser.call(verify_ssl, username, password)
-        fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
+        raise Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
         # verification passed, credentials are valid
         @api_token = token
         @expires = expiration_time
@@ -32,8 +32,8 @@ module Nucleus
 
       # @see AuthClient#auth_header
       def auth_header
-        fail Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
-        fail Errors::EndpointAuthenticationError, 'Cached authentication token expired' if expired?
+        raise Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
+        raise Errors::EndpointAuthenticationError, 'Cached authentication token expired' if expired?
         { 'Authorization' => "Bearer #{api_token}" }
       end
 

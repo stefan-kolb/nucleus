@@ -25,7 +25,7 @@ describe Nucleus::Adapters::AuthenticationRetryWrapper do
         counted = 0
         expect  = 1
         allow(calculator).to receive(:calc) do
-          fail(Nucleus::Errors::EndpointAuthenticationError.new('error', auth_client)) if (counted += 1) <= expect
+          raise(Nucleus::Errors::EndpointAuthenticationError.new('error', auth_client)) if (counted += 1) <= expect
           1
         end
       end

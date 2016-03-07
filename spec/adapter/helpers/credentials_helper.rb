@@ -15,7 +15,7 @@ module Nucleus
               hash[adapter] = hash[adapter.to_s]
             else
               # raise error if recording and no credentials are found
-              fail StandardError, "No credentials found for #{adapter}" if vcr_recording?
+              raise StandardError, "No credentials found for #{adapter}" if vcr_recording?
 
               hash[adapter] = {
                 'user' => 'faked_user',

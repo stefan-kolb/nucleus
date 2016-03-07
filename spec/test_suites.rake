@@ -25,7 +25,7 @@ namespace :spec do
         Rake::Task["spec:suite:#{suite[:id]}"].execute
         failed << suite[:id] unless $CHILD_STATUS.success?
       end
-      fail "Spec suite#{failed.length > 1 ? 's' : ''} '#{failed.join(', ')}' failed" unless failed.empty?
+      raise "Spec suite#{failed.length > 1 ? 's' : ''} '#{failed.join(', ')}' failed" unless failed.empty?
     end
   end
 end

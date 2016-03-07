@@ -39,7 +39,7 @@ module Nucleus
         # given the username and a matching password.
         # @return [Nucleus::Adapters::AuthClient] authentication client
         def auth_client
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Return a list of all {Nucleus::API::Models::Region class} compatible objects
@@ -48,7 +48,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Regions] region entity compatible Hash of available regions
         def regions
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Return the {Nucleus::API::Models::Region class} compatible information
@@ -59,14 +59,14 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Region] region entity compatible Hash with the id region_id
         def region(region_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Get a list of all applications that are accessible to the authenticated user account.
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Applications] application entity list compatible hash
         def applications
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Retrieve the application entity of the application with the given application_id.
@@ -75,7 +75,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash with the application_id
         def application(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Create a new application on the endpoint using the given application entity.
@@ -90,7 +90,7 @@ module Nucleus
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash
         #   of the created application
         def create_application(application)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Update an application on the endpoint using the given application entity.
@@ -102,7 +102,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash with the application_id
         def update_application(application_id, application)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Delete the application with the given application_id on the endpoint.
@@ -111,7 +111,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_application(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Get a list of all domains that are assigned to the application.
@@ -120,7 +120,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Domains] domain entity list compatible hash
         def domains(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Retrieve the domain entity of the application with the given application_id and the domain with the domain_id.
@@ -131,7 +131,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Domain] domain entity compatible hash of the domain with the domain_id
         def domain(application_id, domain_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Create a new domain using the given domain entity and assign it to the application.
@@ -143,7 +143,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Domain] domain entity compatible hash of the created domain
         def create_domain(application_id, domain)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Delete the domain of the application with the domain_id.
@@ -154,7 +154,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_domain(application_id, domain_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Get a list of all environment variables that are assigned to the application.
@@ -163,7 +163,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::EnvironmentVariables] environment variable entity list compatible hash
         def env_vars(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Retrieve the environment variable entity of the application with the given application_id and the env. var
@@ -176,7 +176,7 @@ module Nucleus
         # @return [Hash, Nucleus::API::Models::EnvironmentVariable] environment variable entity compatible hash
         #   of the env. var with the env_var_id
         def env_var(application_id, env_var_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Create a new environment variable using the given env. var entity and assign it to the application.
@@ -189,7 +189,7 @@ module Nucleus
         # @return [Hash, Nucleus::API::Models::EnvironmentVariable] environment variable entity compatible hash
         #   of the created env. var
         def create_env_var(application_id, env_var)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Update the environment variable of the application, using the given env. var entity.
@@ -203,7 +203,7 @@ module Nucleus
         # @return [Hash, Nucleus::API::Models::EnvironmentVariable] environment variable entity compatible hash
         #   of the updated env. var
         def update_env_var(application_id, env_var_id, env_var)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Delete the environment variable of the application with the env_var_id.
@@ -214,7 +214,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def delete_env_var(application_id, env_var_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Start all instances of the application with the application_id.
@@ -230,7 +230,7 @@ module Nucleus
         # @raise [Nucleus::Errors::SemanticAdapterRequestError] if the application is not deployed
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash
         def start(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Stop all instances of the application with the application_id.
@@ -245,7 +245,7 @@ module Nucleus
         # @raise [Nucleus::Errors::SemanticAdapterRequestError] if the application is not deployed
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash
         def stop(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Restart all instances of the application with the application_id.
@@ -261,7 +261,7 @@ module Nucleus
         # @raise [Nucleus::Errors::SemanticAdapterRequestError] if the application is not deployed
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash
         def restart(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Deploy the data of the application given the compressed application archive.<br>
@@ -278,7 +278,7 @@ module Nucleus
         #   valid application archive, or if the application_archive / compression_format are not supported
         # @return [void]
         def deploy(application_id, application_archive, compression_format)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Rebuild the recently deployed bits of the application.<br>
@@ -289,7 +289,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash
         def rebuild(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Download the application data that is currently deployed on the platform.
@@ -304,7 +304,7 @@ module Nucleus
         #   valid application archive, or if the compression_format is not supported
         # @return [StringIO] binary application data
         def download(application_id, compression_format)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # TODO: Finish documentation when vertical scaling is added
@@ -315,7 +315,7 @@ module Nucleus
         # @raise [Nucleus::Errors::SemanticAdapterRequestError] if the number of instances is disallowed on the platform
         # @return [Hash, Nucleus::API::Models::Application] application entity compatible Hash
         def scale(application_id, instances)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Assert whether the given log_id is valid for the application_id.
@@ -326,7 +326,7 @@ module Nucleus
         # @return [Boolean] returns true if there is a log for the application with the log_id,
         #   false if it does not exist
         def log?(application_id, log_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Get a list of all logs that are available for the application.
@@ -335,7 +335,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Logs] log entity list compatible hash
         def logs(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Retrieve all log entries of the log.
@@ -345,7 +345,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Array<String>] array of log entries, starting with the earliest entry at pos [0]
         def log_entries(application_id, log_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Tail the logfile of the application and send each retrieved chunk, which can be a line of a file,
@@ -360,14 +360,14 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Nucleus::Adapters::TailStopper] callback object to stop the ongoing tail process
         def tail(application_id, log_id, stream)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # List all services that are available at the endpoint.
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Services] services list compatible hash
         def services
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Retrieve the service entity matching the given service_id.
@@ -376,7 +376,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::Service] service entity compatible hash
         def service(service_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # List all plans that can be chosen for the service with the service_id, ascending order on the price.
@@ -385,7 +385,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::ServicePlans] service plan list compatible hash
         def service_plans(service_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Show the plan with the plan_id that is applicable to the service with the service_id.
@@ -394,7 +394,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::ServicePlan] service plan entity compatible hash
         def service_plan(service_id, plan_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # List all services that are installed on the application with the given application_id.
@@ -403,7 +403,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::InstalledServices] installed services list compatible hash
         def installed_services(application_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Retrieve the installed service entity matching the given service_id that is installed
@@ -413,7 +413,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [Hash, Nucleus::API::Models::InstalledService] installed service entity compatible hash
         def installed_service(application_id, service_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Add the service with the service_id to the application with the application_id.
@@ -428,7 +428,7 @@ module Nucleus
         #   could not be found
         # @return [Hash, Nucleus::API::Models::InstalledService] installed service entity compatible hash
         def add_service(application_id, service_entity, plan_entity)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Change the service, e.g. the active plan, of the service with the service_id for
@@ -444,7 +444,7 @@ module Nucleus
         # @raise [Nucleus::Errors::SemanticAdapterRequestError] if the plan to use could not be found
         # @return [Hash, Nucleus::API::Models::InstalledService] installed service entity compatible hash
         def change_service(application_id, service_id, plan_entity)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
 
         # Remove the installed service with the service_id from the application with the application_id.
@@ -456,7 +456,7 @@ module Nucleus
         # @raise [Nucleus::Errors::EndpointAuthenticationError] if the authentication on the endpoint failed
         # @return [void]
         def remove_service(application_id, service_id)
-          fail NOT_IMPLEMENTED_ERROR
+          raise NOT_IMPLEMENTED_ERROR
         end
       end
     end

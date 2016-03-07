@@ -28,9 +28,9 @@ module Nucleus
         def handle_error(error_response)
           handle_422(error_response)
           if error_response.status == 404 && error_response.body[:id] == 'not_found'
-            fail Errors::AdapterResourceNotFoundError, error_response.body[:message]
+            raise Errors::AdapterResourceNotFoundError, error_response.body[:message]
           elsif error_response.status == 503
-            fail Errors::PlatformUnavailableError, 'The Heroku API is currently not responding'
+            raise Errors::PlatformUnavailableError, 'The Heroku API is currently not responding'
           end
           # error still unhandled, will result in a 500, server error
           log.warn "Heroku error still unhandled: #{error_response}"
@@ -39,7 +39,7 @@ module Nucleus
         def handle_422(error_response)
           return unless error_response.status == 422
           if error_response.body[:id] == 'invalid_params'
-            fail Errors::SemanticAdapterRequestError, error_response.body[:message]
+            raise Errors::SemanticAdapterRequestError, error_response.body[:message]
           elsif error_response.body[:id] == 'verification_required'
             fail_with(:need_verification, [error_response.body[:message]])
           end

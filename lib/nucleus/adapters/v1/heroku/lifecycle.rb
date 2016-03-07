@@ -17,7 +17,7 @@ module Nucleus
               scale_web(application_id, 1)
             elsif app[:state] == Enums::ApplicationStates::CREATED
               # fail if there is no deployment
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
             end
 
             scale_worker(application_id, 1)
@@ -31,7 +31,7 @@ module Nucleus
             # fail if there is no deployment
             app = application(application_id)
             if app[:state] == Enums::ApplicationStates::CREATED
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
             end
 
             scale_worker(application_id, 0)

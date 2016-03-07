@@ -16,8 +16,8 @@ module Nucleus
             return :idle if gear_groups[0][:gears].all? { |gear| gear[:state] == 'idle' }
 
             log.debug("Failed to determine state for: #{app}")
-            fail Errors::UnknownAdapterCallError,
-                 'Could not determine app state. Please verify the Openshift V2 adapter'
+            raise Errors::UnknownAdapterCallError,
+                  'Could not determine app state. Please verify the Openshift V2 adapter'
           end
 
           private

@@ -13,7 +13,7 @@ module Nucleus
     # @return [Integer] number of extracted files
     def extract(file, destination_path, compression_format)
       compression_method = compression_format_method_name(compression_format)
-      fail StandardError, 'Unsupported compression format' unless respond_to?(compression_method, true)
+      raise StandardError, 'Unsupported compression format' unless respond_to?(compression_method, true)
 
       # be sure that directory exists
       FileUtils.mkdir_p(destination_path, verbose: false)

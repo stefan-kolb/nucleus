@@ -34,12 +34,12 @@ module Nucleus
           when 400
             handle_400_error(error, cf_error)
           when 404
-            fail Errors::AdapterResourceNotFoundError, error.body[:description] if cf_error > 10_000
+            raise Errors::AdapterResourceNotFoundError, error.body[:description] if cf_error > 10_000
           else
             if [1001].include? cf_error
-              fail Errors::AdapterRequestError, "#{error.body[:description]} (#{cf_error} - #{error.body[:error_code]})"
+              raise Errors::AdapterRequestError, "#{error.body[:description]} (#{cf_error} - #{error.body[:error_code]})"
             elsif [10_002].include?(cf_error) || error.status == 401
-              fail Errors::EndpointAuthenticationError, 'Endpoint authentication failed with OAuth2 token'
+              raise Errors::EndpointAuthenticationError, 'Endpoint authentication failed with OAuth2 token'
             end
           end
           # error still unhandled, will result in a 500, server error
@@ -51,11 +51,11 @@ module Nucleus
         def handle_400_error(error, cf_error)
           if cf_error == 150_001 || cf_error == 160_001 || cf_error > 100_000 && cf_error < 109_999
             # Indicating semantically invalid parameters
-            fail Errors::SemanticAdapterRequestError, error.body[:description]
+            raise Errors::SemanticAdapterRequestError, error.body[:description]
           elsif cf_error == 170_002
             fail_with(:build_in_progress)
           elsif cf_error == 60_002
-            fail Errors::SemanticAdapterRequestError, 'Service is already assigned to the application'
+            raise Errors::SemanticAdapterRequestError, 'Service is already assigned to the application'
           end
         end
 
@@ -75,9 +75,9 @@ module Nucleus
 
         def find_app_guid_by_name(application_name)
           filtered_list_response = get('/v2/apps', query: { q: "name:#{application_name}" })
-          if filtered_list_response.body[:resources].length == 0
-            fail Errors::AdapterResourceNotFoundError,
-                 "Couldn't find app with name '#{application_name}' on the platform"
+          if filtered_list_response.body[:resources].empty?
+            raise Errors::AdapterResourceNotFoundError,
+                  "Couldn't find app with name '#{application_name}' on the platform"
           end
           # return the found guid
           filtered_list_response.body[:resources][0][:metadata][:guid]
@@ -86,8 +86,8 @@ module Nucleus
         def find_app_id_by_name(application_name, previous_response)
           filtered_list_response = get('/v2/apps', query: { q: "name:#{application_name}" })
           # fail as expected if the app can also not be found by its name
-          fail Errors::AdapterResourceNotFoundError,
-               previous_response.body[:description] if filtered_list_response.body[:resources].length == 0
+          raise Errors::AdapterResourceNotFoundError,
+                previous_response.body[:description] if filtered_list_response.body[:resources].empty?
           # return the found guid
           filtered_list_response.body[:resources][0][:metadata][:guid]
         end

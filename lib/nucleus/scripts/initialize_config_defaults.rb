@@ -12,13 +12,13 @@ if nucleus_config.ssh.key?(:custom_key) && !nucleus_config.ssh.custom_key.nil?
   unless File.exist?(key_file)
     msg = "Could not find the SSH key: '#{key_file}'"
     STDERR.puts msg
-    fail Nucleus::StartupError.new(msg, Nucleus::ExitCodes::INVALID_SSH_KEY_FILE)
+    raise Nucleus::StartupError.new(msg, Nucleus::ExitCodes::INVALID_SSH_KEY_FILE)
   end
 
   if File.read(key_file).include?('ENCRYPTED')
     msg = "Provided private key '#{key_file}' must not be protected with a passphrase."
     STDERR.puts msg
-    fail Nucleus::StartupError.new(msg, Nucleus::ExitCodes::INVALID_SSH_KEY_FILE_PROTECTED)
+    raise Nucleus::StartupError.new(msg, Nucleus::ExitCodes::INVALID_SSH_KEY_FILE_PROTECTED)
   end
 end
 

@@ -18,7 +18,7 @@ module Nucleus
       # to behave differently, usually indicates implementation issues
       # @return[Nucleus::Adapters::AuthClient] current AuthClient instance
       def authenticate(username, password)
-        fail Errors::EndpointAuthenticationError, 'Authentication client does not support authentication'
+        raise Errors::EndpointAuthenticationError, 'Authentication client does not support authentication'
       end
 
       # Get the authentication header for the current AuthClient instance that must be used to execute requests
@@ -27,8 +27,8 @@ module Nucleus
       # @raise[Nucleus::Errors::EndpointAuthenticationError] if the refresh failed
       # @return[Hash<String, String>] authentication header that enables requests against the endpoint
       def auth_header
-        fail Errors::EndpointAuthenticationError,
-             'Authentication client does not support to create the authentication header'
+        raise Errors::EndpointAuthenticationError,
+              'Authentication client does not support to create the authentication header'
       end
 
       # Refresh a rejected authentication and generate a new authentication header.<br>
@@ -37,7 +37,7 @@ module Nucleus
       # @raise [Nucleus::Errors::EndpointAuthenticationError] if token refresh failed or authentication never succeeded
       # @return [Nucleus::Adapters::AuthClient] current AuthClient instance
       def refresh
-        fail Errors::EndpointAuthenticationError, 'Authentication client does not support refresh'
+        raise Errors::EndpointAuthenticationError, 'Authentication client does not support refresh'
       end
     end
   end

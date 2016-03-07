@@ -27,7 +27,7 @@ module Nucleus
           end
         end
 
-        fail StandardError, "Cant modify restricted key '#{entity.id}'" if entity.id.to_s == @restricted_index_key
+        raise StandardError, "Cant modify restricted key '#{entity.id}'" if entity.id.to_s == @restricted_index_key
 
         @lock.synchronize do
           @db.store(entity.id, entity)
@@ -39,7 +39,7 @@ module Nucleus
       end
 
       def delete(entity_id)
-        fail StandardError, "Cant modify restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
+        raise StandardError, "Cant modify restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
         @lock.synchronize do
           if @db.key?(entity_id)
             # id was given, delete now
@@ -47,7 +47,7 @@ module Nucleus
             # update the index
             remove_key_from_index(entity_id)
           elsif id.nil?
-            fail ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'."
+            raise ResourceNotFoundError, "No #{@store_type} entity was found for the ID '#{entity_id}'."
           end
         end
       end
@@ -56,7 +56,7 @@ module Nucleus
         response = []
         unless entity_ids.nil? || entity_ids.empty?
           entity_ids.each do |entity_id|
-            fail StandardError, "Cant load restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
+            raise StandardError, "Cant load restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
             response << @db.load(entity_id)
           end
         end
@@ -64,7 +64,7 @@ module Nucleus
       end
 
       def get(entity_id)
-        fail StandardError, "Cant load restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
+        raise StandardError, "Cant load restricted key '#{entity_id}'" if entity_id.to_s == @restricted_index_key
         @db.load(entity_id)
       end
 
@@ -81,7 +81,7 @@ module Nucleus
       end
 
       def key?(key)
-        fail StartupError, "Cant load restricted key '#{key}'" if key.to_s == @restricted_index_key
+        raise StartupError, "Cant load restricted key '#{key}'" if key.to_s == @restricted_index_key
         @db.key? key
       end
 
@@ -110,8 +110,8 @@ module Nucleus
         db_backend = chosen_db_backend
 
         unless allowed_backends.key?(db_backend)
-          fail StandardError,
-               "Invalid database backend '#{db_backend}'. Please choose one of: #{allowed_backends.keys}"
+          raise StandardError,
+                "Invalid database backend '#{db_backend}'. Please choose one of: #{allowed_backends.keys}"
         end
 
         backend_options = if nucleus_config.db.key?(:backend_options)

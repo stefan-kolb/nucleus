@@ -23,7 +23,7 @@ module Nucleus
       end
 
       def auth_header
-        fail Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @access_token
+        raise Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @access_token
         if expired?
           log.debug('OAuth2 access_token is expired, trigger refresh before returning auth_header')
           # token is expired, renew first
@@ -35,7 +35,7 @@ module Nucleus
 
       def refresh
         if @refresh_token.nil?
-          fail Errors::EndpointAuthenticationError, "Can't refresh token before initial authentication"
+          raise Errors::EndpointAuthenticationError, "Can't refresh token before initial authentication"
         end
         log.debug("Attempt to refresh the access_token with our refresh_token: '#{@refresh_token}'")
         response = post(query: { grant_type: 'refresh_token', refresh_token: @refresh_token })

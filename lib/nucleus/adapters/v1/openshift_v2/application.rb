@@ -18,7 +18,7 @@ module Nucleus
           def create_application(application_entity)
             # handle runtimes / cartridges
             fail_with(:only_one_runtime) if application_entity[:runtimes].length > 1
-            fail_with(:must_have_runtime) if application_entity[:runtimes].length == 0
+            fail_with(:must_have_runtime) if application_entity[:runtimes].empty?
             application_entity[:cartridge] = cartridge(application_entity.delete(:runtimes)[0])
 
             # updates the application with a valid region identity

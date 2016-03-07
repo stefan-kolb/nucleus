@@ -15,7 +15,7 @@ module Nucleus
           def stop(application_id)
             id = app_id_by_name(application_id)
             unless deployed?(id)
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
             end
             to_nucleus_app(send_event(id, 'stop'))
           end
@@ -34,7 +34,7 @@ module Nucleus
             if state == Enums::ApplicationStates::DEPLOYED
               activate(id, latest_deployment(id)[:id])
             elsif state == Enums::ApplicationStates::CREATED
-              fail Errors::SemanticAdapterRequestError, "Application must be deployed before it can be #{action}ed"
+              raise Errors::SemanticAdapterRequestError, "Application must be deployed before it can be #{action}ed"
             end
           end
 

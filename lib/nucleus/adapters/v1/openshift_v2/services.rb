@@ -28,7 +28,7 @@ module Nucleus
             if (cartridge[:usage_rates].empty? && plan_id != 'default') ||
                (!cartridge[:usage_rates].empty? && !cartridge[:usage_rates].any? { |rate| rate[:plan_id] == plan_id })
               # Currently there are no plans, implement when required...
-              fail Errors::AdapterResourceNotFoundError, "No such service plan name '#{plan_id}' for service "\
+              raise Errors::AdapterResourceNotFoundError, "No such service plan name '#{plan_id}' for service "\
                 "'#{service_id}'"
             end
 
@@ -66,7 +66,7 @@ module Nucleus
             plan_name = service_to_add[:usage_rates].find { |plan| plan[:plan_id] == plan_entity[:id] }
             if (service_to_add[:usage_rates].empty? && plan_entity[:id] != 'default') ||
                (!service_to_add[:usage_rates].empty? && plan_name.nil?)
-              fail Errors::SemanticAdapterRequestError, "No such service plan name '#{plan_entity[:id]}' for service "\
+              raise Errors::SemanticAdapterRequestError, "No such service plan name '#{plan_entity[:id]}' for service "\
               "'#{service_entity[:id]}' and application '#{application_id}'"
             end
 
@@ -87,7 +87,7 @@ module Nucleus
             missing_dependencies = service_to_add.key?(:requires) ? service_to_add[:requires] : []
             already_installed = installed_cartridges(application_id)
             already_installed.each { |installed_cartridge| missing_dependencies.delete(installed_cartridge[:name]) }
-            fail Errors::SemanticAdapterRequestError, "Failed to add service '#{service_id}' for application "\
+            raise Errors::SemanticAdapterRequestError, "Failed to add service '#{service_id}' for application "\
               "'#{application_id}'. The service's dependencies '#{missing_dependencies}' are not, "\
               'but have to be installed.' unless missing_dependencies.empty?
           end

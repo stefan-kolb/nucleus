@@ -21,14 +21,14 @@ module Nucleus
 
       def authenticate(username, password)
         token = @token_parser.call(verify_ssl, username, password)
-        fail Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
+        raise Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless token
         # verification passed, credentials are valid
         @api_token = token
         self
       end
 
       def auth_header
-        fail Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
+        raise Errors::EndpointAuthenticationError, 'Authentication client was not authenticated yet' unless @api_token
         { 'Authorization' => "Bearer #{api_token}" }
       end
     end

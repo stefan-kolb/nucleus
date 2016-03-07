@@ -27,7 +27,7 @@ module Nucleus
 
             # arriving here the above states do not catch all states of the Heroku app, which should not happen ;-)
             log.debug("Faild to determine state for: #{app}, #{dynos}")
-            fail Errors::UnknownAdapterCallError, 'Could not determine app state. Please verify the Heroku adapter'
+            raise Errors::UnknownAdapterCallError, 'Could not determine app state. Please verify the Heroku adapter'
           end
 
           def repo_or_slug_content?(app)

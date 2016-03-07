@@ -49,7 +49,7 @@ module Nucleus
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
             unless deployed?(app_guid)
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
             end
 
             download_response = get("/v2/apps/#{app_guid}/download", follow_redirects: false, expects: [200, 302])
@@ -83,7 +83,7 @@ module Nucleus
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
             unless deployed?(app_guid)
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be rebuild'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be rebuild'
             end
 
             # rebuild by name or id

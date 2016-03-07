@@ -72,7 +72,7 @@ RSpec.configure do |config|
           prefix = prefix_suffix[0]
           suffix = prefix_suffix[1]
         else
-          fail ArgumentError, "unexpected prefix_suffix: #{prefix_suffix.inspect}"
+          raise ArgumentError, "unexpected prefix_suffix: #{prefix_suffix.inspect}"
         end
         # random part of equal length (!) so that the message length is always equal
         random_part = (0...16).map { (65 + rand(26)).chr }.join

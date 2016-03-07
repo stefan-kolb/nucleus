@@ -37,8 +37,8 @@ module Nucleus
       # @return [void]
       def deploy(file, file_compression_format)
         extractor = Nucleus::ArchiveExtractor.new
-        fail Errors::AdapterRequestError,
-             'Unsupported format of the application archive' unless extractor.supports? file_compression_format
+        raise Errors::AdapterRequestError,
+              'Unsupported format of the application archive' unless extractor.supports? file_compression_format
 
         push_repository_changes do |repo_dir|
           # now remove all current files, except the git db
@@ -50,7 +50,7 @@ module Nucleus
 
           # uncompress and extract to
           extracted = extractor.extract(file, repo_dir, file_compression_format)
-          fail Errors::AdapterRequestError, 'Invalid application: Archive did not contain any files' if extracted == 0
+          raise Errors::AdapterRequestError, 'Invalid application: Archive did not contain any files' if extracted == 0
 
           # if the application was wrapped within a directory, move all 1st level files and dirs to the root
           sanitizer = Nucleus::ApplicationRepoSanitizer.new

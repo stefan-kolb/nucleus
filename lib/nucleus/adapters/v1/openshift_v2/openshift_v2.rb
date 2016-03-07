@@ -26,13 +26,13 @@ module Nucleus
           # some error messages do not have the proper error message format
           errors = openshift_errors(error_response)
           if error_response.status == 404 && errors.any? { |e| e[:text].include?('not found') }
-            fail Errors::AdapterResourceNotFoundError, errors.collect { |e| e[:text] }.join(' ')
+            raise Errors::AdapterResourceNotFoundError, errors.collect { |e| e[:text] }.join(' ')
           elsif error_response.status == 422
-            fail Errors::SemanticAdapterRequestError, errors.collect { |e| e[:text] }.join(' ')
+            raise Errors::SemanticAdapterRequestError, errors.collect { |e| e[:text] }.join(' ')
           elsif error_response.status == 503
-            fail Errors::PlatformUnavailableError, 'The Openshift API is currently not available'
+            raise Errors::PlatformUnavailableError, 'The Openshift API is currently not available'
           elsif error_response.status == 504
-            fail Errors::PlatformTimeoutError, 'The Openshift API did not receive information from it\'s slaves. '\
+            raise Errors::PlatformTimeoutError, 'The Openshift API did not receive information from it\'s slaves. '\
               'Most likely the request is still being executed. Please make sure to analyse whether the request '\
               'was successful before invoking further actions.'
           end

@@ -98,8 +98,8 @@ module Nucleus
             installed = get("/apps/#{application_id}/addons/#{service_id}", expects: [200, 404])
             if installed.status == 404
               assignment_id = service_assignment_id(application_id, service_id)
-              fail Errors::AdapterResourceNotFoundError,
-                   "Service #{service_id} is not assigned to application #{application_id}" unless assignment_id
+              raise Errors::AdapterResourceNotFoundError,
+                    "Service #{service_id} is not assigned to application #{application_id}" unless assignment_id
               return get("/apps/#{application_id}/addons/#{assignment_id}").body
             end
             installed.body

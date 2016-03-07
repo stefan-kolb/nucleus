@@ -20,7 +20,7 @@ RSpec::Core::Example.class_eval do
         end.resume
       end
       # was there a timeout in the EM loop? then fail!
-      fail @timeout_error if @timeout_error
+      raise @timeout_error if @timeout_error
       # return test result
       @ignorant_success
     else

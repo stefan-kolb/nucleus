@@ -33,8 +33,8 @@ module Nucleus
           # @see Stub#log_entries
           def log_entries(application_id, log_id)
             unless log?(application_id, log_id)
-              fail Errors::AdapterResourceNotFoundError,
-                   "Invalid log file '#{log_id}', not available for application '#{application_id}'"
+              raise Errors::AdapterResourceNotFoundError,
+                    "Invalid log file '#{log_id}', not available for application '#{application_id}'"
             end
 
             return build_log_entries(application_id) if log_id.to_sym == Enums::ApplicationLogfileType::BUILD

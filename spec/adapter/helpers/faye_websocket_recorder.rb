@@ -69,7 +69,7 @@ module Nucleus
 
     def replay_websocket_events(*new_client_args)
       dir = cassette_dir(args_hash(*new_client_args))
-      fail StandardError, 'Invalid playback request, no record for this websocket was found.' unless File.exist?(dir)
+      raise StandardError, 'Invalid playback request, no record for this websocket was found.' unless File.exist?(dir)
 
       setup_websocket_connection_mock(dir)
 
@@ -105,7 +105,7 @@ module Nucleus
       dispatch_chunk = lambda do
         @connection.parent.dispatch_event(restore_event(event_cassettes.pop))
         # send a new message each 200ms
-        EM.add_timer(0.2) { dispatch_chunk.call } if event_cassettes.length > 0
+        EM.add_timer(0.2) { dispatch_chunk.call } unless event_cassettes.empty?
       end
       EM.add_timer(1) { dispatch_chunk.call }
     end

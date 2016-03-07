@@ -11,7 +11,7 @@ module Nucleus
           # @see Stub#region
           def region(region_name)
             unless region_name.casecmp('default') == 0
-              fail Errors::AdapterResourceNotFoundError, "Region '#{region_name}' does not exist at the endpoint"
+              raise Errors::AdapterResourceNotFoundError, "Region '#{region_name}' does not exist at the endpoint"
             end
             default_region
           end

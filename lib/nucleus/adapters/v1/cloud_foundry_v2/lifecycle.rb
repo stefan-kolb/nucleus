@@ -8,7 +8,7 @@ module Nucleus
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
             unless deployed?(app_guid)
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
             end
 
             # start by name or id
@@ -21,7 +21,7 @@ module Nucleus
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
             unless deployed?(app_guid)
-              fail Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
+              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
             end
 
             # stop by name or id

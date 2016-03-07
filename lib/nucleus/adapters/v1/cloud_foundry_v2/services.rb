@@ -46,8 +46,8 @@ module Nucleus
             service_guid = service_guid(service_id_or_name)
             cf_binding = binding(app_guid, service_guid)
             # make sure there is a binding
-            fail Errors::AdapterResourceNotFoundError,
-                 "No such service '#{service_id_or_name}' for application '#{application_name_or_id}'" unless cf_binding
+            raise Errors::AdapterResourceNotFoundError,
+                  "No such service '#{service_id_or_name}' for application '#{application_name_or_id}'" unless cf_binding
             to_nucleus_installed_service(cf_binding)
           end
 
@@ -138,8 +138,8 @@ module Nucleus
             services = get('/v2/services').body[:resources]
             # find a match and use the service's guid
             service_match = services.find { |service| service[:entity][:label] == service_id_or_name }
-            fail error_class,
-                 "Invalid service: Could not find service with name '#{service_id_or_name}'" unless service_match
+            raise error_class,
+                  "Invalid service: Could not find service with name '#{service_id_or_name}'" unless service_match
             service_match[:metadata][:guid]
           end
 
@@ -159,8 +159,8 @@ module Nucleus
             plans = get("/v2/services/#{service_id}/service_plans").body[:resources]
             # find a match and use the plan's guid
             plan_match = plans.find { |plan| plan[:entity][:name] == plan_name_or_id }
-            fail error_class,
-                 "Invalid plan: No such plan '#{plan_name_or_id}' for service '#{service_id}'" unless plan_match
+            raise error_class,
+                  "Invalid plan: No such plan '#{plan_name_or_id}' for service '#{service_id}'" unless plan_match
             plan_match[:metadata][:guid]
           end
 

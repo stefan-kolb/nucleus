@@ -43,7 +43,7 @@ module Nucleus
       adapter_name = File.basename(adapter_config).sub(/.[^.]+\z/, '.rb')
       file_search_path = "#{Nucleus.root}/lib/nucleus/adapters/#{api_version}/*/#{adapter_name}"
       adapter_file = Dir.glob(file_search_path)
-      fail AmbiguousAdapterError, "More than 1 adapter file found for #{adapter_name}" unless adapter_file.size <= 1
+      raise AmbiguousAdapterError, "More than 1 adapter file found for #{adapter_name}" unless adapter_file.size <= 1
 
       return if adapter_file.empty?
       log.debug "... found '#{adapter_file.first}'"

@@ -15,8 +15,8 @@ module Nucleus
           # @see Stub#region
           def region(region_name)
             found_region = native_region(region_name)
-            fail Errors::AdapterResourceNotFoundError,
-                 "Region '#{region_name}' does not exist at the endpoint" if found_region.nil?
+            raise Errors::AdapterResourceNotFoundError,
+                  "Region '#{region_name}' does not exist at the endpoint" if found_region.nil?
             found_region[:id] = found_region.delete(:name).upcase
             found_region
           end
@@ -26,8 +26,8 @@ module Nucleus
           def retrieve_region(application)
             return unless application.key?(:region)
             found_region = native_region(application[:region])
-            fail Errors::SemanticAdapterRequestError,
-                 "Region '#{application[:region]}' does not exist at the endpoint" if found_region.nil?
+            raise Errors::SemanticAdapterRequestError,
+                  "Region '#{application[:region]}' does not exist at the endpoint" if found_region.nil?
             application[:region] = found_region[:id]
           end
 

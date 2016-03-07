@@ -48,7 +48,7 @@ module Nucleus
               logs.each do |logfile|
                 log.debug "Including #{logfile[:id]} in archive download"
                 log_entries = adapter.log_entries(params[:application_id], logfile[:id])
-                next unless log_entries && log_entries.length > 0
+                next unless log_entries && !log_entries.empty?
                 data = StringIO.new(log_entries.join("\n"))
                 filename = "#{params[:endpoint_id]}.app.#{params[:application_id]}.#{logfile[:id]}.log"
                 file_path = File.join(tmp_dir, filename)
@@ -59,8 +59,8 @@ module Nucleus
 
               if valid_logfiles == 0
                 # no logs with entries found? fail!
-                fail Nucleus::Errors::AdapterResourceNotFoundError,
-                     "No non-empty log available for application '#{params[:application_id]}'"
+                raise Nucleus::Errors::AdapterResourceNotFoundError,
+                      "No non-empty log available for application '#{params[:application_id]}'"
               end
 
               # when all log files were written to disk, pack them and return the data

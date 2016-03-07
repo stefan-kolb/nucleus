@@ -64,7 +64,7 @@ describe Nucleus::Adapters::GitDeployer do
 
         it 'returns archived repository even if master did not contain any commit' do
           # branch fails for master without commits
-          expect(repo).to receive(:branch).with(repo_branch).once { fail StandardError, 'No commit for master' }
+          expect(repo).to receive(:branch).with(repo_branch).once { raise StandardError, 'No commit for master' }
           # then we rely on the fallback, checkout new branch
           expect(repo).to receive(:checkout).with(repo_branch, new_branch: true).once { repo }
 

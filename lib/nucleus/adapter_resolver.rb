@@ -5,7 +5,7 @@ module Nucleus
     include Nucleus::UrlConverter
 
     def initialize(requested_version)
-      fail 'No such version supported' unless Nucleus::VersionDetector.api_versions.include?(requested_version)
+      raise 'No such version supported' unless Nucleus::VersionDetector.api_versions.include?(requested_version)
       @api_version = requested_version
     end
 
@@ -33,7 +33,7 @@ module Nucleus
     # @return [Nucleus::Adapters::BaseAdapter] loaded adapter implementation
     def load(vendor, username, password, options = {})
       setup
-      fail StandardError, "Could not find adapter for vendor '#{vendor}'" unless @adapters.key?(vendor)
+      raise StandardError, "Could not find adapter for vendor '#{vendor}'" unless @adapters.key?(vendor)
 
       # load the endpoint's HTTPS enabled API URL
       endpoint_url = load_endpoint(vendor, options)
@@ -73,7 +73,7 @@ module Nucleus
         # use default endpoint
         endpoint_url = @configurations[vendor].keys.first
       else
-        fail StandardError, "Could not identify an API endpoint for the vendor '#{vendor}'. "\
+        raise StandardError, "Could not identify an API endpoint for the vendor '#{vendor}'. "\
           "Please specify the API URL to use with the ':api_url' option."
       end
 

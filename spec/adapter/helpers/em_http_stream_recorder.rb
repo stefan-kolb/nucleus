@@ -69,7 +69,7 @@ module Nucleus
     def replay_chunks(*new_client_args)
       replay_cassettes_dir = cassette_dir(args_hash(*new_client_args))
       unless File.exist?(replay_cassettes_dir)
-        fail StandardError, 'Invalid playback request, no record for this http stream connection was found.'
+        raise StandardError, 'Invalid playback request, no record for this http stream connection was found.'
       end
 
       setup_chunk_replay_mock(replay_cassettes_dir)
@@ -101,7 +101,7 @@ module Nucleus
         dispatch_chunk = lambda do
           @connection.receive_data(replay_chunk(chunk_cassettes.pop))
           # send a new message each 200ms
-          EM.add_timer(0.2) { dispatch_chunk.call } if chunk_cassettes.length > 0
+          EM.add_timer(0.2) { dispatch_chunk.call } unless chunk_cassettes.empty?
         end
         EM.add_timer(1) { dispatch_chunk.call }
       end
