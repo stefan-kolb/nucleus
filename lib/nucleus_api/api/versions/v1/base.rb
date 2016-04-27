@@ -3,7 +3,7 @@ module Nucleus
     # API {V1} is the first API version of Nucleus to be released.
     # Please have a look at the README file or the {Nucleus::Adapters::V1::Stub} adapter for a detailed list of features.
     module V1
-      # The {Base} class of API version 1 includes all routes, endpoints and the swagger documentation to be build.
+      # The {Base} class of API version 1 includes all routes, endpoints and the swagger documentation.
       class Base < Grape::API
         # specify the version for all mounted endpoints
         version 'v1', using: :header, vendor: 'nucleus', format: :json
@@ -11,10 +11,10 @@ module Nucleus
         before do
           # allow no declared version for api root
           if version.nil?
-            if env['HTTP_ACCEPT_VERSION']
-              # Fallback for swagger-ui. If no version could be used from the accept header,
+            if env['HTTP_SWAGGER_VERSION']
+              # FIXME: Fallback for swagger-ui. If no version could be used from the accept header,
               # try to use the accept-version header.
-              env['api.version'] = env['HTTP_ACCEPT_VERSION']
+              env['api.version'] = env['HTTP_SWAGGER_VERSION']
             else
               # Without a version Nucleus can't work properly, fail fast (!)
               to_error(ErrorMessages::INVALID_ACCEPT_HEADER,
