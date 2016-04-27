@@ -18,6 +18,8 @@ end
 group :development do
   gem 'bundler'
   gem 'guard', '~> 2.13.0'
+  # needed for Ruby < 2.2
+  gem 'listen', '<= 3.0'
   gem 'guard-bundler'
   gem 'guard-rack'
   gem 'guard-rubocop'
