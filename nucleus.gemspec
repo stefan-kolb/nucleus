@@ -70,17 +70,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'sshkey', '~> 1.7'
   # The ONLY supported server ATM
   spec.add_runtime_dependency 'thin', '~> 1.6'
-
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'guard', '~> 2.13.0'
-  spec.add_development_dependency 'guard-bundler'
-  spec.add_development_dependency 'guard-rack'
-  spec.add_development_dependency 'guard-rubocop'
-  spec.add_development_dependency 'guard-yard'
-  spec.add_development_dependency 'inch', '~> 0.7'
-  spec.add_development_dependency 'rake', '~> 10.4'
-  spec.add_development_dependency 'rubocop', '~> 0.37.2'
-  spec.add_development_dependency 'vcr', '~> 3.0'
-  spec.add_development_dependency 'webmock', '~> 1.20'
-  spec.add_development_dependency 'yard', '~> 0.8'
 end

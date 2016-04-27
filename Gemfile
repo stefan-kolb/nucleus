@@ -14,3 +14,18 @@ group :test do
   gem 'rspec-wait'
   gem 'simplecov', require: false
 end
+
+group :development do
+  gem 'bundler'
+  gem 'guard', '~> 2.13.0'
+  gem 'guard-bundler'
+  gem 'guard-rack'
+  gem 'guard-rubocop'
+  gem 'guard-yard'
+  gem 'inch', '~> 0.7'
+  gem 'rake', '~> 10.4'
+  gem 'rubocop', '~> 0.37.2'
+  gem 'vcr', '~> 3.0'
+  gem 'webmock', '~> 1.20'
+  gem 'yard', '~> 0.8'
+end
