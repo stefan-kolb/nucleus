@@ -45,7 +45,7 @@ module Nucleus
         end
 
         add_swagger_documentation api_version: version, mount_path: '/schema',
-                                  hide_documentation_path: true, info: nucleus_config.api,
+                                  hide_documentation_path: true, #FIXME: info: nucleus_config.api,
                                   specific_api_documentation: { desc: 'Platform as a Service abstraction layer '\
                                   'API swagger-compatible endpoint documentation.' }
       end
