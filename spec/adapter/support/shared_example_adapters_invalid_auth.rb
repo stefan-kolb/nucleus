@@ -3,18 +3,16 @@ shared_examples 'compliant adapter with invalid credentials' do
   describe 'is compliant and' do
     # get the swagger schema that includes all application endpoints
     browser = Rack::Test::Session.new(Rack::MockSession.new(Airborne.configuration.rack_app))
+    # TODO: only ever queries /endpoints/{endpoint_id}?!
     browser.send('get', '/schema/endpoints', {}, {})
-    operations = Oj.load(browser.last_response.body, symbol_keys: true)[:apis].collect do |api|
-      if api[:path].include?('/endpoints/{endpoint_id}/')
-        { path: api[:path], methods: api[:operations].collect { |operation| operation[:method] } }
+    operations = Oj.load(browser.last_response.body, symbol_keys: true)[:paths].collect do |key, value|
+      if key.to_s.include?('/endpoints/{endpoint_id}')
+        { path: key.to_s, methods: value.collect { |k, _v| k.to_s } }
       end
     end.compact.flatten
 
     operations.each do |operation|
       operation[:methods].each do |method|
-        # remove format, use default response type
-        operation[:path].gsub!(/.{format}/, '')
-
         describe "#{method}: #{operation[:path]}" do
           before do
             # substitute random IDs for the request query params
