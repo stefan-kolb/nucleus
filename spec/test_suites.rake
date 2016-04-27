@@ -13,7 +13,7 @@ namespace :spec do
       RSpec::Core::RakeTask.new(suite[:id]) do |t|
         t.pattern = suite[:pattern]
         t.verbose = false
-        t.fail_on_error = false
+        t.fail_on_error = true
       end
     end
     desc 'Run all spec suites'
