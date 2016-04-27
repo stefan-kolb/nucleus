@@ -34,8 +34,8 @@ Gem::Specification.new do |spec|
   # Application data handling
   spec.add_runtime_dependency 'git', '~> 1.2'
   # Used to build the API
-  spec.add_runtime_dependency 'grape', '~> 0.13.0'
-  spec.add_runtime_dependency 'grape-entity', '~> 0.4.8', '>= 0.4.5'
+  spec.add_runtime_dependency 'grape', '~> 0.16.2'
+  spec.add_runtime_dependency 'grape-entity', '~> 0.5.1'
   # Used to document the API
   spec.add_runtime_dependency 'grape-swagger', '~> 0.20'
   # Used to import the vendor, provider & adapter setup from configuration with schema validation
