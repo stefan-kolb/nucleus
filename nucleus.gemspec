@@ -72,7 +72,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'thin', '~> 1.6'
 
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard', '~> 2.13.0'
   spec.add_development_dependency 'guard-bundler'
   spec.add_development_dependency 'guard-rack'
   spec.add_development_dependency 'guard-rubocop'
