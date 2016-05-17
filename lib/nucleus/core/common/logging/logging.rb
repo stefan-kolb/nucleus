@@ -44,7 +44,8 @@ module Nucleus
         # apply the log level from the app. configuration
         multi_logger = MultiLogger.new(
           level: nucleus_config.logging.key?(:level) ? nucleus_config.logging.level : Logger::Severity::WARN,
-          loggers: [std_log, file_log])
+          loggers: [std_log, file_log]
+        )
         multi_logger
       end
     end

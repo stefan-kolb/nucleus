@@ -33,7 +33,8 @@ module Nucleus
       class Stub < BaseAdapter
         # Error message saying that the adapter feature has not been implemented yet.
         NOT_IMPLEMENTED_ERROR = Errors::AdapterMissingImplementationError.new(
-          'Adapter is missing an implementation to support this feature')
+          'Adapter is missing an implementation to support this feature'
+        )
 
         # Build an Authentication client that can handle the authentication to the endpoint
         # given the username and a matching password.
