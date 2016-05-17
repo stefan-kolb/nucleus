@@ -28,6 +28,6 @@ group :development do
   gem 'rake', '~> 11.1'
   gem 'rubocop', '~> 0.40'
   gem 'vcr', '~> 3.0'
-  gem 'webmock', '~> 1.20'
+  gem 'webmock', '~> 2.0'
   gem 'yard', '~> 0.8'
 end
