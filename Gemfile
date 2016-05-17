@@ -25,7 +25,7 @@ group :development do
   gem 'guard-rubocop'
   gem 'guard-yard'
   gem 'inch', '~> 0.7'
-  gem 'rake', '~> 10.4'
+  gem 'rake', '~> 11.1'
   gem 'rubocop', '~> 0.40'
   gem 'vcr', '~> 3.0'
   gem 'webmock', '~> 1.20'
