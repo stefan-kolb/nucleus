@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'grape-entity', '~> 0.4.8', '>= 0.4.5'
   # Used to document the API
   spec.add_runtime_dependency 'grape-swagger', '~> 0.20'
+  spec.add_runtime_dependency 'grape-swagger-entity', '~> 0.1'
   # Used to import the vendor, provider & adapter setup from configuration with schema validation
   spec.add_runtime_dependency 'kwalify', '~> 0.7'
   # DB store
