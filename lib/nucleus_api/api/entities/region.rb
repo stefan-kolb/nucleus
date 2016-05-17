@@ -12,6 +12,14 @@ module Nucleus
           required: true
         }
 
+        expose :country, documentation: {
+          type: String, desc: 'The country of the data center location'
+        }
+
+        expose :locale, documentation: {
+          type: String, desc: 'The area of the data center location'
+        }
+
         expose :description, documentation: {
           type: String, desc: 'Region description, restrictions, etc.',
           required: true

@@ -1,6 +1,6 @@
 # [optional] The available levels are: FATAL, ERROR, WARN, INFO, DEBUG
 # Defaults to: Logger::Severity::WARN
-# nucleus_config.logging.level = Logger::Severity::WARN
+nucleus_config.logging.level = Logger::Severity::DEBUG
 
 # [optional] Logging directory
 # Defaults to: File.expand_path(File.join(File.dirname(__FILE__), '..', 'log'))
