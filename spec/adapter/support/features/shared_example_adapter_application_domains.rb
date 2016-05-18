@@ -180,7 +180,7 @@ shared_examples 'valid:applications:domains:delete' do
           domain_id = json_body[:domains].find do |d|
             d[:name] == "#{@endpoint}.adomainthatishopefullynotusedontheplatform.de"
           end[:id]
-          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", request_headers
+          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", {}, request_headers
         end
         include_examples 'a valid DELETE request'
       end
@@ -189,7 +189,7 @@ shared_examples 'valid:applications:domains:delete' do
           # fetch the ID of the domain. CF does not allow access by name
           get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains", request_headers)
           domain_id = json_body[:domains].find { |d| d[:name] == 'adomainthatishopefullynotusedontheplatform.de' }[:id]
-          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", request_headers
+          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/#{domain_id}", {}, request_headers
         end
         include_examples 'a valid DELETE request'
       end
@@ -198,8 +198,7 @@ shared_examples 'valid:applications:domains:delete' do
     describe 'fails for' do
       describe 'non-existing domain id', :as_cassette do
         before do
-          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/unknown_domain",
-                 request_headers
+          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/domains/unknown_domain", {}, request_headers
         end
         include_examples 'an unknown requested resource'
       end
@@ -207,7 +206,7 @@ shared_examples 'valid:applications:domains:delete' do
       describe 'non-existing application', :as_cassette do
         before do
           delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789/domains/"\
-                 'adomainthatishopefullynotusedontheplatform%2Ede', request_headers
+                 'adomainthatishopefullynotusedontheplatform%2Ede', {}, request_headers
         end
         include_examples 'an unknown requested resource'
       end

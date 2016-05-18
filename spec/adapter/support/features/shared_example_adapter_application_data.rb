@@ -71,7 +71,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'and app with all properties', :as_cassette do
         it 'changes state to deployed' do
           wait(180.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:state]
+            get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
+            json_body[:state]
           end.to eq('deployed')
         end
       end
@@ -90,7 +91,8 @@ shared_examples 'valid:applications:data:deploy' do
       describe 'and app with min properties', :as_cassette do
         it 'changes state to deployed' do
           wait(180.seconds).for do
-            get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)[:state]
+            get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)
+            json_body[:state]
           end.to eq('deployed')
         end
       end
@@ -124,7 +126,8 @@ shared_examples 'valid:applications:data:rebuild' do
         app_before_rebuild = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
         post("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/data/rebuild", {}, request_headers)
         wait(60.seconds).for do
-          get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)[:release_version]
+          get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
+          json_body[:release_version]
         end.not_to eq(app_before_rebuild[:release_version])
       end
     end

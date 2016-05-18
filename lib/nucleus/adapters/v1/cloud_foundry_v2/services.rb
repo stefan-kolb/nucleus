@@ -94,7 +94,7 @@ module Nucleus
             app_guid = app_guid(application_name_or_id)
             service_guid = service_guid(service_id)
             # sadly we can't resolve the binding and instance from the service_id with ease
-            # we therefore setup a chain to resolve the binding and instance from the active pla
+            # we therefore setup a chain to resolve the binding and instance from the active plan
             binding = binding(app_guid, service_guid)
 
             # now remove the binding from the application

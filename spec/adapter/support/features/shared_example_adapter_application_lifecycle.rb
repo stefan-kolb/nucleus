@@ -10,8 +10,8 @@ shared_examples 'valid:applications:lifecycle' do
           it 'changes state to running within timeout period' do
             expect(response.status).to eql(200)
             wait(180.seconds).for do
-              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                  request_headers)[:state]
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}", request_headers)
+              json_body[:state]
             end.to eq('running')
           end
         end
@@ -21,8 +21,8 @@ shared_examples 'valid:applications:lifecycle' do
                  {}, request_headers)
           end
           it 'changes state to running within timeout period' do
-            expect(get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                       request_headers)[:state]).to eql('running')
+            get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}", request_headers)
+            expect(json_body[:state]).to eql('running')
           end
         end
       end
@@ -35,8 +35,8 @@ shared_examples 'valid:applications:lifecycle' do
           it 'changes state to stopped within timeout period' do
             expect(response.status).to eql(200)
             wait(60.seconds).for do
-              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                  request_headers)[:state]
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}", request_headers)
+              json_body[:state]
             end.to eq('stopped')
           end
         end
@@ -46,8 +46,8 @@ shared_examples 'valid:applications:lifecycle' do
                  {}, request_headers)
           end
           it 'changes state to stopped within timeout period' do
-            expect(get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                       request_headers)[:state]).to eql('stopped')
+            get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}", request_headers)
+            expect(json_body[:state]).to eql('stopped')
           end
         end
       end
@@ -60,8 +60,8 @@ shared_examples 'valid:applications:lifecycle' do
           it 'changes state to running within timeout period' do
             expect(response.status).to eql(200)
             wait(60.seconds).for do
-              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                  request_headers)[:state]
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}", request_headers)
+              json_body[:state]
             end.to eq('running')
           end
         end
@@ -72,8 +72,8 @@ shared_examples 'valid:applications:lifecycle' do
           end
           it 'changes state to running within timeout period' do
             wait(60.seconds).for do
-              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}",
-                  request_headers)[:state]
+              get("/endpoints/#{@endpoint}/applications/#{instance_variable_get(app_name)[:updated_name]}", request_headers)
+              json_body[:state]
             end.to eq('running')
           end
         end
