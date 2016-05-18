@@ -170,14 +170,14 @@ shared_examples 'valid:applications:services:remove' do
     describe 'fails' do
       describe 'with non-existent service', :as_cassette do
         before do
-          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services/invalid_service",
+          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services/invalid_service", {},
                  request_headers
         end
         include_examples 'an unknown requested resource'
       end
       describe 'with non-existent application', :as_cassette do
         before do
-          delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789/services/#{@service[:id]}",
+          delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789/services/#{@service[:id]}", {},
                  request_headers
         end
         include_examples 'an unknown requested resource'
@@ -185,7 +185,7 @@ shared_examples 'valid:applications:services:remove' do
     end
     describe 'succeeds', :as_cassette do
       before do
-        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services/#{@service[:id]}",
+        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/services/#{@service[:id]}", {},
                request_headers
       end
       include_examples 'a valid DELETE request'

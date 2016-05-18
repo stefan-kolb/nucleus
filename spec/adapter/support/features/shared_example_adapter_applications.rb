@@ -214,20 +214,20 @@ shared_examples 'valid:applications:web' do
   describe 'web url access is possible', cassette_group: 'app;web access' do
     describe 'for app with all properties', :as_cassette do
       before do
-        app = get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
+        get("/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers)
         # use excon so that the external request is recorded
-        @live_app = Excon.get(app[:web_url])
+        @live_app = Excon.get(json_body[:web_url])
       end
       include_examples 'valid:app:wordfinder'
     end
 
     describe 'for app with min properties', :as_cassette do
       before do
-        app = get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)
+        get("/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers)
         # CF Hack, sometimes this app requires more time before the route is ready
-        wait(5.seconds).for { Excon.get(app[:web_url]).body }.not_to include('404 Not Found: Requested route')
+        wait(5.seconds).for { Excon.get(json_body[:web_url]).body }.not_to include('404 Not Found: Requested route')
         # use excon so that the external request is recorded
-        @live_app = Excon.get(app[:web_url])
+        @live_app = Excon.get(json_body[:web_url])
       end
       include_examples 'valid:app:wordfinder'
     end
@@ -240,7 +240,7 @@ shared_examples 'valid:applications:delete' do
       describe 'with min properties' do
         describe 'succeeds', :as_cassette do
           before do
-            delete "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", request_headers
+            delete "/endpoints/#{@endpoint}/applications/#{@app_min[:updated_name]}", {}, request_headers
           end
           include_examples 'a valid DELETE request'
         end
@@ -253,7 +253,7 @@ shared_examples 'valid:applications:delete' do
       describe 'with all properties' do
         describe 'succeeds', :as_cassette do
           before do
-            delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", request_headers
+            delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}", {}, request_headers
           end
           include_examples 'a valid DELETE request'
         end
@@ -266,7 +266,7 @@ shared_examples 'valid:applications:delete' do
 
     describe 'fails for non-existing application', :as_cassette do
       before do
-        delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", request_headers
+        delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789", {}, request_headers
       end
       include_examples 'an unknown requested resource'
     end

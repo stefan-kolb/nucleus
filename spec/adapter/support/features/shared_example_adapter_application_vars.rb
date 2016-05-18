@@ -229,7 +229,7 @@ shared_examples 'valid:applications:vars:delete' do
   describe 'delete env_var', cassette_group: 'app-vars;delete' do
     describe 'succeeds', :as_cassette do
       before do
-        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key", request_headers
+        delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/our_test_var_key", {}, request_headers
       end
       include_examples 'a valid DELETE request'
     end
@@ -253,15 +253,14 @@ shared_examples 'valid:applications:vars:delete' do
     describe 'fails for' do
       describe 'non-existing key', :as_cassette do
         before do
-          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/unknown_key", request_headers
+          delete "/endpoints/#{@endpoint}/applications/#{@app_all[:updated_name]}/vars/unknown_key", {}, request_headers
         end
         include_examples 'an unknown requested resource'
       end
 
       describe 'non-existing application', :as_cassette do
         before do
-          delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789/vars/our_test_var_key",
-                 request_headers
+          delete "/endpoints/#{@endpoint}/applications/app_never_exists_0123456789/vars/our_test_var_key", {}, request_headers
         end
         include_examples 'an unknown requested resource'
       end
