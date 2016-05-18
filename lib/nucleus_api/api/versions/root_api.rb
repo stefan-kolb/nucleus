@@ -44,9 +44,10 @@ module Nucleus
           env['nucleus.invalid.accept.header'] = true
         else
           entity = env['api.endpoint'].build_error_entity(
-            ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug?")
+            ErrorMessages::RESCUED, "Rescued from #{e.class.name}. Could you please report this bug? #{e.message}, #{e.backtrace}"
+          )
           env['api.endpoint'].log.error("API error via Rack: #{entity[:status]} - #{e.message} (#{e.class}) "\
-            "in #{e.backtrace.first}:")
+            "in #{e.backtrace}:")
         end
 
         # send response via Rack, since Grape does not support error! or entities via :with in the rescue block

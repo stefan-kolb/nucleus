@@ -21,8 +21,7 @@ describe Nucleus::Adapters::V1::CloudFoundryV2 do
                     'with valid credentials is compliant and log download of all logs succeeds as .tar.gz unzipped content equals log content of the show requests',
                     'with valid credentials is compliant and log tail request is valid chunked request with encoding and receives at least one new message',
                     'with valid credentials is compliant and deployment data download succeeds for default archive_format .zip', # FIXME: download problem from AWS port 443
-                    'with valid credentials is compliant and deployment data download succeeds for archive_format .tar.gz'
-                   ]
+                    'with valid credentials is compliant and deployment data download succeeds for archive_format .tar.gz']
   end
   before do |example|
     if skip_example?(described_class, example.metadata[:full_description], @unsupported)

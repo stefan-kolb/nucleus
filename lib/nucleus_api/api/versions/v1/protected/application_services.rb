@@ -11,8 +11,7 @@ module Nucleus
                  swagger: { nested: false, name: 'application-services' } do
           desc 'List all services that are used by the application' do
             success Models::InstalledServices
-            failure [[200, 'Installed services retrieved', Models::InstalledServices]
-                    ].concat ErrorResponses.standard_responses
+            failure [[200, 'Installed services retrieved', Models::InstalledServices]].concat ErrorResponses.standard_responses
           end
           get '/' do
             present adapter.installed_services(params[:application_id]), with: Models::InstalledServices
@@ -20,8 +19,7 @@ module Nucleus
 
           desc 'Add a service to the application' do
             success Models::InstalledService
-            failure [[200, 'Service bound to application', Models::InstalledService]
-                    ].concat ErrorResponses.standard_responses
+            failure [[200, 'Service bound to application', Models::InstalledService]].concat ErrorResponses.standard_responses
           end
           params do
             requires :service, type: Hash do
@@ -53,8 +51,7 @@ module Nucleus
           resource ':service_id', requirements: { service_id: %r{[^\/]*} } do
             desc 'Retrieve a service that is used by the application' do
               success Models::InstalledService
-              failure [[200, 'Installed service retrieved', Models::InstalledService]
-                      ].concat ErrorResponses.standard_responses
+              failure [[200, 'Installed service retrieved', Models::InstalledService]].concat ErrorResponses.standard_responses
             end
             get '/' do
               present adapter.installed_service(params[:application_id], params[:service_id]),
@@ -63,8 +60,7 @@ module Nucleus
 
             desc 'Change a service that is already applied to the application' do
               success Models::InstalledService
-              failure [[200, 'Installed service changed', Models::InstalledService]
-                      ].concat ErrorResponses.standard_responses
+              failure [[200, 'Installed service changed', Models::InstalledService]].concat ErrorResponses.standard_responses
             end
             params do
               requires :plan, type: Hash do

@@ -68,7 +68,8 @@ module Nucleus
         }
 
         expose :_links, using: Nucleus::API::Models::ApplicationReferences, documentation: {
-          type: 'ApplicationReferences', desc: 'Resource links', required: true } do |instance, o|
+          type: 'ApplicationReferences', desc: 'Resource links', required: true
+        } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
                                               ['applications', instance[:id]]) },

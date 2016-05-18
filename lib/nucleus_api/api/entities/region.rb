@@ -12,13 +12,22 @@ module Nucleus
           required: true
         }
 
+        expose :country, documentation: {
+          type: String, desc: 'The country of the data center location'
+        }
+
+        expose :locale, documentation: {
+          type: String, desc: 'The area of the data center location'
+        }
+
         expose :description, documentation: {
           type: String, desc: 'Region description, restrictions, etc.',
           required: true
         }
 
         expose :_links, using: BasicReferences, documentation: {
-          type: 'BasicReferences', desc: 'Resource links', required: true } do |instance, o|
+          type: 'BasicReferences', desc: 'Resource links', required: true
+        } do |instance, o|
           {
             self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
                                               ['regions', instance[:id]]) },

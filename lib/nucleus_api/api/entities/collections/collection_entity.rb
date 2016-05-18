@@ -35,7 +35,8 @@ module Nucleus
         def self.basic_links(unformatted_link, action_name)
           expose :_links, using: Models::BasicReferences, documentation: {
             required: true,
-            type: 'BasicReferences', desc: 'Resource links', is_array: true } do |_instance, o|
+            type: 'BasicReferences', desc: 'Resource links', is_array: true
+          } do |_instance, o|
             {
               self: { href: link_resource(format(unformatted_link, o[:env]['rack.routing_args']), action_name) },
               # link back to the parent resource

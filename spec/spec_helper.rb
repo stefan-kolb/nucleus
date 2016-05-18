@@ -27,6 +27,7 @@ require 'vcr'
 require 'factory_girl'
 require 'faker'
 require 'tmpdir'
+require 'webmock/rspec'
 
 # we need this to detect whether to apply test middleware (tailing hack)
 ENV['RACK_ENV'] = 'test'

@@ -7,7 +7,8 @@ module Nucleus
         }
 
         expose :_links, using: ApiReferences, documentation: {
-          type: 'ApiReferences', desc: 'Resource links', required: true } do |i, _o|
+          type: 'ApiReferences', desc: 'Resource links', required: true
+        } do |i, _o|
           {
             self: { href: link_resource([i[:name]]) }
           }

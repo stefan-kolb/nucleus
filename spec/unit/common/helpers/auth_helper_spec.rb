@@ -40,7 +40,8 @@ describe Nucleus::Adapters::AuthenticationRetryWrapper do
       context 'and refresh failed' do
         before do
           allow(auth_client).to receive(:refresh).and_raise(
-            Nucleus::Errors::EndpointAuthenticationError.new('error', auth_client))
+            Nucleus::Errors::EndpointAuthenticationError.new('error', auth_client)
+          )
         end
         context 'but authentication succeeded' do
           before { allow(adapter).to receive(:authenticate) { 'authentication result' } }

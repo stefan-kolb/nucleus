@@ -10,7 +10,8 @@ module Nucleus
         expose :name, documentation: {
           type: String, desc: 'Vendor name, e.g. \'Cloud Foundry\'',
           required: true,
-          allow_blank: false }
+          allow_blank: false
+        }
 
         expose :providers, documentation: {
           type: 'Provider',
@@ -19,7 +20,8 @@ module Nucleus
         }, using: Models::Provider, unless: { collection: true }
 
         expose :_links, using: ApiReferences, documentation: {
-          type: 'ApiReferences', desc: 'Resource links', required: true } do |instance, _o|
+          type: 'ApiReferences', desc: 'Resource links', required: true
+        } do |instance, _o|
           {
             self: { href: link_resource(%w(vendors), instance) },
             # link back to the api version

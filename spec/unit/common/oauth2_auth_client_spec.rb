@@ -38,7 +38,8 @@ describe Nucleus::Adapters::OAuth2AuthClient do
         context 'with invalid credentials' do
           it 'raises an error when authentication failed' do
             expect { client.authenticate(invalid_username, invalid_password) }.to raise_error(
-              Nucleus::Errors::EndpointAuthenticationError)
+              Nucleus::Errors::EndpointAuthenticationError
+            )
           end
         end
 

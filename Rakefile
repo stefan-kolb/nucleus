@@ -88,7 +88,8 @@ task schema_v1: :environment do
   response = Nucleus::API::RootAPI.call(
     'REQUEST_METHOD' => 'GET',
     'PATH_INFO' => '/schema',
-    'rack.input' => StringIO.new)[2].body[0]
+    'rack.input' => StringIO.new
+  )[2].body[0]
   json = JSON.parse(response)
   puts JSON.pretty_generate(json)
 end

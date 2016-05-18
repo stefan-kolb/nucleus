@@ -9,7 +9,8 @@ module Nucleus
         }, using: ApiVersion
 
         expose :_links, using: ApiReferences, documentation: {
-          type: 'ApiReferences', required: true, desc: 'Resource links' } do |_i, _o|
+          type: 'ApiReferences', required: true, desc: 'Resource links'
+        } do |_i, _o|
           {
             self: { href: link_api_root },
               # link to the API documentation
