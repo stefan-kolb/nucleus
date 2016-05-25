@@ -632,3 +632,7 @@ We love contributions from everyone! See our [contribution guidelines](CONTRIBUT
 
 - [Add a vendor (or implement a new adapter)](wiki/implement_new_adapter.md)
 - [Adapter Tests](wiki/adapter_tests.md)
+
+The technical report ["Nucleus - Unified Deployment and Management for Platform as a Service"](http://nbn-resolving.de/urn/resolver.pl?urn:nbn:de:bvb:473-opus4-465595) explaining the details of our implementation is available [here](http://nbn-resolving.de/urn/resolver.pl?urn:nbn:de:bvb:473-opus4-465595).
+Nucleus also has been used in the the paper ["Unified Cloud Application Management"](http://www.uni-bamberg.de/?id=112935) which was presented at the 12th IEEE World Congress on Services in San Francisco, USA. 
+You can find a preprint version of the paper [here](http://www.uni-bamberg.de/?id=112935).
