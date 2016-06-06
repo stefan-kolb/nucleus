@@ -7,6 +7,7 @@ require 'nucleus'
 require 'grape'
 require 'grape-entity'
 require 'grape-swagger'
+require 'grape-swagger/entity'
 
 # faye is used to fetch logs from cloud foundry, using websocket communication
 require 'rack/stream'
