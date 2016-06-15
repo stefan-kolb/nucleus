@@ -7,7 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Fixed
-
+* Updated Anynines API endpoint
+* 
 ### Removed
 
 
