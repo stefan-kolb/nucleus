@@ -137,10 +137,10 @@ module Nucleus
         middleware = Excon.defaults[:middlewares].dup
 
         middleware = if params[:follow_redirects] == false
-                       [Excon::Middleware::ResponseParser, Excon::Middleware::Decompress].push(*middleware).uniq
+                       [Excon::Middleware::ResponseParser, Excon::Middleware::Decompress].concat(middleware).uniq
                      else
                        [Excon::Middleware::ResponseParser, Excon::Middleware::RedirectFollower,
-                        Excon::Middleware::Decompress].push(*middleware).uniq
+                        Excon::Middleware::Decompress].concat(middleware).uniq
                      end
         { middlewares: middleware, ssl_verify_peer: @check_certificates }
       end
@@ -160,7 +160,7 @@ module Nucleus
         # allow to follow redirects in the APIs
         allowed_status_codes = params.key?(:expects) ? [*params[:expects]] : []
         unless params[:follow_redirects] == false
-          allowed_status_codes.push(*[301, 302, 303, 307, 308])
+          allowed_status_codes.concat([301, 302, 303, 307, 308])
         end
 
         params[:expects] = allowed_status_codes.uniq

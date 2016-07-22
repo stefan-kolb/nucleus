@@ -15,7 +15,7 @@ module Nucleus
 
       if custom_ssh_key_file
         # file must not be accessible by others, otherwise usage will be forbidden by git.
-        FileUtils.chmod(0600, custom_ssh_key_file) if OS.unix?
+        FileUtils.chmod(0o600, custom_ssh_key_file) if OS.unix?
         cache_public_key
       end
 
@@ -71,7 +71,7 @@ module Nucleus
       cache_public_key
 
       # file must not be accessible by others, otherwise usage will be forbidden by git.
-      FileUtils.chmod(0600, @key_file) if OS.unix?
+      FileUtils.chmod(0o600, @key_file) if OS.unix?
     end
 
     def create_agent
@@ -85,7 +85,7 @@ module Nucleus
       # adapt the agent file to OS specific requirements
       if OS.unix?
         File.write(@agent_file, "ssh -i #{@key_file} -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $*")
-        FileUtils.chmod(0700, @agent_file)
+        FileUtils.chmod(0o700, @agent_file)
       else
         File.write(@agent_file, "@echo off\r\nssh -i #{@key_file} -o UserKnownHostsFile=NUL "\
           '-o StrictHostKeyChecking=no %*')

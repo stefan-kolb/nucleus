@@ -85,7 +85,7 @@ module Nucleus
             # limitation: show only the last 3 builds
             entries = []
             build_list.last(3).each do |build|
-              entries.push(*build_result_entries(application_id, build[:id]))
+              entries.concat(build_result_entries(application_id, build[:id]))
             end
             entries
           end
