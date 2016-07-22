@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.executables   = 'nucleus'
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.0'
+  spec.required_ruby_version = '>= 2.3'
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
   spec.files = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|

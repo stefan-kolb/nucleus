@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Updated Anynines API endpoint
 
 ### Removed
-
+* Drop support for Ruby < 2.3
 
 ## [0.3.1] - 2016-03-07
 
