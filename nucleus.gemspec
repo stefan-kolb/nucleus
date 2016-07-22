@@ -59,8 +59,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rack-ssl-enforcer', '~> 0.2', '>= 0.2.8'
   # TODO: Should be removed as soon as excon supports multipart requests
   spec.add_runtime_dependency 'rest-client', '~> 1.8'
-  # Used to build a streaming API for the log tail action
-  spec.add_runtime_dependency 'rack-stream', '= 0.0.5'
   # Save certain information for the current request, e.g. the already loaded adapter
   spec.add_runtime_dependency 'request_store', '~> 1.1'
   # Application setup, require libs

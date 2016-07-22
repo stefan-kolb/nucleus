@@ -11,6 +11,7 @@ group :test do
   gem 'memfs'
   # includes required fix for empty arrays as param value, see issue #122 and pull request #125,
   gem 'rack-test', git: 'https://github.com/stefan-kolb/rack-test.git', branch: 'empty-array-param'
+  # Used to build a streaming API for the log tail action
   gem 'rack-stream', git: 'https://github.com/stefan-kolb/rack-stream.git'
   gem 'rspec-wait'
   gem 'simplecov', require: false
