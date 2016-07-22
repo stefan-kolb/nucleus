@@ -79,7 +79,7 @@ Please make sure to obey the following installation instructions before starting
 
 ### Ruby Interpreter Compatibility
 
-Nucleus is supposed to run on Ruby >= 2.0.
+Nucleus is supposed to run on Ruby >= 2.3.
 Due to native gem dependencies, it currently won't work on JRuby.
 
 ### Installation instructions
