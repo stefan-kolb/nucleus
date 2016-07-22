@@ -46,7 +46,7 @@ Gem::Specification.new do |spec|
   # Logging
   spec.add_runtime_dependency 'logger', '~> 1.2'
   # Application archive handling, detect unsupported uploads
-  spec.add_runtime_dependency 'mime-types', '~> 2.6'
+  spec.add_runtime_dependency 'mime-types', '~> 2.99'
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
   # Openshift logging access and direct Git SSH requests
