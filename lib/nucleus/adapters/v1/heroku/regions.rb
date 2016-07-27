@@ -33,7 +33,7 @@ module Nucleus
 
           def native_region(region_name)
             response = get('/regions').body
-            response.find { |region| region[:name].casecmp(region_name) == 0 }
+            response.find { |region| region[:name].casecmp(region_name).zero? }
           end
         end
       end

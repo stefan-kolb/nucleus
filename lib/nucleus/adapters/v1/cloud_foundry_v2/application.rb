@@ -23,7 +23,7 @@ module Nucleus
           # @see Stub#create_application
           def create_application(application)
             if application.key? :region
-              unless application[:region].casecmp('default') == 0
+              unless application[:region].casecmp('default').zero?
                 raise Errors::SemanticAdapterRequestError,
                       "Region '#{application[:region]}' does not exist at the endpoint. "\
                       'Please check which regions are actually available on this endpoint.'

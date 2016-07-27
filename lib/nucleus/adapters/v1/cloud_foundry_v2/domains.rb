@@ -62,7 +62,7 @@ module Nucleus
 
             # check route usage
             route_in_apps = get("/v2/routes/#{route_id}/apps").body
-            return unless route_in_apps[:total_results] == 0
+            return unless (route_in_apps[:total_results]).zero?
 
             # route is no longer needed, delete
             delete("/v2/routes/#{route_id}")

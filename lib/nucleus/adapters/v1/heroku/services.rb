@@ -143,7 +143,7 @@ module Nucleus
             # TODO: extract payment period to enum
             plan[:costs] = [{ price: [amount: plan[:price][:cents] / 100.0, currency: 'USD'],
                              period: plan[:price][:unit], per_instance: false }]
-            plan[:free] = plan[:price][:cents] == 0
+            plan[:free] = (plan[:price][:cents]).zero?
             plan
           end
 
@@ -158,7 +158,7 @@ module Nucleus
             @free_plans ||= {}
             return @free_plans[service_id] if @free_plans.key?(service_id)
             plans = load_plans(service_id) unless plans
-            @free_plans[service_id] = plans.any? { |plan| plan[:price][:cents] == 0 }
+            @free_plans[service_id] = plans.any? { |plan| (plan[:price][:cents]).zero? }
             @free_plans[service_id]
           end
         end

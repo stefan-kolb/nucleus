@@ -57,7 +57,7 @@ module Nucleus
                 valid_logfiles += 1
               end
 
-              if valid_logfiles == 0
+              if valid_logfiles.zero?
                 # no logs with entries found? fail!
                 raise Nucleus::Errors::AdapterResourceNotFoundError,
                       "No non-empty log available for application '#{params[:application_id]}'"

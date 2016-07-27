@@ -10,7 +10,7 @@ module Nucleus
 
           # @see Stub#region
           def region(region_name)
-            unless region_name.casecmp('default') == 0
+            unless region_name.casecmp('default').zero?
               raise Errors::AdapterResourceNotFoundError, "Region '#{region_name}' does not exist at the endpoint"
             end
             default_region

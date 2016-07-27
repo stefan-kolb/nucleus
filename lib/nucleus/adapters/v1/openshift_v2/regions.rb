@@ -40,7 +40,7 @@ module Nucleus
           def native_region(region_name)
             response = get('/regions').body[:data]
             response.delete_if { |region| region[:allow_selection] == false }
-            response.find { |region| region[:name].casecmp(region_name) == 0 }
+            response.find { |region| region[:name].casecmp(region_name).zero? }
           end
 
           def to_nucleus_region(region)

@@ -50,7 +50,7 @@ module Nucleus
 
           # uncompress and extract to
           extracted = extractor.extract(file, repo_dir, file_compression_format)
-          raise Errors::AdapterRequestError, 'Invalid application: Archive did not contain any files' if extracted == 0
+          raise Errors::AdapterRequestError, 'Invalid application: Archive did not contain any files' if extracted.zero?
 
           # if the application was wrapped within a directory, move all 1st level files and dirs to the root
           sanitizer = Nucleus::ApplicationRepoSanitizer.new
