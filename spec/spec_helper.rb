@@ -32,34 +32,24 @@ require 'webmock/rspec'
 # we need this to detect whether to apply test middleware (tailing hack)
 ENV['RACK_ENV'] = 'test'
 
-if ENV['CODECLIMATE_REPO_TOKEN']
-  require 'simplecov'
-  require 'codeclimate-test-reporter'
-  SimpleCov.add_filter 'vendor'
-  SimpleCov.formatters = []
-  # merge results of the last 1 hour
-  SimpleCov.merge_timeout 3600
-  SimpleCov.start CodeClimate::TestReporter.configuration.profile
-else
-  require 'simplecov'
-  # merge results of the last 1 hour
-  SimpleCov.merge_timeout 3600
-  SimpleCov.start do
-    add_filter 'spec/'
-    add_filter 'lib/nucleus/scripts/'
-    add_filter 'config/'
+require 'simplecov'
+# merge results of the last 1 hour
+SimpleCov.merge_timeout 3600
+SimpleCov.start do
+  add_filter 'spec/'
+  add_filter 'lib/nucleus/scripts/'
+  add_filter 'config/'
 
-    add_group 'Adapters', 'lib/nucleus/adapters'
-    add_group 'Core', 'lib/nucleus/core'
-    add_group 'Persistence', 'lib/nucleus/persistence'
-    add_group 'Lib ext.', 'lib/nucleus/ext'
-    add_group 'API versions', 'lib/nucleus_api/api/versions'
-    add_group 'API entities', 'lib/nucleus_api/api/entities'
-    add_group 'API helpers', 'lib/nucleus_api/api/helpers'
-    add_group 'API Middleware', 'lib/nucleus_api/rack_middleware'
-    add_group 'API Models', 'lib/nucleus_api/models'
-    add_group 'API Lib ext.', 'lib/nucleus_api/ext'
-  end
+  add_group 'Adapters', 'lib/nucleus/adapters'
+  add_group 'Core', 'lib/nucleus/core'
+  add_group 'Persistence', 'lib/nucleus/persistence'
+  add_group 'Lib ext.', 'lib/nucleus/ext'
+  add_group 'API versions', 'lib/nucleus_api/api/versions'
+  add_group 'API entities', 'lib/nucleus_api/api/entities'
+  add_group 'API helpers', 'lib/nucleus_api/api/helpers'
+  add_group 'API Middleware', 'lib/nucleus_api/rack_middleware'
+  add_group 'API Models', 'lib/nucleus_api/models'
+  add_group 'API Lib ext.', 'lib/nucleus_api/ext'
 end
 
 # load configuration for integration tests

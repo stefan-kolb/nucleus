@@ -1,9 +1,6 @@
 # Nucleus
 
 [![Build Status](https://travis-ci.org/stefan-kolb/nucleus.svg)](https://travis-ci.org/stefan-kolb/nucleus)
-[![Dependency Status](https://gemnasium.com/stefan-kolb/nucleus.svg)](https://gemnasium.com/stefan-kolb/nucleus)
-[![Code Climate](https://codeclimate.com/github/stefan-kolb/nucleus/badges/gpa.svg)](https://codeclimate.com/github/stefan-kolb/nucleus)
-[![Test Coverage](https://codeclimate.com/github/stefan-kolb/nucleus/badges/coverage.svg)](https://codeclimate.com/github/stefan-kolb/nucleus/coverage)
 [![Gem Version](https://badge.fury.io/rb/nucleus.svg)](https://badge.fury.io/rb/nucleus)
 
 _Nucleus_ is a RESTful abstraction layer and Ruby gem to unify core management functions of Platform as a Service (PaaS) systems.
@@ -634,5 +631,5 @@ We love contributions from everyone! See our [contribution guidelines](CONTRIBUT
 - [Adapter Tests](wiki/adapter_tests.md)
 
 The technical report ["Nucleus - Unified Deployment and Management for Platform as a Service"](http://nbn-resolving.de/urn/resolver.pl?urn:nbn:de:bvb:473-opus4-465595) explaining the details of our implementation is available [here](http://nbn-resolving.de/urn/resolver.pl?urn:nbn:de:bvb:473-opus4-465595).
-Nucleus also has been used in the the paper ["Unified Cloud Application Management"](http://www.uni-bamberg.de/?id=112935) which was presented at the 12th IEEE World Congress on Services in San Francisco, USA. 
+Nucleus also has been used in the the paper ["Unified Cloud Application Management"](http://www.uni-bamberg.de/?id=112935) which was presented at the 12th IEEE World Congress on Services in San Francisco, USA.
 You can find a preprint version of the paper [here](http://www.uni-bamberg.de/?id=112935).

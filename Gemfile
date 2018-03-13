@@ -5,7 +5,6 @@ gemspec
 
 group :test do
   gem 'airborne', '~> 0.2'
-  gem 'codeclimate-test-reporter', require: false
   gem 'factory_girl'
   gem 'faker'
   gem 'memfs'

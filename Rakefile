@@ -19,12 +19,6 @@ task default: [:rubocop, :spec]
 task :spec do
   # first, run all tests
   Rake::Task['spec:suite:all'].invoke
-  # if on the CI system, push coverage report to codeclimate
-  if ENV['CODECLIMATE_REPO_TOKEN']
-    require 'simplecov'
-    require 'codeclimate-test-reporter'
-    CodeClimate::TestReporter::Formatter.new.format(SimpleCov.result)
-  end
 end
 
 task :doc_toc do
