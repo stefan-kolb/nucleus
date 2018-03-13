@@ -23,10 +23,10 @@ group :development do
   gem 'guard-rack'
   gem 'guard-rubocop'
   gem 'guard-yard'
-  gem 'inch', '~> 0.7'
+  gem 'inch', '~> 0.8.0.rc1'
   gem 'rake', '~> 11.1'
-  gem 'rubocop', '~> 0.42.0'
+  gem 'rubocop', '~> 0.49.0'
   gem 'vcr', '~> 3.0'
   gem 'webmock', '~> 2.0'
-  gem 'yard', '~> 0.8'
+  gem 'yard', '~> 0.9'
 end
