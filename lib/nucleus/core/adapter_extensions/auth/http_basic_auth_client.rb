@@ -28,8 +28,10 @@ module Nucleus
 
       # @see AuthClient#auth_header
       def auth_header
-        raise Errors::EndpointAuthenticationError,
-              'Authentication client was not authenticated yet' unless @packed_credentials
+        unless @packed_credentials
+          raise Errors::EndpointAuthenticationError,
+                'Authentication client was not authenticated yet'
+        end
         { 'Authorization' => "Basic #{@packed_credentials}" }
       end
     end

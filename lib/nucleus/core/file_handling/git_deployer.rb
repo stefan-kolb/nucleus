@@ -37,8 +37,10 @@ module Nucleus
       # @return [void]
       def deploy(file, file_compression_format)
         extractor = Nucleus::ArchiveExtractor.new
-        raise Errors::AdapterRequestError,
-              'Unsupported format of the application archive' unless extractor.supports? file_compression_format
+        unless extractor.supports? file_compression_format
+          raise Errors::AdapterRequestError,
+                'Unsupported format of the application archive'
+        end
 
         push_repository_changes do |repo_dir|
           # now remove all current files, except the git db

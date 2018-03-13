@@ -76,7 +76,7 @@ module Nucleus
             assigned_routes = get("/v2/apps/#{app_guid}/routes").body
             assigned_routes[:resources].each do |route|
               route_domain = get(route[:entity][:domain_url]).body
-              return true if "#{route[:entity][:host]}.#{route_domain[:entity][:name]}" == domain_without_protocol
+              return true if domain_without_protocol == "#{route[:entity][:host]}.#{route_domain[:entity][:name]}"
             end
             false
           end
@@ -101,7 +101,7 @@ module Nucleus
           end
 
           def cf_domain(domain_name)
-            %w(private shared).each do |domain_type|
+            %w[private shared].each do |domain_type|
               response = get("/v2/#{domain_type}_domains").body
               response[:resources].each do |domain|
                 return domain if domain[:entity][:name] == domain_name

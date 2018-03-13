@@ -59,11 +59,11 @@ module Nucleus
           type: 'ApiReferences', desc: 'Resource links', required: true
         } do |instance, _o|
           {
-            self: { href: link_resource(%w(endpoints), instance) },
+            self: { href: link_resource(%w[endpoints], instance) },
               # link back to the provider
-              parent: { href: link_resource(%w(providers), instance.provider) },
+              parent: { href: link_resource(%w[providers], instance.provider) },
               # associated applications
-              applications: { href: link_child_resource(%w(endpoints), instance, %w(applications)) }, safe: true
+              applications: { href: link_child_resource(%w[endpoints], instance, %w[applications]) }, safe: true
           }
         end
       end

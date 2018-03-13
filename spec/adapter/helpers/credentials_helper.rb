@@ -26,7 +26,7 @@ module Nucleus
           end
           begin
             fname = ENV['CONFIG'] || File.expand_path('config/.credentials')
-            @hash.merge!(YAML.load(File.open(fname)))
+            @hash.merge!(YAML.safe_load(File.open(fname)))
           rescue Errno::ENOENT
             # Ignore if file was not found
             p "No endpoint credentials configuration found at 'config/.credentials'"

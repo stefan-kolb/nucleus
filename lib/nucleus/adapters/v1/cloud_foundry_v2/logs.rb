@@ -111,7 +111,7 @@ module Nucleus
             when Enums::ApplicationLogfileType::REQUEST
               filter = ['RTR']
             when Enums::ApplicationLogfileType::SYSTEM
-              filter = %w(STG LGR DEA)
+              filter = %w[STG LGR DEA]
             when :all
               # no filter, show all
               filter = nil
@@ -140,7 +140,7 @@ module Nucleus
           def download_file(app_guid, file_path, headers_to_use = nil)
             expected_statuses = [200, 302, 400, 404]
             # Hack, do not create fresh headers (which would fail) when in a deferred action
-            headers_to_use = headers unless headers_to_use
+            headers_to_use ||= headers
 
             # log list consists of 2 parts, loggregator and files
             log_files = get("/v2/apps/#{app_guid}/instances/0/files/#{file_path}",

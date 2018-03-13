@@ -76,8 +76,10 @@ module Nucleus
 
     def play_io(class_name, method_name, param_hash)
       cassette = File.join(cassette_dir(class_name, method_name, param_hash), 'io_response')
-      raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
-        'class and argument combination' unless File.exist?(cassette)
+      unless File.exist?(cassette)
+        raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
+          'class and argument combination'
+      end
 
       response = StringIO.new('')
       File.open(cassette, 'rb') do |file|
@@ -91,8 +93,10 @@ module Nucleus
 
     def play_tempfile(class_name, method_name, param_hash)
       cassette = File.join(cassette_dir(class_name, method_name, param_hash), 'tempfile_response')
-      raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
-        "class and argument combination: #{cassette}" unless File.exist?(cassette)
+      unless File.exist?(cassette)
+        raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
+          "class and argument combination: #{cassette}"
+      end
 
       response = Tempfile.new([param_hash, '.zip'])
       File.open(cassette, 'rb') do |file|
@@ -106,8 +110,10 @@ module Nucleus
 
     def play(class_name, method_name, param_hash)
       cassette = File.join(cassette_dir(class_name, method_name, param_hash), 'response')
-      raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
-        "class and argument combination: #{cassette}" unless File.exist?(cassette)
+      unless File.exist?(cassette)
+        raise StandardError, 'Invalid playback request. Could not find any cassette matching the '\
+          "class and argument combination: #{cassette}"
+      end
 
       response = Oj.load(File.read(cassette))
       raise response if response.is_a? Exception

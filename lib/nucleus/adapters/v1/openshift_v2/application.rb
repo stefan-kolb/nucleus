@@ -84,8 +84,8 @@ module Nucleus
           end
 
           def to_nucleus_app(app, gear_groups = nil, deployments = nil)
-            gear_groups = load_gears(app[:id]) unless gear_groups
-            deployments = load_deployments(app[:id]) unless deployments
+            gear_groups ||= load_gears(app[:id])
+            deployments ||= load_deployments(app[:id])
 
             app[:release_version] = active_deployment(app, deployments)[:sha1]
             app[:state] = application_state(app, gear_groups, deployments)

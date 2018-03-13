@@ -26,7 +26,7 @@ VCR.configure do |c|
   # Use exclusive option to prevent accidental matching requests in different application states
   c.default_cassette_options = {
     record: vcr_record_mode, exclusive: true, allow_unused_http_interactions: false,
-    match_requests_on: [:method, :uri_no_auth, :multipart_tempfile_agnostic_body, :headers_no_auth],
+    match_requests_on: %i[method uri_no_auth multipart_tempfile_agnostic_body headers_no_auth],
     decode_compressed_response: true, serialize_with: :oj
   }
 
@@ -85,7 +85,7 @@ VCR.configure do |c|
         else
           filter_body(response_body, key, 'RESPONSE')
         end
-      rescue
+      rescue StandardError
         "INVALID_JSON_BODY_AS_OF_#{DateTime.now}"
       end
     end
@@ -113,9 +113,9 @@ VCR.configure do |c|
 
   # only filter these fields when we are recording, otherwise the tests take more than 2x as long
   if vcr_record_mode != :none
-    %w(token).each { |key| filter_query(c, key) }
-    %w(Authorization).each { |key| filter_header(c, key) }
-    %w(api_key token refresh_token access_token).each do |key|
+    %w[token].each { |key| filter_query(c, key) }
+    %w[Authorization].each { |key| filter_header(c, key) }
+    %w[api_key token refresh_token access_token].each do |key|
       filter_request_body(c, key)
       filter_response_body(c, key)
     end
@@ -130,7 +130,7 @@ VCR.configure do |c|
           # FIXME: shows as nil replace for non heroku responses!
           response_body['id'] if response_body.is_a?(Hash) && /^\S+@users.heroku.com$/ =~ response_body['id']
         end
-      rescue
+      rescue StandardError
         "INVALID_JSON_BODY_AS_OF_#{DateTime.now}"
       end
     end
@@ -192,7 +192,7 @@ VCR.configure do |c|
     query_1 = Rack::Utils.parse_query uri_1.query
     query_2 = Rack::Utils.parse_query uri_2.query
 
-    %w(username user password token).each do |key|
+    %w[username user password token].each do |key|
       query_1[key] = "__#{key.upcase}__" if query_1.key?(key)
       query_2[key] = "__#{key.upcase}__" if query_2.key?(key)
     end

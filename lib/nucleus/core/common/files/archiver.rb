@@ -12,8 +12,10 @@ module Nucleus
     # @return [StringIO] compressed data of the given input path
     def compress(path, compression_format)
       compression_method = compression_format.downcase.tr('.', '_').underscore.to_sym
-      raise StandardError,
-            "Unsupported compression format #{compression_format}" unless respond_to?(compression_method, true)
+      unless respond_to?(compression_method, true)
+        raise StandardError,
+              "Unsupported compression format #{compression_format}"
+      end
       send(compression_method, path)
     end
 

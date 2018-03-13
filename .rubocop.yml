@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.1
   Exclude:
     - bin/**/*
     - vendor/**/*
@@ -8,6 +9,9 @@ Metrics/BlockNesting:
 
 Metrics/AbcSize:
   Max: 20
+
+Metrics/BlockLength:
+  Enabled: false
 
 Metrics/LineLength:
   Max: 200
@@ -50,4 +54,31 @@ Style/BlockComments:
   Enabled: false
 
 Lint/UnusedMethodArgument:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Style/DateTime:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/CommentedKeyword:
+  Enabled: false
+
+Lint/UriEscapeUnescape:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+
+Style/EvalWithLocation:
+  Enabled: false
+
+Style/MixinUsage:
   Enabled: false

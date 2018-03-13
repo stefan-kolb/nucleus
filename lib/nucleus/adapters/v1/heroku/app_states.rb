@@ -47,7 +47,7 @@ module Nucleus
 
           def dynos_not_running?(dynos)
             dynos.empty? || dyno_states(dynos).reject do |state|
-              %w(crashed down starting).include?(state)
+              %w[crashed down starting].include?(state)
             end.empty?
           end
         end

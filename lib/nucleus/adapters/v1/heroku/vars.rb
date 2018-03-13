@@ -16,16 +16,20 @@ module Nucleus
           # @see Stub#env_var
           def env_var(application_id, env_var_key)
             all_vars = get("/apps/#{application_id}/config-vars").body
-            raise Errors::AdapterResourceNotFoundError,
-                  "Env. var key '#{env_var_key}' does not exist" unless env_var?(application_id, env_var_key, all_vars)
+            unless env_var?(application_id, env_var_key, all_vars)
+              raise Errors::AdapterResourceNotFoundError,
+                    "Env. var key '#{env_var_key}' does not exist"
+            end
 
             { id: env_var_key, key: env_var_key, value: all_vars[env_var_key.to_sym] }
           end
 
           # @see Stub#create_env_var
           def create_env_var(application_id, env_var)
-            raise Errors::SemanticAdapterRequestError,
-                  "Env. var key '#{env_var[:key]}' already taken" if env_var?(application_id, env_var[:key])
+            if env_var?(application_id, env_var[:key])
+              raise Errors::SemanticAdapterRequestError,
+                    "Env. var key '#{env_var[:key]}' already taken"
+            end
 
             request_body = { env_var[:key] => env_var[:value] }
             all_vars = patch("/apps/#{application_id}/config-vars", body: request_body).body
@@ -34,8 +38,10 @@ module Nucleus
 
           # @see Stub#update_env_var
           def update_env_var(application_id, env_var_key, env_var)
-            raise Errors::AdapterResourceNotFoundError,
-                  "Env. var key '#{env_var_key}' does not exist" unless env_var?(application_id, env_var_key)
+            unless env_var?(application_id, env_var_key)
+              raise Errors::AdapterResourceNotFoundError,
+                    "Env. var key '#{env_var_key}' does not exist"
+            end
 
             request_body = { env_var_key => env_var[:value] }
             updated_vars = patch("/apps/#{application_id}/config-vars", body: request_body).body
@@ -44,8 +50,10 @@ module Nucleus
 
           # @see Stub#delete_env_var
           def delete_env_var(application_id, env_var_key)
-            raise Errors::AdapterResourceNotFoundError,
-                  "Env. var key '#{env_var_key}' does not exist" unless env_var?(application_id, env_var_key)
+            unless env_var?(application_id, env_var_key)
+              raise Errors::AdapterResourceNotFoundError,
+                    "Env. var key '#{env_var_key}' does not exist"
+            end
 
             # vars can be deleted by setting them to null / nil
             request_body = { env_var_key => nil }

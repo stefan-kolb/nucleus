@@ -30,9 +30,7 @@ module Nucleus
           def download(application_id, compression_format)
             # Only possible with git
             app = get("/application/#{app_id_by_name(application_id)}").body[:data]
-            if application_state(app) == Enums::ApplicationStates::CREATED
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded' if application_state(app) == Enums::ApplicationStates::CREATED
             # compress files to archive but exclude the .git repo
             repo_name = "nucleus.app.repo.openshift_v2.download.#{application_id}.#{SecureRandom.uuid}"
             with_ssh_key do
@@ -44,9 +42,7 @@ module Nucleus
           def rebuild(application_id)
             app_id = app_id_by_name(application_id)
             app = get("/application/#{app_id}").body[:data]
-            if application_state(app) == Enums::ApplicationStates::CREATED
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild' if application_state(app) == Enums::ApplicationStates::CREATED
 
             account = get('/user').body[:data]
             repo_name = "nucleus.app.repo.openshift_v2.rebuild.#{application_id}.#{SecureRandom.uuid}"
@@ -77,7 +73,7 @@ module Nucleus
             # load ssh key into Openshift
             matches = nucleus_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
             key_name = register_key(matches[1], matches[2])
-            return yield
+            yield
           ensure
             # unload ssh key, allow 404 if the key couldn't be registered at first
             delete("/user/keys/#{key_name}", expects: [200, 204, 404]) if key_name

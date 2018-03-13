@@ -28,9 +28,7 @@ describe Nucleus::Adapters::V1::Heroku do
     end
   end
   before do |example|
-    if skip_example?(described_class, example.metadata[:full_description], @unsupported)
-      skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Heroku")
-    end
+    skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Heroku") if skip_example?(described_class, example.metadata[:full_description], @unsupported)
     # reload adapter for each test
     @adapter = load_adapter(@endpoint, @api_version)
   end

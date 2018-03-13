@@ -68,9 +68,7 @@ module Nucleus
 
     def replay_chunks(*new_client_args)
       replay_cassettes_dir = cassette_dir(args_hash(*new_client_args))
-      unless File.exist?(replay_cassettes_dir)
-        raise StandardError, 'Invalid playback request, no record for this http stream connection was found.'
-      end
+      raise StandardError, 'Invalid playback request, no record for this http stream connection was found.' unless File.exist?(replay_cassettes_dir)
 
       setup_chunk_replay_mock(replay_cassettes_dir)
       setup_http_connection_mock

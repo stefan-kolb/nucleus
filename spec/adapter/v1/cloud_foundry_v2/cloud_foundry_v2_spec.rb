@@ -24,9 +24,7 @@ describe Nucleus::Adapters::V1::CloudFoundryV2 do
                     'with valid credentials is compliant and deployment data download succeeds for archive_format .tar.gz']
   end
   before do |example|
-    if skip_example?(described_class, example.metadata[:full_description], @unsupported)
-      skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Cloud Foundry V2")
-    end
+    skip("501 - '#{example.metadata[:full_description]}' is currently not supported by Cloud Foundry V2") if skip_example?(described_class, example.metadata[:full_description], @unsupported)
     @adapter = load_adapter(@endpoint, @api_version)
   end
 

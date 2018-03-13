@@ -23,11 +23,11 @@ module Nucleus
           type: 'ApiReferences', desc: 'Resource links', required: true
         } do |instance, _o|
           {
-            self: { href: link_resource(%w(vendors), instance) },
+            self: { href: link_resource(%w[vendors], instance) },
             # link back to the api version
             parent: { href: link_resource },
             # associated providers
-            providers: { href: link_child_resource(%w(vendors), instance, %w(providers)) }
+            providers: { href: link_child_resource(%w[vendors], instance, %w[providers]) }
           }
         end
       end

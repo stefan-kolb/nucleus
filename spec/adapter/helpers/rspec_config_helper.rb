@@ -17,9 +17,7 @@ RSpec.configure do |config|
     description = meta[:description]
     example_group = meta.key?(:example_group) ? meta[:example_group] : meta[:parent_example_group]
     if example_group
-      if meta.key?(:cassette_group) && !meta[:parent_example_group].key?(:cassette_group)
-        return File.join(vcr_cassette_name_for[example_group], *meta[:cassette_group].split(';'))
-      end
+      return File.join(vcr_cassette_name_for[example_group], *meta[:cassette_group].split(';')) if meta.key?(:cassette_group) && !meta[:parent_example_group].key?(:cassette_group)
       return File.join(vcr_cassette_name_for[example_group], description)
     end
     # modify adapter name and split by API version
@@ -33,9 +31,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    if File.exist?(nucleus_config.db.path) && File.directory?(nucleus_config.db.path)
-      FileUtils.rm_rf(nucleus_config.db.path)
-    end
+    FileUtils.rm_rf(nucleus_config.db.path) if File.exist?(nucleus_config.db.path) && File.directory?(nucleus_config.db.path)
   end
 
   config.before(:each) do |test|
@@ -57,7 +53,7 @@ RSpec.configure do |config|
 
     # fake UUIDs to have identical filenames in repetitive tests
     allow(SecureRandom).to receive(:uuid) do
-      @counter = '000000000000' unless @counter
+      @counter ||= '000000000000'
       "2d931510-d99f-494a-8c67-#{@counter.next!}"
     end
 
@@ -75,7 +71,7 @@ RSpec.configure do |config|
           raise ArgumentError, "unexpected prefix_suffix: #{prefix_suffix.inspect}"
         end
         # random part of equal length (!) so that the message length is always equal
-        random_part = (0...16).map { (65 + rand(26)).chr }.join
+        random_part = (0...16).map { rand(65..90).chr }.join
         "#{prefix}-nucleus-created-tempfile-#{random_part}#{suffix}"
       end
 
@@ -96,11 +92,11 @@ RSpec.configure do |config|
 
       method_path = File.join(__dir__, '..', 'recordings', vendor[example.metadata], 'method_cassettes')
       recorder = Nucleus::MethodResponseRecorder.new(self, example, File.expand_path(method_path))
-      recorder.setup(Nucleus::Adapters::GitDeployer, [:trigger_build, :deploy, :download])
+      recorder.setup(Nucleus::Adapters::GitDeployer, %i[trigger_build deploy download])
       recorder.setup(Nucleus::Adapters::GitRepoAnalyzer, [:any_branch?])
-      recorder.setup(Nucleus::Adapters::FileManager, [:save_file_from_data, :load_file])
+      recorder.setup(Nucleus::Adapters::FileManager, %i[save_file_from_data load_file])
       recorder.setup(Nucleus::Adapters::ArchiveConverter, [:convert])
-      recorder.setup(Nucleus::Adapters::V1::OpenshiftV2, [:remote_log_files, :remote_log_file?, :remote_log_entries])
+      recorder.setup(Nucleus::Adapters::V1::OpenshiftV2, %i[remote_log_files remote_log_file? remote_log_entries])
     end
 
     if group_mock_websocket

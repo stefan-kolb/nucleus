@@ -6,8 +6,8 @@ module Nucleus
           # Determine the current state of the application in the Nucleus lifecycle.
           # @return [Symbol] application state according to {Nucleus::Enums::ApplicationStates}
           def application_state(app, gear_groups = nil, deployments = nil)
-            deployments = load_deployments(app[:id]) unless deployments
-            gear_groups = load_gears(app[:id]) unless gear_groups
+            deployments ||= load_deployments(app[:id])
+            gear_groups ||= load_gears(app[:id])
 
             return :created if state_created?(app, gear_groups, deployments)
             return :deployed if state_deployed?(app, gear_groups, deployments)
@@ -49,10 +49,10 @@ module Nucleus
             # Gears must all be stopped
             return false unless gear_groups[0][:gears].all? { |gear| gear[:state] == 'stopped' }
 
-            deployments = load_deployments(app[:id]) unless deployments
+            deployments ||= load_deployments(app[:id])
 
             # If there still is the initial deployment, then the state can be deployed.
-            original_os_deployment = original_deployment(app, deployments) unless original_os_deployment
+            original_os_deployment ||= original_deployment(app, deployments)
             return false unless original_os_deployment
 
             activations = deployments.inject(0) { |a, e| a + e[:activations].length }

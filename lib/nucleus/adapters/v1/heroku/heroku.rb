@@ -63,7 +63,7 @@ module Nucleus
             # a) skip native, fails when native required and not in list
             # b) (current) use native, fails when others (additional) are in the list
             # next if native_runtime?(runtime_identifier)
-            runtime_is_url = runtime_identifier =~ /\A#{URI.regexp}\z/
+            runtime_is_url = runtime_identifier =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
             runtime_url = find_runtime(runtime_identifier)
             runtime_is_valid = runtime_url || runtime_is_url
             fail_with(:invalid_runtime, [runtime_identifier]) unless runtime_is_valid

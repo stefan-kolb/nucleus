@@ -98,9 +98,7 @@ module Nucleus
       # @param [Array<String>] params values that are to be included in the error message template
       # @raise [Errors::PlatformSpecificSemanticError]
       def fail_with(error_name, params = nil)
-        unless respond_to?(:semantic_error_messages)
-          raise StandardError 'Invalid adapter implementation, no :semantic_error_messages method provided'
-        end
+        raise StandardError 'Invalid adapter implementation, no :semantic_error_messages method provided' unless respond_to?(:semantic_error_messages)
         error = semantic_error_messages[error_name]
         raise Errors::PlatformSpecificSemanticError.new(error[:message] % params, error[:code])
       end

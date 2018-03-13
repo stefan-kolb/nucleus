@@ -1,5 +1,5 @@
-# coding: utf-8
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'nucleus/version'
 
 Gem::Specification.new do |spec|
@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.executables   = 'nucleus'
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.3'
+  spec.required_ruby_version = '>= 2.1'
 
   # we ignore the test files and icons as they tremendously increase the gem size (up to 43MB)
   spec.files = `git ls-files -z --exclude-standard`.split("\x0").reject do |f|

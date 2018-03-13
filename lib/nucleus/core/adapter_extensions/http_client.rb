@@ -159,9 +159,7 @@ module Nucleus
         common_params = { connection_timeout: 610, write_timeout: 600, read_timeout: 600 }
         # allow to follow redirects in the APIs
         allowed_status_codes = params.key?(:expects) ? [*params[:expects]] : []
-        unless params[:follow_redirects] == false
-          allowed_status_codes.concat([301, 302, 303, 307, 308])
-        end
+        allowed_status_codes.concat([301, 302, 303, 307, 308]) unless params[:follow_redirects] == false
 
         params[:expects] = allowed_status_codes.uniq
         # use default or customized headers

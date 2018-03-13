@@ -1,9 +1,9 @@
-# encoding: utf-8
+
 require 'spec/unit/unit_spec_helper'
 require 'nucleus/ext/regexp'
 
 describe 'Regexp::PERFECT_URL_PATTERN' do
-  %w(
+  %w[
     http://✪df.ws/123 http://userid:password@example.com:8080 http://userid:password@example.com:8080/
     http://userid@example.com http://userid@example.com/ http://userid@example.com:8080 http://userid@example.com:8080/
     http://userid:password@example.com http://userid:password@example.com/ http://142.42.1.1/ http://142.42.1.1:8080/
@@ -12,7 +12,7 @@ describe 'Regexp::PERFECT_URL_PATTERN' do
     http://foo.com/(something)?after=parens http://☺.damowmow.com/ http://code.google.com/events/#&product=browser
     http://j.mp ftp://foo.bar/baz http://foo.bar/?q=Test%20URL-encoded%20stuff http://مثال.إختبار
     http://例子.测试
-  ).each do |valid_url|
+  ].each do |valid_url|
     it "matches #{valid_url}" do
       expect(Regexp::PERFECT_URL_PATTERN =~ valid_url).to eq 0
     end

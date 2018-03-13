@@ -25,7 +25,7 @@ module Nucleus
           #########################
 
           # Enforce the usage of HTTPS connections
-          use ::Rack::SslEnforcer, except_environments: %w(test development)
+          use ::Rack::SslEnforcer, except_environments: %w[test development]
 
           # Clear request caches
           use RequestStore::Middleware

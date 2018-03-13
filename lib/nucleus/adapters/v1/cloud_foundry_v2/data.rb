@@ -48,9 +48,7 @@ module Nucleus
           def download(application_name_or_id, compression_format)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
-            unless deployed?(app_guid)
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded' unless deployed?(app_guid)
 
             download_response = get("/v2/apps/#{app_guid}/download", follow_redirects: false, expects: [200, 302])
             if download_response.status == 200
@@ -82,9 +80,7 @@ module Nucleus
           def rebuild(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
-            unless deployed?(app_guid)
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be rebuild'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be rebuild' unless deployed?(app_guid)
 
             # rebuild by name or id
             rebuild_response = post("/v2/apps/#{app_guid}/restage")

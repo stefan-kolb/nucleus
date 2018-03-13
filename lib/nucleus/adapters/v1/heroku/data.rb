@@ -23,9 +23,7 @@ module Nucleus
           def download(application_id, compression_format)
             # Only possible with git, not with HTTP builds
             app = get("/apps/#{application_id}").body
-            if application_state(app) == Enums::ApplicationStates::CREATED
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be downloaded' if application_state(app) == Enums::ApplicationStates::CREATED
             # compress files to archive but exclude the .git repo
             repo_name = "nucleus.app.repo.heroku.download.#{application_id}.#{SecureRandom.uuid}"
             with_ssh_key do
@@ -36,9 +34,7 @@ module Nucleus
           # @see Stub#rebuild
           def rebuild(application_id)
             app = get("/apps/#{application_id}").body
-            if application_state(app) == Enums::ApplicationStates::CREATED
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before data can be rebuild' if application_state(app) == Enums::ApplicationStates::CREATED
 
             account = get('/account').body
             repo_name = "nucleus.app.repo.heroku.rebuild.#{application_id}.#{SecureRandom.uuid}"
@@ -57,7 +53,7 @@ module Nucleus
             # load ssh key into cloud control
             matches = nucleus_config.ssh.handler.public_key.match(/(.*)\s{1}(.*)\s{1}(.*)/)
             key_id = register_key(matches[1], matches[2])
-            return yield
+            yield
           ensure
             # unload ssh key, allow 404 if the key couldn't be registered at first
             delete("/account/keys/#{key_id}") if key_id

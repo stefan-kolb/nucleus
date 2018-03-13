@@ -30,16 +30,12 @@ describe Nucleus::API::V1::Auth do
       end
 
       allow_any_instance_of(Nucleus::Adapters::V1::Heroku).to receive(:applications).and_wrap_original do |m, _|
-        unless m.receiver.send(:headers)['Authorization'] == 'bearer 1234567890'
-          raise Nucleus::Errors::EndpointAuthenticationError, 'Bad authentication credentials'
-        end
+        raise Nucleus::Errors::EndpointAuthenticationError, 'Bad authentication credentials' unless m.receiver.send(:headers)['Authorization'] == 'bearer 1234567890'
         []
       end
       call_count = 0
       allow_any_instance_of(Nucleus::Adapters::V1::CloudFoundryV2).to receive(:applications).and_wrap_original do |m, _|
-        unless m.receiver.send(:headers)['Authorization'] == 'bearer 0987654321'
-          raise Nucleus::Errors::EndpointAuthenticationError, 'Bad authentication credentials'
-        end
+        raise Nucleus::Errors::EndpointAuthenticationError, 'Bad authentication credentials' unless m.receiver.send(:headers)['Authorization'] == 'bearer 0987654321'
         call_count += 1
         raise Nucleus::Errors::EndpointAuthenticationError, 'Fail 1st attempt' if call_count == 1
         []

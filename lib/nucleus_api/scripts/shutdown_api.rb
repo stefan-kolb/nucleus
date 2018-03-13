@@ -4,9 +4,7 @@ at_exit do
   puts 'Cleaning up the API...'
 
   if !nucleus_config.db.key?(:delete_on_shutdown) || nucleus_config.db.delete_on_shutdown
-    if File.exist?(nucleus_config.db.path) && File.directory?(nucleus_config.db.path)
-      FileUtils.rm_rf(nucleus_config.db.path)
-    end
+    FileUtils.rm_rf(nucleus_config.db.path) if File.exist?(nucleus_config.db.path) && File.directory?(nucleus_config.db.path)
     puts '... DB store successfully deleted' unless File.exist?(nucleus_config.db.path)
   end
   puts '... done!'

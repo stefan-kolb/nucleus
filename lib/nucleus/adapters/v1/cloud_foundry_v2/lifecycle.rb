@@ -7,9 +7,7 @@ module Nucleus
           def start(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
-            unless deployed?(app_guid)
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be started' unless deployed?(app_guid)
 
             # start by name or id
             start_response = put("/v2/apps/#{app_guid}", body: { state: 'STARTED' })
@@ -20,9 +18,7 @@ module Nucleus
           def stop(application_name_or_id)
             app_guid = app_guid(application_name_or_id)
             # fail if there is no deployment
-            unless deployed?(app_guid)
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped' unless deployed?(app_guid)
 
             # stop by name or id
             stop_response = put("/v2/apps/#{app_guid}", body: { state: 'STOPPED' })

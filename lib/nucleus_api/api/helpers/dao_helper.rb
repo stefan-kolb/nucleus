@@ -54,9 +54,7 @@ module Nucleus
       # @param [Hash] loading_params parameters required when called from auth block
       # @return [Nucleus::AbstractModel] loaded entity's instance
       def load_entity(dao, id, name, loading_params = params)
-        unless dao.key? loading_params[id]
-          to_error(Nucleus::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'")
-        end
+        to_error(Nucleus::ErrorMessages::NOT_FOUND, "No #{name} found with the ID '#{loading_params[id]}'") unless dao.key? loading_params[id]
         dao.get loading_params[id]
       end
 

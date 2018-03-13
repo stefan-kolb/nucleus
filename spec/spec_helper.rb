@@ -4,7 +4,7 @@ $LOAD_PATH << File.join(__dir__, '..')
 if $LOADED_FEATURES.grep(%r{spec\/spec_helper\.rb}).any?
   begin
     raise 'foo'
-  rescue => e
+  rescue StandardError => e
     puts <<-MSG
   ===================================================
   It looks like spec_helper.rb has been loaded

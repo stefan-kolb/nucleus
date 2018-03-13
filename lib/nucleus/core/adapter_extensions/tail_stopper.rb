@@ -16,7 +16,7 @@ module Nucleus
         log.debug('Stop tail updates, connection was closed')
         begin
           @polling.method(@method_to_stop).call
-        rescue
+        rescue StandardError
           log.debug('Ignore error while closing connection')
         end
       end

@@ -40,9 +40,7 @@ module Nucleus
 
             # do only replace if file is as expected
             actual_hex = Digest::MD5.file(file).hexdigest
-            unless actual_hex == expected_file_md5_hex
-              raise ArgumentError, "File to replace does exist, but hash sum is different than expected: #{actual_hex}"
-            end
+            raise ArgumentError, "File to replace does exist, but hash sum is different than expected: #{actual_hex}" unless actual_hex == expected_file_md5_hex
           end
         end
 

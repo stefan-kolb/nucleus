@@ -71,17 +71,17 @@ module Nucleus
           type: 'ApplicationReferences', desc: 'Resource links', required: true
         } do |instance, o|
           {
-            self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            self: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                               ['applications', instance[:id]]) },
             # link back to the endpoint
-            parent: { href: link_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id]) },
-            domains: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            parent: { href: link_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id]) },
+            domains: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                                  ['applications', instance[:id], 'domains']) },
-            logs: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            logs: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                               ['applications', instance[:id], 'logs']) },
-            services: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            services: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                                   ['applications', instance[:id], 'services']) },
-            vars: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            vars: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                               ['applications', instance[:id], 'vars']) }
           }
         end

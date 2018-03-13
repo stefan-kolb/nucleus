@@ -1,6 +1,6 @@
 shared_examples 'valid:applications:lifecycle' do
   describe 'lifecycle operations', :mock_fs_on_replay, cassette_group: 'app-actions;lifecycle' do
-    [:@app_all, :@app_min].each do |app_name|
+    %i[@app_all @app_min].each do |app_name|
       describe 'start' do
         describe "succeeds for #{app_name} if currently stopped", :as_cassette do
           before do

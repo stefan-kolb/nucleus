@@ -58,7 +58,7 @@ module Nucleus
             use :vendor_id
             requires :provider, type: Hash do
               requires :all, using: Nucleus::API::Models::Provider.documentation
-                .except(:id, :endpoints, :created_at, :updated_at, :_links)
+                                                                  .except(:id, :endpoints, :created_at, :updated_at, :_links)
             end
           end
           post ':vendor_id/providers' do
@@ -74,7 +74,7 @@ module Nucleus
             vendor.providers << provider.id
             vendor_dao.set vendor
             # add location header that refers to the created entity (see RFC7231 p.68)
-            header 'Location', link_generator.resource(%w(providers), provider.id)
+            header 'Location', link_generator.resource(%w[providers], provider.id)
             present provider, with: Models::Provider
           end
         end # vendor namespace

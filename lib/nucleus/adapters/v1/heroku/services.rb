@@ -98,8 +98,10 @@ module Nucleus
             installed = get("/apps/#{application_id}/addons/#{service_id}", expects: [200, 404])
             if installed.status == 404
               assignment_id = service_assignment_id(application_id, service_id)
-              raise Errors::AdapterResourceNotFoundError,
-                    "Service #{service_id} is not assigned to application #{application_id}" unless assignment_id
+              unless assignment_id
+                raise Errors::AdapterResourceNotFoundError,
+                      "Service #{service_id} is not assigned to application #{application_id}"
+              end
               return get("/apps/#{application_id}/addons/#{assignment_id}").body
             end
             installed.body
@@ -157,7 +159,7 @@ module Nucleus
           def free_plan?(service_id, plans = nil)
             @free_plans ||= {}
             return @free_plans[service_id] if @free_plans.key?(service_id)
-            plans = load_plans(service_id) unless plans
+            plans ||= load_plans(service_id)
             @free_plans[service_id] = plans.any? { |plan| (plan[:price][:cents]).zero? }
             @free_plans[service_id]
           end

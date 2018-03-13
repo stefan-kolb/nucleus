@@ -25,7 +25,7 @@ module Nucleus
             use :endpoint_id
             requires :endpoint, type: Hash do
               optional :all, using: Nucleus::API::Models::Endpoint.documentation
-                .except(:id, :applications, :created_at, :updated_at, :_links)
+                                                                  .except(:id, :applications, :created_at, :updated_at, :_links)
             end
           end
           patch ':endpoint_id' do

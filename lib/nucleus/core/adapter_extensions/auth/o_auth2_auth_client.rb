@@ -34,9 +34,7 @@ module Nucleus
       end
 
       def refresh
-        if @refresh_token.nil?
-          raise Errors::EndpointAuthenticationError, "Can't refresh token before initial authentication"
-        end
+        raise Errors::EndpointAuthenticationError, "Can't refresh token before initial authentication" if @refresh_token.nil?
         log.debug("Attempt to refresh the access_token with our refresh_token: '#{@refresh_token}'")
         response = post(query: { grant_type: 'refresh_token', refresh_token: @refresh_token })
         extract(body(response))

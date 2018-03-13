@@ -22,11 +22,11 @@ module Nucleus
           type: 'ApiReferences', desc: 'Resource links', required: true
         } do |instance, _o|
           {
-            self: { href: link_resource(%w(providers), instance) },
+            self: { href: link_resource(%w[providers], instance) },
               # link back to the vendor
-              parent: { href: link_resource(%w(vendors), instance.vendor) },
+              parent: { href: link_resource(%w[vendors], instance.vendor) },
               # associated endpoints
-              endpoints: { href: link_child_resource(%w(providers), instance, %w(endpoints)) }
+              endpoints: { href: link_child_resource(%w[providers], instance, %w[endpoints]) }
           }
         end
       end

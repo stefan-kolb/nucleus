@@ -44,7 +44,7 @@ module Nucleus
             unless runtimes.nil? || runtimes.empty?
               begin
                 install_runtimes(created_app[:id], runtimes)
-              rescue
+              rescue StandardError
                 # if buildpack fails, make sure app gets deleted (!)
                 log.debug 'Runtime installation failed, rollback...'
                 delete_application(created_app[:id])

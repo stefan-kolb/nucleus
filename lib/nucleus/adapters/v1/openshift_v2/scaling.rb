@@ -13,9 +13,7 @@ module Nucleus
             user = get('/user').body[:data]
             available_gears = user[:max_gears] - user[:consumed_gears]
             requires_additional_gears = instances - app[:gear_count]
-            if requires_additional_gears > available_gears
-              fail_with(:insufficient_gears, [application_id, instances, requires_additional_gears, available_gears])
-            end
+            fail_with(:insufficient_gears, [application_id, instances, requires_additional_gears, available_gears]) if requires_additional_gears > available_gears
 
             # scale up if we require more gears
             while requires_additional_gears > 0

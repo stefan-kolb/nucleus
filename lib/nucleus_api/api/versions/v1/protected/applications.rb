@@ -58,9 +58,7 @@ module Nucleus
           post '/' do
             application_params = declared(params, include_missing: false)[:application]
             # allow ALL values in the vendor specific section
-            if params[:application].key? :vendor_specific
-              application_params = application_params.merge params[:application][:vendor_specific]
-            end
+            application_params = application_params.merge params[:application][:vendor_specific] if params[:application].key? :vendor_specific
             present adapter.create_application(application_params), with: Models::Application
           end
 
@@ -79,9 +77,7 @@ module Nucleus
           patch '/:application_id' do
             application_params = declared(params, include_missing: false)[:application]
             # allow ALL values in the vendor specific section
-            if params[:application].key? :vendor_specific
-              application_params = application_params.merge params[:application][:vendor_specific]
-            end
+            application_params = application_params.merge params[:application][:vendor_specific] if params[:application].key? :vendor_specific
             present adapter.update_application(params[:application_id], application_params), with: Models::Application
           end
         end

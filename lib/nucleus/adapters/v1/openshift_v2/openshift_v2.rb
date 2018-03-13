@@ -67,7 +67,7 @@ module Nucleus
           # What are the alternatives?
           # 1) Clone git repo and lookup commits --> insanely slow
           # 2) Identify initial commits by sha1 key --> would require collection of allowed values, which may change!
-          deployments = load_deployments(app[:id]) unless deployments
+          deployments ||= load_deployments(app[:id])
           deployments.find do |deployment|
             diff = (Time.parse(deployment[:created_at]).to_i - Time.parse(app[:creation_time]).to_i).abs
             log.debug "OS deployment time diff: #{diff}"
@@ -77,7 +77,7 @@ module Nucleus
         end
 
         def latest_deployment(application_id, deployments = nil)
-          deployments = load_deployments(application_id) unless deployments
+          deployments ||= load_deployments(application_id)
           latest = nil
           latest_ts = nil
           deployments.each do |deployment|
@@ -91,7 +91,7 @@ module Nucleus
         end
 
         def active_deployment(app, deployments = nil)
-          deployments = load_deployments(app[:id]) unless deployments
+          deployments ||= load_deployments(app[:id])
           active = nil
           active_ts = nil
           deployments.each do |deployment|

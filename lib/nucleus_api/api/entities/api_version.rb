@@ -15,7 +15,7 @@ module Nucleus
           type: 'ApiReferences', required: true, desc: 'Resource links'
         } do |_i, _o|
           {
-            self: { href: link_resource(%w(resources)) },
+            self: { href: link_resource(%w[resources]) },
               # link back to the API root
               parent: { href: link_api_root },
               # link to the API version documentation

@@ -13,7 +13,7 @@ require 'rubocop/rake_task'
 RuboCop::RakeTask.new
 
 # first check code style, then execute the tests
-task default: [:rubocop, :spec]
+task default: %i[rubocop spec]
 
 # map spec task to all test suites
 task :spec do
@@ -90,7 +90,7 @@ end
 
 begin
   require 'yard'
-  DOC_FILES = %w(lib/**/*.rb).freeze
+  DOC_FILES = %w[lib/**/*.rb].freeze
 
   YARD::Rake::YardocTask.new(:doc) do |t|
     t.files = DOC_FILES
@@ -117,7 +117,7 @@ begin
     end
 
     desc 'Generate and publish YARD docs to GitHub pages.'
-    task publish: %w(doc:pages:checkout doc:pages) do
+    task publish: %w[doc:pages:checkout doc:pages] do
       Dir.chdir(File.join(__dir__, '..', 'nucleus.doc')) do
         system('git checkout gh-pages')
         system('git add .')

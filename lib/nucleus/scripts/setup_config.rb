@@ -23,6 +23,4 @@ if File.exist?(File.expand_path(project_dir_config, File.dirname(__FILE__)))
 end
 
 # make sure we have a logging directory
-unless nucleus_config.logging.key?(:path)
-  nucleus_config.logging.path = File.join(__dir__, '..', '..', '..', 'log')
-end
+nucleus_config.logging.path = File.join(__dir__, '..', '..', '..', 'log') unless nucleus_config.logging.key?(:path)

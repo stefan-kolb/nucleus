@@ -31,7 +31,7 @@ module Nucleus
 
         get '/resources' do
           # TODO: move to helper and reuse in later versions
-          resource_names = %w(vendors providers endpoints)
+          resource_names = %w[vendors providers endpoints]
           resource_hashes = []
           resource_names.each do |version_resource|
             resource_hashes << {

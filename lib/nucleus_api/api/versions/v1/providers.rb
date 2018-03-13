@@ -51,7 +51,7 @@ module Nucleus
               # both are optional
               optional :all, using: Nucleus::API::Models::Endpoint.documentation.slice(:app_domain, :trust)
               requires :all, using: Nucleus::API::Models::Endpoint.documentation
-                .except(:id, :app_domain, :trust, :applications, :created_at, :updated_at, :_links)
+                                                                  .except(:id, :app_domain, :trust, :applications, :created_at, :updated_at, :_links)
             end
           end
           post ':provider_id/endpoints' do
@@ -67,7 +67,7 @@ module Nucleus
             provider.endpoints << endpoint.id
             provider_dao.set provider
             # add location header that refers to the created entity (see RFC7231 p.68)
-            header 'Location', link_generator.resource(%w(endpoints), endpoint.id)
+            header 'Location', link_generator.resource(%w[endpoints], endpoint.id)
             present endpoint, with: Models::Endpoint
           end
 
@@ -79,7 +79,7 @@ module Nucleus
             use :provider_id
             requires :provider, type: Hash do
               optional :all, using: Nucleus::API::Models::Provider.documentation
-                .except(:id, :endpoints, :vendor, :created_at, :updated_at, :_links)
+                                                                  .except(:id, :endpoints, :vendor, :created_at, :updated_at, :_links)
             end
           end
           patch ':provider_id' do
@@ -111,9 +111,11 @@ module Nucleus
             vendor.providers.delete provider.id unless vendor.providers.nil?
             vendor_dao.set vendor
             # cascade delete operation, remove all associated endpoints
-            provider.endpoints.each do |endpoint_id|
-              endpoint_dao.delete endpoint_id
-            end unless provider.endpoints.nil?
+            unless provider.endpoints.nil?
+              provider.endpoints.each do |endpoint_id|
+                endpoint_dao.delete endpoint_id
+              end
+            end
             # respond with 204 when entity is deleted (see rfc7231), no content
             status 204
           end

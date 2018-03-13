@@ -37,9 +37,7 @@ module Nucleus
           # current path as base
           link = link_resource(namespaces, instance_or_id)
           # resource can only exist for an API version
-          unless child_namespaces.nil? || child_namespaces.empty?
-            link << "/#{child_namespaces.join('/')}"
-          end
+          link << "/#{child_namespaces.join('/')}" unless child_namespaces.nil? || child_namespaces.empty?
           # return the created link
           link
         end

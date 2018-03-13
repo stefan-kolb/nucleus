@@ -14,9 +14,7 @@ module Nucleus
           # @see Stub#stop
           def stop(application_id)
             id = app_id_by_name(application_id)
-            unless deployed?(id)
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped' unless deployed?(id)
             to_nucleus_app(send_event(id, 'stop'))
           end
 

@@ -70,7 +70,7 @@ module Nucleus
       # @return [Array<String>] username at response[0], password at response[1]
       def self.username_password(env)
         # resolve username & password for authentication request
-        auth_keys = %w(HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION)
+        auth_keys = %w[HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION]
         authorization_key = auth_keys.detect { |k| env.key?(k) }
         env[authorization_key].split(' ', 2).last.unpack('m*').first.split(/:/, 2)
       end

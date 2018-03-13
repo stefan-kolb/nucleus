@@ -86,8 +86,10 @@ module Nucleus
         def find_app_id_by_name(application_name, previous_response)
           filtered_list_response = get('/v2/apps', query: { q: "name:#{application_name}" })
           # fail as expected if the app can also not be found by its name
-          raise Errors::AdapterResourceNotFoundError,
-                previous_response.body[:description] if filtered_list_response.body[:resources].empty?
+          if filtered_list_response.body[:resources].empty?
+            raise Errors::AdapterResourceNotFoundError,
+                  previous_response.body[:description]
+          end
           # return the found guid
           filtered_list_response.body[:resources][0][:metadata][:guid]
         end

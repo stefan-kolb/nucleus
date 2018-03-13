@@ -30,9 +30,7 @@ module Nucleus
 
             # fail if there is no deployment
             app = application(application_id)
-            if app[:state] == Enums::ApplicationStates::CREATED
-              raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped'
-            end
+            raise Errors::SemanticAdapterRequestError, 'Application must be deployed before it can be stopped' if app[:state] == Enums::ApplicationStates::CREATED
 
             scale_worker(application_id, 0)
             update_application(application_id, maintenance: true)

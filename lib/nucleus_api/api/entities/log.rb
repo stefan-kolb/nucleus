@@ -29,11 +29,11 @@ module Nucleus
           type: 'BasicReferences', desc: 'Resource links', required: true
         } do |instance, o|
           {
-            self: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            self: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                               ['applications', o[:env]['rack.routing_args'][:application_id],
                                                'logs', instance[:id]]) },
             # link back to the application
-            parent: { href: link_child_resource(%w(endpoints), o[:env]['rack.routing_args'][:endpoint_id],
+            parent: { href: link_child_resource(%w[endpoints], o[:env]['rack.routing_args'][:endpoint_id],
                                                 ['applications', o[:env]['rack.routing_args'][:application_id]]) }
           }
         end

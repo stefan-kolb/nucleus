@@ -99,7 +99,7 @@ module Nucleus
 
     def cache_public_key
       @public_key = SSHKey.new(File.read(@key_file), comment: 'Nucleus').ssh_public_key
-    rescue
+    rescue StandardError
       msg = "Invalid custom SSH key '#{@key_file}', must be of type ssh-rsa."
       STDERR.puts msg
       raise Nucleus::StartupError.new(msg, Nucleus::ExitCodes::INVALID_SSH_KEY)

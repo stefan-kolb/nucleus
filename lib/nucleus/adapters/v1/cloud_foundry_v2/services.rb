@@ -46,8 +46,10 @@ module Nucleus
             service_guid = service_guid(service_id_or_name)
             cf_binding = binding(app_guid, service_guid)
             # make sure there is a binding
-            raise Errors::AdapterResourceNotFoundError,
-                  "No such service '#{service_id_or_name}' for application '#{application_name_or_id}'" unless cf_binding
+            unless cf_binding
+              raise Errors::AdapterResourceNotFoundError,
+                    "No such service '#{service_id_or_name}' for application '#{application_name_or_id}'"
+            end
             to_nucleus_installed_service(cf_binding)
           end
 
@@ -138,8 +140,10 @@ module Nucleus
             services = get('/v2/services').body[:resources]
             # find a match and use the service's guid
             service_match = services.find { |service| service[:entity][:label] == service_id_or_name }
-            raise error_class,
-                  "Invalid service: Could not find service with name '#{service_id_or_name}'" unless service_match
+            unless service_match
+              raise error_class,
+                    "Invalid service: Could not find service with name '#{service_id_or_name}'"
+            end
             service_match[:metadata][:guid]
           end
 
@@ -159,8 +163,10 @@ module Nucleus
             plans = get("/v2/services/#{service_id}/service_plans").body[:resources]
             # find a match and use the plan's guid
             plan_match = plans.find { |plan| plan[:entity][:name] == plan_name_or_id }
-            raise error_class,
-                  "Invalid plan: No such plan '#{plan_name_or_id}' for service '#{service_id}'" unless plan_match
+            unless plan_match
+              raise error_class,
+                    "Invalid plan: No such plan '#{plan_name_or_id}' for service '#{service_id}'"
+            end
             plan_match[:metadata][:guid]
           end
 
@@ -174,7 +180,7 @@ module Nucleus
           def free_plan?(service_id, plans = nil)
             @free_plans ||= {}
             return @free_plans[service_id] if @free_plans.key?(service_id)
-            plans = load_plans(service_id) unless plans
+            plans ||= load_plans(service_id)
             @free_plans[service_id] = plans.any? { |plan| plan[:entity][:free] }
             @free_plans[service_id]
           end
@@ -234,13 +240,11 @@ module Nucleus
           # </ul>
           def to_nucleus_installed_service(cf_binding, cf_service = nil, cf_instance = nil)
             # load if not provided
-            cf_instance = load_instance(cf_binding) unless cf_instance
-            cf_service = load_service(cf_instance) unless cf_service
+            cf_instance ||= load_instance(cf_binding)
+            cf_service ||= load_service(cf_instance)
             # load if not provided
-            unless cf_service
-              cf_service = get("/v2/service_plans/#{cf_instance[:entity][:service_plan_guid]}"\
+            cf_service ||= get("/v2/service_plans/#{cf_instance[:entity][:service_plan_guid]}"\
                 '?inline-relations-depth=1').body[:entity][:service]
-            end
 
             # active_plan, web_url, properties
             service = to_nucleus_service(cf_service)

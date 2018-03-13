@@ -18,32 +18,40 @@ module Nucleus
           def env_var(application_name_or_id, env_var_key)
             app_guid = app_guid(application_name_or_id)
             all_vars = get("/v2/apps/#{app_guid}/env").body[:environment_json]
-            raise Errors::AdapterResourceNotFoundError,
-                  "Env. var key '#{env_var_key}' does not exist" unless env_var?(app_guid, env_var_key, all_vars)
+            unless env_var?(app_guid, env_var_key, all_vars)
+              raise Errors::AdapterResourceNotFoundError,
+                    "Env. var key '#{env_var_key}' does not exist"
+            end
             { id: env_var_key, key: env_var_key, value: all_vars[env_var_key.to_sym] }
           end
 
           # @see Stub#create_env_var
           def create_env_var(application_name_or_id, env_var)
             app_guid = app_guid(application_name_or_id)
-            raise Errors::SemanticAdapterRequestError,
-                  "Env. var key '#{env_var[:key]}' already taken" if env_var?(app_guid, env_var[:key])
+            if env_var?(app_guid, env_var[:key])
+              raise Errors::SemanticAdapterRequestError,
+                    "Env. var key '#{env_var[:key]}' already taken"
+            end
             set_var(app_guid, env_var[:key].to_sym, env_var[:value])
           end
 
           # @see Stub#update_env_var
           def update_env_var(application_name_or_id, env_var_key, env_var)
             app_guid = app_guid(application_name_or_id)
-            raise Errors::AdapterResourceNotFoundError,
-                  "Env. var key '#{env_var_key}' does not exist" unless env_var?(app_guid, env_var_key)
+            unless env_var?(app_guid, env_var_key)
+              raise Errors::AdapterResourceNotFoundError,
+                    "Env. var key '#{env_var_key}' does not exist"
+            end
             set_var(app_guid, env_var_key.to_sym, env_var[:value])
           end
 
           # @see Stub#delete_env_var
           def delete_env_var(application_name_or_id, env_var_key)
             app_guid = app_guid(application_name_or_id)
-            raise Errors::AdapterResourceNotFoundError,
-                  "Env. var key '#{env_var_key}' does not exist" unless env_var?(app_guid, env_var_key)
+            unless env_var?(app_guid, env_var_key)
+              raise Errors::AdapterResourceNotFoundError,
+                    "Env. var key '#{env_var_key}' does not exist"
+            end
             request_body = get("/v2/apps/#{app_guid}/env").body[:environment_json]
             request_body.delete(env_var_key.to_sym)
             put("/v2/apps/#{app_guid}", body: { environment_json: request_body }).body[:entity][:environment_json]

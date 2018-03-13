@@ -73,14 +73,14 @@ namespace :evaluation do
       end
 
       task :latex, [:save_to] => :load do |_t, args|
-        tests_with_wait = %w(app-actions/lifecycle/restart/succeeds
+        tests_with_wait = %w[app-actions/lifecycle/restart/succeeds
                              app-actions/lifecycle/start/succeeds_for_app_all_if_currently_stopped
                              app-actions/lifecycle/start/succeeds_for_app_min_if_currently_stopped
                              app-actions/lifecycle/stop/succeeds_for_app_all_if_currently_running
                              app-actions/lifecycle/stop/succeeds_for_app_min_if_currently_running
                              app-data/deploy/succeeds/and_app_with
                              app-data/rebuild/changes_the_release_version_property
-                             app/web access/for_app_with_min_properties)
+                             app/web access/for_app_with_min_properties]
         ignore_tests_with_wait = 0
         ignore_req_with_wait = {}
         @vendor_results.each { |vendor, _| ignore_req_with_wait[vendor] = 0 }

@@ -26,7 +26,7 @@ module Nucleus
           def service_plan(service_id, plan_id)
             cartridge = embedded_cartridge(service_id)
             if (cartridge[:usage_rates].empty? && plan_id != 'default') ||
-               (!cartridge[:usage_rates].empty? && !cartridge[:usage_rates].any? { |rate| rate[:plan_id] == plan_id })
+               (!cartridge[:usage_rates].empty? && cartridge[:usage_rates].none? { |rate| rate[:plan_id] == plan_id })
               # Currently there are no plans, implement when required...
               raise Errors::AdapterResourceNotFoundError, "No such service plan name '#{plan_id}' for service "\
                 "'#{service_id}'"
@@ -87,9 +87,11 @@ module Nucleus
             missing_dependencies = service_to_add.key?(:requires) ? service_to_add[:requires] : []
             already_installed = installed_cartridges(application_id)
             already_installed.each { |installed_cartridge| missing_dependencies.delete(installed_cartridge[:name]) }
-            raise Errors::SemanticAdapterRequestError, "Failed to add service '#{service_id}' for application "\
-              "'#{application_id}'. The service's dependencies '#{missing_dependencies}' are not, "\
-              'but have to be installed.' unless missing_dependencies.empty?
+            unless missing_dependencies.empty?
+              raise Errors::SemanticAdapterRequestError, "Failed to add service '#{service_id}' for application "\
+                "'#{application_id}'. The service's dependencies '#{missing_dependencies}' are not, "\
+                'but have to be installed.'
+            end
           end
 
           def installed_cartridges(application_id)

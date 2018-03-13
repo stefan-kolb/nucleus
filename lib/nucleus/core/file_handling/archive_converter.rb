@@ -19,7 +19,7 @@ module Nucleus
         # sanitize if desired
         ApplicationRepoSanitizer.new.sanitize(extraction_dir) if sanitize
 
-        return Archiver.new.compress(extraction_dir, destination_format)
+        Archiver.new.compress(extraction_dir, destination_format)
       ensure
         # now delete the tmp directory again
         FileUtils.rm_rf(extraction_dir) if extraction_dir

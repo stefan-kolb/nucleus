@@ -19,10 +19,12 @@ module Nucleus
           post '/deploy' do
             # pattern matches filename?
             name_match = /^.+\.(zip|tar|tgz|tar.gz)$/.match(params[:file][:filename])
-            content_type_match = %w(application/zip application/gzip application/x-gzip).include? params[:file][:type]
+            content_type_match = %w[application/zip application/gzip application/x-gzip].include? params[:file][:type]
 
-            raise Nucleus::Errors::AdapterRequestError,
-                  "Invalid 'file'. Must contain the archive format" unless name_match || content_type_match
+            unless name_match || content_type_match
+              raise Nucleus::Errors::AdapterRequestError,
+                    "Invalid 'file'. Must contain the archive format"
+            end
 
             # convert content type to compression format when name was not matched
             if name_match
