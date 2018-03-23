@@ -14,6 +14,7 @@ group :test do
   gem 'rack-stream', git: 'https://github.com/stefan-kolb/rack-stream.git'
   gem 'rspec-wait'
   gem 'simplecov', require: false
+  gem 'codecov', require: false
 end
 
 group :development do

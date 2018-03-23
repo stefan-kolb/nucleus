@@ -52,6 +52,9 @@ SimpleCov.start do
   add_group 'API Lib ext.', 'lib/nucleus_api/ext'
 end
 
+require 'codecov'
+SimpleCov.formatter = SimpleCov::Formatter::Codecov
+
 # load configuration for integration tests
 require 'nucleus/scripts/setup_config'
 # disable logging
