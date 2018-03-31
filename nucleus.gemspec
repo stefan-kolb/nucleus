@@ -46,7 +46,7 @@ Gem::Specification.new do |spec|
   # Logging
   spec.add_runtime_dependency 'logger', '~> 1.2'
   # Application archive handling, detect unsupported uploads
-  spec.add_runtime_dependency 'mime-types', '~> 2.99'
+  spec.add_runtime_dependency 'mime-types', '~> 3.1'
   # Generic interface for DB store implementations
   spec.add_runtime_dependency 'moneta', '~> 0.8'
   # Openshift logging access and direct Git SSH requests
@@ -58,7 +58,7 @@ Gem::Specification.new do |spec|
   # To make sure HTTPS is used instead of HTTP
   spec.add_runtime_dependency 'rack-ssl-enforcer', '~> 0.2', '>= 0.2.8'
   # TODO: Should be removed as soon as excon supports multipart requests
-  spec.add_runtime_dependency 'rest-client', '~> 1.8'
+  spec.add_runtime_dependency 'rest-client', '~> 2.0'
   # Save certain information for the current request, e.g. the already loaded adapter
   spec.add_runtime_dependency 'request_store', '~> 1.1'
   # Application setup, require libs
