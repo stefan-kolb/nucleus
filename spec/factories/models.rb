@@ -1,6 +1,6 @@
 require 'active_support/core_ext'
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence :uuid do |_|
     SecureRandom.uuid
   end

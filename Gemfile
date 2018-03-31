@@ -5,7 +5,7 @@ gemspec
 
 group :test do
   gem 'airborne', '~> 0.2'
-  gem 'factory_girl'
+  gem 'factory_bot'
   gem 'faker'
   gem 'memfs'
   # includes required fix for empty arrays as param value, see issue #122 and pull request #125,

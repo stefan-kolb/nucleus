@@ -24,7 +24,7 @@ if $LOADED_FEATURES.grep(%r{spec\/spec_helper\.rb}).any?
 end
 
 require 'vcr'
-require 'factory_girl'
+require 'factory_bot'
 require 'faker'
 require 'tmpdir'
 require 'webmock/rspec'
@@ -79,7 +79,7 @@ require 'spec/factories/models'
 require_all 'spec/support'
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.before(:suite) do
     Excon.defaults[:mock] = true
   end
