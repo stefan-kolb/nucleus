@@ -327,6 +327,7 @@ Please refer to the swagger-ui documentation for additional information about th
 
 Authentication against the endpoint is managed by Nucleus.
 The credentials must be provided as [Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) header **within each single request**.
+Heroku requires a combination of username:apikey instead of username:password!
 
     Authorization: Basic thebase64encodedcredentialsstring
 
