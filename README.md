@@ -215,6 +215,15 @@ For detailed usage information go to the section [API client(s)](#api-clients).
 
 #### Start the server
 
+The easiest way to run the API is via Docker.
+
+```shell
+$ docker build -t nucleus .
+$ docker run -it --name nucleus-instance nucleus
+```
+
+Server is exposed at `localhost:9292` by default.
+
 A rack server can be started in multiple ways.
 The most convenient solution is to use the provided script:  
 
@@ -420,7 +429,7 @@ Please refer to the [functionality section](#functionality) for more information
 
 Providers: [Heroku](http://heroku.com)
 
-*No known issues*
+Heroku requires a combination of username:apikey instead of username:password for authentication!
 
 ### Cloud Foundry v2
 

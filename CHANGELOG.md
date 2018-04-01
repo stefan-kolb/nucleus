@@ -5,8 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased - Next
 
 ### Added
+* Easy startup of Nucleus via Docker
 
 ### Fixed
+* Fixed Heroku Authentication
 * Updated Anynines API endpoint
 
 ### Removed
