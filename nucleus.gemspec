@@ -1,11 +1,9 @@
-
 $LOAD_PATH.push File.expand_path('lib', __dir__)
-require 'nucleus/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'nucleus'
-  spec.version       = Nucleus::VERSION
-  spec.authors       = ['Stefan Kolb', 'Cedric Röck']
+  spec.version       = '0.3.2'
+  spec.authors       = ['Stefan Kolb', 'Cedric Roeck']
   spec.email         = ['stefan.kolb@uni-bamberg.de']
   spec.summary       = 'Nucleus unifies core management functions of Platform-as-a-Service (PaaS) systems.'
   spec.description   = 'Nucleus is a unified API for deployment and management of '\
@@ -69,4 +67,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'sshkey', '~> 1.7'
   # The ONLY supported server ATM
   spec.add_runtime_dependency 'thin', '~> 1.6'
+  spec.add_runtime_dependency 'rack'
 end

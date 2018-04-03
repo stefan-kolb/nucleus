@@ -215,15 +215,24 @@ For detailed usage information go to the section [API client(s)](#api-clients).
 
 #### Start the server
 
-The easiest way to run the API is via Docker.
+The easiest way to run the API is via Docker Hub.
+
+```shell
+docker pull stfnklb/nucleus
+docker run -it -p 9292:9292 nucleus
+```
+
+The server is exposed at `localhost:9292` by default.
+
+Or build it on your own.
+Be aware that there might be issues with line endings inside the configuration files, if you check out Windows or legacy macOS line endings instead of Linux LF line endings.
 
 ```shell
 $ docker build -t nucleus .
-$ docker run -it --name nucleus-instance nucleus
+$ docker run -it -p 9292:9292 nucleus
 ```
 
-Server is exposed at `localhost:9292` by default.
-
+If you want to run Nucleus locally without Docker here's how to do it.
 A rack server can be started in multiple ways.
 The most convenient solution is to use the provided script:  
 
