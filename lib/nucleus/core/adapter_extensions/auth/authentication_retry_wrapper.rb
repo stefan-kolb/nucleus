@@ -1,3 +1,5 @@
+require 'base64'
+
 module Nucleus
   module Adapters
     # The AuthenticationRetryWrapper module can be used to invoke commands in a block that repeats its execution in case
@@ -72,7 +74,7 @@ module Nucleus
         # resolve username & password for authentication request
         auth_keys = %w[HTTP_AUTHORIZATION X-HTTP_AUTHORIZATION X_HTTP_AUTHORIZATION]
         authorization_key = auth_keys.detect { |k| env.key?(k) }
-        env[authorization_key].split(' ', 2).last.unpack('m*').first.split(/:/, 2)
+        Base64.strict_decode64(env[authorization_key].split(' ', 2).last).split(/:/, 2)
       end
     end
   end

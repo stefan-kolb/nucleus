@@ -1,3 +1,5 @@
+require 'base64'
+
 module Nucleus
   module Adapters
     # Implementation of the AuthClient that works with the HTTP basic authentication.
@@ -18,7 +20,7 @@ module Nucleus
 
       # @see AuthClient#authenticate
       def authenticate(username, password)
-        packed_credentials = ["#{username}:#{password}"].pack('m*').delete("\n")
+        packed_credentials = Base64.strict_encode64("#{username}:#{password}")
         valid = @verification.call(verify_ssl, 'Authorization' => "Basic #{packed_credentials}")
         raise Errors::EndpointAuthenticationError, 'Authentication failed, credentials seem to be invalid' unless valid
         # verification passed, credentials are valid

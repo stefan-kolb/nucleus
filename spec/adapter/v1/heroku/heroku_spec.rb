@@ -1,3 +1,5 @@
+require 'base64'
+
 require 'spec/adapter/adapter_spec_helper'
 
 describe Nucleus::Adapters::V1::Heroku do
@@ -44,7 +46,7 @@ describe Nucleus::Adapters::V1::Heroku do
   end
 
   describe 'with empty credentials' do
-    let!(:request_headers) { { 'HTTP_AUTHORIZATION' => 'Basic ' + [':'].pack('m*').delete("\n") } }
+    let!(:request_headers) { { 'HTTP_AUTHORIZATION' => 'Basic ' + Base64.strict_encode64(':') } }
     include_examples 'compliant adapter with invalid credentials'
   end
 

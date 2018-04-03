@@ -1,3 +1,5 @@
+require 'base64'
+
 require 'spec/integration/integration_spec_helper'
 
 describe Nucleus::API::V1::Auth do
@@ -42,11 +44,11 @@ describe Nucleus::API::V1::Auth do
       end
     end
     it 'credentials are not re-used for different requests' do
-      headers_a = { 'HTTP_AUTHORIZATION' => 'Basic ' + ['username_a:password_a'].pack('m*').delete("\n") }
+      headers_a = { 'HTTP_AUTHORIZATION' => 'Basic ' + Base64.strict_encode64('username_a:password_a') }
       get "/endpoints/#{endpoint_a.id}/applications", headers_a
       expect(response.status).to eq(200)
 
-      headers_b = { 'HTTP_AUTHORIZATION' => 'Basic ' + ['username_b:password_b'].pack('m*').delete("\n") }
+      headers_b = { 'HTTP_AUTHORIZATION' => 'Basic ' + Base64.strict_encode64('username_b:password_b') }
       get "/endpoints/#{endpoint_b.id}/applications", headers_b
       expect(response.status).to eq(200)
     end

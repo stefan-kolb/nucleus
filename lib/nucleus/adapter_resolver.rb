@@ -1,3 +1,5 @@
+require 'base64'
+
 module Nucleus
   # The {AdapterResolver} can be used within Ruby applications to retrieve a Nucleus adapter.
   # Returned adapters are patched so that each call enforces authentication and retries a call when a token was expired.
@@ -47,7 +49,7 @@ module Nucleus
       check_ssl = options.key?(:check_ssl) ? options[:check_ssl] : true
       adapter = @adapters[vendor].new(endpoint_url, options[:app_domain], check_ssl)
 
-      fake_env = { 'HTTP_AUTHORIZATION' => 'Basic ' + ["#{username}:#{password}"].pack('m*').delete("\n") }
+      fake_env = { 'HTTP_AUTHORIZATION' => 'Basic ' + Base64.strict_encode64("#{username}:#{password}") }
       # patch the adapter so that calls are wrapped and expect valid authentication
       AdapterAuthenticationInductor.patch(adapter, fake_env)
 
